@@ -21,7 +21,7 @@ class TipOverlayViewModel: ObservableObject {
     }
 
     func dismiss() {
-        withAnimation(.easeOut(duration: 0.5)) {
+        withAnimation(.easeOut(duration: 0.25)) {
             showModal = false
         }
     }

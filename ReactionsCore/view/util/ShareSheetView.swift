@@ -33,7 +33,7 @@ public struct ShareSheetView: UIViewControllerRepresentable {
 }
 
 public struct ShareSettings {
-    let message: String
+    public let message: String
     let appStoreUrl = ""
 
     public init() {

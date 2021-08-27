@@ -614,6 +614,9 @@
 		57BDFF5226415E00001B97CC /* dummy-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5126415E00001B97CC /* dummy-quiz.csv */; };
 		57BDFF5826416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF5726416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315C12631B58A0092C454 /* MoleculeArc.swift */; };
+		57CAD88226D938D200D75D9B /* SharePromptModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88126D938D200D75D9B /* SharePromptModal.swift */; };
+		57CAD88426D93F5300D75D9B /* SharePromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */; };
+		57CAD88626D93F9200D75D9B /* PromptInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88526D93F9200D75D9B /* PromptInfo.swift */; };
 		57CD325C2672549800C94109 /* AnimatingNumberPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */; };
 		57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C4426241FCC00BE1303 /* Labelled.swift */; };
 		57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C5F2625B12700BE1303 /* ParticleContainer.swift */; };
@@ -1265,6 +1268,9 @@
 		57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingReactionDefinition.swift; sourceTree = "<group>"; };
 		57C315C12631B58A0092C454 /* MoleculeArc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeArc.swift; sourceTree = "<group>"; };
 		57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionScreen.swift; sourceTree = "<group>"; };
+		57CAD88126D938D200D75D9B /* SharePromptModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptModal.swift; sourceTree = "<group>"; };
+		57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptViewModel.swift; sourceTree = "<group>"; };
+		57CAD88526D93F9200D75D9B /* PromptInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInfo.swift; sourceTree = "<group>"; };
 		57CD325726723ACB00C94109 /* BufferFractionsChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferFractionsChart.swift; sourceTree = "<group>"; };
 		57CD325926724DBD00C94109 /* BufferEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferEquationView.swift; sourceTree = "<group>"; };
 		57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingNumberPlaceholder.swift; sourceTree = "<group>"; };
@@ -1568,6 +1574,7 @@
 				5700C1B926A9AAA100677777 /* UnitCard.swift */,
 				5700C1BE26A9C25100677777 /* APChemRootView.swift */,
 				57587F2226D695D200F52D8C /* AboutScreen.swift */,
+				57CAD88126D938D200D75D9B /* SharePromptModal.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -1581,6 +1588,7 @@
 				5742D1C926AB06BA00049FCC /* APChemStyling.swift */,
 				5769751426D4D79A00D30ECE /* URLExtension.swift */,
 				57587F2426D69DC200F52D8C /* Strings.swift */,
+				57CAD88526D93F9200D75D9B /* PromptInfo.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -3663,6 +3671,7 @@
 				5742D1B326AABA0F00049FCC /* StoreManager.swift */,
 				5769751826D64D9D00D30ECE /* TippingViewModel.swift */,
 				57587F1C26D680A500F52D8C /* TipOverlayViewModel.swift */,
+				57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */,
 			);
 			path = viewmodel;
 			sourceTree = "<group>";
@@ -4546,7 +4555,9 @@
 				57346C6326D0E37800525920 /* SupportStudentsModalSettings.swift in Sources */,
 				57E6D8D826AD89DA00603796 /* NotificationViewModel.swift in Sources */,
 				5742D1BA26AAF53600049FCC /* StoreObserver.swift in Sources */,
+				57CAD88226D938D200D75D9B /* SharePromptModal.swift in Sources */,
 				57E6D8DE26ADA8BA00603796 /* APChemRootNavigationModel.swift in Sources */,
+				57CAD88626D93F9200D75D9B /* PromptInfo.swift in Sources */,
 				574865A026A96E55007FA314 /* AppDelegate.swift in Sources */,
 				574865A226A96E55007FA314 /* SceneDelegate.swift in Sources */,
 				5742D1AD26AAAAC900049FCC /* ProductLocker.swift in Sources */,
@@ -4556,6 +4567,7 @@
 				57587F2526D69DC200F52D8C /* Strings.swift in Sources */,
 				5700C1BD26A9B32200677777 /* Unit.swift in Sources */,
 				5742D1BC26AAF61100049FCC /* DebugStoreObserver.swift in Sources */,
+				57CAD88426D93F5300D75D9B /* SharePromptViewModel.swift in Sources */,
 				57346C6B26D0F59700525920 /* IntroScreen.swift in Sources */,
 				57E6D8D526AD871600603796 /* NotificationCard.swift in Sources */,
 				5700C1BA26A9AAA100677777 /* UnitCard.swift in Sources */,

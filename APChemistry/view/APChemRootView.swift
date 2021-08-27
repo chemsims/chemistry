@@ -12,7 +12,10 @@ struct APChemRootView: View {
     @ObservedObject var navigation: APChemRootNavigationModel
     @ObservedObject var tipModel: TippingViewModel
     @ObservedObject var tipOverlayModel: TipOverlayViewModel
+    @ObservedObject var sharePromptModel: SharePromptViewModel
     @ObservedObject var notificationModel = NotificationViewModel.shared
+
+    private let shareSettings = ShareSettings()
 
     var body: some View {
         GeometryReader { geo in
@@ -25,14 +28,17 @@ struct APChemRootView: View {
                     case .about:
                         AboutScreen(model: tipModel, navigation: navigation)
                             .notification(notificationModel.notification)
+
+                    case .share:
+                        ShareSheetView(
+                            activityItems: [shareSettings.message],
+                            onCompletion: { navigation.activeSheet = nil }
+                        )
+                        .edgesIgnoringSafeArea(.all)
                     }
                 }
-//                .sheet(isPresented: $navigation.showUnitSelection) {
-//                    unitSelection(geo)
-//                        .notification(notificationModel.notification)
-//                }
-                .blur(radius: tipOverlayModel.showModal ? 1 : 0)
-                .overlay(tippingOverlay)
+                .blur(radius: blurContent ? 1 : 0)
+                .overlay(tippingOverlay(layout: .init(geometry: geo)))
         }
         // Only add this on iPhone, since the view is visible behind the sheet on iPad
         // so notification shows up twice
@@ -41,18 +47,36 @@ struct APChemRootView: View {
         }
     }
 
+    private var blurContent: Bool {
+        tipOverlayModel.showModal || sharePromptModel.showPrompt
+    }
+
     @ViewBuilder
-    private var tippingOverlay: some View {
-        if tipOverlayModel.showModal {
+    private func tippingOverlay(layout: SupportStudentsModalSettings) -> some View {
+        if blurContent {
             ZStack {
                 Color.black
                     .opacity(0.1)
                     .edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        sharePromptModel.dismiss()
+                    }
 
-                SupportStudentsModal(
-                    model: tipModel,
-                    tipOverlayModel: tipOverlayModel
-                )
+                if tipOverlayModel.showModal {
+                    SupportStudentsModal(
+                        model: tipModel,
+                        tipOverlayModel: tipOverlayModel
+                    )
+                } else if sharePromptModel.showPrompt {
+                    SharePromptModal(
+                        layout: layout,
+                        showShareSheet: {
+                            navigation.activeSheet = .share
+                            sharePromptModel.dismiss()
+                        },
+                        dismissPrompt: sharePromptModel.dismiss
+                    )
+                }
             }
         }
     }

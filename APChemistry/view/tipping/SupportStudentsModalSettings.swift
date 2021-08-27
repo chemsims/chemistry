@@ -32,6 +32,11 @@ struct SupportStudentsModalSettings {
         return min(maxWidth, 0.8 * width)
     }
 
+    var shareModalWidth: CGFloat {
+        let maxWidth: CGFloat = 450
+        return min(maxWidth, 0.75 * width)
+    }
+
     var mainContentWidth: CGFloat {
         modalWidth - (2 * cornerRadius)
     }

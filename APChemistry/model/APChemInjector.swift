@@ -20,6 +20,8 @@ protocol APChemInjector {
     var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> { get }
 
     var tipOverlayPersistence: TipOverlayPersistence { get }
+
+    var sharePromptPersistence: SharePromptPersistence { get }
 }
 
 class ProductionAPChemInjector: APChemInjector {
@@ -39,6 +41,8 @@ class ProductionAPChemInjector: APChemInjector {
         )
 
     let tipOverlayPersistence: TipOverlayPersistence = UserDefaultsTipOverlayPersistence()
+
+    let sharePromptPersistence: SharePromptPersistence = UserDefaultsSharePromptPersistence()
 }
 
 class DebugAPChemInjector: APChemInjector {
@@ -64,4 +68,6 @@ class DebugAPChemInjector: APChemInjector {
         AnyScreenPersistence(InMemoryScreenPersistence())
 
     let tipOverlayPersistence: TipOverlayPersistence = UserDefaultsTipOverlayPersistence()
+
+    let sharePromptPersistence: SharePromptPersistence = UserDefaultsSharePromptPersistence()
 }

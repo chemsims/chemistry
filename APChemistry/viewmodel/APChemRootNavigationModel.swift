@@ -87,7 +87,7 @@ class APChemRootNavigationModel: ObservableObject {
 
 extension APChemRootNavigationModel {
     enum ActiveSheet: Int, Identifiable {
-        case unitSelection, about
+        case unitSelection, about, share
 
         var id: Int {
             rawValue

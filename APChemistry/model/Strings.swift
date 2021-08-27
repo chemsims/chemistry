@@ -21,4 +21,9 @@ struct Strings {
     We really appreciate the support you've given our app already! If you'd like to give any \
     further tip, you can do so below.
     """
+
+    static let promptToShare = """
+    If you've found this app useful, please consider sharing it to anyone who could benefit, \
+    and help us reach more people!
+    """
 }
