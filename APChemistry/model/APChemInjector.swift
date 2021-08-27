@@ -98,19 +98,19 @@ class DebugAPChemInjector: APChemInjector {
         )
     }
 
-    let storeManager: StoreManager = StoreManager(
-        locker: InMemoryProductLocker(allProductsAreUnlocked: false),
-        productLoader: DebugProductLoader(loadDelay: 2),
-        storeObserver: DebugStoreObserver(actionDelay: 2)
-    )
+//    let storeManager: StoreManager = StoreManager(
+//        locker: InMemoryProductLocker(allProductsAreUnlocked: false),
+//        productLoader: DebugProductLoader(loadDelay: 2),
+//        storeObserver: DebugStoreObserver(actionDelay: 2)
+//    )
 
     // A store manager which uses the real store kit, but stores the
     // unlock in memory
-//    let storeManager: StoreManager = StoreManager(
-//        locker: InMemoryProductLocker(allProductsAreUnlocked: false),
-//        productLoader: ConcreteProductLoader(),
-//        storeObserver: ConcreteStoreObserver.shared
-//    )
+    let storeManager: StoreManager = StoreManager(
+        locker: InMemoryProductLocker(allProductsAreUnlocked: false),
+        productLoader: ConcreteProductLoader(),
+        storeObserver: ConcreteStoreObserver.shared
+    )
 
     let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector>
 
