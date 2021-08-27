@@ -29,6 +29,10 @@ public protocol NavigationInjector {
     var onboardingPersistence: OnboardingPersistence { get set }
 
     var namePersistence: NamePersistence { get }
+
+    var sharePromptPersistence: SharePromptPersistence { get }
+
+    var appLaunchPersistence: AppLaunchPersistence { get }
 }
 
 public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInjector {
@@ -40,6 +44,8 @@ public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInj
         reviewPersistence: ReviewPromptPersistence,
         onboardingPersistence: OnboardingPersistence,
         namePersistence: NamePersistence,
+        sharePromptPersistence: SharePromptPersistence,
+        appLaunchPersistence: AppLaunchPersistence,
         allScreens: [Screen],
         linearScreens: [Screen]
     ) {
@@ -52,6 +58,8 @@ public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInj
         self.reviewPersistence = reviewPersistence
         self.onboardingPersistence = onboardingPersistence
         self.namePersistence = namePersistence
+        self.sharePromptPersistence = sharePromptPersistence
+        self.appLaunchPersistence = appLaunchPersistence
     }
 
     public let allScreens: [Screen]
@@ -63,4 +71,6 @@ public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInj
     public let reviewPersistence: ReviewPromptPersistence
     public var onboardingPersistence: OnboardingPersistence
     public var namePersistence: NamePersistence
+    public let sharePromptPersistence: SharePromptPersistence
+    public let appLaunchPersistence: AppLaunchPersistence
 }

@@ -22,18 +22,38 @@ protocol APChemInjector {
     var tipOverlayPersistence: TipOverlayPersistence { get }
 
     var sharePromptPersistence: SharePromptPersistence { get }
+
+    var appLaunchPersistence: AppLaunchPersistence { get }
 }
 
 class ProductionAPChemInjector: APChemInjector {
+
+
+    init() {
+        let sharePrompt = UserDefaultsSharePromptPersistence()
+        let appLaunch = UserDefaultsAppLaunchPersistence()
+
+        self.sharePromptPersistence = sharePrompt
+        self.appLaunchPersistence = appLaunch
+        self.reactionRatesInjector = .production(
+            sharePromptPersistence: sharePrompt,
+            appLaunchPersistence: appLaunch
+        )
+        self.equilibriumInjector = .production(
+            sharePromptPersistence: sharePrompt,
+            appLaunchPersistence: appLaunch
+        )
+    }
+
     let storeManager: StoreManager = StoreManager(
         locker: KeychainProductLocker(),
         productLoader: ConcreteProductLoader(),
         storeObserver: ConcreteStoreObserver.shared
     )
 
-    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .production
+    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector>
 
-    let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> = .production
+    let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector>
 
     let lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
         AnyScreenPersistence(
@@ -42,10 +62,29 @@ class ProductionAPChemInjector: APChemInjector {
 
     let tipOverlayPersistence: TipOverlayPersistence = UserDefaultsTipOverlayPersistence()
 
-    let sharePromptPersistence: SharePromptPersistence = UserDefaultsSharePromptPersistence()
+    let sharePromptPersistence: SharePromptPersistence
+
+    let appLaunchPersistence: AppLaunchPersistence
 }
 
 class DebugAPChemInjector: APChemInjector {
+
+    init() {
+        let sharePrompt = UserDefaultsSharePromptPersistence()
+        let appLaunch = UserDefaultsAppLaunchPersistence()
+
+        self.sharePromptPersistence = sharePrompt
+        self.appLaunchPersistence = appLaunch
+        self.reactionRatesInjector = .inMemory(
+            sharePromptPersistence: sharePrompt,
+            appLaunchPersistence: appLaunch
+        )
+        self.equilibriumInjector = .inMemory(
+            sharePromptPersistence: sharePrompt,
+            appLaunchPersistence: appLaunch
+        )
+    }
+
 //    let storeManager: StoreManager = StoreManager(
 //        locker: InMemoryProductLocker(allProductsAreUnlocked: true),
 //        productLoader: DebugProductLoader(loadDelay: 5),
@@ -60,14 +99,16 @@ class DebugAPChemInjector: APChemInjector {
         storeObserver: ConcreteStoreObserver.shared
     )
 
-    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> = .inMemory
+    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector>
 
-    let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> = .inMemory
+    let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector>
 
     var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
         AnyScreenPersistence(InMemoryScreenPersistence())
 
     let tipOverlayPersistence: TipOverlayPersistence = UserDefaultsTipOverlayPersistence()
 
-    let sharePromptPersistence: SharePromptPersistence = UserDefaultsSharePromptPersistence()
+    let sharePromptPersistence: SharePromptPersistence
+
+    let appLaunchPersistence: AppLaunchPersistence
 }

@@ -156,9 +156,17 @@ extension RootNavigationViewModel {
 
         // Only show review prompt or open menu if the app is not the first screen shown when app opens
         if hasOpenedFirstScreen {
-            if behaviour.showReviewPromptOn(screen: screen) {
-                ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
+            let reviewPrompter = ReviewPrompter(
+                persistence: injector.reviewPersistence,
+                appLaunches: injector.appLaunchPersistence
+            )
+            let doShowReview = reviewPrompter.shouldRequestReview(
+                navBehaviourRequestsReview: behaviour.showReviewPromptOn(screen: screen)
+            )
+            if doShowReview {
+                reviewPrompter.requestReview()
             }
+
             if behaviour.showMenuOn(screen: screen) {
                 showMenu = true
             }

@@ -7,13 +7,38 @@ import ReactionsCore
 
 extension RootNavigationViewModel where Injector == EquilibriumNavInjector {
 
-    public static let production = model(ProductionEquilibriumInjector())
-    public static let inMemory = model(InMemoryEquilibriumInjector())
+    public static func production(
+        sharePromptPersistence: SharePromptPersistence,
+        appLaunchPersistence: AppLaunchPersistence
+    ) -> RootNavigationViewModel<EquilibriumNavInjector> {
+        model(
+            ProductionEquilibriumInjector(),
+            sharePromptPersistence: sharePromptPersistence,
+            appLaunchPersistence: appLaunchPersistence
+        )
+    }
+
+    public static func inMemory(
+        sharePromptPersistence: SharePromptPersistence,
+        appLaunchPersistence: AppLaunchPersistence
+    ) -> RootNavigationViewModel<EquilibriumNavInjector> {
+        model(
+            InMemoryEquilibriumInjector(),
+            sharePromptPersistence: sharePromptPersistence,
+            appLaunchPersistence: appLaunchPersistence
+        )
+    }
 
     private static func model(
-        _ injector: EquilibriumInjector
+        _ injector: EquilibriumInjector,
+        sharePromptPersistence: SharePromptPersistence,
+        appLaunchPersistence: AppLaunchPersistence
     ) -> RootNavigationViewModel<EquilibriumNavInjector> {
-        ReactionsEquilibriumNavigationModel.model(using: injector)
+        ReactionsEquilibriumNavigationModel.model(
+            using: injector,
+            sharePromptPersistence: sharePromptPersistence,
+            appLaunchPersistence: appLaunchPersistence
+        )
     }
 }
 
@@ -21,11 +46,25 @@ public typealias EquilibriumNavInjector = AnyNavigationInjector<EquilibriumAppSc
 
 struct ReactionsEquilibriumNavigationModel {
 
-    static func model(using injector: EquilibriumInjector) -> RootNavigationViewModel<EquilibriumNavInjector> {
-        RootNavigationViewModel(injector: makeInjector(using: injector))
+    static func model(
+        using injector: EquilibriumInjector,
+        sharePromptPersistence: SharePromptPersistence,
+        appLaunchPersistence: AppLaunchPersistence
+    ) -> RootNavigationViewModel<EquilibriumNavInjector> {
+        RootNavigationViewModel(
+            injector: makeInjector(
+                using: injector,
+                sharePromptPersistence: sharePromptPersistence,
+                appLaunchPersistence: appLaunchPersistence
+            )
+        )
     }
 
-    private static func makeInjector(using injector: EquilibriumInjector) -> EquilibriumNavInjector {
+    private static func makeInjector(
+        using injector: EquilibriumInjector,
+        sharePromptPersistence: SharePromptPersistence,
+        appLaunchPersistence: AppLaunchPersistence
+    ) -> EquilibriumNavInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
                 EquilibriumNavigationBehaviour(injector: injector)
@@ -34,8 +73,10 @@ struct ReactionsEquilibriumNavigationModel {
             analytics: injector.analytics,
             quizPersistence: injector.quizPersistence,
             reviewPersistence: injector.reviewPersistence,
-            onboardingPersistence: InMemoryOnboardingPersistence(hasCompletedOnboarding: true),
+            onboardingPersistence: InMemoryOnboardingPersistence(hasCompletedOnboarding: true), // TODO
             namePersistence: InMemoryNamePersistence(),
+            sharePromptPersistence: sharePromptPersistence,
+            appLaunchPersistence: appLaunchPersistence,
             allScreens: EquilibriumAppScreen.allCases,
             linearScreens: linearScreens
         )

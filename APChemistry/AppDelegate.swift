@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         EquilibriumQuizQuestions.load()
 
         APChemApp.injector.storeManager.initialiseStore()
+        APChemApp.injector.appLaunchPersistence.recordAppLaunch()
 
         return true
     }

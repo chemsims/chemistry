@@ -615,8 +615,14 @@
 		57BDFF5826416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF5726416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315C12631B58A0092C454 /* MoleculeArc.swift */; };
 		57CAD88226D938D200D75D9B /* SharePromptModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88126D938D200D75D9B /* SharePromptModal.swift */; };
-		57CAD88426D93F5300D75D9B /* SharePromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */; };
-		57CAD88626D93F9200D75D9B /* PromptInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88526D93F9200D75D9B /* PromptInfo.swift */; };
+		57CAD88826D9464A00D75D9B /* PromptPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88726D9464A00D75D9B /* PromptPersistence.swift */; };
+		57CAD88A26D9469700D75D9B /* SharePromptPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88926D9469700D75D9B /* SharePromptPersistence.swift */; };
+		57CAD88B26D946B200D75D9B /* PromptInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88526D93F9200D75D9B /* PromptInfo.swift */; };
+		57CAD88C26D9473500D75D9B /* SharePromptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */; };
+		57CAD88E26D94AD300D75D9B /* ReviewPrompterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88D26D94AD300D75D9B /* ReviewPrompterTests.swift */; };
+		57CAD89026D94DF900D75D9B /* AppLaunchPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88F26D94DF900D75D9B /* AppLaunchPersistence.swift */; };
+		57CAD89226D94F2600D75D9B /* AppLaunchPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD89126D94F2600D75D9B /* AppLaunchPersistenceTests.swift */; };
+		57CAD89526D959D100D75D9B /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD89426D959D100D75D9B /* DateProvider.swift */; };
 		57CD325C2672549800C94109 /* AnimatingNumberPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */; };
 		57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C4426241FCC00BE1303 /* Labelled.swift */; };
 		57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C5F2625B12700BE1303 /* ParticleContainer.swift */; };
@@ -630,6 +636,7 @@
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
 		57D9693C26D7B67900A629AB /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9693B26D7B67900A629AB /* InAppPurchase.swift */; };
+		57D9C3E726D964870023ED91 /* FixedDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9C3E626D964870023ED91 /* FixedDateProvider.swift */; };
 		57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */; };
 		57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */; };
 		57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */; };
@@ -1271,6 +1278,12 @@
 		57CAD88126D938D200D75D9B /* SharePromptModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptModal.swift; sourceTree = "<group>"; };
 		57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptViewModel.swift; sourceTree = "<group>"; };
 		57CAD88526D93F9200D75D9B /* PromptInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptInfo.swift; sourceTree = "<group>"; };
+		57CAD88726D9464A00D75D9B /* PromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptPersistence.swift; sourceTree = "<group>"; };
+		57CAD88926D9469700D75D9B /* SharePromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePromptPersistence.swift; sourceTree = "<group>"; };
+		57CAD88D26D94AD300D75D9B /* ReviewPrompterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompterTests.swift; sourceTree = "<group>"; };
+		57CAD88F26D94DF900D75D9B /* AppLaunchPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchPersistence.swift; sourceTree = "<group>"; };
+		57CAD89126D94F2600D75D9B /* AppLaunchPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchPersistenceTests.swift; sourceTree = "<group>"; };
+		57CAD89426D959D100D75D9B /* DateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateProvider.swift; sourceTree = "<group>"; };
 		57CD325726723ACB00C94109 /* BufferFractionsChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferFractionsChart.swift; sourceTree = "<group>"; };
 		57CD325926724DBD00C94109 /* BufferEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferEquationView.swift; sourceTree = "<group>"; };
 		57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingNumberPlaceholder.swift; sourceTree = "<group>"; };
@@ -1327,6 +1340,7 @@
 		57D8BA26257BBCE9006B3C8B /* ReactionComparisonViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViews.swift; sourceTree = "<group>"; };
 		57D8BA2B257BF17E006B3C8B /* ReactionComparisonScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonScreenElement.swift; sourceTree = "<group>"; };
 		57D9693B26D7B67900A629AB /* InAppPurchase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppPurchase.swift; sourceTree = "<group>"; };
+		57D9C3E626D964870023ED91 /* FixedDateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedDateProvider.swift; sourceTree = "<group>"; };
 		57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatRoundingTests.swift; sourceTree = "<group>"; };
 		57DAE4D32577C2FD006D945B /* FixedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedText.swift; sourceTree = "<group>"; };
 		57DAE4D72577C4F1006D945B /* HalfLife.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfLife.swift; sourceTree = "<group>"; };
@@ -1588,7 +1602,6 @@
 				5742D1C926AB06BA00049FCC /* APChemStyling.swift */,
 				5769751426D4D79A00D30ECE /* URLExtension.swift */,
 				57587F2426D69DC200F52D8C /* Strings.swift */,
-				57CAD88526D93F9200D75D9B /* PromptInfo.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -2157,6 +2170,7 @@
 		57438A37260A26BE005E3888 /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */,
 				57B8946626A037BB00D71998 /* onboarding */,
 				57F88862267E6D8000609671 /* molecule-emitting */,
 				572B1A772675DF3900302B8E /* reaction-progress */,
@@ -2175,6 +2189,10 @@
 				57438A64260A4177005E3888 /* ScreenPersistence.swift */,
 				57B8946C26A04FFA00D71998 /* OnboardingPersistence.swift */,
 				57B8946E26A0500100D71998 /* NamePersistence.swift */,
+				57CAD88726D9464A00D75D9B /* PromptPersistence.swift */,
+				57CAD88926D9469700D75D9B /* SharePromptPersistence.swift */,
+				57CAD88F26D94DF900D75D9B /* AppLaunchPersistence.swift */,
+				57CAD89126D94F2600D75D9B /* AppLaunchPersistenceTests.swift */,
 			);
 			path = persistence;
 			sourceTree = "<group>";
@@ -2839,6 +2857,7 @@
 		5797A44D25E4069F00991BD9 /* ReactionsCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				57D9C3E826D964B60023ED91 /* test-util */,
 				5713D8CA267B7CB5009C65AC /* shapes */,
 				5773BCD7267A5F3100E52C81 /* text-line */,
 				572B1A742675DC3D00302B8E /* reaction-progress */,
@@ -2866,6 +2885,7 @@
 				57315ECF2640311200A7D0F9 /* CsvParserTests.swift */,
 				575C90E42662CE6A001DCD17 /* PHMeterTests.swift */,
 				57FB9ED12674A02B0003E977 /* ReactingBeakerViewModelTests.swift */,
+				57CAD88D26D94AD300D75D9B /* ReviewPrompterTests.swift */,
 			);
 			path = ReactionsCoreTests;
 			sourceTree = "<group>";
@@ -2873,6 +2893,7 @@
 		5797A45E25E406FC00991BD9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57CAD89326D959A900D75D9B /* prompts */,
 				572B1A7A2675DF8700302B8E /* reaction-progress */,
 				57D60150265EACF300017E25 /* validation */,
 				578B1714261874CC00D8079F /* motion */,
@@ -3279,6 +3300,16 @@
 			path = "quiz-questions";
 			sourceTree = "<group>";
 		};
+		57CAD89326D959A900D75D9B /* prompts */ = {
+			isa = PBXGroup;
+			children = (
+				57B528E525B38A2300381550 /* ReviewPrompter.swift */,
+				57CAD88526D93F9200D75D9B /* PromptInfo.swift */,
+				57CAD89426D959D100D75D9B /* DateProvider.swift */,
+			);
+			path = prompts;
+			sourceTree = "<group>";
+		};
 		57D15C152622D7D600BE1303 /* solubility */ = {
 			isa = PBXGroup;
 			children = (
@@ -3422,6 +3453,14 @@
 			path = "screen-element-enums";
 			sourceTree = "<group>";
 		};
+		57D9C3E826D964B60023ED91 /* test-util */ = {
+			isa = PBXGroup;
+			children = (
+				57D9C3E626D964870023ED91 /* FixedDateProvider.swift */,
+			);
+			path = "test-util";
+			sourceTree = "<group>";
+		};
 		57DB304225F74CEC0070E96F /* molecule-container */ = {
 			isa = PBXGroup;
 			children = (
@@ -3496,7 +3535,6 @@
 			children = (
 				5763177D259B8EAF00D7CE2C /* SizeAdjuster.swift */,
 				579B5D742632A2D600502B69 /* Flags.swift */,
-				57B528E525B38A2300381550 /* ReviewPrompter.swift */,
 				57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */,
 				57E902B925ED561200758300 /* EquatableCounter.swift */,
 				57FDA138255D6C5000CB8804 /* Extensions.swift */,
@@ -3671,7 +3709,6 @@
 				5742D1B326AABA0F00049FCC /* StoreManager.swift */,
 				5769751826D64D9D00D30ECE /* TippingViewModel.swift */,
 				57587F1C26D680A500F52D8C /* TipOverlayViewModel.swift */,
-				57CAD88326D93F5300D75D9B /* SharePromptViewModel.swift */,
 			);
 			path = viewmodel;
 			sourceTree = "<group>";
@@ -4557,7 +4594,6 @@
 				5742D1BA26AAF53600049FCC /* StoreObserver.swift in Sources */,
 				57CAD88226D938D200D75D9B /* SharePromptModal.swift in Sources */,
 				57E6D8DE26ADA8BA00603796 /* APChemRootNavigationModel.swift in Sources */,
-				57CAD88626D93F9200D75D9B /* PromptInfo.swift in Sources */,
 				574865A026A96E55007FA314 /* AppDelegate.swift in Sources */,
 				574865A226A96E55007FA314 /* SceneDelegate.swift in Sources */,
 				5742D1AD26AAAAC900049FCC /* ProductLocker.swift in Sources */,
@@ -4567,7 +4603,6 @@
 				57587F2526D69DC200F52D8C /* Strings.swift in Sources */,
 				5700C1BD26A9B32200677777 /* Unit.swift in Sources */,
 				5742D1BC26AAF61100049FCC /* DebugStoreObserver.swift in Sources */,
-				57CAD88426D93F5300D75D9B /* SharePromptViewModel.swift in Sources */,
 				57346C6B26D0F59700525920 /* IntroScreen.swift in Sources */,
 				57E6D8D526AD871600603796 /* NotificationCard.swift in Sources */,
 				5700C1BA26A9AAA100677777 /* UnitCard.swift in Sources */,
@@ -4580,13 +4615,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57CAD89526D959D100D75D9B /* DateProvider.swift in Sources */,
 				57438A56260A3242005E3888 /* ReviewPromptPersistence.swift in Sources */,
 				57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */,
 				57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */,
+				57CAD89026D94DF900D75D9B /* AppLaunchPersistence.swift in Sources */,
 				573E1B2B263AACE000379A1D /* StringUtil.swift in Sources */,
 				5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */,
 				57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */,
 				575A886625E435FB00AEE448 /* Beaky.swift in Sources */,
+				57CAD88B26D946B200D75D9B /* PromptInfo.swift in Sources */,
 				5786FAAB25E6908D00AAD8A6 /* DisabledSliderModifier.swift in Sources */,
 				57FD400726484DCF00E352C1 /* FeedbackSettings.swift in Sources */,
 				5797A4AA25E40A5400991BD9 /* MoleculeGridSettings.swift in Sources */,
@@ -4609,6 +4647,7 @@
 				57315EC226401CF500A7D0F9 /* QuizIntroBody.swift in Sources */,
 				57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */,
 				57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */,
+				57CAD88C26D9473500D75D9B /* SharePromptViewModel.swift in Sources */,
 				57B701AC26D3FE6D0053ED79 /* Link.swift in Sources */,
 				575A880F25E4310700AEE448 /* QuizOption.swift in Sources */,
 				572B1A7C2675DF9100302B8E /* ReactionProgressChartGeometry.swift in Sources */,
@@ -4625,6 +4664,7 @@
 				57B3B92F260B408500EB9B47 /* NavigationRow.swift in Sources */,
 				57436611266E7EF4007F0410 /* ICETable.swift in Sources */,
 				579EA8FB264694FB008461E8 /* BarChartData.swift in Sources */,
+				57CAD88A26D9469700D75D9B /* SharePromptPersistence.swift in Sources */,
 				57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */,
 				575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */,
 				578B17202618751B00D8079F /* MotionDelegates.swift in Sources */,
@@ -4702,6 +4742,7 @@
 				57952A4725E67F96006AB876 /* NavigationModel.swift in Sources */,
 				57315EB4263FF79900A7D0F9 /* Flags.swift in Sources */,
 				5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */,
+				57CAD88826D9464A00D75D9B /* PromptPersistence.swift in Sources */,
 				57E6D8DA26ADA2E800603796 /* AnalyticsScreen.swift in Sources */,
 				57315ECE26402D1900A7D0F9 /* CsvParser.swift in Sources */,
 				575A882D25E4319E00AEE448 /* TextLineView.swift in Sources */,
@@ -4771,9 +4812,12 @@
 				57FD401326484F9A00E352C1 /* ReviewPromptPersistenceTests.swift in Sources */,
 				57FD401626484FA600E352C1 /* QuizDifficultyTests.swift in Sources */,
 				57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */,
+				57CAD88E26D94AD300D75D9B /* ReviewPrompterTests.swift in Sources */,
 				57FD401426484F9F00E352C1 /* LastOpenedScreenTests.swift in Sources */,
+				57CAD89226D94F2600D75D9B /* AppLaunchPersistenceTests.swift in Sources */,
 				57FD402E2648765700E352C1 /* QuizTestMethods.swift in Sources */,
 				57FD400F26484F5100E352C1 /* ScreenStateTreeNodeTests.swift in Sources */,
+				57D9C3E726D964870023ED91 /* FixedDateProvider.swift in Sources */,
 				5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */,
 				573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */,
 				57FD400D26484F4B00E352C1 /* CGFloatRoundingTests.swift in Sources */,

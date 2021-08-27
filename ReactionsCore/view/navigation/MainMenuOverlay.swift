@@ -577,6 +577,8 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         reviewPersistence: InMemoryReviewPromptPersistence(),
         onboardingPersistence: InMemoryOnboardingPersistence(),
         namePersistence: InMemoryNamePersistence(),
+        sharePromptPersistence: InMemorySharePromptPersistence(),
+        appLaunchPersistence: UserDefaultsAppLaunchPersistence(),
         allScreens: [1, 2, 3, 4],
         linearScreens: [1, 2, 3, 4]
     )

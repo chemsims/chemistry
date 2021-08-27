@@ -21,6 +21,10 @@ class RootNavigationModelTest: XCTestCase {
     }
 
     private func newModel() -> RootNavigationViewModel<ReactionRatesInjector> {
-        ReactionRateNavigationModel.navigationModel(using: InMemoryInjector())
+        ReactionRateNavigationModel.navigationModel(
+            using: InMemoryInjector(),
+            sharePromptPersistence: InMemorySharePromptPersistence(),
+            appLaunchPersistence: InMemoryAppLaunchPersistence()
+        )
     }
 }

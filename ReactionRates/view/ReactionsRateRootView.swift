@@ -55,7 +55,9 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPhone SE
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
-                using: InMemoryInjector()
+                using: InMemoryInjector(),
+                sharePromptPersistence: InMemorySharePromptPersistence(),
+                appLaunchPersistence: UserDefaultsAppLaunchPersistence()
             ),
             unitSelectionIsShowing: .constant(false),
             aboutPageIsShowing: .constant(false)
@@ -64,7 +66,9 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPad mini
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
-                using: InMemoryInjector()
+                using: InMemoryInjector(),
+                sharePromptPersistence: InMemorySharePromptPersistence(),
+                appLaunchPersistence: UserDefaultsAppLaunchPersistence()
             ),
             unitSelectionIsShowing: .constant(false),
             aboutPageIsShowing: .constant(false)
@@ -73,7 +77,9 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPad Pro 11
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
-                using: InMemoryInjector()
+                using: InMemoryInjector(),
+                sharePromptPersistence: InMemorySharePromptPersistence(),
+                appLaunchPersistence: UserDefaultsAppLaunchPersistence()
             ),
             unitSelectionIsShowing: .constant(false),
             aboutPageIsShowing: .constant(false)
