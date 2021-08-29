@@ -55,12 +55,18 @@ public class OnboardingViewModel: ObservableObject {
     }
 
     func next() {
+        if navigation.exists({!$0.hasNext}) {
+            logCompletedOnboarding()
+        }
+        navigation?.next()
+    }
+
+    private func logCompletedOnboarding() {
         if let name = name, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             analytics.completedOnboardingWithName()
         } else {
             analytics.completedOnboardingWithoutName()
         }
-        navigation?.next()
     }
 
     func saveName() {

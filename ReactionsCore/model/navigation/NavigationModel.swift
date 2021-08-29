@@ -61,6 +61,10 @@ public class NavigationModel<State: ScreenState> {
         }
     }
 
+    var hasNext: Bool {
+        currentNode.next(model: model) != nil
+    }
+
     private func scheduleSubState(indexToRun: Int) {
         if let timer = subTimer {
             timer.invalidate()

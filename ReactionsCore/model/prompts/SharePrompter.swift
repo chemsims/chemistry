@@ -24,12 +24,16 @@ public class SharePrompter: ObservableObject {
     let dateProvider: DateProvider = CurrentDateProvider()
 
     public func dismiss() {
-        analytics.dismissedSharePrompt(promptCount: getCountOfShowingPrompt())
+        if showingPrompt { // Check if showing to prevent double taps registering 2 events
+            analytics.dismissedSharePrompt(promptCount: getCountOfShowingPrompt())
+        }
         doDismiss()
     }
 
     public func clickedShare() {
-        analytics.tappedShareFromPrompt(promptCount: getCountOfShowingPrompt())
+        if showingPrompt {
+            analytics.tappedShareFromPrompt(promptCount: getCountOfShowingPrompt())
+        }
         persistence.setClickedShare()
         doDismiss()
     }

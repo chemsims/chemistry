@@ -30,7 +30,6 @@ protocol APChemInjector {
     var namePersistence: NamePersistence { get }
 
     var analytics: GeneralAppAnalytics { get }
-    
 }
 
 class ProductionAPChemInjector: APChemInjector {
@@ -108,7 +107,7 @@ class DebugAPChemInjector: APChemInjector {
 
     init() {
         let appLaunch = InMemoryAppLaunchPersistence()
-        let analytics = ProductionAPChemInjector().analytics 
+        let analytics = NoOpGeneralAnalytics()
         let sharePrompter = SharePrompter(
             persistence: InMemorySharePromptPersistence(),
             appLaunches: appLaunch,

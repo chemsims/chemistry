@@ -38,7 +38,9 @@ class TipOverlayViewModel: ObservableObject {
     }
 
     func dismissWithoutTip() {
-        analytics.dismissedTipPrompt(promptCount: getCountOfCurrentlyShowingTipPrompt())
+        if showModal { // Check if showing to prevent double taps registering 2 events
+            analytics.dismissedTipPrompt(promptCount: getCountOfCurrentlyShowingTipPrompt())
+        }
         doHide()
     }
 
