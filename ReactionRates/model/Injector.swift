@@ -39,10 +39,7 @@ class ProductionInjector: Injector {
     let appAnalytics = AnyAppAnalytics(
         GoogleAnalytics<AppScreen, ReactionsRateQuestionSet>(
             unitName: "reactionRates",
-
-            // We decided to bundle all units into 1 app after reaction rates was released, so
-            // don't modify event names for reaction rates so we don't affect analytics history
-            includeUnitInEventNames: false
+            includeUnitInEventNames: true
         )
     )
 
