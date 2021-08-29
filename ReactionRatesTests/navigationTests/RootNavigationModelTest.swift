@@ -25,9 +25,11 @@ class RootNavigationModelTest: XCTestCase {
             using: InMemoryInjector(),
             sharePrompter: SharePrompter(
                 persistence: InMemorySharePromptPersistence(),
-                appLaunches: InMemoryAppLaunchPersistence()
+                appLaunches: InMemoryAppLaunchPersistence(),
+                analytics: NoOpGeneralAnalytics()
             ),
-            appLaunchPersistence: InMemoryAppLaunchPersistence()
+            appLaunchPersistence: InMemoryAppLaunchPersistence(),
+            analytics: NoOpGeneralAnalytics()
         )
     }
 }

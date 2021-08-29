@@ -46,6 +46,7 @@ class ReviewPrompterTests: XCTestCase {
         return ReviewPrompter(
             persistence: TestReviewPromptPersistence(initialCount: initialCount),
             appLaunches: TestAppLaunchPersistence(firstLaunch: firstLaunch ?? Date()),
+            analytics: NoOpGeneralAnalytics(),
             dateProvider: currentDate.map(FixedDateProvider.init) ?? CurrentDateProvider()
         )
     }
