@@ -7,14 +7,17 @@ import SwiftUI
 public class OnboardingViewModel: ObservableObject {
 
     public init(
-        namePersistence: NamePersistence
+        namePersistence: NamePersistence,
+        analytics: GeneralAppAnalytics
     ) {
         self.namePersistence = namePersistence
+        self.analytics = analytics
         self.name = namePersistence.name
         self.navigation = OnboardingNavigationModel.model(self)
     }
 
     private var namePersistence: NamePersistence
+    private let analytics: GeneralAppAnalytics
 
     @Published var statement = [TextLine]()
     @Published var isProvidingName = false
@@ -52,6 +55,11 @@ public class OnboardingViewModel: ObservableObject {
     }
 
     func next() {
+        if let name = name, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            analytics.completedOnboardingWithName()
+        } else {
+            analytics.completedOnboardingWithoutName()
+        }
         navigation?.next()
     }
 

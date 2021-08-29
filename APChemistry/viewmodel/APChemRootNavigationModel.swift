@@ -95,7 +95,10 @@ class APChemRootNavigationModel: ObservableObject {
 extension APChemRootNavigationModel {
     private func doShowOnboarding() {
         showOnboarding = true
-        onboardingModel = OnboardingViewModel(namePersistence: injector.namePersistence)
+        onboardingModel = OnboardingViewModel(
+            namePersistence: injector.namePersistence,
+            analytics: injector.analytics
+        )
         
         onboardingModel?.navigation?.nextScreen = { [weak self] in
             withAnimation() {

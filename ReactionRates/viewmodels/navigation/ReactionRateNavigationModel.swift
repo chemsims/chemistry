@@ -11,35 +11,41 @@ extension RootNavigationViewModel where Injector == ReactionRatesInjector {
 
     public static func production(
         sharePrompter: SharePrompter,
-        appLaunchPersistence: AppLaunchPersistence
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<ReactionRatesInjector> {
         model(
             using: ProductionInjector(),
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunchPersistence
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
         )
     }
 
     public static func inMemory(
         sharePrompter: SharePrompter,
-        appLaunchPersistence: AppLaunchPersistence
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<ReactionRatesInjector> {
         model(
             using: InMemoryInjector(),
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunchPersistence
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
         )
     }
 
     private static func model(
         using injector: ReactionRates.Injector,
         sharePrompter: SharePrompter,
-        appLaunchPersistence: AppLaunchPersistence
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<ReactionRatesInjector> {
         ReactionRateNavigationModel.navigationModel(
             using: injector,
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunchPersistence
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
         )
     }
 }
@@ -49,14 +55,16 @@ struct ReactionRateNavigationModel {
     static func navigationModel(
         using injector: Injector,
         sharePrompter: SharePrompter,
-        appLaunchPersistence: AppLaunchPersistence
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<ReactionRatesInjector> {
         RootNavigationViewModel(
             injector: navigationInjector(
                 using: injector,
                 sharePrompter: sharePrompter,
                 appLaunchPersistence: appLaunchPersistence
-            )
+            ),
+            generalAnalytics: analytics
         )
     }
 

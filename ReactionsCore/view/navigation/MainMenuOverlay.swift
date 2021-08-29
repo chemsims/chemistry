@@ -327,7 +327,10 @@ extension MainMenuOverlayWithSettings {
     }
 
     private var shareButton: some View {
-        Button(action: { activeSheet = .share }) {
+        Button(action: {
+            navigation.didShowShareSheetFromMenu()
+            activeSheet = .share
+        }) {
             Image("share-icon", bundle: .reactionsCore)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -567,18 +570,19 @@ struct MainMenuOverlay_Previews: PreviewProvider {
         )
     ]
 
-    static let model = RootNavigationViewModel(injector: injector)
+    static let model = RootNavigationViewModel(injector: injector, generalAnalytics: NoOpGeneralAnalytics())
 
     static let injector = AnyNavigationInjector(
         behaviour: AnyNavigationBehavior(EmptyBehaviour()),
         persistence: AnyScreenPersistence(InMemoryScreenPersistence()),
-        analytics: AnyAppAnalytics(NoOpAnalytics()),
+        analytics: AnyAppAnalytics(NoOpAppAnalytics<Int, Int>()),
         quizPersistence: AnyQuizPersistence(InMemoryQuizPersistence<Int>()),
         reviewPersistence: InMemoryReviewPromptPersistence(),
         namePersistence: InMemoryNamePersistence(),
         sharePrompter: SharePrompter(
             persistence: InMemorySharePromptPersistence(),
-            appLaunches: InMemoryAppLaunchPersistence()
+            appLaunches: InMemoryAppLaunchPersistence(),
+            analytics: NoOpGeneralAnalytics()
         ),
         appLaunchPersistence: UserDefaultsAppLaunchPersistence(),
         allScreens: [1, 2, 3, 4],
@@ -613,25 +617,5 @@ struct MainMenuOverlay_Previews: PreviewProvider {
 
     struct EmptyProvider: ScreenProvider {
         let screen: AnyView = AnyView(EmptyView())
-    }
-
-    struct NoOpAnalytics: AppAnalytics {
-        typealias Screen = Int
-        typealias QuestionSet = Int
-
-        func opened(screen: Screen) { }
-
-        let enabled: Bool = false
-        func setEnabled(value: Bool) {
-        }
-
-        func startedQuiz(questionSet: Int, difficulty: QuizDifficulty) {
-        }
-
-        func completedQuiz(questionSet: Int, difficulty: QuizDifficulty, percentCorrect: Double) {
-        }
-
-        func answeredQuestion(questionSet: Int, questionId: String, answerId: String, answerAttempt: Int, isCorrect: Bool) {
-        }
     }
 }

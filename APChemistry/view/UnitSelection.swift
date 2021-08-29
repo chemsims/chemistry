@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 struct UnitSelection: View {
 
@@ -134,7 +135,8 @@ struct UnitSelection_Previews: PreviewProvider {
                     injector: DebugAPChemInjector(),
                     tipOverlayModel: .init(
                         persistence: UserDefaultsTipOverlayPersistence(),
-                        locker: InMemoryProductLocker()
+                        locker: InMemoryProductLocker(),
+                        analytics: NoOpGeneralAnalytics()
                     )
                 ),
                 layout: .init(

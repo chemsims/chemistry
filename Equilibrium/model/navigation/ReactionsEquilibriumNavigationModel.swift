@@ -9,35 +9,41 @@ extension RootNavigationViewModel where Injector == EquilibriumNavInjector {
 
     public static func production(
         sharePrompter: SharePrompter,
-        appLaunchPersistence: AppLaunchPersistence
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<EquilibriumNavInjector> {
         model(
             ProductionEquilibriumInjector(),
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunchPersistence
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
         )
     }
 
     public static func inMemory(
         sharePrompter: SharePrompter,
-        appLaunchPersistence: AppLaunchPersistence
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<EquilibriumNavInjector> {
         model(
             InMemoryEquilibriumInjector(),
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunchPersistence
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
         )
     }
 
     private static func model(
         _ injector: EquilibriumInjector,
         sharePrompter: SharePrompter,
-        appLaunchPersistence: AppLaunchPersistence
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<EquilibriumNavInjector> {
         ReactionsEquilibriumNavigationModel.model(
             using: injector,
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunchPersistence
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
         )
     }
 }
@@ -49,14 +55,16 @@ struct ReactionsEquilibriumNavigationModel {
     static func model(
         using injector: EquilibriumInjector,
         sharePrompter: SharePrompter,
-        appLaunchPersistence: AppLaunchPersistence
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<EquilibriumNavInjector> {
         RootNavigationViewModel(
             injector: makeInjector(
                 using: injector,
                 sharePrompter: sharePrompter,
                 appLaunchPersistence: appLaunchPersistence
-            )
+            ),
+            generalAnalytics: analytics
         )
     }
 

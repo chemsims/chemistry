@@ -29,8 +29,7 @@ where
     }
 }
 
-
-extension GoogleAnalytics: AppAnalytics {
+extension GoogleAnalytics: AppAnalytics, GeneralAppAnalytics {
 
     public var enabled: Bool {
         userDefaults.bool(forKey: analyticsEnabledKey)
@@ -93,10 +92,105 @@ extension GoogleAnalytics: AppAnalytics {
     }
 }
 
+// MARK: - Prompts
+extension GoogleAnalytics {
+    private func promptAction(event: String, count: Int) {
+        Analytics.logEvent(event, parameters: [Params.promptCount: count])
+    }
+}
+
+// MARK: - Sharing
+extension GoogleAnalytics {
+
+    public func tappedShareFromMenu() {
+        Analytics.logEvent(Events.tappedShareFromMenu, parameters: nil)
+    }
+
+    public func showedSharePrompt(promptCount: Int) {
+        promptAction(event: Events.showedSharePrompt, count: promptCount)
+    }
+
+    public func tappedShareFromPrompt(promptCount: Int) {
+        promptAction(event: Events.tappedShareFromPrompt, count: promptCount)
+    }
+
+    public func dismissedSharePrompt(promptCount: Int) {
+        promptAction(event: Events.dismissedSharePrompt, count: promptCount)
+    }
+}
+
+// MARK: - Tips
+extension GoogleAnalytics {
+    public func showedTipPrompt(promptCount: Int) {
+        promptAction(event: Events.showedTipPrompt, count: promptCount)
+    }
+
+    public func dismissedTipPrompt(promptCount: Int) {
+        promptAction(event: Events.dismissedTipPrompt, count: promptCount)
+    }
+
+    public func beganUnlockBadgePurchaseFromTipPrompt(promptCount: Int, productId: String) {
+        Analytics.logEvent(
+            Events.beganUnlockBadgePurchaseFromTipPrompt,
+            parameters: [
+                Params.promptCount: promptCount,
+                Params.productId: productId
+            ]
+        )
+    }
+
+    public func beganUnlockBadgePurchaseFromMenu(productId: String) {
+        Analytics.logEvent(
+            Events.beganUnlockBadgePurchaseFromMenu,
+            parameters: [
+                Params.productId: productId
+            ]
+        )
+    }
+}
+
+// MARK: - Review prompt
+extension GoogleAnalytics {
+    public func attemptedReviewPrompt(promptCount: Int) {
+        promptAction(event: Events.attemptedReviewPrompt, count: promptCount)
+    }
+}
+
+// MARK: - Onboarding
+extension GoogleAnalytics {
+    public func completedOnboardingWithName() {
+        Analytics.logEvent(Events.completedOnboardingWithName, parameters: nil)
+    }
+
+    public func completedOnboardingWithoutName() {
+        Analytics.logEvent(Events.completedOnboardingWithoutName, parameters: nil)
+    }
+}
+
 private struct Events {
+    // Quiz
     static let answeredQuestion = "answeredQuestion"
     static let startedQuiz = "startedQuiz"
     static let completedQuiz = "completedQuiz"
+
+    // Tips
+    static let showedTipPrompt = "showedTipPrompt"
+    static let dismissedTipPrompt = "dismissedTipPrompt"
+    static let beganUnlockBadgePurchaseFromTipPrompt = "beganUnlockBadgePurchaseFromTipPrompt"
+    static let beganUnlockBadgePurchaseFromMenu = "beganUnlockBadgePurchaseFromMenu"
+
+    // Sharing
+    static let showedSharePrompt = "showedSharePrompt"
+    static let dismissedSharePrompt = "dismissedSharePrompt"
+    static let tappedShareFromMenu = "tappedShareFromMenu"
+    static let tappedShareFromPrompt = "tappedShareFromPrompt"
+
+    // Reviews
+    static let attemptedReviewPrompt = "attemptedReviewPrompt"
+
+    // Onboarding
+    static let completedOnboardingWithName = "completedOnboardingWithName"
+    static let completedOnboardingWithoutName = "completedOnboardingWithoutName"
 }
 
 private struct Params {
@@ -116,6 +210,9 @@ private struct Params {
 
     static let percentCorrect = "percentCorrect"
     static let percentCorrectDimension = "percentCorrectDimension"
+
+    static let promptCount = "promptCount"
+    static let productId = "productId"
 }
 
 private extension RawRepresentable where RawValue == String {

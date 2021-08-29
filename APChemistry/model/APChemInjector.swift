@@ -28,26 +28,37 @@ protocol APChemInjector {
     var onboardingPersistence: OnboardingPersistence { get set }
 
     var namePersistence: NamePersistence { get }
+
+    var analytics: GeneralAppAnalytics { get }
+    
 }
 
 class ProductionAPChemInjector: APChemInjector {
 
     init() {
         let appLaunch = UserDefaultsAppLaunchPersistence()
+        let analytics = GoogleAnalytics<DummyQuestionSet, DummyScreen>(
+            unitName: "",
+            includeUnitInEventNames: false
+        )
         let sharePrompter = SharePrompter(
             persistence: UserDefaultsSharePromptPersistence(),
-            appLaunches: appLaunch
+            appLaunches: appLaunch,
+            analytics: analytics
         )
 
         self.sharePrompter = sharePrompter
         self.appLaunchPersistence = appLaunch
+        self.analytics = analytics
         self.reactionRatesInjector = .production(
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunch
+            appLaunchPersistence: appLaunch,
+            analytics: analytics
         )
         self.equilibriumInjector = .production(
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunch
+            appLaunchPersistence: appLaunch,
+            analytics: analytics
         )
     }
 
@@ -75,26 +86,47 @@ class ProductionAPChemInjector: APChemInjector {
     var onboardingPersistence: OnboardingPersistence = UserDefaultsOnboardingPersistence()
 
     let namePersistence: NamePersistence = UserDefaultsNamePersistence()
+
+    let analytics: GeneralAppAnalytics
+}
+
+// TODO refactor the common analytics so that it doesn't require dummy types
+extension ProductionAPChemInjector {
+    enum DummyQuestionSet: String, HasAnalyticsLabel {
+        case A
+
+        var analyticsLabel: String {
+            rawValue
+        }
+    }
+    enum DummyScreen: String {
+        case A
+    }
 }
 
 class DebugAPChemInjector: APChemInjector {
 
     init() {
         let appLaunch = InMemoryAppLaunchPersistence()
+        let analytics = ProductionAPChemInjector().analytics 
         let sharePrompter = SharePrompter(
             persistence: InMemorySharePromptPersistence(),
-            appLaunches: appLaunch
+            appLaunches: appLaunch,
+            analytics: analytics
         )
 
         self.sharePrompter = sharePrompter
         self.appLaunchPersistence = appLaunch
+        self.analytics = analytics
         self.reactionRatesInjector = .inMemory(
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunch
+            appLaunchPersistence: appLaunch,
+            analytics: analytics
         )
         self.equilibriumInjector = .inMemory(
             sharePrompter: sharePrompter,
-            appLaunchPersistence: appLaunch
+            appLaunchPersistence: appLaunch,
+            analytics: analytics
         )
     }
 
@@ -128,4 +160,6 @@ class DebugAPChemInjector: APChemInjector {
     var onboardingPersistence: OnboardingPersistence = InMemoryOnboardingPersistence()
 
     let namePersistence: NamePersistence = InMemoryNamePersistence()
+
+    let analytics: GeneralAppAnalytics
 }

@@ -155,7 +155,8 @@ struct OnboardingView_Previews: PreviewProvider {
                 Spacer()
                 OnboardingView(
                     model: .init(
-                        namePersistence: InMemoryNamePersistence()
+                        namePersistence: InMemoryNamePersistence(),
+                        analytics: NoOpGeneralAnalytics()
                     )
                 )
                 Spacer()

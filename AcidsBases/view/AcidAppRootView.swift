@@ -32,7 +32,7 @@ struct AcidAppRootView: View {
                 )
             )
         }
-        .ignoresKeyboardSafeArea()
+        
     }
 
     private func makeView(settings: AcidBasesScreenLayout) -> some View {

@@ -19,14 +19,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let injector = APChemApp.injector
         let tipOverlayModel = TipOverlayViewModel(
             persistence: injector.tipOverlayPersistence,
-            locker: injector.storeManager.locker
+            locker: injector.storeManager.locker,
+            analytics: injector.analytics
         )
         let contentView = APChemRootView(
             navigation: APChemRootNavigationModel(
                 injector: injector,
                 tipOverlayModel: tipOverlayModel
             ),
-            tipModel: .init(storeManager: injector.storeManager),
+            tipModel: .init(
+                storeManager: injector.storeManager,
+                analytics: injector.analytics
+            ),
             tipOverlayModel: tipOverlayModel,
             sharePromptModel: injector.sharePrompter
         )

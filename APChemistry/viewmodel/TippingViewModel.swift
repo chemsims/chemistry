@@ -2,13 +2,15 @@
 // Reactions App
 //
 
+import ReactionsCore
 import SwiftUI
 
 class TippingViewModel: ObservableObject {
 
-    init(storeManager: StoreManager) {
+    init(storeManager: StoreManager, analytics: GeneralAppAnalytics) {
         self.storeManager = storeManager
         self.unitLocker = storeManager.locker
+        self.analytics = analytics
         self.wasUnlockedOnInitialisation = UnlockBadgeTipLevel.allCases.contains { level in
             storeManager.locker.isUnlocked(level.product)
         }
@@ -17,6 +19,7 @@ class TippingViewModel: ObservableObject {
     @Published var selectedTipLevel = UnlockBadgeTipLevel.level2
     let storeManager: StoreManager
     let unitLocker: ProductLocker
+    let analytics: GeneralAppAnalytics
 
     private let wasUnlockedOnInitialisation: Bool
 
@@ -47,7 +50,28 @@ class TippingViewModel: ObservableObject {
         return currentState.state.isReadyForPurchase
     }
 
-    func makeTipPurchase() {
+    func makeTipPurchaseFromMenu() {
+        guard tipButtonEnabled else {
+            return
+        }
+        analytics.beganUnlockBadgePurchaseFromMenu(
+            productId: selectedTipLevel.product.inAppPurchaseId
+        )
+        makeTipPurchase()
+    }
+
+    func makeTipPurchaseFromPrompt(promptCount: Int) {
+        guard tipButtonEnabled else {
+            return
+        }
+        analytics.beganUnlockBadgePurchaseFromTipPrompt(
+            promptCount: promptCount,
+            productId: selectedTipLevel.product.inAppPurchaseId
+        )
+        makeTipPurchase()
+    }
+
+    private func makeTipPurchase() {
         guard tipButtonEnabled else {
             return
         }

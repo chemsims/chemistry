@@ -9,15 +9,18 @@ struct ReviewPrompter {
     init(
         persistence: ReviewPromptPersistence,
         appLaunches: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics,
         dateProvider: DateProvider = CurrentDateProvider()
     ) {
         self.persistence = persistence
         self.appLaunches = appLaunches
+        self.analytics = analytics
         self.dateProvider = dateProvider
     }
 
     let persistence: ReviewPromptPersistence
     let appLaunches: AppLaunchPersistence
+    let analytics: GeneralAppAnalytics
     let dateProvider: DateProvider
 
     static let minDaysBeforeSecondPrompt = 7
@@ -27,6 +30,7 @@ struct ReviewPrompter {
         let lastPrompt = persistence.getLastPromptInfo()
         let thisPrompt = lastPrompt?.increment(dateProvider: dateProvider) ?? .firstPrompt(dateProvider: dateProvider)
         SKStoreReviewController.requestReview()
+        analytics.attemptedReviewPrompt(promptCount: thisPrompt.count)
         persistence.setPromptInfo(thisPrompt)
     }
 

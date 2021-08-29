@@ -152,10 +152,11 @@ extension SupportStudentsModal {
 struct SupportStudentsModal_Previews: PreviewProvider {
     static var previews: some View {
         SupportStudentsModal(
-            model: .init(storeManager: .preview),
+            model: .init(storeManager: .preview, analytics: NoOpGeneralAnalytics()),
             tipOverlayModel: .init(
                 persistence: UserDefaultsTipOverlayPersistence(),
-                locker: InMemoryProductLocker()
+                locker: InMemoryProductLocker(),
+                analytics: NoOpGeneralAnalytics()
             )
         )
         .padding()

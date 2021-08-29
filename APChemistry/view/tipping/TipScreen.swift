@@ -113,7 +113,7 @@ extension SupportStudentsModal {
             CapsuleButton(
                 label: "Continue",
                 settings: settings,
-                action: tipOverlayModel.dismiss
+                action: tipOverlayModel.continuePostTip
             )
             .foregroundColor(.primaryDarkBlue)
             .frame(size: settings.supportButtonSize)
@@ -146,7 +146,11 @@ extension SupportStudentsModal {
             SupportStudentsModal.CapsuleButton(
                 label: "Support",
                 settings: settings,
-                action: model.makeTipPurchase
+                action: {
+                    model.makeTipPurchaseFromPrompt(
+                        promptCount: tipOverlayModel.getCountOfCurrentlyShowingTipPrompt()
+                    )
+                }
             )
             .foregroundColor(.primaryDarkBlue)
             .frame(size: settings.supportButtonSize)
@@ -157,7 +161,7 @@ extension SupportStudentsModal {
             SupportStudentsModal.CapsuleButton(
                 label: "Skip",
                 settings: settings,
-                action: tipOverlayModel.dismiss
+                action: tipOverlayModel.dismissWithoutTip
             )
             .foregroundColor(.gray)
             .frame(size: settings.skipButtonSize)
@@ -197,10 +201,11 @@ struct TipScreen_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
             SupportStudentsModal.TipScreen(
-                model: .init(storeManager: .preview),
+                model: .init(storeManager: .preview, analytics: NoOpGeneralAnalytics()),
                 tipOverlayModel: .init(
                     persistence: UserDefaultsTipOverlayPersistence(),
-                    locker: InMemoryProductLocker()
+                    locker: InMemoryProductLocker(),
+                    analytics: NoOpGeneralAnalytics()
                 ),
                 settings: .init(geometry: geo)
             )

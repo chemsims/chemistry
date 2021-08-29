@@ -8,31 +8,42 @@ public class SharePrompter: ObservableObject {
 
     public init(
         persistence: SharePromptPersistence,
-        appLaunches: AppLaunchPersistence
+        appLaunches: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) {
         self.persistence = persistence
         self.appLaunches = appLaunches
+        self.analytics = analytics
     }
 
     @Published public var showingPrompt = false
 
     let persistence: SharePromptPersistence
     let appLaunches: AppLaunchPersistence
+    let analytics: GeneralAppAnalytics
     let dateProvider: DateProvider = CurrentDateProvider()
 
     public func dismiss() {
+        analytics.dismissedSharePrompt(promptCount: getCountOfShowingPrompt())
+        doDismiss()
+    }
+
+    public func clickedShare() {
+        analytics.tappedShareFromPrompt(promptCount: getCountOfShowingPrompt())
+        persistence.setClickedShare()
+        doDismiss()
+    }
+
+    private func doDismiss() {
         withAnimation(.easeOut(duration: 0.3)) {
             showingPrompt = false
         }
     }
 
-    public func clickedShare() {
-        persistence.setClickedShare()
-    }
-
     func showPrompt() {
         let lastPrompt = persistence.getLastPromptInfo()
         let thisPrompt = lastPrompt?.increment(dateProvider: dateProvider) ?? .firstPrompt(dateProvider: dateProvider)
+        analytics.showedSharePrompt(promptCount: thisPrompt.count)
         persistence.setSharePromptInfo(thisPrompt)
         withAnimation(.easeOut(duration: 0.3)) {
             showingPrompt = true
@@ -53,6 +64,14 @@ public class SharePrompter: ObservableObject {
             )
         }
         return false
+    }
+
+
+    // Returns the count of the currently showing prompt
+    // This assumes that `showPrompt` has been called, as the count in the store
+    // is incremented when `showPrompt` is called.
+    private func getCountOfShowingPrompt() -> Int {
+        persistence.getLastPromptInfo()?.count ?? 0
     }
 
     private func shouldShowPrompt(lastPrompt: PromptInfo) -> Bool {

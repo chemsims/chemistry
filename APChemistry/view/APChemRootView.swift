@@ -26,6 +26,7 @@ struct APChemRootView: View {
                 .overlay(tippingOverlay(layout: .init(geometry: geo)))
         }
         .notification(showNotificationOnMainContent ? notificationModel.notification : nil)
+        .ignoresKeyboardSafeArea()
     }
 
     private var mainContent: some View {
@@ -100,7 +101,6 @@ struct APChemRootView: View {
                         layout: layout,
                         showShareSheet: {
                             navigation.activeSheet = .share
-                            sharePromptModel.dismiss()
                             sharePromptModel.clickedShare()
                         },
                         dismissPrompt: sharePromptModel.dismiss

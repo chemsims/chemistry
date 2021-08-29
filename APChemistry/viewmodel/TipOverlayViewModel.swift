@@ -9,15 +9,18 @@ class TipOverlayViewModel: ObservableObject {
 
     init(
         persistence: TipOverlayPersistence,
-        locker: ProductLocker
+        locker: ProductLocker,
+        analytics: GeneralAppAnalytics
     ) {
         self.persistence = persistence
         self.locker = locker
+        self.analytics = analytics
     }
 
     @Published private(set) var showModal = false
     private var persistence: TipOverlayPersistence
     private let locker: ProductLocker
+    private let analytics: GeneralAppAnalytics
     private let dateProvider: DateProvider = CurrentDateProvider()
 
     func show() {
@@ -27,9 +30,25 @@ class TipOverlayViewModel: ObservableObject {
         let lastPrompt = persistence.lastPrompt
         let thisPrompt = lastPrompt?.increment(dateProvider: dateProvider) ?? .firstPrompt(dateProvider: dateProvider)
         persistence.lastPrompt = thisPrompt
+        analytics.showedTipPrompt(promptCount: thisPrompt.count)
     }
 
-    func dismiss() {
+    func continuePostTip() {
+        doHide()
+    }
+
+    func dismissWithoutTip() {
+        analytics.dismissedTipPrompt(promptCount: getCountOfCurrentlyShowingTipPrompt())
+        doHide()
+    }
+
+    /// Returns count of the currently showing tip prompt, which assumes
+    /// that `show` has already been called.
+    func getCountOfCurrentlyShowingTipPrompt() -> Int {
+        persistence.lastPrompt?.count ?? 0
+    }
+
+    private func doHide() {
         withAnimation(.easeOut(duration: 0.25)) {
             showModal = false
         }

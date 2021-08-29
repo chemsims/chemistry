@@ -179,7 +179,7 @@ extension AboutScreenWithSettings {
             SupportStudentsModal.CapsuleButton(
                 label: "Support",
                 settings: settings,
-                action: model.makeTipPurchase
+                action: model.makeTipPurchaseFromMenu
             )
             .foregroundColor(.primaryDarkBlue)
             .frame(size: settings.supportButtonSize)
