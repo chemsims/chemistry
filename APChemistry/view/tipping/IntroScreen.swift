@@ -52,6 +52,7 @@ extension SupportStudentsModal {
                     .font(.largeTitle.bold())
                     .foregroundColor(.primaryDarkBlue)
                     .frame(width: settings.mainContentWidth)
+                    .accessibility(addTraits: .isHeader)
 
                 Text(message1)
                     .lineLimit(nil)
@@ -74,6 +75,9 @@ extension SupportStudentsModal {
                 .frame(size: settings.hyperLearningImageSize)
                 .frame(height: settings.bannerHeight)
                 .background(imageBackground)
+                .accessibility(
+                    label: Text("Illustration of carbon symbol, an atom with surrounding electrons, and nuclear reactor")
+                )
         }
 
         @ViewBuilder

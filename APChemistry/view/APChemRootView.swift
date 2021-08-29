@@ -23,7 +23,6 @@ struct APChemRootView: View {
                 .sheet(item: $navigation.activeSheet) {
                     sheet($0, geo: geo)
                 }
-//                .blur(radius: blurContent ? 1 : 0)
                 .overlay(tippingOverlay(layout: .init(geometry: geo)))
         }
         .notification(showNotificationOnMainContent ? notificationModel.notification : nil)
@@ -33,6 +32,7 @@ struct APChemRootView: View {
         ZStack {
             navigation.view
                 .modifier(BlurredSceneModifier(isBlurred: blurContent))
+                .accessibility(hidden: blurContent)
 
             if let onboardingModel = navigation.onboardingModel, navigation.showOnboarding {
                 OnboardingView(model: onboardingModel)

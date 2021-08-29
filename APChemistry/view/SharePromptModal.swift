@@ -28,6 +28,7 @@ struct SharePromptModal: View {
             Text("Share app")
                 .font(.largeTitle.bold())
                 .foregroundColor(.primaryDarkBlue)
+                .accessibility(addTraits: .isHeader)
 
             Text(Strings.promptToShare)
             HStack {

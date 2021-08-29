@@ -347,7 +347,7 @@ extension MainMenuOverlayWithSettings {
                 .aspectRatio(contentMode: .fit)
                 .foregroundColor(Styling.navIcon)
         }
-        .accessibility(label: Text("Open unit selection menu"))
+        .accessibility(label: Text("Open unit selection page"))
     }
 
     private var aboutButton: some View {

@@ -15,9 +15,35 @@ struct TipSlider: View {
         VStack {
             slider
                 .frame(size: settings.tipSliderSize)
+                .accessibilityElement(children: .ignore)
+                .accessibility(label: Text(sliderLabel))
+                .accessibility(value: Text(sliderValue))
+                .accessibilityAdjustableAction(accessibilityAction)
+
             amount
                 .frame(height: settings.tipAmountLabelHeight)
+                .accessibility(label: Text("Tip amount"))
+                .accessibility(value: Text(priceAccessibilityValue))
         }
+    }
+
+    private func accessibilityAction(direction: AccessibilityAdjustmentDirection) {
+        if let next = direction == .increment ? selectedTipLevel.next : selectedTipLevel.previous {
+            selectedTipLevel = next
+        }
+    }
+
+
+    private let sliderLabel: String = "Slider to set optional tip level with hearts above the slider"
+
+    private var sliderValue: String {
+        let count = "\(selectedTipLevel.userFacingIndex) hearts out of \(UnlockBadgeTipLevel.max.userFacingIndex)"
+        let price = priceAccessibilityValue
+        return "\(count), \(price)"
+    }
+
+    private var priceAccessibilityValue: String {
+        formatPrice(selectedTipLevel) ?? "loading price"
     }
 
     private var slider: some View {

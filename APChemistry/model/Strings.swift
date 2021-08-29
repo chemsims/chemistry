@@ -31,4 +31,9 @@ struct Strings {
     If you're finding this app useful, please consider leaving a review to help us grow and \
     reach more students!
     """
+
+    static let stemBadgeLabel = """
+    Circular STEM badge with a test tube and text in the middle which reads: I'm helping \
+    democratize the next era of STEM education, want to join me?
+    """
 }

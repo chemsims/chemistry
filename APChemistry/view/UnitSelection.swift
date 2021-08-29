@@ -34,6 +34,7 @@ struct UnitSelection: View {
                     navigation.activeSheet = nil
             }) {
                 Text("Back")
+                    .accessibility(hint: Text("Closes unit selection page"))
             }
             Spacer(minLength: 0)
         }
@@ -41,7 +42,9 @@ struct UnitSelection: View {
 
     private var title: some View {
         Text("Choose a unit")
-            .font(.largeTitle)
+            .font(.largeTitle.bold())
+            .foregroundColor(.primaryDarkBlue)
+            .accessibility(addTraits: .isHeader)
     }
 
     private var units: some View {
@@ -50,6 +53,9 @@ struct UnitSelection: View {
                 unit: unit,
                 layout: layout
             )
+            .accessibilityElement(children: .contain)
+            .accessibility(hint: Text("Opens \(unit.info.title) unit"))
+            .accessibility(addTraits: .isButton)
             .onTapGesture {
                 navigation.goTo(unit: unit)
             }

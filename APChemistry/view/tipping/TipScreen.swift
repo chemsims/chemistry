@@ -59,6 +59,7 @@ extension SupportStudentsModal {
                 Text("Support Students!")
                     .font(.largeTitle.bold())
                     .foregroundColor(.primaryDarkBlue)
+                    .accessibility(addTraits: .isHeader)
 
                 Text(Strings.tipMessage)
                     .lineLimit(nil)
@@ -123,6 +124,7 @@ extension SupportStudentsModal {
                 Text("Check out your STEM badge below!")
 
                 Image("stem-badge")
+                    .accessibility(label: Text(Strings.stemBadgeLabel))
                     .overlay(shareStemBadge, alignment: .topTrailing)
             }
         }

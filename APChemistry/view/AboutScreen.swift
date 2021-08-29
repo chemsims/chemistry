@@ -91,6 +91,7 @@ private struct AboutScreenWithSettings: View {
             Button(action: { navigation.activeSheet = nil }) {
                 Text("Back")
             }
+            .accessibility(hint: Text("Closes about page"))
             Spacer(minLength: 0)
         }
     }
@@ -120,6 +121,7 @@ extension AboutScreenWithSettings {
                 Text("Support students")
                     .font(.largeTitle.bold())
                     .foregroundColor(.primaryDarkBlue)
+                    .accessibility(addTraits: .isHeader)
 
                 Text(Strings.tipMessage)
                     .lineLimit(nil)
@@ -162,6 +164,7 @@ extension AboutScreenWithSettings {
                 Text(Strings.showStemBadge)
 
                 Image("stem-badge")
+                    .accessibility(label: Text(Strings.stemBadgeLabel))
                     .overlay(shareStemBadge, alignment: .topTrailing)
             }
         }
@@ -182,12 +185,15 @@ extension AboutScreenWithSettings {
             .frame(size: settings.supportButtonSize)
             .disabled(!model.tipButtonEnabled)
             .overlay(tipButtonOverlay)
+            .accessibility(value: Text(model.isPurchasing ? "purchasing" : ""))
+            .accessibility(hint: Text("Purchases the selected tip amount"))
         }
 
         @ViewBuilder
         private var tipButtonOverlay: some View {
             if model.isPurchasing {
                 ActivityIndicator()
+                    .accessibility(hidden: true)
             }
         }
 
@@ -225,6 +231,7 @@ extension AboutScreenWithSettings {
             let failedToLoadProduct = (state?.state).exists { $0 == .failedToLoadProduct }
 
             let priceString = price ?? (failedToLoadProduct ? "Cannot connect to store" : "")
+            let label = price.map { "Tip \($0)" } ?? priceString
 
             let showLoading = state.map(showLoadingIndicator) ?? false
 
@@ -234,6 +241,7 @@ extension AboutScreenWithSettings {
                 action: { storeManager.beginPurchase(of: level.product) }
             )
             .frame(size: settings.extraTipSize)
+            .accessibility(label: Text(label))
             .foregroundColor(.primaryDarkBlue)
             .disabled(showLoading)
             .overlay(loadingOverlay(loading: showLoading))

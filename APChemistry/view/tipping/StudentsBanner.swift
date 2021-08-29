@@ -27,6 +27,16 @@ struct StudentsBanner: View {
             Spacer(minLength: 0)
                 .frame(width: settings.cornerRadius)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+    }
+
+    private var label: String {
+        if studentsToShow == 1 {
+            return "Illustration of a smiling student with a cartoon heart on their chest"
+        }
+        return "Illustration of \(studentsToShow) smiling students with cartoon hearts on their chest"
+
     }
 
     private func student(index: Int) -> some View {

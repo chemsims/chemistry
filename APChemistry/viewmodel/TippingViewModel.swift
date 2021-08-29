@@ -93,8 +93,27 @@ enum UnlockBadgeTipLevel: Int, Identifiable, CaseIterable, Comparable {
 
     case level1, level2, level3, level4
 
+    static let max = UnlockBadgeTipLevel.allCases.max()!
+
     var id: Int {
         rawValue
+    }
+
+    /// A user-facing index, which starts at 1
+    var userFacingIndex: Int {
+        id + 1
+    }
+
+    var next: UnlockBadgeTipLevel? {
+        Self.withId(id + 1)
+    }
+
+    var previous: UnlockBadgeTipLevel? {
+        Self.withId(id - 1)
+    }
+
+    private static func withId(_ id: Int) -> UnlockBadgeTipLevel? {
+        Self.allCases.first { $0.id == id }
     }
 
     var product: InAppPurchase {
