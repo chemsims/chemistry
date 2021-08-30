@@ -104,7 +104,7 @@ struct BufferScreen_Previews: PreviewProvider {
         BufferScreen(
             model: BufferScreenViewModel(
                 substancePersistence: InMemoryAcidOrBasePersistence(),
-                namePersistence: InMemoryNamePersistence()
+                namePersistence: InMemoryNamePersistence.shared
             )
         )
         .padding()

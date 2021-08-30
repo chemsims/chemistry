@@ -5,6 +5,7 @@
 import SwiftUI
 import ReactionsCore
 import ReactionRates
+import AcidsBases
 import Equilibrium
 
 class APChemRootNavigationModel: ObservableObject {
@@ -71,6 +72,12 @@ class APChemRootNavigationModel: ObservableObject {
                 showUnitSelection: showUnitSelectionBinding,
                 showAboutPage: showAboutPageBinding
             )
+        case .acidsBases:
+            return AcidsBasesScreenProvider(
+                injector: injector,
+                showUnitSelection: showUnitSelectionBinding,
+                showAboutPage: showAboutPageBinding
+            )
         }
     }
 
@@ -99,10 +106,11 @@ extension APChemRootNavigationModel {
             namePersistence: injector.namePersistence,
             analytics: injector.analytics
         )
-        
+
         onboardingModel?.navigation?.nextScreen = { [weak self] in
             withAnimation() {
                 self?.showOnboarding = false
+                self?.onboardingModel?.saveName() // always save name in case it was not committed
                 self?.injector.onboardingPersistence.hasCompletedOnboarding = true
             }
         }
@@ -131,7 +139,7 @@ private class ReactionRatesScreenProvider: ScreenProvider {
         self.showAboutPage = showAboutPage
     }
 
-    private let model: RootNavigationViewModel<ReactionRatesInjector>
+    private let model: RootNavigationViewModel<ReactionRatesNavInjector>
     private let showUnitSelection: Binding<Bool>
     private let showAboutPage: Binding<Bool>
 
@@ -164,6 +172,32 @@ private class EquilibriumScreenProvider: ScreenProvider {
     var screen: AnyView {
         AnyView(
             ReactionEquilibriumRootView(
+                model: model,
+                unitSelectionIsShowing: showUnitSelection,
+                aboutPageIsShowing: showAboutPage
+            )
+        )
+    }
+}
+
+private class AcidsBasesScreenProvider: ScreenProvider {
+    init(
+        injector: APChemInjector,
+        showUnitSelection: Binding<Bool>,
+        showAboutPage: Binding<Bool>
+    ) {
+        self.model = injector.acidsBasesInjector
+        self.showUnitSelection = showUnitSelection
+        self.showAboutPage = showAboutPage
+    }
+
+    private let model: RootNavigationViewModel<AcidAppNavInjector>
+    private let showUnitSelection: Binding<Bool>
+    private let showAboutPage: Binding<Bool>
+
+    var screen: AnyView {
+        AnyView(
+            AcidAppRootView(
                 model: model,
                 unitSelectionIsShowing: showUnitSelection,
                 aboutPageIsShowing: showAboutPage

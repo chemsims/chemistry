@@ -5,24 +5,26 @@
 import SwiftUI
 import ReactionsCore
 
-struct AcidAppRootView: View {
+public struct AcidAppRootView: View {
 
-    @ObservedObject var model: RootNavigationViewModel<AcidBasesNavigationModel.Injector>
+    public init(
+        model: RootNavigationViewModel<AcidAppNavInjector>,
+        unitSelectionIsShowing: Binding<Bool>,
+        aboutPageIsShowing: Binding<Bool>
+    ) {
+        self.model = model
+        self._unitSelectionIsShowing = unitSelectionIsShowing
+        self._aboutPageIsShowing = aboutPageIsShowing
+    }
+
+    @ObservedObject var model: RootNavigationViewModel<AcidAppNavInjector>
+    @Binding var unitSelectionIsShowing: Bool
+    @Binding var aboutPageIsShowing: Bool
+
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
-    var body: some View {
-        ZStack {
-            mainBody
-                .modifier(BlurredSceneModifier(isBlurred: model.showOnboarding))
-
-            if model.showOnboarding && model.onboardingModel != nil {
-                OnboardingView(model: model.onboardingModel!)
-            }
-        }
-    }
-
-    private var mainBody: some View {
+    public var body: some View {
         GeometryReader { geo in
             makeView(
                 settings: AcidBasesScreenLayout(
@@ -32,46 +34,19 @@ struct AcidAppRootView: View {
                 )
             )
         }
-        
     }
 
     private func makeView(settings: AcidBasesScreenLayout) -> some View {
         GeneralRootNavigationView(
             model: model,
             navigationRows: AcidAppNavigationRows.rows,
-            feedbackSettings: .acidBases,
-            shareSettings: .acidBases,
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
             menuHPadding: settings.menuHPadding,
-            unitSelectionIsShowing: .constant(false)
+            unitSelectionIsShowing: $unitSelectionIsShowing,
+            aboutPageIsShowing: $aboutPageIsShowing
         )
     }
-}
-
-private struct BlurredSceneModifier: ViewModifier {
-    let isBlurred: Bool
-
-    @ViewBuilder
-    func body(content: Content) -> some View {
-        if isBlurred {
-            content
-                .brightness(0.1)
-                .overlay(Color.white.opacity(0.6))
-                .blur(radius: 6)
-                .disabled(true)
-        } else {
-            content
-        }
-    }
-}
-
-// TODO - move this & fix URL
-extension FeedbackSettings {
-    static let acidBases = FeedbackSettings(appName: "Acid & Bases")
-}
-extension ShareSettings {
-    static let acidBases = ShareSettings(appStoreUrl: "", appName: "Acid & Bases")
 }
 
 extension AcidBasesScreenLayout {
@@ -92,7 +67,18 @@ extension AcidBasesScreenLayout {
 struct AcidAppRootView_Previews: PreviewProvider {
     static var previews: some View {
         AcidAppRootView(
-            model: AcidBasesNavigationModel.model(injector: InMemoryAcidAppInjector())
+            model: AcidBasesNavigationModel.model(
+                injector: InMemoryAcidBasesInjector(),
+                sharePrompter: SharePrompter(
+                    persistence: InMemorySharePromptPersistence(),
+                    appLaunches: InMemoryAppLaunchPersistence(),
+                    analytics: NoOpGeneralAnalytics()
+                ),
+                appLaunchPersistence: InMemoryAppLaunchPersistence(),
+                analytics: NoOpGeneralAnalytics()
+            ),
+            unitSelectionIsShowing: .constant(false),
+            aboutPageIsShowing: .constant(false)
         )
         .previewLayout(.iPhoneSELandscape)
     }

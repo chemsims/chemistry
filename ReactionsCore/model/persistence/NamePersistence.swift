@@ -36,13 +36,15 @@ extension NamePersistence {
     }
 
     public static var inMemory: NamePersistence {
-        InMemoryNamePersistence()
+        InMemoryNamePersistence.shared
     }
 }
 
 public class InMemoryNamePersistence: NamePersistence {
 
-    public init() { }
+    private init() { }
+
+    public static let shared = InMemoryNamePersistence()
 
     public var name: String? = nil
 }

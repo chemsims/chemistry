@@ -20,7 +20,7 @@ class BufferNavigationParametersAreReappliedTests: XCTestCase {
     private func doTest<T: Equatable>(_ path: KeyPath<BufferScreenViewModel, T>) {
         let model = BufferScreenViewModel(
             substancePersistence: InMemoryAcidOrBasePersistence(),
-            namePersistence: InMemoryNamePersistence()
+            namePersistence: InMemoryNamePersistence.shared
         )
         checkPreviousValueIsReapplied(
             model: model,

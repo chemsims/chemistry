@@ -5,18 +5,18 @@
 import Foundation
 import ReactionsCore
 
-protocol Injector {
+protocol ReactionRatesInjector {
     var reactionPersistence: ReactionInputPersistence { get }
     var reviewPersistence: ReviewPromptPersistence { get }
     var energyPersistence: EnergyProfilePersistence { get }
 
     var quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet> { get }
-    var screenPersistence: AnyScreenPersistence<AppScreen> { get }
-    var appAnalytics: AnyAppAnalytics<AppScreen, ReactionsRateQuestionSet> { get }
+    var screenPersistence: AnyScreenPersistence<ReactionRatesScreen> { get }
+    var appAnalytics: AnyAppAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet> { get }
     var namePersistence: NamePersistence { get }
 }
 
-class ProductionInjector: Injector {
+class ProductionReactionRatesInjector: ReactionRatesInjector {
 
     let reactionPersistence: ReactionInputPersistence = UserDefaultsReactionInputPersistence()
 
@@ -31,13 +31,13 @@ class ProductionInjector: Injector {
     let energyPersistence: EnergyProfilePersistence = UserDefaultsEnergyProfilePersistence()
 
     let screenPersistence = AnyScreenPersistence(
-        UserDefaultsScreenPersistence<AppScreen>(
+        UserDefaultsScreenPersistence<ReactionRatesScreen>(
             prefix: userDefaultsPrefix
         )
     )
 
     let appAnalytics = AnyAppAnalytics(
-        GoogleAnalytics<AppScreen, ReactionsRateQuestionSet>(
+        GoogleAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet>(
             unitName: "reactionRates",
             includeUnitInEventNames: true
         )
@@ -46,7 +46,7 @@ class ProductionInjector: Injector {
     let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 }
 
-class InMemoryInjector: Injector {
+class InMemoryReactionRatesInjector: ReactionRatesInjector {
     init() { }
 
     let reactionPersistence: ReactionInputPersistence = InMemoryReactionInputPersistence()
@@ -57,13 +57,13 @@ class InMemoryInjector: Injector {
 
     let energyPersistence: EnergyProfilePersistence = InMemoryEnergyProfilePersistence()
 
-    let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<AppScreen>(completedAllScreens: false))
+    let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<ReactionRatesScreen>(completedAllScreens: false))
 
-    let appAnalytics = AnyAppAnalytics(NoOpAppAnalytics<AppScreen, ReactionsRateQuestionSet>())
+    let appAnalytics = AnyAppAnalytics(NoOpAppAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet>())
 
-    let namePersistence: NamePersistence = InMemoryNamePersistence()
+    let namePersistence: NamePersistence = InMemoryNamePersistence.shared
 }
 
-// We use a blank prefix, since we decided to bundle all units into one after releasing the reaction
-// rates app. Rather than perform a migration, we can simply read from the existing fields.
+// We use a blank prefix, since we decided to bundle all units into one app after releasing the
+// reaction rates app. Rather than perform a migration, we can simply read from the existing fields.
 private let userDefaultsPrefix = ""

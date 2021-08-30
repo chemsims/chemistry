@@ -109,11 +109,11 @@ struct BufferRightStack_Previews: PreviewProvider {
                     ),
                     model: BufferScreenViewModel(
                         substancePersistence: InMemoryAcidOrBasePersistence(),
-                        namePersistence: InMemoryNamePersistence()
+                        namePersistence: InMemoryNamePersistence.shared
                     ),
                     weakModel: BufferScreenViewModel(
                         substancePersistence: InMemoryAcidOrBasePersistence(),
-                        namePersistence: InMemoryNamePersistence()
+                        namePersistence: InMemoryNamePersistence.shared
                     ).weakSubstanceModel
                 )
             }

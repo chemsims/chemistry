@@ -52,5 +52,11 @@ struct AqueousReactionSettings {
 
         /// The concentration at which the pile of molecules is at its max
         static let concentrationForMaxBasketPile: CGFloat = 0.4
+
+        /// Number of molecules on the base of each molecule pile
+        static let pileCols = 4
+
+        /// Height of each molecule pile
+        static let pileRows = 4
     }
 }

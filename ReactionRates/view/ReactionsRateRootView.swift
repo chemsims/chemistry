@@ -8,7 +8,7 @@ import ReactionsCore
 public struct ReactionsRateRootView: View {
 
     public init(
-        model: RootNavigationViewModel<ReactionRatesInjector>,
+        model: RootNavigationViewModel<ReactionRatesNavInjector>,
         unitSelectionIsShowing: Binding<Bool>,
         aboutPageIsShowing: Binding<Bool>
     ) {
@@ -17,7 +17,7 @@ public struct ReactionsRateRootView: View {
         self._aboutPageIsShowing = aboutPageIsShowing
     }
 
-    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<AppScreen, ReactionsRateQuestionSet>>
+    @ObservedObject var model: RootNavigationViewModel<AnyNavigationInjector<ReactionRatesScreen, ReactionsRateQuestionSet>>
 
     @Binding var unitSelectionIsShowing: Bool
     @Binding var aboutPageIsShowing: Bool
@@ -55,7 +55,7 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPhone SE
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
-                using: InMemoryInjector(),
+                using: InMemoryReactionRatesInjector(),
                 sharePrompter: previewSharePrompter,
                 appLaunchPersistence: UserDefaultsAppLaunchPersistence(),
                 analytics: NoOpGeneralAnalytics()
@@ -67,7 +67,7 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPad mini
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
-                using: InMemoryInjector(),
+                using: InMemoryReactionRatesInjector(),
                 sharePrompter: previewSharePrompter,
                 appLaunchPersistence: UserDefaultsAppLaunchPersistence(),
                 analytics: NoOpGeneralAnalytics()
@@ -79,7 +79,7 @@ struct RootNavigationView_Previews: PreviewProvider {
         // iPad Pro 11
         ReactionsRateRootView(
             model: ReactionRateNavigationModel.navigationModel(
-                using: InMemoryInjector(),
+                using: InMemoryReactionRatesInjector(),
                 sharePrompter: previewSharePrompter,
                 appLaunchPersistence: UserDefaultsAppLaunchPersistence(),
                 analytics: NoOpGeneralAnalytics()
@@ -95,4 +95,3 @@ struct RootNavigationView_Previews: PreviewProvider {
         analytics: NoOpGeneralAnalytics()
     )
 }
-

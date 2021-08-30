@@ -286,7 +286,8 @@ extension AcidOrBase {
 
         return AcidReactionDefinition(
             leftTerms: leftTerms,
-            rightTerms: rightTerms
+            rightTerms: rightTerms,
+            reversible: !type.isStrong
         )
     }
 
@@ -314,7 +315,8 @@ extension AcidOrBase {
                     color: color(ofPart: .secondaryIon)
                 ),
                 waterTerm
-            ]
+            ],
+            reversible: !type.isStrong
         )
     }
 

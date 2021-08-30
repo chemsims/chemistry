@@ -258,7 +258,7 @@ struct TitrationPhChart_Previews: PreviewProvider {
 
     static var model = TitrationViewModel(
         titrationPersistence: InMemoryTitrationInputPersistence(),
-        namePersistence: InMemoryNamePersistence()
+        namePersistence: InMemoryNamePersistence.shared
     )
     static var components: TitrationComponentState {
         model.components

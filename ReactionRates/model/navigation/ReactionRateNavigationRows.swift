@@ -15,7 +15,7 @@ private enum TopLevelScreen: CaseIterable {
           reactionComparison,
           energyProfile
 
-    var row: NavigationRow<AppScreen> {
+    var row: NavigationRow<ReactionRatesScreen> {
         NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: appScreen,
@@ -54,7 +54,7 @@ private enum TopLevelScreen: CaseIterable {
         "\(navImage)-pressed"
     }
 
-    var appScreen: AppScreen {
+    var appScreen: ReactionRatesScreen {
         switch self {
         case .zeroOrderReaction: return .zeroOrderReaction
         case .firstOrderReaction: return .firstOrderReaction
@@ -64,7 +64,7 @@ private enum TopLevelScreen: CaseIterable {
         }
     }
 
-    var quizScreen: AppScreen {
+    var quizScreen: ReactionRatesScreen {
         switch self {
         case .zeroOrderReaction: return .zeroOrderReactionQuiz
         case .firstOrderReaction: return .firstOrderReactionQuiz
@@ -74,7 +74,7 @@ private enum TopLevelScreen: CaseIterable {
         }
     }
 
-    var filingScreen: AppScreen? {
+    var filingScreen: ReactionRatesScreen? {
         switch self {
         case .zeroOrderReaction: return .zeroOrderFiling
         case .firstOrderReaction: return .firstOrderFiling

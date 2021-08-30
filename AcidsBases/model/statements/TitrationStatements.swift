@@ -674,8 +674,8 @@ struct TitrationSubstanceStatements {
     var explainWeakBaseEP1: [TextLine] {
         [
             """
-            As we saw in the previous parts, the \(secondary) is the conjugate base of \(symbol). Because there \
-            are so many \(symbol) ions in the solution, it produce little amounts of *\(hydroxide)*, making \
+            As we saw in the previous parts, the \(secondary) is the conjugate acid of \(symbol). Because there \
+            are so many \(symbol) ions in the solution, it produce little amounts of *\(hydrogen)*, making \
             the solution basic.
             """
         ]

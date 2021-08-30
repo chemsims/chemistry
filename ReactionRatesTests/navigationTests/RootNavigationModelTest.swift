@@ -14,15 +14,15 @@ class RootNavigationModelTest: XCTestCase {
 
     func testCanSelectOtherScreens() {
         let model = newModel()
-        let screens = AppScreen.allCases.filter { $0 != .zeroOrderReaction}
+        let screens = ReactionRatesScreen.allCases.filter { $0 != .zeroOrderReaction}
         screens.forEach { screen in
             XCTAssertFalse(model.canSelect(screen: screen), "\(screen)")
         }
     }
 
-    private func newModel() -> RootNavigationViewModel<ReactionRatesInjector> {
+    private func newModel() -> RootNavigationViewModel<ReactionRatesNavInjector> {
         ReactionRateNavigationModel.navigationModel(
-            using: InMemoryInjector(),
+            using: InMemoryReactionRatesInjector(),
             sharePrompter: SharePrompter(
                 persistence: InMemorySharePromptPersistence(),
                 appLaunches: InMemoryAppLaunchPersistence(),

@@ -5,7 +5,7 @@
 import Foundation
 import ReactionsCore
 
-public enum AppScreen: String, CaseIterable {
+public enum ReactionRatesScreen: String, CaseIterable {
     case zeroOrderReaction,
          zeroOrderReactionQuiz,
          zeroOrderFiling,
@@ -23,7 +23,7 @@ public enum AppScreen: String, CaseIterable {
          finalAppScreen
 }
 
-extension AppScreen : HasAnalyticsLabel {
+extension ReactionRatesScreen : HasAnalyticsLabel {
     // We decided to bundle units into 1 app after reaction rates was released, so there is already
     // analytics data. So we avoid adding any prefix here to the screens, so that there's no loss
     // in data history
@@ -32,7 +32,7 @@ extension AppScreen : HasAnalyticsLabel {
     }
 }
 
-extension AppScreen {
+extension ReactionRatesScreen {
     var isQuiz: Bool {
         switch self {
         case .zeroOrderReactionQuiz, .firstOrderReactionQuiz, .secondOrderReactionQuiz,

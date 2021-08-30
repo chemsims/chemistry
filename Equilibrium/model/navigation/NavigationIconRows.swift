@@ -11,7 +11,7 @@ struct ReactionEquilibriumNavigationRows {
     )
 
     static let integration = NavigationRow(
-        primaryIcon: NavigationIcon<EquilibriumAppScreen>(
+        primaryIcon: NavigationIcon<EquilibriumScreen>(
             screen: .integrationActivity,
             image: .framework("integrationicon", bundle: .equilibrium),
             selectedImage: .framework("integrationicon-pressed", bundle: .equilibrium),
@@ -25,7 +25,7 @@ struct ReactionEquilibriumNavigationRows {
 private enum TopLevelScreen: CaseIterable {
     case aqueous, gaseous, solubility
 
-    var row: NavigationRow<EquilibriumAppScreen> {
+    var row: NavigationRow<EquilibriumScreen> {
         NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: screen,
@@ -43,7 +43,7 @@ private enum TopLevelScreen: CaseIterable {
         )
     }
 
-    var screen: EquilibriumAppScreen {
+    var screen: EquilibriumScreen {
         switch self {
         case .aqueous: return .aqueousReaction
         case .gaseous: return .gaseousReaction
@@ -67,7 +67,7 @@ private enum TopLevelScreen: CaseIterable {
         }
     }
 
-    private var quizScreen: EquilibriumAppScreen {
+    private var quizScreen: EquilibriumScreen {
         switch self {
         case .aqueous: return .aqueousQuiz
         case .gaseous: return .gaseousQuiz

@@ -17,7 +17,7 @@ class ReactionInputPersistenceTests: XCTestCase {
 
     func testCompletingScreens() {
         let model = newModel()
-        AppScreen.allCases.forEach { screen in
+        ReactionRatesScreen.allCases.forEach { screen in
             XCTAssertFalse(model.hasCompleted(screen: screen), "\(screen)")
             model.setCompleted(screen: screen)
             XCTAssertTrue(model.hasCompleted(screen: screen), "\(screen)")

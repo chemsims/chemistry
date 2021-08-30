@@ -48,6 +48,8 @@ public class OnboardingViewModel: ObservableObject {
                 if isEmpty {
                     self.name = nil
                 } else {
+                    // We don't store the trimmed name here, otherwise
+                    // user would not be able to add any whitespace
                     self.name = String(newValue.prefix(Self.maxNameLength))
                 }
             }
@@ -69,7 +71,7 @@ public class OnboardingViewModel: ObservableObject {
         }
     }
 
-    func saveName() {
+    public func saveName() {
         namePersistence.name = name?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

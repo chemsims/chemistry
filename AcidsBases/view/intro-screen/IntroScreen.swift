@@ -155,7 +155,7 @@ struct IntroScreen_Previews: PreviewProvider {
         IntroScreen(
             model: IntroScreenViewModel(
                 substancePersistence: InMemoryAcidOrBasePersistence(),
-                namePersistence: InMemoryNamePersistence()
+                namePersistence: InMemoryNamePersistence.shared
             )
         )
             .previewLayout(.iPhone8Landscape)

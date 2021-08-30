@@ -5,6 +5,7 @@
 import Foundation
 import ReactionRates
 import Equilibrium
+import AcidsBases
 import ReactionsCore
 
 protocol APChemInjector {
@@ -13,9 +14,11 @@ protocol APChemInjector {
     /// This should be a single instance shared across the injector.
     var storeManager: StoreManager { get }
 
-    var reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector> { get }
+    var reactionRatesInjector: RootNavigationViewModel<ReactionRatesNavInjector> { get }
 
     var equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> { get }
+
+    var acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector> { get }
 
     var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> { get }
 
@@ -59,6 +62,11 @@ class ProductionAPChemInjector: APChemInjector {
             appLaunchPersistence: appLaunch,
             analytics: analytics
         )
+        self.acidsBasesInjector = .production(
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunch,
+            analytics: analytics
+        )
     }
 
     let storeManager: StoreManager = StoreManager(
@@ -67,9 +75,11 @@ class ProductionAPChemInjector: APChemInjector {
         storeObserver: ConcreteStoreObserver.shared
     )
 
-    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector>
+    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesNavInjector>
 
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector>
+
+    let acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector>
 
     let lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
         AnyScreenPersistence(
@@ -127,6 +137,11 @@ class DebugAPChemInjector: APChemInjector {
             appLaunchPersistence: appLaunch,
             analytics: analytics
         )
+        self.acidsBasesInjector = .inMemory(
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunch,
+            analytics: analytics
+        )
     }
 
     let storeManager: StoreManager = StoreManager(
@@ -143,9 +158,11 @@ class DebugAPChemInjector: APChemInjector {
 //        storeObserver: ConcreteStoreObserver.shared
 //    )
 
-    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesInjector>
+    let reactionRatesInjector: RootNavigationViewModel<ReactionRatesNavInjector>
 
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector>
+
+    let acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector>
 
     var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
         AnyScreenPersistence(InMemoryScreenPersistence())
@@ -158,7 +175,7 @@ class DebugAPChemInjector: APChemInjector {
 
     var onboardingPersistence: OnboardingPersistence = InMemoryOnboardingPersistence()
 
-    let namePersistence: NamePersistence = InMemoryNamePersistence()
+    let namePersistence: NamePersistence = InMemoryNamePersistence.shared
 
     let analytics: GeneralAppAnalytics
 }

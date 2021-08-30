@@ -5,7 +5,7 @@
 import Foundation
 import ReactionsCore
 
-enum AcidAppScreen: String, CaseIterable {
+public enum AcidBasesScreen: String, CaseIterable {
     case introduction,
          introductionQuiz,
          buffer,
@@ -22,8 +22,8 @@ enum AcidAppScreen: String, CaseIterable {
     }
 }
 
-extension AcidAppScreen: HasAnalyticsLabel {
-    var analyticsLabel: String {
+extension AcidBasesScreen: HasAnalyticsLabel {
+    public var analyticsLabel: String {
         "acidsBases_\(rawValue)"
     }
 }

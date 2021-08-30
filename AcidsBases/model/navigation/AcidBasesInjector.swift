@@ -5,36 +5,34 @@
 import Foundation
 import ReactionsCore
 
-protocol AcidAppInjector {
+protocol AcidBasesInjector {
     var titrationPersistence: TitrationInputPersistence { get }
 
-    var screenPersistence: AnyScreenPersistence<AcidAppScreen> { get }
+    var screenPersistence: AnyScreenPersistence<AcidBasesScreen> { get }
 
-    var analytics: AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet> { get }
+    var analytics: AnyAppAnalytics<AcidBasesScreen, AcidBasesQuestionSet> { get }
 
-    var quizPersistence: AnyQuizPersistence<AcidAppQuestionSet> { get }
+    var quizPersistence: AnyQuizPersistence<AcidBasesQuestionSet> { get }
 
     var substancePersistence: AcidOrBasePersistence { get }
 
     var reviewPersistence: ReviewPromptPersistence { get }
 
-    var onboardingPersistence: OnboardingPersistence { get }
-
     var namePersistence: NamePersistence { get }
 }
 
-class InMemoryAcidAppInjector: AcidAppInjector {
+class InMemoryAcidBasesInjector: AcidBasesInjector {
 
     let titrationPersistence: TitrationInputPersistence =
         InMemoryTitrationInputPersistence()
 
-    let screenPersistence: AnyScreenPersistence<AcidAppScreen> =
-        AnyScreenPersistence(NoOpScreenPersistence())
+    let screenPersistence: AnyScreenPersistence<AcidBasesScreen> =
+        AnyScreenPersistence(UserDefaultsScreenPersistence(prefix: userDefaultsPrefix))
 
-    let analytics: AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet> =
+    let analytics: AnyAppAnalytics<AcidBasesScreen, AcidBasesQuestionSet> =
         AnyAppAnalytics(NoOpAppAnalytics())
 
-    let quizPersistence: AnyQuizPersistence<AcidAppQuestionSet> =
+    let quizPersistence: AnyQuizPersistence<AcidBasesQuestionSet> =
         AnyQuizPersistence(InMemoryQuizPersistence())
 
     let substancePersistence: AcidOrBasePersistence =
@@ -43,30 +41,27 @@ class InMemoryAcidAppInjector: AcidAppInjector {
     let reviewPersistence: ReviewPromptPersistence =
         InMemoryReviewPromptPersistence()
 
-    let onboardingPersistence: OnboardingPersistence =
-        InMemoryOnboardingPersistence(hasCompletedOnboarding: true)
-
     let namePersistence: NamePersistence =
-        InMemoryNamePersistence()
+        InMemoryNamePersistence.shared
 }
 
-class ProductionAcidAppInjector: AcidAppInjector {
+class ProductionAcidBasesInjector: AcidBasesInjector {
 
     // Note: This is stored in-memory in production as we don't need to store it on disk
     let titrationPersistence: TitrationInputPersistence =
         InMemoryTitrationInputPersistence()
 
-    let screenPersistence: AnyScreenPersistence<AcidAppScreen> =
+    let screenPersistence: AnyScreenPersistence<AcidBasesScreen> =
         AnyScreenPersistence(
             UserDefaultsScreenPersistence(prefix: userDefaultsPrefix)
         )
 
-    let analytics: AnyAppAnalytics<AcidAppScreen, AcidAppQuestionSet> =
+    let analytics: AnyAppAnalytics<AcidBasesScreen, AcidBasesQuestionSet> =
         AnyAppAnalytics(
             GoogleAnalytics(unitName: "acidsBases")
         )
 
-    let quizPersistence: AnyQuizPersistence<AcidAppQuestionSet> =
+    let quizPersistence: AnyQuizPersistence<AcidBasesQuestionSet> =
         AnyQuizPersistence(
             UserDefaultsQuizPersistence(prefix: userDefaultsPrefix)
         )
@@ -77,11 +72,7 @@ class ProductionAcidAppInjector: AcidAppInjector {
     let reviewPersistence: ReviewPromptPersistence =
         UserDefaultsReviewPromptPersistence()
 
-    let onboardingPersistence: OnboardingPersistence =
-        UserDefaultsOnboardingPersistence()
-
-    let namePersistence: NamePersistence =
-        UserDefaultsNamePersistence()
+    let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 }
 
 private let userDefaultsPrefix = "acidsBases"

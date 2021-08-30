@@ -3,7 +3,7 @@
 //
 
 import XCTest
-@testable import Equilibrium
+@testable import ReactionsCore
 
 class MoleculeScalesGeometryTests: XCTestCase {
 

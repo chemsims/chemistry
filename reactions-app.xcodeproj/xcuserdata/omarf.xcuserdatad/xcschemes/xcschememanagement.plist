@@ -7,59 +7,38 @@
 		<key>APChemistry.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>1</integer>
+			<integer>0</integer>
 		</dict>
 		<key>AcidsBases.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>2</integer>
+			<integer>3</integer>
 		</dict>
 		<key>Equilibrium.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>3</integer>
+			<integer>2</integer>
 		</dict>
 		<key>Promises (Playground) 1.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>33</integer>
+			<integer>28</integer>
 		</dict>
 		<key>Promises (Playground) 2.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>34</integer>
-		</dict>
-		<key>Promises (Playground) 3.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>26</integer>
-		</dict>
-		<key>Promises (Playground) 4.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>30</integer>
-		</dict>
-		<key>Promises (Playground) 5.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>31</integer>
+			<integer>29</integer>
 		</dict>
 		<key>Promises (Playground).xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>32</integer>
+			<integer>27</integer>
 		</dict>
 		<key>ReactionRates.xcscheme_^#shared#^_</key>
 		<dict>
@@ -69,65 +48,7 @@
 		<key>ReactionsCore.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
-		</dict>
-	</dict>
-	<key>SuppressBuildableAutocreation</key>
-	<dict>
-		<key>5700C11726A99C8800677777</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>57035EE1255BFE5200DB3A19</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>570AB9FF265A736C008EC8CC</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>571D6A3B255A780700F4E635</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5748651126A96A33007FA314</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5748659C26A96E55007FA314</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>575A88B225E43CD500AEE448</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>575A88C725E43CD700AEE448</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5797A44025E4069F00991BD9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5797A44825E4069F00991BD9</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>57E6D8C526AC795300603796</key>
-		<dict>
-			<key>primary</key>
-			<true/>
+			<integer>1</integer>
 		</dict>
 	</dict>
 </dict>
