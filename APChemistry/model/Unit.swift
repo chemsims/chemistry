@@ -4,7 +4,7 @@
 
 import Foundation
 
-enum Unit: String, Identifiable {
+enum Unit: String, CaseIterable, Identifiable {
     case reactionRates,
          equilibrium,
         acidsBases
@@ -15,13 +15,6 @@ enum Unit: String, Identifiable {
         self.rawValue
     }
 
-    var inAppPurchaseID: String? {
-        switch self {
-        case .equilibrium: return "equilibrium_unit"
-        case .acidsBases: return "acid_bases_unit"
-        default: return nil
-        }
-    }
 
     var info: UnitInfo {
         switch self {

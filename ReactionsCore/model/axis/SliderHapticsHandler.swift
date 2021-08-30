@@ -15,7 +15,8 @@ public struct SliderHapticsHandler<Value: BinaryFloatingPoint> {
         self.impactGenerator = impactGenerator
     }
 
-    /// Handles the haptics by preparing or firing the
+    /// Triggers a haptic impact when the `newValue` exceeds the axis limits, and
+    /// prepares the generator when value is close to the limits.
     public func valueDidChange(
         newValue: Value,
         oldValue: Value

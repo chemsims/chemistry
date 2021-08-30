@@ -25,6 +25,12 @@ public protocol NavigationInjector {
     var quizPersistence: QuizP { get }
 
     var reviewPersistence: ReviewPromptPersistence { get }
+
+    var namePersistence: NamePersistence { get }
+
+    var sharePrompter: SharePrompter { get }
+
+    var appLaunchPersistence: AppLaunchPersistence { get }
 }
 
 public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInjector {
@@ -34,6 +40,9 @@ public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInj
         analytics: AnyAppAnalytics<Screen, QuestionSet>,
         quizPersistence: AnyQuizPersistence<QuestionSet>,
         reviewPersistence: ReviewPromptPersistence,
+        namePersistence: NamePersistence,
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence,
         allScreens: [Screen],
         linearScreens: [Screen]
     ) {
@@ -44,6 +53,9 @@ public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInj
         self.analytics = analytics
         self.quizPersistence = quizPersistence
         self.reviewPersistence = reviewPersistence
+        self.namePersistence = namePersistence
+        self.sharePrompter = sharePrompter
+        self.appLaunchPersistence = appLaunchPersistence
     }
 
     public let allScreens: [Screen]
@@ -53,4 +65,7 @@ public class AnyNavigationInjector<Screen: Hashable, QuestionSet>: NavigationInj
     public let analytics: AnyAppAnalytics<Screen, QuestionSet>
     public let quizPersistence: AnyQuizPersistence<QuestionSet>
     public let reviewPersistence: ReviewPromptPersistence
+    public var namePersistence: NamePersistence
+    public let sharePrompter: SharePrompter
+    public let appLaunchPersistence: AppLaunchPersistence
 }

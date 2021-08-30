@@ -1,0 +1,139 @@
+{
+  "identifier" : "75B9F4A0",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "19",
+      "familyShareable" : false,
+      "internalID" : "DFAD38E7",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_with_badge_1",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "59",
+      "familyShareable" : false,
+      "internalID" : "0F1FAD39",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_with_badge_2",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "99",
+      "familyShareable" : false,
+      "internalID" : "CD67EC34",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_with_badge_3",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "129",
+      "familyShareable" : false,
+      "internalID" : "8DCDC1C5",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_with_badge_4",
+      "referenceName" : null,
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "19",
+      "familyShareable" : false,
+      "internalID" : "5629EBD9",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_1",
+      "referenceName" : null,
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "59",
+      "familyShareable" : false,
+      "internalID" : "F992B703",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_2",
+      "referenceName" : null,
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "99",
+      "familyShareable" : false,
+      "internalID" : "B8D4D24F",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_3",
+      "referenceName" : null,
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "129",
+      "familyShareable" : false,
+      "internalID" : "BB137038",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "tip_4",
+      "referenceName" : null,
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+    "_locale" : "en_US",
+    "_storefront" : "USA"
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

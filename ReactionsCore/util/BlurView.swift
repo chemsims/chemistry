@@ -4,17 +4,21 @@
 
 import SwiftUI
 
-struct BlurView: UIViewRepresentable {
+public struct BlurView: UIViewRepresentable {
+
+    public init(style: UIBlurEffect.Style) {
+        self.style = style
+    }
 
     let style: UIBlurEffect.Style
 
-    func makeUIView(context: Context) -> UIVisualEffectView {
+    public func makeUIView(context: Context) -> UIVisualEffectView {
         UIVisualEffectView(
             effect: UIBlurEffect(style: style)
         )
     }
 
-    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+    public func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
     }
 }
 

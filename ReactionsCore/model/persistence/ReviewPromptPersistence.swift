@@ -5,38 +5,38 @@
 import Foundation
 
 public protocol ReviewPromptPersistence {
-    func lastPromptedVersion() -> String?
-    func setPromptedVersion(version: String)
+    func getLastPromptInfo() -> PromptInfo?
+    func setPromptInfo(_ info: PromptInfo)
 }
 
 public class UserDefaultsReviewPromptPersistence: ReviewPromptPersistence {
 
-    private let defaults = UserDefaults.standard
-
     public init() { }
 
-    public func lastPromptedVersion() -> String? {
-        defaults.string(forKey: key)
+    private let underlying = UserDefaultsPromptPersistence(key: UserDefaultsReviewPromptPersistence.key)
+
+    public func getLastPromptInfo() -> PromptInfo? {
+        underlying.getLastPromptInfo()
     }
 
-    public func setPromptedVersion(version: String) {
-        defaults.setValue(version, forKey: key)
+    public func setPromptInfo(_ info: PromptInfo) {
+        underlying.setPromptInfo(info)
     }
 
-    private let key = "last-review-prompt-version"
+    private static let key = "reviewPrompt"
 }
 
 public class InMemoryReviewPromptPersistence: ReviewPromptPersistence {
 
-    private var underlying: String?
-
     public init() { }
 
-    public func lastPromptedVersion() -> String? {
+    private var underlying: PromptInfo?
+
+    public func getLastPromptInfo() -> PromptInfo? {
         underlying
     }
 
-    public func setPromptedVersion(version: String) {
-        underlying = version
+    public func setPromptInfo(_ info: PromptInfo) {
+        underlying = info
     }
 }

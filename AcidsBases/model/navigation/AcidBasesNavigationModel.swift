@@ -9,26 +9,71 @@ public typealias AcidAppNavInjector = AnyNavigationInjector<AcidBasesScreen, Aci
 
 extension RootNavigationViewModel where Injector == AcidAppNavInjector {
 
-    public static let production = model(using: ProductionAcidBasesInjector())
-    public static let inMemory = model(using: InMemoryAcidBasesInjector())
+    public static func production(
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
+    ) -> RootNavigationViewModel<AcidAppNavInjector> {
+        model(
+            using: ProductionAcidBasesInjector(),
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
+        )
+    }
+
+    public static func inMemory(
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
+    ) -> RootNavigationViewModel<AcidAppNavInjector> {
+        model(
+            using: InMemoryAcidBasesInjector(),
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
+        )
+    }
 
     private static func model(
-        using injector: AcidBasesInjector
+        using injector: AcidBasesInjector,
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<AcidAppNavInjector> {
-        AcidBasesNavigationModel.model(injector: injector)
+        AcidBasesNavigationModel.model(
+            injector: injector,
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
+        )
     }
 }
 
 struct AcidBasesNavigationModel {
     private init() { }
 
-    static func model(injector: AcidBasesInjector) -> RootNavigationViewModel<AcidAppNavInjector> {
+    static func model(
+        injector: AcidBasesInjector,
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
+    ) -> RootNavigationViewModel<AcidAppNavInjector> {
         RootNavigationViewModel(
-            injector: makeInjector(using: injector)
+            injector: makeInjector(
+                using: injector,
+                sharePrompter: sharePrompter,
+                appLaunchPersistence: appLaunchPersistence
+            ),
+            generalAnalytics: analytics
         )
     }
 
-    private static func makeInjector(using appInjector: AcidBasesInjector) -> AcidAppNavInjector {
+    private static func makeInjector(
+        using appInjector: AcidBasesInjector,
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence
+    ) -> AcidAppNavInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
                 AcidAppNavigationBehaviour(injector: appInjector)
@@ -37,6 +82,9 @@ struct AcidBasesNavigationModel {
             analytics: appInjector.analytics,
             quizPersistence: appInjector.quizPersistence,
             reviewPersistence: appInjector.reviewPersistence,
+            namePersistence: appInjector.namePersistence,
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunchPersistence,
             allScreens: AcidBasesScreen.allCases,
             linearScreens: AcidBasesScreen.allCases
         )

@@ -71,6 +71,9 @@ extension RGB {
     public static let moleculeI = RGB(r: 221, g: 183, b: 113)
 
     public static let beakerLiquid = RGB(r: 218, g: 238, b: 245)
+
+    public static let primaryLightBlue = RGB(r: 169, g: 204, b: 229)
+    public static let primaryDarkBlue = RGB(r: 97, g: 147, b: 201)
 }
 
 public struct Styling {
@@ -146,6 +149,9 @@ extension UIColor {
 extension Color {
     public static let darkGray = Color(red: 0.25, green: 0.25, blue: 0.25)
     public static let orangeAccent = Color(red: 220 / 255, green: 84 / 255, blue: 59 / 255)
+
+    public static let primaryDarkBlue = RGB.primaryDarkBlue.color
+    public static let primaryLightBlue = RGB.primaryLightBlue.color
 
     public static func from(_ rgb: RGB) -> Color {
         rgb.color

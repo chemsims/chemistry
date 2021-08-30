@@ -9,14 +9,17 @@ public struct AcidAppRootView: View {
 
     public init(
         model: RootNavigationViewModel<AcidAppNavInjector>,
-        unitSelectionIsShowing: Binding<Bool>
+        unitSelectionIsShowing: Binding<Bool>,
+        aboutPageIsShowing: Binding<Bool>
     ) {
         self.model = model
         self._unitSelectionIsShowing = unitSelectionIsShowing
+        self._aboutPageIsShowing = aboutPageIsShowing
     }
 
     @ObservedObject var model: RootNavigationViewModel<AcidAppNavInjector>
     @Binding var unitSelectionIsShowing: Bool
+    @Binding var aboutPageIsShowing: Bool
 
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -40,7 +43,8 @@ public struct AcidAppRootView: View {
             menuIconSize: settings.menuSize,
             menuTopPadding: settings.menuTopPadding,
             menuHPadding: settings.menuHPadding,
-            unitSelectionIsShowing: $unitSelectionIsShowing
+            unitSelectionIsShowing: $unitSelectionIsShowing,
+            aboutPageIsShowing: $aboutPageIsShowing
         )
     }
 }
@@ -63,8 +67,18 @@ extension AcidBasesScreenLayout {
 struct AcidAppRootView_Previews: PreviewProvider {
     static var previews: some View {
         AcidAppRootView(
-            model: AcidBasesNavigationModel.model(injector: InMemoryAcidBasesInjector()),
-            unitSelectionIsShowing: .constant(false)
+            model: AcidBasesNavigationModel.model(
+                injector: InMemoryAcidBasesInjector(),
+                sharePrompter: SharePrompter(
+                    persistence: InMemorySharePromptPersistence(),
+                    appLaunches: InMemoryAppLaunchPersistence(),
+                    analytics: NoOpGeneralAnalytics()
+                ),
+                appLaunchPersistence: InMemoryAppLaunchPersistence(),
+                analytics: NoOpGeneralAnalytics()
+            ),
+            unitSelectionIsShowing: .constant(false),
+            aboutPageIsShowing: .constant(false)
         )
         .previewLayout(.iPhoneSELandscape)
     }

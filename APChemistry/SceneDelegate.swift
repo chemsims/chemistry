@@ -16,9 +16,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mode = APChemApp.isDebug ? "debug" : "release"
         print("Running in \(mode) mode")
 
+        let injector = APChemApp.injector
+        let tipOverlayModel = TipOverlayViewModel(
+            persistence: injector.tipOverlayPersistence,
+            locker: injector.storeManager.locker,
+            analytics: injector.analytics
+        )
         let contentView = APChemRootView(
-            navigation: APChemRootNavigationModel(injector: APChemApp.injector),
-            storeManager: APChemApp.injector.storeManager
+            navigation: APChemRootNavigationModel(
+                injector: injector,
+                tipOverlayModel: tipOverlayModel
+            ),
+            tipModel: .init(
+                storeManager: injector.storeManager,
+                analytics: injector.analytics
+            ),
+            tipOverlayModel: tipOverlayModel,
+            sharePromptModel: injector.sharePrompter
         )
 
         let deferScreenEdgesController = DeferScreenEdgesHostingController(

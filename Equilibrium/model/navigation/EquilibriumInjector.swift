@@ -11,6 +11,7 @@ protocol EquilibriumInjector {
     var quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> { get }
     var solubilityPersistence: SolubilityPersistence { get }
     var reviewPersistence: ReviewPromptPersistence { get }
+    var namePersistence: NamePersistence { get }
 }
 
 class InMemoryEquilibriumInjector: EquilibriumInjector {
@@ -24,6 +25,8 @@ class InMemoryEquilibriumInjector: EquilibriumInjector {
     let quizPersistence: AnyQuizPersistence<EquilibriumQuestionSet> = AnyQuizPersistence(InMemoryQuizPersistence())
 
     let reviewPersistence: ReviewPromptPersistence = InMemoryReviewPromptPersistence()
+
+    let namePersistence: NamePersistence = InMemoryNamePersistence.shared
 }
 
 class ProductionEquilibriumInjector: EquilibriumInjector {
@@ -48,9 +51,13 @@ class ProductionEquilibriumInjector: EquilibriumInjector {
             )
         )
 
+    // NB we don't currently need to maintain this between app launches
+    // so we use in-memory in production
     let solubilityPersistence: SolubilityPersistence = InMemorySolubilityPersistence()
 
     let reviewPersistence: ReviewPromptPersistence = UserDefaultsReviewPromptPersistence()
+
+    let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 }
 
 private let userDefaultsPrefix = "equilibrium"

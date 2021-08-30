@@ -31,7 +31,8 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
     private var hasOpenedFirstScreen = false
 
     public init(
-        injector: Injector
+        injector: Injector,
+        generalAnalytics: GeneralAppAnalytics
     ) {
         let lastOpenedScreen = injector.persistence.lastOpened()
         let firstScreen = lastOpenedScreen ?? injector.linearScreens.first!
@@ -40,6 +41,7 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
         self.injector = injector
         self.persistence = injector.persistence
         self.behaviour = injector.behaviour
+        self.generalAnalytics = generalAnalytics
 
         self.view = AnyView(EmptyView())
         self.analyticsConsent = AnalyticsConsentViewModel(service: injector.analytics)
@@ -50,6 +52,8 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
     public private(set) var onboardingModel: OnboardingViewModel?
 
     let analyticsConsent: AnalyticsConsentViewModel<Injector.Analytics>
+
+    private let generalAnalytics: GeneralAppAnalytics
 
     public var highlightedIcon: Screen? {
         behaviour.highlightedNavIcon(for: currentScreen)
@@ -76,6 +80,10 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
         } else {
             goToFresh(screen: screen)
         }
+    }
+
+    public func didShowShareSheetFromMenu() {
+        generalAnalytics.tappedShareFromMenu()
     }
 }
 
@@ -138,9 +146,22 @@ extension RootNavigationViewModel {
 
         // Only show review prompt or open menu if the app is not the first screen shown when app opens
         if hasOpenedFirstScreen {
-            if behaviour.showReviewPromptOn(screen: screen) {
-                ReviewPrompter.requestReview(persistence: injector.reviewPersistence)
+            let reviewPrompter = ReviewPrompter(
+                persistence: injector.reviewPersistence,
+                appLaunches: injector.appLaunchPersistence,
+                analytics: generalAnalytics
+            )
+            let doShowReview = reviewPrompter.shouldRequestReview(
+                navBehaviourRequestsReview: behaviour.showReviewPromptOn(screen: screen)
+            )
+
+            // show either review prompt or share prompt, never both
+            if doShowReview {
+                reviewPrompter.requestReview()
+            } else if injector.sharePrompter.shouldShowPrompt() {
+                injector.sharePrompter.showPrompt()
             }
+
             if behaviour.showMenuOn(screen: screen) {
                 showMenu = true
             }

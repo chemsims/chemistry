@@ -34,12 +34,15 @@ private struct OnboardingViewWithGeometry: View {
                 textInput
                     .padding(.top, textInputTopOuterPadding)
                     .opacity(model.isProvidingName ? 1 : 0)
+                    .accessibility(sortPriority: 0.9)
 
             Spacer(minLength: 0)
 
             VStack(alignment: .leading) {
                 bubbleWithBeaky
+                    .accessibility(sortPriority: 1)
                 next
+                    .accessibility(sortPriority: 0.8)
             }
 
             Spacer(minLength: 0)
@@ -153,7 +156,7 @@ struct OnboardingView_Previews: PreviewProvider {
                 OnboardingView(
                     model: .init(
                         namePersistence: InMemoryNamePersistence.shared,
-                        closeOnboarding: { }
+                        analytics: NoOpGeneralAnalytics()
                     )
                 )
                 Spacer()

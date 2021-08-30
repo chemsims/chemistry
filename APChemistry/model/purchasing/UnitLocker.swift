@@ -5,29 +5,24 @@
 import Foundation
 import SwiftKeychainWrapper
 
-fileprivate let freeUnits: [Unit] = [.reactionRates]
-
-protocol UnitLocker {
-    func unlock(_ unit: Unit)
-    func isUnlocked(_ unit: Unit) -> Bool
+protocol ProductLocker {
+    func unlock(_ unit: NonConsumableProduct)
+    func isUnlocked(_ unit: NonConsumableProduct) -> Bool
 }
 
-class KeychainUnitLocker: UnitLocker {
-    func unlock(_ unit: Unit) {
-        let key = unit.id
+class KeychainUnitLocker: ProductLocker {
+    func unlock(_ unit: NonConsumableProduct) {
+        let key = unit.inAppPurchaseId
         KeychainWrapper.standard.set(true, forKey: key)
     }
 
-    func isUnlocked(_ unit: Unit) -> Bool {
-        if freeUnits.contains(unit) {
-            return true
-        }
-        let key = unit.id
+    func isUnlocked(_ unit: NonConsumableProduct) -> Bool {
+        let key = unit.inAppPurchaseId
         return KeychainWrapper.standard.bool(forKey: key) ?? false
     }
 }
 
-class InMemoryUnitLocker: UnitLocker {
+class InMemoryUnitLocker: ProductLocker {
 
     init(allUnitsAreUnlocked: Bool = true) {
         self.allUnitsAreUnlocked = allUnitsAreUnlocked
@@ -36,11 +31,11 @@ class InMemoryUnitLocker: UnitLocker {
     let allUnitsAreUnlocked: Bool
     private var unlockedUnits = Set<String>()
 
-    func unlock(_ unit: Unit) {
-        unlockedUnits.insert(unit.id)
+    func unlock(_ unit: NonConsumableProduct) {
+        unlockedUnits.insert(unit.inAppPurchaseId)
     }
 
-    func isUnlocked(_ unit: Unit) -> Bool {
-        allUnitsAreUnlocked || freeUnits.contains(unit) || unlockedUnits.contains(unit.id)
+    func isUnlocked(_ unit: NonConsumableProduct) -> Bool {
+        allUnitsAreUnlocked || unlockedUnits.contains(unit.inAppPurchaseId)
     }
 }

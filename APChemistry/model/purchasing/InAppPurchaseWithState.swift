@@ -5,25 +5,26 @@
 import Foundation
 import StoreKit
 
-struct UnitWithState: Identifiable, Equatable {
+struct InAppPurchaseWithState: Identifiable, Equatable {
 
     init(
-        unit: Unit,
+        type: InAppPurchase,
         state: PurchaseState
     ) {
-        self.unit = unit
+        self.type = type
         self.state = state
     }
 
     var id: String {
-        unit.id
+        type.inAppPurchaseId
     }
 
-    let unit: Unit
+    let type: InAppPurchase
     private(set) var state: PurchaseState
+    private(set) var skProduct: SKProduct?
 }
 
-extension UnitWithState {
+extension InAppPurchaseWithState {
     mutating func startLoadingProduct() {
         if shouldLoadProduct {
             self.state = .loadingProduct
@@ -32,7 +33,7 @@ extension UnitWithState {
 
     var shouldLoadProduct: Bool {
         switch state {
-        case .waitingToLoadProduct, .failedToLoadProduct, .readyForPurchase:
+        case .waitingToLoadProduct, .failedToLoadProduct:
             return true
         default:
             return false
@@ -43,6 +44,7 @@ extension UnitWithState {
         switch state {
         case .loadingProduct:
             self.state = .readyForPurchase(product: product)
+            self.skProduct = product
         default:
             break;
         }
@@ -89,17 +91,34 @@ extension UnitWithState {
     }
 
     mutating func purchased() {
-        switch state {
-        case .purchasing:
-            self.state = .purchased
-        default:
-            break
+        if type.isConsumableTip {
+            didPurchaseConsumableTip()
+        } else {
+            switch state {
+            case .purchasing:
+                self.state = .purchased
+            default:
+                break
+            }
         }
+
     }
 
     // Restoring can happen from any state, so we always set it
     mutating func restored() {
-        self.state = .purchased
+        if type.isConsumableTip {
+            didPurchaseConsumableTip()
+        } else {
+            self.state = .purchased
+        }
+    }
+
+    private mutating func didPurchaseConsumableTip() {
+        if let product = skProduct {
+            self.state = .readyForPurchase(product: product)
+        } else {
+            self.state = .failedToLoadProduct
+        }
     }
 }
 
@@ -115,5 +134,12 @@ enum PurchaseState: Equatable {
 
     var locked: Bool {
         self != .purchased
+    }
+
+    var isReadyForPurchase: Bool {
+        if case .readyForPurchase = self {
+            return true
+        }
+        return false
     }
 }

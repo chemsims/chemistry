@@ -3,7 +3,7 @@
 //
 
 import XCTest
-import ReactionsCore
+@testable import ReactionsCore
 
 class ReviewPromptPersistenceTests: XCTestCase {
 
@@ -13,11 +13,12 @@ class ReviewPromptPersistenceTests: XCTestCase {
 
     func testSavingReviewVersion() {
         let model = newModel()
-        XCTAssertNil(model.lastPromptedVersion())
-        model.setPromptedVersion(version: "version-1")
-        XCTAssertEqual(model.lastPromptedVersion(), "version-1")
-        model.setPromptedVersion(version: "version-2")
-        XCTAssertEqual(model.lastPromptedVersion(), "version-2")
+        XCTAssertNil(model.getLastPromptInfo())
+
+        let info = PromptInfo.firstPrompt()
+        model.setPromptInfo(info)
+        XCTAssertEqual(model.getLastPromptInfo()?.count, info.count)
+        XCTAssertEqual(model.getLastPromptInfo()?.date, info.date)
     }
 
     private func newModel() -> ReviewPromptPersistence {

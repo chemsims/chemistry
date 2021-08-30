@@ -10,36 +10,103 @@ import ReactionRates
 struct APChemRootView: View {
 
     @ObservedObject var navigation: APChemRootNavigationModel
-    @ObservedObject var storeManager: StoreManager
+    @ObservedObject var tipModel: TippingViewModel
+    @ObservedObject var tipOverlayModel: TipOverlayViewModel
+    @ObservedObject var sharePromptModel: SharePrompter
     @ObservedObject var notificationModel = NotificationViewModel.shared
 
-    var body: some View {
-        ZStack {
-            mainView
-                .modifier(BlurredSceneModifier(isBlurred: navigation.showOnboarding))
+    private let shareSettings = ShareSettings()
 
-            if navigation.showOnboarding && navigation.onboardingModel != nil {
-                OnboardingView(
-                    model: navigation.onboardingModel!
-                )
-            }
+    var body: some View {
+        GeometryReader { geo in
+            mainContent
+                .sheet(item: $navigation.activeSheet) {
+                    sheet($0, geo: geo)
+                }
+                .overlay(tippingOverlay(layout: .init(geometry: geo)))
         }
+        .notification(showNotificationOnMainContent ? notificationModel.notification : nil)
         .ignoresKeyboardSafeArea()
     }
 
-    private var mainView: some View {
-        GeometryReader { geo in
+    private var mainContent: some View {
+        ZStack {
             navigation.view
-                .sheet(isPresented: $navigation.showUnitSelection) {
-                    unitSelection(geo)
-                        .notification(notificationModel.notification)
-                }
+                .modifier(BlurredSceneModifier(isBlurred: blurContent))
+                .accessibility(hidden: blurContent)
+
+            if let onboardingModel = navigation.onboardingModel, navigation.showOnboarding {
+                OnboardingView(model: onboardingModel)
+            }
         }
-        // Only add this on iPhone, since the view is visible behind the sheet on iPad
-        // so notification shows up twice. It was not possible to add a single overlay
-        // to both the sheet and background view.
-        .modifyIf(isIphone) {
-            $0.notification(notificationModel.notification)
+    }
+
+    // on iPad, we must not show the notification on both the main content and sheet at the same
+    // time since the notification overlay on the main content will be visible behind the sheet.
+    // So we only show it on main content when one of the app sheets is not visible. The share
+    // sheet is a system sheet, so it seems better to leave the notification behind it.
+    private var showNotificationOnMainContent: Bool {
+        if isIphone {
+            return true
+        }
+        return navigation.activeSheet != .about && navigation.activeSheet != .unitSelection
+    }
+
+    @ViewBuilder
+    private func sheet(
+        _ activeSheet: APChemRootNavigationModel.ActiveSheet,
+        geo: GeometryProxy
+    ) -> some View {
+        switch activeSheet {
+        case .unitSelection:
+            unitSelection(geo)
+                .notification(notificationModel.notification)
+        case .about:
+            AboutScreen(model: tipModel, navigation: navigation)
+                .notification(notificationModel.notification)
+
+        case .share:
+            ShareSheetView(
+                activityItems: [shareSettings.message],
+                onCompletion: { navigation.activeSheet = nil }
+            )
+            .edgesIgnoringSafeArea(.all)
+        }
+    }
+
+    private var blurContent: Bool {
+        tipOverlayModel.showModal || sharePromptModel.showingPrompt || navigation.showOnboarding
+    }
+
+    @ViewBuilder
+    private func tippingOverlay(layout: SupportStudentsModalSettings) -> some View {
+        if blurContent {
+            ZStack {
+                if sharePromptModel.showingPrompt {
+                    Color.black
+                        .opacity(0.1)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            sharePromptModel.dismiss()
+                        }
+                }
+
+                if tipOverlayModel.showModal {
+                    SupportStudentsModal(
+                        model: tipModel,
+                        tipOverlayModel: tipOverlayModel
+                    )
+                } else if sharePromptModel.showingPrompt {
+                    SharePromptModal(
+                        layout: layout,
+                        showShareSheet: {
+                            navigation.activeSheet = .share
+                            sharePromptModel.clickedShare()
+                        },
+                        dismissPrompt: sharePromptModel.dismiss
+                    )
+                }
+            }
         }
     }
 
@@ -50,7 +117,6 @@ struct APChemRootView: View {
     private func unitSelection(_ geo: GeometryProxy) -> some View {
         UnitSelection(
             navigation: navigation,
-            model: storeManager,
             layout: .init(
                 geometry: geo,
                 verticalSizeClass: nil,
@@ -66,11 +132,14 @@ private struct BlurredSceneModifier: ViewModifier {
     @ViewBuilder
     func body(content: Content) -> some View {
         if isBlurred {
-            content
-                .brightness(0.1)
-                .overlay(Color.white.opacity(0.6))
-                .blur(radius: 6)
-                .disabled(true)
+            ZStack {
+                content
+                    .blur(radius: 2)
+                    .disabled(true)
+                Rectangle()
+                    .edgesIgnoringSafeArea(.all)
+                    .foregroundColor(.black.opacity(0.3))
+            }
         } else {
             content
         }

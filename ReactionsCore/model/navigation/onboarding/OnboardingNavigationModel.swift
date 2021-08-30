@@ -41,27 +41,27 @@ private struct OnboardingStatements {
     ]
 }
 
-class OnboardingScreenState: ScreenState, SubState {
+public class OnboardingScreenState: ScreenState, SubState {
 
-    typealias Model = OnboardingViewModel
-    typealias NestedState = OnboardingScreenState
+    public typealias Model = OnboardingViewModel
+    public typealias NestedState = OnboardingScreenState
 
-    func apply(on model: OnboardingViewModel) {
+    public func apply(on model: OnboardingViewModel) {
     }
 
-    func reapply(on model: OnboardingViewModel) {
+    public func reapply(on model: OnboardingViewModel) {
         apply(on: model)
     }
 
 
-    func unapply(on model: OnboardingViewModel) {
+    public func unapply(on model: OnboardingViewModel) {
     }
 
-    func delayedStates(model: OnboardingViewModel) -> [DelayedState<OnboardingScreenState>] {
+    public func delayedStates(model: OnboardingViewModel) -> [DelayedState<OnboardingScreenState>] {
         []
     }
 
-    func nextStateAutoDispatchDelay(model: OnboardingViewModel) -> Double? {
+    public func nextStateAutoDispatchDelay(model: OnboardingViewModel) -> Double? {
         nil
     }
 }

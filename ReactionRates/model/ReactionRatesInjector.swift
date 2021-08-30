@@ -13,6 +13,7 @@ protocol ReactionRatesInjector {
     var quizPersistence: AnyQuizPersistence<ReactionsRateQuestionSet> { get }
     var screenPersistence: AnyScreenPersistence<ReactionRatesScreen> { get }
     var appAnalytics: AnyAppAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet> { get }
+    var namePersistence: NamePersistence { get }
 }
 
 class ProductionReactionRatesInjector: ReactionRatesInjector {
@@ -38,12 +39,11 @@ class ProductionReactionRatesInjector: ReactionRatesInjector {
     let appAnalytics = AnyAppAnalytics(
         GoogleAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet>(
             unitName: "reactionRates",
-
-            // We decided to bundle all units into 1 app after reaction rates was released, so
-            // don't modify event names for reaction rates so we don't affect analytics history
-            includeUnitInEventNames: false
+            includeUnitInEventNames: true
         )
     )
+
+    let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 }
 
 class InMemoryReactionRatesInjector: ReactionRatesInjector {
@@ -57,8 +57,11 @@ class InMemoryReactionRatesInjector: ReactionRatesInjector {
 
     let energyPersistence: EnergyProfilePersistence = InMemoryEnergyProfilePersistence()
 
-    let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<ReactionRatesScreen>())
+    let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<ReactionRatesScreen>(completedAllScreens: false))
+
     let appAnalytics = AnyAppAnalytics(NoOpAppAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet>())
+
+    let namePersistence: NamePersistence = InMemoryNamePersistence.shared
 }
 
 // We use a blank prefix, since we decided to bundle all units into one app after releasing the

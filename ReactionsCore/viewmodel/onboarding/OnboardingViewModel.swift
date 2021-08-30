@@ -8,25 +8,22 @@ public class OnboardingViewModel: ObservableObject {
 
     public init(
         namePersistence: NamePersistence,
-        closeOnboarding: @escaping () -> Void
+        analytics: GeneralAppAnalytics
     ) {
         self.namePersistence = namePersistence
+        self.analytics = analytics
         self.name = namePersistence.name
         self.navigation = OnboardingNavigationModel.model(self)
-        self.navigation?.nextScreen = {
-            // text field onCommit may not be called, so always save name
-            self.saveName()
-            closeOnboarding()
-        }
     }
 
     private var namePersistence: NamePersistence
+    private let analytics: GeneralAppAnalytics
 
     @Published var statement = [TextLine]()
     @Published var isProvidingName = false
     @Published var name: String?
 
-    private(set) var navigation: NavigationModel<OnboardingScreenState>?
+    public private(set) var navigation: NavigationModel<OnboardingScreenState>?
 
     // We need to use a small limit to prevent long names breaking the UI
     private static let maxNameLength = 30
@@ -60,10 +57,21 @@ public class OnboardingViewModel: ObservableObject {
     }
 
     func next() {
+        if navigation.exists({!$0.hasNext}) {
+            logCompletedOnboarding()
+        }
         navigation?.next()
     }
 
-    func saveName() {
+    private func logCompletedOnboarding() {
+        if let name = name, !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            analytics.completedOnboardingWithName()
+        } else {
+            analytics.completedOnboardingWithoutName()
+        }
+    }
+
+    public func saveName() {
         namePersistence.name = name?.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

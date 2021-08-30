@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AcidQuizQuestions.load()
 
         APChemApp.injector.storeManager.initialiseStore()
+        APChemApp.injector.appLaunchPersistence.recordAppLaunch()
 
         return true
     }

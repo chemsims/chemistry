@@ -82,9 +82,11 @@ public class UserDefaultsScreenPersistence<Screen: RawRepresentable>: ScreenPers
 public class InMemoryScreenPersistence<Screen: Hashable>: ScreenPersistence {
     public typealias Screen = Screen
 
-    public init() {
+    public init(completedAllScreens: Bool = false) {
+        self.completedAllScreens = completedAllScreens
     }
 
+    private let completedAllScreens: Bool
     private var completed = Set<Screen>()
     private var _lastOpened: Screen?
 
@@ -93,7 +95,7 @@ public class InMemoryScreenPersistence<Screen: Hashable>: ScreenPersistence {
     }
 
     public func hasCompleted(screen: Screen) -> Bool {
-        completed.contains(screen)
+        completedAllScreens || completed.contains(screen)
     }
 
     public func lastOpened() -> Screen? {

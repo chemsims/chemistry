@@ -9,26 +9,25 @@ import ReactionsCore
 class StoreManager: ObservableObject {
 
     init(
-        locker: UnitLocker,
-        products: ProductLoader,
+        locker: ProductLocker,
+        productLoader: ProductLoader,
         storeObserver: StoreObserver
     ) {
-        self.units = Unit.all.map { unit in
-            UnitWithState(
-                unit: unit,
+        self.products = InAppPurchase.allCases.map { unit in
+            InAppPurchaseWithState(
+                type: unit,
                 state: Self.initialState(
                     for: unit,
                     locker: locker,
-                    products: products
+                    productLoader: productLoader
                 )
             )
         }
         self.locker = locker
-        self.products = products
+        self.productLoader = productLoader
         self.storeObserver = storeObserver
 
-        self.products.delegate = self
-
+        self.productLoader.delegate = self
         self.storeObserver.delegate = self
     }
 
@@ -41,17 +40,25 @@ class StoreManager: ObservableObject {
     }
 
     func loadProducts() {
-        let unitsToLoad = units.filter(\.shouldLoadProduct)
-        unitsToLoad.forEach { unit in
-            if let index = index(of: unit.unit) {
-                units[index].startLoadingProduct()
+        let productsToLoad = products.filter(\.shouldLoadProduct)
+        productsToLoad.forEach { unit in
+            if let index = index(of: unit.type) {
+                products[index].startLoadingProduct()
             }
         }
 
-        self.products.loadProducts(units: unitsToLoad.map(\.unit))
+        self.productLoader.loadSKProducts(types: productsToLoad.map(\.type))
     }
 
-    @Published var units: [UnitWithState]
+    func price(forProduct product: InAppPurchase) -> String? {
+        productState(for: product)?.skProduct?.formattedPrice
+    }
+
+    func productState(for type: InAppPurchase) -> InAppPurchaseWithState? {
+        products.first { $0.type.inAppPurchaseId == type.inAppPurchaseId }
+    }
+
+    @Published var products: [InAppPurchaseWithState]
     @Published var isRestoring = false
 
     var canMakePurchase: Bool {
@@ -59,46 +66,46 @@ class StoreManager: ObservableObject {
     }
 
     private var storeObserver: StoreObserver
-    private var products: ProductLoader
-    private let locker: UnitLocker
+    private var productLoader: ProductLoader
+    let locker: ProductLocker
 }
 
 // MARK: - Load products
 extension StoreManager: ProductLoaderDelegate {
-    func didLoadProducts(_ products: [SKProduct]) {
-        func product(for unit: UnitWithState) -> SKProduct? {
-            products.first { $0.productIdentifier == unit.unit.inAppPurchaseID }
+    func didLoadProducts(_ skProducts: [SKProduct]) {
+        func skProduct(for unit: InAppPurchaseWithState) -> SKProduct? {
+            skProducts.first { $0.productIdentifier == unit.type.inAppPurchaseId }
         }
 
-        units.indices.forEach { i in
-            if let product = product(for: units[i]) {
-                units[i].addLoadedProduct(product)
+        products.indices.forEach { i in
+            if let product = skProduct(for: products[i]) {
+                products[i].addLoadedProduct(product)
             } else {
-                units[i].failedToLoadProduct()
+                products[i].failedToLoadProduct()
             }
         }
     }
 
-    private func index(of unit: Unit) -> Int? {
-        units.firstIndex { $0.id == unit.id }
+    private func index(of unit: InAppPurchase) -> Int? {
+        products.firstIndex { $0.type.inAppPurchaseId == unit.inAppPurchaseId }
     }
 }
 
 // MARK: - Purchase product
 extension StoreManager {
-    func beginPurchase(of unit: Unit) {
+    func beginPurchase(of unit: InAppPurchase) {
         guard let index = index(of: unit) else {
             return
         }
-        switch units[index].state {
+        switch products[index].state {
         case let .readyForPurchase(product):
-            units[index].startPurchase()
+            products[index].startPurchase()
             storeObserver.buy(product: product)
 
         case .failedToLoadProduct:
-            units[index].startLoadingProduct()
-            let unit = units[index].unit
-            products.loadProducts(units: [unit])
+            products[index].startLoadingProduct()
+            let unit = products[index].type
+            productLoader.loadSKProducts(types: [unit])
             
         default: break
         }
@@ -118,7 +125,7 @@ extension StoreManager: StoreObserverDelegate {
 
     func didDefer(productId: String) {
         if let index = unitIndex(forProduct: productId) {
-            units[index].deferPurchase()
+            products[index].deferPurchase()
         }
     }
 
@@ -133,14 +140,20 @@ extension StoreManager: StoreObserverDelegate {
 
     func didPurchase(productId: String) {
         doUnlock(productId: productId, isRestoring: false)
-        NotificationViewModel.showSuccessfulPurchaseNotification()
+        
+        if let index = unitIndex(forProduct: productId),
+           products[index].type.isConsumableTip {
+            NotificationViewModel.showExtraTipNotification()
+        } else {
+            NotificationViewModel.showSuccessfulPurchaseNotification()
+        }
     }
 
     func didFail(productId: String) {
         if let index = unitIndex(forProduct: productId) {
-            let unit = units[index]
-            let product = products.getProduct(forUnit: unit.unit)
-            units[index].failedToPurchase(product: product)
+            let productType = products[index].type
+            let skProduct = productLoader.getSKProduct(for: productType)
+            products[index].failedToPurchase(product: skProduct)
         }
         isRestoring = false
         NotificationViewModel.showFailedPurchaseNotification()
@@ -153,33 +166,40 @@ extension StoreManager: StoreObserverDelegate {
         if let index = unitIndex(forProduct: productId) {
             withAnimation {
                 if isRestoring {
-                    units[index].restored()
+                    products[index].restored()
                 } else {
-                    units[index].purchased()
+                    products[index].purchased()
                 }
-
             }
-            locker.unlock(units[index].unit)
+            locker.unlock(products[index].type)
         }
     }
 
     private func unitIndex(forProduct productId: String) -> Int? {
-        units.firstIndex { $0.unit.inAppPurchaseID == productId }
+        products.firstIndex { $0.type.inAppPurchaseId == productId }
     }
 }
 
 extension StoreManager {
     static func initialState(
-        for unit: Unit,
-        locker: UnitLocker,
-        products: ProductLoader
+        for unit: InAppPurchase,
+        locker: ProductLocker,
+        productLoader: ProductLoader
     ) -> PurchaseState {
         if locker.isUnlocked(unit) {
             return .purchased
         }
-        if let product = products.getProduct(forUnit: unit) {
+        if let product = productLoader.getSKProduct(for: unit) {
             return .readyForPurchase(product: product)
         }
         return .waitingToLoadProduct
     }
+}
+
+extension StoreManager {
+    static let preview = StoreManager(
+        locker: InMemoryProductLocker(),
+        productLoader: DebugProductLoader(),
+        storeObserver: DebugStoreObserver()
+    )
 }

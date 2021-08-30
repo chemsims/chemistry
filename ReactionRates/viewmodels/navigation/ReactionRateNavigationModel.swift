@@ -9,23 +9,70 @@ public typealias ReactionRatesNavInjector = AnyNavigationInjector<ReactionRatesS
 
 extension RootNavigationViewModel where Injector == ReactionRatesNavInjector {
 
-    public static let production = model(using: ProductionReactionRatesInjector())
-    public static let inMemory = model(using: InMemoryReactionRatesInjector())
+    public static func production(
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
+    ) -> RootNavigationViewModel<ReactionRatesNavInjector> {
+        model(
+            using: ProductionReactionRatesInjector(),
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
+        )
+    }
+
+    public static func inMemory(
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
+    ) -> RootNavigationViewModel<ReactionRatesNavInjector> {
+        model(
+            using: InMemoryReactionRatesInjector(),
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
+        )
+    }
 
     private static func model(
-        using injector: ReactionRates.ReactionRatesInjector
+        using injector: ReactionRates.ReactionRatesInjector,
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
     ) -> RootNavigationViewModel<ReactionRatesNavInjector> {
-        ReactionRateNavigationModel.navigationModel(using: injector)
+        ReactionRateNavigationModel.navigationModel(
+            using: injector,
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunchPersistence,
+            analytics: analytics
+        )
     }
 }
 
 struct ReactionRateNavigationModel {
 
-    static func navigationModel(using injector: ReactionRatesInjector) -> RootNavigationViewModel<ReactionRatesNavInjector> {
-        RootNavigationViewModel(injector: navigationInjector(using: injector))
+    static func navigationModel(
+        using injector: ReactionRates.ReactionRatesInjector,
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence,
+        analytics: GeneralAppAnalytics
+    ) -> RootNavigationViewModel<ReactionRatesNavInjector> {
+        RootNavigationViewModel(
+            injector: navigationInjector(
+                using: injector,
+                sharePrompter: sharePrompter,
+                appLaunchPersistence: appLaunchPersistence
+            ),
+            generalAnalytics: analytics
+        )
     }
 
-    private static func navigationInjector(using injector: ReactionRatesInjector) -> ReactionRatesNavInjector {
+    private static func navigationInjector(
+        using injector: ReactionRatesInjector,
+        sharePrompter: SharePrompter,
+        appLaunchPersistence: AppLaunchPersistence
+    ) -> ReactionRatesNavInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
                 ReactionsRateNavigationBehaviour(injector: injector)
@@ -34,6 +81,9 @@ struct ReactionRateNavigationModel {
             analytics: injector.appAnalytics,
             quizPersistence: injector.quizPersistence,
             reviewPersistence: injector.reviewPersistence,
+            namePersistence: injector.namePersistence,
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunchPersistence,
             allScreens: ReactionRatesScreen.allCases,
             linearScreens: linearScreens
         )
