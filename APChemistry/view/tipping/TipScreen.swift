@@ -44,13 +44,9 @@ extension SupportStudentsModal {
                 .padding(.horizontal, settings.mainContentScrollViewHPadding)
             }
             .sheet(isPresented: $showShareSheet) {
-                ShareSheetView(
-                    activityItems: [
-                        UIImage(named: "stem-badge") as Any
-                    ],
+                ShareStemBadgeView(
                     onCompletion: { showShareSheet = false }
                 )
-                .edgesIgnoringSafeArea(.all)
             }
         }
 

@@ -32,16 +32,20 @@ public struct ShareSheetView: UIViewControllerRepresentable {
     }
 }
 
+// TODO - no need to pass an instance of this around anymore, can just use
+// static var for the message
 public struct ShareSettings {
     public let message: String
-    public let appStoreUrl = ""
 
     public init() {
-        let url = "https://apps.apple.com/app/ap-chemistry-reactions/id1531309001"
-        self.message = """
-        Hey, check out this great AP Chemistry app! Download it at \(url).
-        """
+        self.message = Self.message
     }
+
+    public static let url = "https://apps.apple.com/app/ap-chemistry-reactions/id1531309001"
+
+    public static let message = """
+    Hey, check out this great AP Chemistry app! Download it at \(url).
+    """
 }
 
 struct ShareSheetView_Previews: PreviewProvider {

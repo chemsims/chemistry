@@ -27,13 +27,9 @@ struct AboutScreen: View {
             model.storeManager.loadProducts()
         }
         .sheet(isPresented: $showShareSheet) {
-            ShareSheetView(
-                activityItems: [
-                    UIImage(named: "stem-badge") as Any
-                ],
+            ShareStemBadgeView(
                 onCompletion: { showShareSheet = false }
             )
-            .edgesIgnoringSafeArea(.all)
         }
     }
 }
