@@ -27,8 +27,11 @@ class APChemRootNavigationModel: ObservableObject {
             firstUnit = .reactionRates
         }
 
+        self.selectedUnit = firstUnit
+
         let firstProvider = getScreenProvider(forUnit: firstUnit)
         providers[firstUnit] = firstProvider
+
         self.view = firstProvider.screen
 
         if !injector.onboardingPersistence.hasCompletedOnboarding {
@@ -38,7 +41,7 @@ class APChemRootNavigationModel: ObservableObject {
 
     private var injector: APChemInjector
     private let tipOverlayModel: TipOverlayViewModel
-    private var selectedUnit = Unit.reactionRates
+    private var selectedUnit: Unit
     private var providers = [Unit : ScreenProvider]()
 
     private(set) var onboardingModel: OnboardingViewModel?
