@@ -173,7 +173,7 @@ class DebugAPChemInjector: APChemInjector {
 
     let appLaunchPersistence: AppLaunchPersistence
 
-    var onboardingPersistence: OnboardingPersistence = InMemoryOnboardingPersistence()
+    var onboardingPersistence: OnboardingPersistence = InMemoryOnboardingPersistence(hasCompletedOnboarding: true)
 
     let namePersistence: NamePersistence = InMemoryNamePersistence.shared
 

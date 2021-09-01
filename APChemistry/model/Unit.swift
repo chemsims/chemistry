@@ -10,7 +10,7 @@ enum Unit: String, Identifiable {
          acidsBases
 
     /// The available units the user can choose from
-    static let available: [Unit] = [.reactionRates, .equilibrium]
+    static let available: [Unit] = [.reactionRates, .equilibrium, .acidsBases]
 
     var id: String {
         self.rawValue
