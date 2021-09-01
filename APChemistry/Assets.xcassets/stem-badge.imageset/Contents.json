@@ -1,10 +1,12 @@
 {
   "images" : [
     {
+      "filename" : "stem-badge@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "stem-badge@2x 2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
