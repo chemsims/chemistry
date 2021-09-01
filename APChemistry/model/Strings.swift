@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ReactionsCore
 
 struct Strings {
     static let tipMessage = """
@@ -15,7 +16,10 @@ struct Strings {
 
     static let unlockingStemBadge = "We are unlocking your special STEM badge now..."
 
-    static let showStemBadge = "Check out your STEM badge below!"
+    static let showStemBadge = """
+    Check out your STEM badge below, please share with others on your social media by tapping \
+    the share button!
+    """
 
     static let furtherTip = """
     We really appreciate the support you've given our app already! If you'd like to give any \
@@ -35,5 +39,10 @@ struct Strings {
     static let stemBadgeLabel = """
     Circular STEM badge with a test tube and text in the middle which reads: I'm helping \
     democratize the next era of STEM education, want to join me?
+    """
+
+    static let largeDonation = """
+    If you'd like to make a large scale donation to help us advance STEM education for students \
+    please reach out to \(FeedbackSettings.defaultAddress) to discuss further.
     """
 }

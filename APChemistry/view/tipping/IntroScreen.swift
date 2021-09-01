@@ -89,7 +89,7 @@ extension SupportStudentsModal {
         }
 
         private let message1 = """
-        We are visualizing STEM in ways never before done, and showing concepts to make \
+        We are visualizing STEM in ways never before done, and showing concepts together to make \
         learning 700% faster or more (Virk, 2013)¹. We call it hyper learning, and want to expand \
         it to all of chemistry and all of physics and STEM for the students of the world with \
         your help!

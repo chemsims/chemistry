@@ -69,6 +69,9 @@ private struct AboutScreenWithSettings: View {
 
                     leaveAReview
                         .frame(width: settings.mainContentWidth)
+
+                    largeDonation
+                        .frame(width: settings.mainContentWidth)
                 }
             }
             .padding(8)
@@ -84,6 +87,10 @@ private struct AboutScreenWithSettings: View {
                 Text("Leave a review on the App Store.")
             }
         }
+    }
+
+    private var largeDonation: some View {
+        Text(Strings.largeDonation)
     }
 
     private var backButton: some View {
@@ -162,6 +169,8 @@ extension AboutScreenWithSettings {
         private var stemBadge: some View {
             Group {
                 Text(Strings.showStemBadge)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(nil)
 
                 Image("stem-badge")
                     .accessibility(label: Text(Strings.stemBadgeLabel))
@@ -215,6 +224,7 @@ extension AboutScreenWithSettings {
                 Text(Strings.furtherTip)
                     .fixedSize(horizontal: false, vertical: true)
                     .lineLimit(nil)
+
                 tipButtons
             }
         }
@@ -246,6 +256,7 @@ extension AboutScreenWithSettings {
             .disabled(showLoading)
             .overlay(loadingOverlay(loading: showLoading))
             .multilineTextAlignment(.center)
+            .minimumScaleFactor(0.5)
         }
 
         private func showLoadingIndicator(state: InAppPurchaseWithState) -> Bool {

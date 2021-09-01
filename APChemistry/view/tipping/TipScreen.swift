@@ -121,7 +121,9 @@ extension SupportStudentsModal {
 
         private var stemBadge: some View {
             Group {
-                Text("Check out your STEM badge below!")
+                Text(Strings.showStemBadge)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(nil)
 
                 Image("stem-badge")
                     .accessibility(label: Text(Strings.stemBadgeLabel))
