@@ -16,7 +16,7 @@ class TippingViewModel: ObservableObject {
         }
     }
 
-    @Published var selectedTipLevel = UnlockBadgeTipLevel.level2
+    @Published var selectedTipLevel = UnlockBadgeTipLevel.initialLevel
     let storeManager: StoreManager
     let unitLocker: ProductLocker
     let analytics: GeneralAppAnalytics
@@ -31,7 +31,9 @@ class TippingViewModel: ObservableObject {
         case .level1: return 1
         case .level2: return 2
         case .level3: return 3
-        case .level4: return 5
+        case .level4: return 4
+        case .level5: return 5
+        case .level6: return 5
         }
     }
 
@@ -115,9 +117,11 @@ enum UnlockBadgeTipLevel: Int, Identifiable, CaseIterable, Comparable {
         lhs.rawValue < rhs.rawValue
     }
 
-    case level1, level2, level3, level4
+    case level1, level2, level3, level4, level5, level6
 
     static let max = UnlockBadgeTipLevel.allCases.max()!
+
+    static let initialLevel = UnlockBadgeTipLevel.level1
 
     var id: Int {
         rawValue
@@ -146,12 +150,14 @@ enum UnlockBadgeTipLevel: Int, Identifiable, CaseIterable, Comparable {
         case .level2: return .tipWithBadge2
         case .level3: return .tipWithBadge3
         case .level4: return .tipWithBadge4
+        case .level5: return .tipWithBadge5
+        case .level6: return .tipWithBadge6
         }
     }
 }
 
 enum ExtraTipLevel: Int, Identifiable, CaseIterable {
-    case level1, level2, level3, level4
+    case level1, level2, level3, level4, level5, level6
 
     var id: Int {
         rawValue
@@ -163,6 +169,8 @@ enum ExtraTipLevel: Int, Identifiable, CaseIterable {
         case .level2: return .extraTip2
         case .level3: return .extraTip3
         case .level4: return .extraTip4
+        case .level5: return .extraTip5
+        case .level6: return .extraTip6
         }
     }
 }

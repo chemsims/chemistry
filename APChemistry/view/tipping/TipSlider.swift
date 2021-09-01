@@ -146,31 +146,55 @@ extension TipSliderWithGeometry {
 
     func heart(forLevel level: UnlockBadgeTipLevel) -> some View {
         let selected = selectedTipLevel == level
-
-        var singleHeart: some View {
-            Image(systemName: selected ? "heart.fill" : "heart")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: geometry.labelSize.width / 6)
-        }
-
-        return HStack(spacing: 0.01 * geometry.labelSize.width) {
-            singleHeart
-            if level > .level1 {
-                singleHeart
-            }
-            if level > .level2 {
-                singleHeart
-            }
-            if level > .level3 {
-                singleHeart
-            }
+        return VStack(spacing: 0.01 * geometry.labelSize.height) {
+            rowOfHearts(count: level.topRowHeartCount, selected: selected)
+            rowOfHearts(count: level.bottomRowHeartCount, selected: selected)
         }
         .frame(size: geometry.labelSize)
         .font(.body.weight(selected ? .bold : .regular))
         .scaleEffect(selected ? 1.3 : 1, anchor: .bottom)
         .position(geometry.labelPosition(atIndex: index(of: level)))
         .foregroundColor(selected ? fill : .black)
+    }
+
+    private func rowOfHearts(count: Int, selected: Bool) -> some View {
+        HStack(spacing: 0.01 * geometry.labelSize.width) {
+            if count >= 1 {
+                singleHeart(selected: selected)
+            }
+            if count >= 2{
+                singleHeart(selected: selected)
+            }
+            if count >= 3 {
+                singleHeart(selected: selected)
+            }
+        }
+    }
+
+    private func singleHeart(selected: Bool) -> some View {
+        Image(systemName: selected ? "heart.fill" : "heart")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: geometry.labelSize.width / 6)
+    }
+}
+
+private extension UnlockBadgeTipLevel {
+    var bottomRowHeartCount: Int {
+        switch self {
+        case .level1: return 1
+        case .level2, .level3, .level4: return 2
+        case .level5, .level6: return 3
+        }
+    }
+
+    var topRowHeartCount: Int {
+        switch self {
+        case .level1, .level2: return 0
+        case .level3: return 1
+        case .level4, .level5: return 2
+        case .level6: return 3
+        }
     }
 }
 

@@ -55,9 +55,11 @@ private extension InAppPurchase {
     var debugPrice: Double {
         switch self {
         case .tipWithBadge1, .extraTip1: return 0.99
-        case .tipWithBadge2, .extraTip2: return 2.99
-        case .tipWithBadge3, .extraTip3: return 4.99
-        case .tipWithBadge4, .extraTip4: return 6.99
+        case .tipWithBadge2, .extraTip2: return 1.99
+        case .tipWithBadge3, .extraTip3: return 2.99
+        case .tipWithBadge4, .extraTip4: return 3.99
+        case .tipWithBadge5, .extraTip5: return 4.99
+        case .tipWithBadge6, .extraTip6: return 5.99
         }
     }
 }
