@@ -49,7 +49,7 @@ struct UnitSelection: View {
     }
 
     private var units: some View {
-        ForEach(Unit.allCases) { unit in
+        ForEach(Unit.available) { unit in
             UnitCard(
                 unit: unit,
                 layout: layout

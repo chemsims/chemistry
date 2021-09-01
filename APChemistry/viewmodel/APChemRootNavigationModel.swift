@@ -18,9 +18,17 @@ class APChemRootNavigationModel: ObservableObject {
         self.injector = injector
         self.tipOverlayModel = tipOverlayModel
         self.view = AnyView(EmptyView())
-        let firstScreen = injector.lastOpenedUnitPersistence.lastOpened() ?? Unit.reactionRates
-        let firstProvider = getScreenProvider(forUnit: firstScreen)
-        providers[firstScreen] = firstProvider
+
+        let firstUnit: Unit
+        if let lastOpened = injector.lastOpenedUnitPersistence.lastOpened(),
+           Unit.available.contains(lastOpened) {
+            firstUnit = lastOpened
+        } else {
+            firstUnit = .reactionRates
+        }
+
+        let firstProvider = getScreenProvider(forUnit: firstUnit)
+        providers[firstUnit] = firstProvider
         self.view = firstProvider.screen
 
         if !injector.onboardingPersistence.hasCompletedOnboarding {

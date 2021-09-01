@@ -4,17 +4,17 @@
 
 import Foundation
 
-enum Unit: String, CaseIterable, Identifiable {
+enum Unit: String, Identifiable {
     case reactionRates,
          equilibrium,
-        acidsBases
+         acidsBases
 
-    static var all: [Unit] = [.reactionRates, .equilibrium, .acidsBases]
+    /// The available units the user can choose from
+    static let available: [Unit] = [.reactionRates, .equilibrium]
 
     var id: String {
         self.rawValue
     }
-
 
     var info: UnitInfo {
         switch self {
@@ -32,8 +32,6 @@ struct UnitInfo {
 }
 
 extension UnitInfo {
-
-    static let all: [Unit] = [.reactionRates, .equilibrium]
 
     fileprivate static let reactionRates = UnitInfo(
         image: "reaction-rates-icon",

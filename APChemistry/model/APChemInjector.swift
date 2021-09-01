@@ -165,7 +165,7 @@ class DebugAPChemInjector: APChemInjector {
     let acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector>
 
     var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
-        AnyScreenPersistence(InMemoryScreenPersistence())
+        AnyScreenPersistence(UserDefaultsScreenPersistence(prefix: "apchem"))
 
     let tipOverlayPersistence: TipOverlayPersistence = InMemoryTipOverlayPersistence()
 
