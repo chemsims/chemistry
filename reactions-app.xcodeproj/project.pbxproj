@@ -395,6 +395,7 @@
 		577DC1F426B17F87005C22D8 /* AcidsBases.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 57B8F9E426AECD2C003CB0C7 /* AcidsBases.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		577EDE8126A026B60067F3C1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577EDE8026A026B60067F3C1 /* OnboardingView.swift */; };
 		577FD5D926E0299600EA3DEB /* ShareStemBadgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577FD5D826E0299600EA3DEB /* ShareStemBadgeView.swift */; };
+		577FD5DB26E0360300EA3DEB /* AcidBasesQuizQuestionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577FD5DA26E0360300EA3DEB /* AcidBasesQuizQuestionTests.swift */; };
 		57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57812A8D25EABA950099D720 /* AnimatableRotation.swift */; };
 		5784F44B2663F5A100513B2A /* MultiContainerShakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */; };
 		5784F4502664075400513B2A /* EnumMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44F2664075400513B2A /* EnumMap.swift */; };
@@ -1154,6 +1155,7 @@
 		577DC1F226B1534F005C22D8 /* USConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = USConfig.storekit; sourceTree = "<group>"; };
 		577EDE8026A026B60067F3C1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		577FD5D826E0299600EA3DEB /* ShareStemBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareStemBadgeView.swift; sourceTree = "<group>"; };
+		577FD5DA26E0360300EA3DEB /* AcidBasesQuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesQuizQuestionTests.swift; sourceTree = "<group>"; };
 		5780320625B0888300A0F610 /* QuizPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPersistenceTests.swift; sourceTree = "<group>"; };
 		57812A8625EAB8450099D720 /* EquilibriumMoleculeScales.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumMoleculeScales.swift; sourceTree = "<group>"; };
 		57812A8D25EABA950099D720 /* AnimatableRotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableRotation.swift; sourceTree = "<group>"; };
@@ -3294,6 +3296,7 @@
 				57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */,
 				57D3262526A312C20093CD16 /* AcidOrBasePersistenceTests.swift */,
 				575FE7DE26A5B68200E6B316 /* TitrantMolarityInputLimitsTests.swift */,
+				577FD5DA26E0360300EA3DEB /* AcidBasesQuizQuestionTests.swift */,
 			);
 			path = AcidsBasesTests;
 			sourceTree = "<group>";
@@ -5007,6 +5010,7 @@
 				57B8FA6C26AECEC8003CB0C7 /* TitrationWeakAcidPostEPModelTests.swift in Sources */,
 				57B8FA7026AECEC8003CB0C7 /* TitrationStrongBasePostEPModelTests.swift in Sources */,
 				57B8FA6B26AECEC8003CB0C7 /* TitrationStrongAcidPreparationModelTests.swift in Sources */,
+				577FD5DB26E0360300EA3DEB /* AcidBasesQuizQuestionTests.swift in Sources */,
 				57B8FA8426AECEDA003CB0C7 /* AcidOrBasePersistenceTests.swift in Sources */,
 				57B8FA8A26AECEDA003CB0C7 /* TitrationReactionDefinitionTests.swift in Sources */,
 				57B8FA8226AECEDA003CB0C7 /* ReactionDefinitionTests.swift in Sources */,
