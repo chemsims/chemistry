@@ -129,7 +129,9 @@ Moles Added of NaOH = 0.1 x 0.250
 Moles Added of NaOH = 0.025 moles
 
 Following the neutralization reaction, if $0.025 moles$ of NaOH neutralize $0.05 moles$ of HF, we're left with $0.025
-moles$ of HF and $0.025 moles$ of F^-^, its conjugate base. Since this an equimolar mixture of a weak acid and its conjugate base, it can be called a buffer solution.",,0.100 M NaF,"Although NaF is a salt that dissociates into F^-^, the conjugate base of the weak acid in question, it would result in a buffer solution but the moles of both substances wouldn't be equal.",,0.500 M HCl,Adding a strong acid to an already slightly acidic solution won't result in a buffer solution., ,0.200 M HF,Adding a weak acid to an already slightly acidic solution won't result in a buffer solution.,,Question Albert.io Making Buffers,Yes,Yes
+moles$ of HF and $0.025 moles$ of F^-^, its conjugate base. Since this an equimolar mixture of a weak acid and its conjugate base, it can be called a buffer solution.
+
+",,0.100 M NaF,"Although NaF is a salt that dissociates into F^-^, the conjugate base of the weak acid in question, it would result in a buffer solution but the moles of both substances wouldn't be equal.",,0.500 M HCl,Adding a strong acid to an already slightly acidic solution won't result in a buffer solution., ,0.200 M HF,Adding a weak acid to an already slightly acidic solution won't result in a buffer solution.,,Question Albert.io Making Buffers,Yes,Yes
 10,BUFFER-10,A monoprotic weak acid HA with $Ka = 2.7x10^-6^$ is used to prepare a $200 mL$ with a molarity of $0.3 M$. How many mililiters of $0.3 M$ KOH have to be added in order for the pH to be 9.4?,hard,,,,Exactly 200 mL,"In $200 mL$ of $0.3 M$ KOH there are:
 
 Moles of KOH = 0.2 x 0.3
@@ -163,7 +165,10 @@ This is also the concentration of hydroxide ions that are now dissolved in the s
 
 pH = 14 - (-log[OH^-^])
 pH = 14 - (-log(2.355x10^-5^))
-pH = 9.4",,More than 200 mL,"If you added more than $200 mL$, KOH would be left in the solution, enough to make the pH more basic than 9.4.",,Less than 200 mL,"If you added more than $200 mL$, HA would be left in the solution, enough to make the pH acidic instead of basic.",,Not enough information,There is enough information to proceed. Try considering the neutralization of the weak acid with the strong base and what would be left after it.,,Question Albert.io Making a Buffered Solution,Yes,Yes
+pH = 9.4
+
+
+",,More than 200 mL,"If you added more than $200 mL$, KOH would be left in the solution, enough to make the pH more basic than 9.4.",,Less than 200 mL,"If you added more than $200 mL$, HA would be left in the solution, enough to make the pH acidic instead of basic.",,Not enough information,There is enough information to proceed. Try considering the neutralization of the weak acid with the strong base and what would be left after it.,,Question Albert.io Making a Buffered Solution,Yes,Yes
 11,BUFFER-11,Consider a weak acid with a $pKa = 5.5$ that's in solution with its conjugate base. The concentration of the weak acid is 100 times higher than its conjugate base. What would be the pH of the solution?,medium,,,,3.5,"Following the Henderson-Hasselbalch equation to easily calculate the pH of a buffer solution:
 
 pH = pKa + log([Conjugate Base]/[Conjugate Acid])
@@ -210,7 +215,10 @@ pH = 14 - (pKb + log([HCN]/[CN^-^])
 pH = 14 - (-log(10^-14^/6.2x10^-10^) + log(0.01/0.05))
 pH = 9.9
 
-Note: We can use moles instead of concentration when replacing the values because the ratio is the same.",,4.1,This would be the pOH of the solution instead of the pH which is what is asked for.,,9.2,This would be the pKa of the conjugate weak acid instead of the pH which is what is asked for.,,4.8,This would be the pKb of the weak base instead of the pH which is what is asked for.,,Question Albert.io pH of a Buffered Solution,Yes,Yes
+Note: We can use moles instead of concentration when replacing the values because the ratio is the same.
+
+
+",,4.1,This would be the pOH of the solution instead of the pH which is what is asked for.,,9.2,This would be the pKa of the conjugate weak acid instead of the pH which is what is asked for.,,4.8,This would be the pKb of the weak base instead of the pH which is what is asked for.,,Question Albert.io pH of a Buffered Solution,Yes,Yes
 14,BUFFER-14,Consider a $300 mL$ solution of $0.200 M$ NaCN. Adding $50 mL$ of which of the following solutions would result in an equimolar buffer solution?,hard,,,,0.600 M HCl,"Adding $50 mL$ of $0.600 M$ HCl would result in the neutralization of half of the weak acid in the solution, like this:
 
 $NaCN + HCl → NaCl + HCN$
@@ -233,7 +241,7 @@ moles$ of CN^-^ and $0.03 moles$ of HCN, its conjugate acid. Since this an equim
 
 
 ",,0.200 M HCN,"Although HCN is the conjugate acid of the weak base in question, it would result in a buffer solution but the moles of both substances wouldn't be equal.",,0.500 M KOH,Adding a strong base to an already slightly basic solution won't result in a buffer solution., ,0.200 M KCN,Adding a weak base to an already slightly basic solution won't result in a buffer solution.,,Question Albert.io Buffer Capacity of HOBr with OBr-1,Yes,Yes
-15,BUFFER-15,"For standard conditions the water dissociation constant Kw is 10^-14^ and is most of the time assumed that way, but it actually can vary with temperature. The higher the temperature, the higher is the Kw. For water that's at a very high temperature, what would its pH be?",easy,,,,Same as the pOH and smaller than 7,"For water, even if the Kw changes, $pH = pOH$ because it's neutral. In the case of higher temperatures, in which Kw has values smaller than 10^-14^, both the pH and pOH slightly go down as well.",,Same as the pOH and equal to 7,"For water, even if the Kw changes, $pH = pOH$ because it's neutral, but they're not 7 anymore when the temperature changes.",,Smaller than the pOH and smaller than 7,"If the temperature is higher than the standard,  the pH would in fact be smaller than 7 but for water, even if the Kw changes, $pH = pOH$. ",,Smaller than the pOH and smaller than 7,"For water, even if the Kw changes, $pH = pOH$ and the pH would go down and not up from 7 for higher temperatures",,"Question Albert.io Kw, pH, pOH and Temperature",Yes,Yes
+15,BUFFER-15,"For standard conditions the water dissociation constant Kw is 10^-14^ and is most of the time assumed that way, but it actually can vary with temperature. The higher the temperature, the higher is the Kw. For water that's at a very high temperature, what would its pH be?",easy,,,,Same as the pOH and smaller than 7,"For water, even if the Kw changes, $pH = pOH$ because it's neutral. In the case of higher temperatures, in which Kw has values smaller than 10^-14^, both the pH and pOH slightly go down as well.",,Same as the pOH and equal to 7,"For water, even if the Kw changes, $pH = pOH$ because it's neutral, but they're not 7 anymore when the temperature changes.",,Same as the pOH and higher than 7,"If the temperature is higher than the standard,  the pH would in fact be smaller than 7 but for water, even if the Kw changes, $pH = pOH$. ",,Smaller than the pOH and higher than 7,"For water, even if the Kw changes, $pH = pOH$ and the pH would go down and not up from 7 for higher temperatures",,"Question Albert.io Kw, pH, pOH and Temperature",Yes,Yes
 16,BUFFER-16,Consider a weak acid that's being titrated with a strong base. What would the pH be when the concentration of the weak acid and its conjugate base are the same? (Note: $Ka = 10^-5^$),easy,,,,5,"The point at which the weak acid and its conjugate base have the same concentration it's called the half-equivalence point, at which the solution has a high buffer capacity and $pKa = pH$. So to determine the pH: 
 
 pH = -log(Ka)
@@ -297,7 +305,9 @@ pH = pKa + log([Conjugate Base]/[Weak Acid])
 Replacing the concentrations you get the pH:
 
 pH = 3 + log(0.100/0.010)
-pH = 4",,"[Conjugate Base] = 0.010 M
+pH = 4
+
+",,"[Conjugate Base] = 0.010 M
 [Conjugate Acid] = 0.100 M",With this combination the resultant pH would be 2 instead of 4.,,"[Conjugate Base] = 0.100 M
 [Conjugate Acid] = 0.100 M",With this combination the resultant pH would be 3 instead of 4.,,"[Conjugate Base] = 0.010 M
 [Conjugate Acid] = 0.010 M","With a ratio of 1 the pH is equal to the pKa of the weak acid, so the pH would be 3 instead of 4.",,"Question Albert.io ""Making a Buffer""",Yes,Yes
@@ -328,7 +338,9 @@ Volume of HX = Moles of HX/Molarity of HX
 Volume of HX = 0.12/0.5
 Volume of HX = 0.240 L
 
-Or what is the same, $240 mL$.",,0.24,This would be in liters but the answer is asked in mililiters.,,120,"Take into account that given the reaction, it takes 2 moles of HX to neutralize 1 mole of Y(OH)_2_.",,300,The solution of HX is more concentrated so less volume is required to fully neutralize the Y(OH)_2_.,,Question Albert.io Buffering Action,Yes,Yes
+Or what is the same, $240 mL$.
+
+ ",,0.24,This would be in liters but the answer is asked in mililiters.,,120,"Take into account that given the reaction, it takes 2 moles of HX to neutralize 1 mole of Y(OH)_2_.",,300,The solution of HX is more concentrated so less volume is required to fully neutralize the Y(OH)_2_.,,Question Albert.io Buffering Action,Yes,Yes
 25,BUFFER-25,"A student wants to determine the Ka of a particular weak acid. They part from a buffer solution composed by said weak acid and its conjugate base in a 1:10 ratio respectively. With the use of a pH meter, the pH is measured as 4.2. Given all these data, what would be the Ka of the weak acid?",easy,,,,6.31x10^-4^,"Consider the Henderson-Hasselbalch equation: 
 
 pH = pKa + log([Conjugate Base]/[Weak Acid])
