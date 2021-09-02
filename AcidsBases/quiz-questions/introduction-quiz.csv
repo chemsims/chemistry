@@ -269,7 +269,7 @@ pH = 14 - 7.6
 pH = 6.4
 
 which is lower than 7.",,Question Albert.io Acidity Rank,Yes,Yes
-19,PHSCALE-19,"A student prepared four $0.01 M$ solutions in different beakers of HI, KOH, NaF and HCN. They forgot to label the beakers, so with the help of pH meters they try to figure out which solution is which. Considering the pH values, which solution is which?",medium,,,,"1: HI
+19,PHSCALE-19,"A student prepared four $0.01 M$ solutions in different beakers of HI, KOH, NaF and HCN. They forgot to label the beakers, so with the help of pH meters they try to figure out which solution is which. Considering the pH values, which solution is which?",medium,introduction-19,"Four beakers labelled from 1 to 4, with a pH reading in each beaker. Beaker 1, 2.0. Beaker 2, 7.7. Beaker 3, 5.6. Beaker 4, 12.0.",,"1: HI
 2: NaF
 3: HCN
 4: KOH","Just by knowing that HI is a strong acid, NaF (F^-^) is a weak base, HCN is a weak acid and KOH is a strong base, should be enough to know which solution is each one.",,"1: HCN
