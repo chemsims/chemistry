@@ -898,8 +898,7 @@ struct BufferEquationView_Previews: PreviewProvider {
     }
 
     private static var allStates: some View {
-        ForEach(BufferScreenViewModel.EquationState.allCases.indices.prefix(1)) { i in
-            let state = BufferScreenViewModel.EquationState.allCases[i]
+        ForEach(BufferScreenViewModel.EquationState.allCases, id: \.id) { state in
             VStack(spacing: 5) {
                 Text(state.rawValue)
                 equation(state: state)
@@ -929,5 +928,11 @@ struct BufferEquationView_Previews: PreviewProvider {
         .frame(width: NaturalWidth, height: NaturalHeight)
         .border(Color.red)
         .background(Styling.inactiveScreenElement)
+    }
+}
+
+private extension BufferScreenViewModel.EquationState {
+    var id: Int {
+        Self.allCases.firstIndex(of: self)!
     }
 }
