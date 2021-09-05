@@ -8,11 +8,10 @@ enum Unit: String, Identifiable {
     case reactionRates,
          equilibrium,
          acidsBases,
-         chenmicalReactions
+         chemicalReactions
 
     /// The available units the user can choose from
-    static let available: [Unit] = [.reactionRates, .equilibrium, .acidsBases]
-
+    static let available: [Unit] = [.reactionRates, .equilibrium, .acidsBases, .chemicalReactions]
 
     var id: String {
         self.rawValue
