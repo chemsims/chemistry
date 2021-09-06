@@ -19,9 +19,11 @@ struct UnitCard: View {
                 VStack(alignment: .leading, spacing: layout.cardTextVerticalSpacing) {
                     Text(unit.info.title)
                         .font(.title)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                     Text(unit.info.description)
                         .lineLimit(nil)
-                        .frame(maxHeight: .infinity)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer(minLength: 0)
             }
@@ -50,12 +52,9 @@ struct UnitCard_Previews: PreviewProvider {
         GeometryReader { geo in
             ScrollView {
                 VStack(spacing: 25) {
-                    card(geo, .reactionRates, .loadingProduct)
-                    card(geo, .equilibrium, .readyForPurchase(product: product))
-                    card(geo, .reactionRates, .deferred)
-                    card(geo, .reactionRates, .purchasing)
-                    card(geo, .reactionRates, .failedToLoadProduct)
-                    card(geo, .reactionRates, .purchased)
+                    card(geo, .reactionRates)
+                    card(geo, .equilibrium)
+                    card(geo, .acidsBases)
 
                 }
                 .frame(width: geo.size.width)
@@ -76,8 +75,7 @@ struct UnitCard_Previews: PreviewProvider {
 
     static func card(
         _ geo: GeometryProxy,
-        _ unit: Unit,
-        _ state: PurchaseState
+        _ unit: Unit
     ) -> some View {
         UnitCard(
             unit: unit,
@@ -87,5 +85,6 @@ struct UnitCard_Previews: PreviewProvider {
                 horizontalSizeClass: nil
             )
         )
+        .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
     }
 }

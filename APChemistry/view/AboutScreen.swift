@@ -125,6 +125,7 @@ extension AboutScreenWithSettings {
                     .font(.largeTitle.bold())
                     .foregroundColor(.primaryDarkBlue)
                     .accessibility(addTraits: .isHeader)
+                    .fixedSize(horizontal: false, vertical: true)
 
                 Text(Strings.tipMessage)
                     .lineLimit(nil)
@@ -142,7 +143,11 @@ extension AboutScreenWithSettings {
         private var hasPurchasedContent: some View {
             Group {
                 Text(Strings.thankForSupport)
+                    .lineLimit(nil)
+                    .fixedSize(horizontal: false, vertical: true)
+
                 stemBadge
+
                 ExtraTipArea(storeManager: storeManager, settings: settings)
             }
         }
@@ -178,6 +183,7 @@ extension AboutScreenWithSettings {
             Button(action: { showShareSheet = true }) {
                 Image(systemName: "square.and.arrow.up")
             }
+            .font(.system(size: 14))
         }
 
         private var tipButton: some View {

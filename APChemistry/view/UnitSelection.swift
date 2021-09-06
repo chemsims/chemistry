@@ -146,5 +146,7 @@ struct UnitSelection_Previews: PreviewProvider {
                 )
             )
         }
+        .previewLayout(.iPhoneSELandscape)
+        .environment(\.sizeCategory, .accessibilityExtraExtraExtraLarge)
     }
 }
