@@ -2,11 +2,10 @@
 // Reactions App
 //
 
-import Foundation
 import CoreGraphics
 import ReactionsCore
 
-struct BalancedReactionMoleculeLayout {
+struct BalancedReactionMoleculeGridLayout {
 
     init(
         rect: CGRect,

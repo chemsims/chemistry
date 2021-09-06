@@ -11,10 +11,10 @@ class BalancedReactionMoleculeLayoutTests: XCTestCase {
             origin: .init(x: 20, y: 40),
             size: .init(width: 200, height: 60)
         )
-        let model = BalancedReactionMoleculeLayout(
+        let model = BalancedReactionMoleculeGridLayout(
             rect: rect,
-            reactants: singleMoleculeSide,
-            products: singleMoleculeSide
+            reactants: .single,
+            products: .single
         )
 
         let expectedReactant = CGPoint(x: 120, y: 55)
@@ -32,10 +32,10 @@ class BalancedReactionMoleculeLayoutTests: XCTestCase {
             origin: .init(x: 20, y: 40),
             size: .init(width: 200, height: 60)
         )
-        let model = BalancedReactionMoleculeLayout(
+        let model = BalancedReactionMoleculeGridLayout(
             rect: rect,
-            reactants: doubleMoleculeSide,
-            products: doubleMoleculeSide
+            reactants: .double,
+            products: .double
         )
 
         let expectedFirstReactant = CGPoint(x: 70, y: 55)
@@ -47,17 +47,5 @@ class BalancedReactionMoleculeLayoutTests: XCTestCase {
         let expectedSecondProduct = CGPoint(x: 170, y: 85)
         XCTAssertEqual(model.firstProductPosition, expectedFirstProduct)
         XCTAssertEqual(model.secondProductPosition, expectedSecondProduct)
-    }
-
-    private var singleMoleculeSide: BalancedReaction.Side {
-        .single(molecule: molecule)
-    }
-
-    private var doubleMoleculeSide: BalancedReaction.Side {
-        .double(first: molecule, second: molecule)
-    }
-
-    private var molecule: BalancedReaction.MoleculeCount {
-        .init(molecule: .ammonia, coefficient: 1)
     }
 }

@@ -8,7 +8,7 @@ public struct BeakerSettings {
 
     public static let heightToWidth: CGFloat = 1.1
 
-    let width: CGFloat
+    public let width: CGFloat
     let hasLip: Bool
 
     public init(width: CGFloat, hasLip: Bool) {

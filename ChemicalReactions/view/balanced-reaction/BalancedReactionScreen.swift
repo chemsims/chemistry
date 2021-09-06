@@ -74,8 +74,8 @@ private struct SizedBalancedReactionScreen: View {
         .border(Color.red)
     }
 
-    private var moleculeLayout: BalancedReactionMoleculeLayout {
-        BalancedReactionMoleculeLayout(
+    private var moleculeLayout: BalancedReactionMoleculeGridLayout {
+        BalancedReactionMoleculeGridLayout(
             rect: layout.moleculeTableRect,
             reactants: .double,
             products: .single

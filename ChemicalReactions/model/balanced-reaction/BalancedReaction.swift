@@ -19,19 +19,6 @@ struct BalancedReaction {
     let products: [MoleculeCount]
     let molecules: Set<BalancedReaction.Molecule>
 
-    /// Represents one side of a reaction - i.e., either reactants or products.
-    enum Side {
-        case single(molecule: MoleculeCount)
-        case double(first: MoleculeCount, second: MoleculeCount)
-
-        var count: SideCount {
-            switch self {
-            case .single: return .single
-            case .double: return .double
-            }
-        }
-    }
-
     enum SideCount {
         case single, double
     }
