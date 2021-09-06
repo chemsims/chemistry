@@ -130,6 +130,7 @@ extension SupportStudentsModal {
         private var shareStemBadge: some View {
             Button(action: { showShareSheet = true }) {
                 Image(systemName: "square.and.arrow.up")
+                    .font(.system(size: 14))
             }
         }
 
