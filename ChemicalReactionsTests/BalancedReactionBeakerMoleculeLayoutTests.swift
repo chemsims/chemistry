@@ -37,7 +37,7 @@ class BalancedReactionBeakerMoleculeLayoutTests: XCTestCase {
             colIndex: 0
         )
 
-        XCTAssertEqual(model.position(of: .ammonia, currentCount: 0), expectedFirstPosition)
+        XCTAssertEqual(model.position(of: .ammonia, index: 0), expectedFirstPosition)
 
         let expectedFinalPosition = TableCellPosition.position(
             in: beakerWithoutLip,
@@ -48,7 +48,7 @@ class BalancedReactionBeakerMoleculeLayoutTests: XCTestCase {
         )
 
         let penultimateCount = (maxCols * maxRows) - 1
-        XCTAssertEqual(model.position(of: .ammonia, currentCount: penultimateCount), expectedFinalPosition)
+        XCTAssertEqual(model.position(of: .ammonia, index: penultimateCount), expectedFinalPosition)
     }
 
     func testPositionForLeftMoleculeInBeakerWithTwoMoleculeTypes() {
@@ -84,7 +84,7 @@ class BalancedReactionBeakerMoleculeLayoutTests: XCTestCase {
             colIndex: 0
         )
 
-        XCTAssertEqual(model.position(of: .ammonia, currentCount: 0), expectedFirstPosition)
+        XCTAssertEqual(model.position(of: .ammonia, index: 0), expectedFirstPosition)
 
         let expectedFinalPosition = TableCellPosition.position(
             in: leftRect,
@@ -95,7 +95,7 @@ class BalancedReactionBeakerMoleculeLayoutTests: XCTestCase {
         )
 
         let penultimateCount = (maxCols * maxRows) - 1
-        XCTAssertEqual(model.position(of: .ammonia, currentCount: penultimateCount), expectedFinalPosition)
+        XCTAssertEqual(model.position(of: .ammonia, index: penultimateCount), expectedFinalPosition)
     }
 
     func testPositionForRightMoleculeInBeakerWithTwoMoleculeTypes() {
@@ -131,7 +131,7 @@ class BalancedReactionBeakerMoleculeLayoutTests: XCTestCase {
             colIndex: 0
         )
 
-        XCTAssertEqual(model.position(of: .carbonDioxide, currentCount: 0), expectedFirstPosition)
+        XCTAssertEqual(model.position(of: .carbonDioxide, index: 0), expectedFirstPosition)
 
         let expectedFinalPosition = TableCellPosition.position(
             in: rightRect,
@@ -142,7 +142,7 @@ class BalancedReactionBeakerMoleculeLayoutTests: XCTestCase {
         )
 
         let penultimateCount = (maxCols * maxRows) - 1
-        XCTAssertEqual(model.position(of: .carbonDioxide, currentCount: penultimateCount), expectedFinalPosition)
+        XCTAssertEqual(model.position(of: .carbonDioxide, index: penultimateCount), expectedFinalPosition)
     }
 
     func testValidMoleculeNotAllowedBeyondLimits() {
@@ -155,7 +155,7 @@ class BalancedReactionBeakerMoleculeLayoutTests: XCTestCase {
 
         let maxCount = BalancedReactionBeakerMoleculeLayout.cols * BalancedReactionBeakerMoleculeLayout.rows
 
-        XCTAssertNil(model.position(of: .ammonia, currentCount: maxCount))
-        XCTAssertNil(model.position(of: .carbonDioxide, currentCount: 0))
+        XCTAssertNil(model.position(of: .ammonia, index: maxCount))
+        XCTAssertNil(model.position(of: .carbonDioxide, index: 0))
     }
 }

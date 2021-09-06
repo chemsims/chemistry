@@ -39,30 +39,6 @@ private struct SizedBalancedReactionScreen: View {
                 .frame(size: layout.moleculeTableRect.size)
                 .position(layout.moleculeTableRect.center)
 
-            BalancedReactionMoleculeView(
-                structure: BalancedReaction.Molecule.water.structure,
-                atomSize: layout.moleculeTableAtomSize
-            )
-            .position(
-                moleculeLayout.firstReactantPosition
-            )
-
-            BalancedReactionMoleculeView(
-                structure: BalancedReaction.Molecule.methane.structure,
-                atomSize: layout.moleculeTableAtomSize
-            )
-            .position(
-                moleculeLayout.secondReactantPosition ?? .zero
-            )
-
-            BalancedReactionMoleculeView(
-                structure: BalancedReaction.Molecule.carbonDioxide.structure,
-                atomSize: layout.moleculeTableAtomSize
-            )
-            .position(
-                moleculeLayout.firstProductPosition
-            )
-
             EmptyBeaker(settings: layout.beakerSettings)
                 .frame(size: layout.beakerSize)
                 .position(layout.firstBeakerPosition)
@@ -70,15 +46,64 @@ private struct SizedBalancedReactionScreen: View {
             EmptyBeaker(settings: layout.beakerSettings)
                 .frame(size: layout.beakerSize)
                 .position(layout.secondBeakerPosition)
+
+            ForEach(model.molecules) { molecule in
+                BalancedReactionMoleculeView(
+                    structure: molecule.moleculeType.structure,
+                    atomSize: atomSize(of: molecule)
+                )
+                .position(position(of: molecule))
+                .onTapGesture {
+                    if molecule.isInBeaker {
+                        model.remove(molecule: molecule)
+                    } else {
+                        model.add(molecule: molecule)
+                    }
+                }
+            }
         }
         .border(Color.red)
+    }
+
+    private func atomSize(of molecule: BalancedReactionViewModel.MovingMolecule) -> CGFloat {
+        if molecule.isInBeaker {
+            return layout.beakerMoleculeAtomSize
+        }
+        return layout.moleculeTableAtomSize
+    }
+
+    private func position(
+        of molecule: BalancedReactionViewModel.MovingMolecule
+    ) -> CGPoint {
+        optPosition(of: molecule) ?? .zero
+    }
+
+    private func optPosition(of molecule: BalancedReactionViewModel.MovingMolecule) -> CGPoint? {
+        switch molecule.position {
+        case .grid:
+            return moleculeLayout.position(
+                substanceType: molecule.substanceType,
+                side: molecule.side
+            )
+        case let .beaker(index):
+            return beakerLayout.position(of: molecule.moleculeType, index: index)
+        }
+    }
+
+    private var beakerLayout: BalancedReactionBeakerMoleculeLayout {
+        .init(
+            firstMolecule: .ammonia,
+            secondMolecule: .carbonDioxide,
+            beakerRect: layout.firstBeakerRect,
+            beakerSettings: layout.beakerSettings
+        )
     }
 
     private var moleculeLayout: BalancedReactionMoleculeGridLayout {
         BalancedReactionMoleculeGridLayout(
             rect: layout.moleculeTableRect,
             reactants: .double,
-            products: .single
+            products: .double
         )
     }
 }

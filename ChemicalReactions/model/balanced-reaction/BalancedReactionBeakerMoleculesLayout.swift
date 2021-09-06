@@ -14,14 +14,14 @@ struct BalancedReactionBeakerMoleculeLayout {
 
 
     /// Returns the position of the given `molecule` in the beaker, if it can be placed.
-    func position(of molecule: BalancedReaction.Molecule, currentCount: Int) -> CGPoint? {
+    func position(of molecule: BalancedReaction.Molecule, index: Int) -> CGPoint? {
         guard let rect = availableRect(for: molecule) else {
             return nil
         }
 
         let grid = GridCoordinateList.list(cols: Self.cols, rows: Self.rows)
 
-        guard let cell = grid[safe: currentCount] else {
+        guard let cell = grid[safe: index] else {
             return nil
         }
 
@@ -68,8 +68,8 @@ struct BalancedReactionBeakerMoleculeLayout {
 }
 
 extension BalancedReactionBeakerMoleculeLayout {
-    static let rows = 2
-    static let cols = 4
+    static let rows = 4
+    static let cols = 2
 
     fileprivate static let maxCount = cols * rows
 }

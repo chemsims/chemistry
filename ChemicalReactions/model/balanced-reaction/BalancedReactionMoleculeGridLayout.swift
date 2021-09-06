@@ -41,6 +41,18 @@ struct BalancedReactionMoleculeGridLayout {
         }
     }
 
+    func position(
+        substanceType: BalancedReaction.SubstanceType,
+        side: BalancedReaction.SidePart
+    ) -> CGPoint? {
+        switch (substanceType, side) {
+        case (.reactant, .first): return firstReactantPosition
+        case (.reactant, .second): return secondReactantPosition
+        case (.product, .first): return firstProductPosition
+        case (.product, .second): return secondProductPosition
+        }
+    }
+
     let firstReactantPosition: CGPoint
 
     let secondReactantPosition: CGPoint?

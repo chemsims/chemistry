@@ -33,6 +33,10 @@ extension BalancedReactionScreenLayout {
         return min(maxForWidth, maxForHeight)
     }
 
+    var beakerMoleculeAtomSize: CGFloat {
+        0.05 * beakerSize.height
+    }
+
     private var moleculeTableSize: CGSize {
         CGSize(
             width: 0.35 * common.width,
@@ -54,6 +58,14 @@ extension BalancedReactionScreenLayout {
         CGSize(width: beakerWidth, height: beakerHeight)
     }
 
+    var firstBeakerRect: CGRect {
+        beakerRect(center: firstBeakerPosition)
+    }
+
+    var secondBeakerRect: CGRect {
+        beakerRect(center: secondBeakerPosition)
+    }
+
     var firstBeakerPosition: CGPoint {
         CGPoint(x: beakerWidth / 2, y: beakerY)
     }
@@ -63,6 +75,13 @@ extension BalancedReactionScreenLayout {
         return CGPoint(
             x: firstBeakerPosition.x + gapBetweenBeakers + beakerWidth,
             y: beakerY
+        )
+    }
+
+    private func beakerRect(center: CGPoint) -> CGRect {
+        CGRect(
+            origin: center.offset(dx: -beakerSize.width / 2, dy: -beakerSize.height / 2),
+            size: beakerSize
         )
     }
 
