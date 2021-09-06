@@ -10,8 +10,8 @@ struct BalancedReactionMoleculeLayout {
 
     init(
         rect: CGRect,
-        reactants: BalancedReaction.Side,
-        products: BalancedReaction.Side
+        reactants: BalancedReaction.SideCount,
+        products: BalancedReaction.SideCount
     ) {
         func pos(row: Int, colIndex: Int, cols: Int) -> CGPoint {
             TableCellPosition.position(in: rect, rows: 2, cols: cols, rowIndex: row, colIndex: colIndex)

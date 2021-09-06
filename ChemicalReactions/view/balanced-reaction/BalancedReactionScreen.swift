@@ -54,6 +54,22 @@ private struct SizedBalancedReactionScreen: View {
             .position(
                 moleculeLayout.secondReactantPosition ?? .zero
             )
+
+            BalancedReactionMoleculeView(
+                structure: BalancedReaction.Molecule.carbonDioxide.structure,
+                atomSize: layout.moleculeTableAtomSize
+            )
+            .position(
+                moleculeLayout.firstProductPosition
+            )
+
+            EmptyBeaker(settings: layout.beakerSettings)
+                .frame(size: layout.beakerSize)
+                .position(layout.firstBeakerPosition)
+
+            EmptyBeaker(settings: layout.beakerSettings)
+                .frame(size: layout.beakerSize)
+                .position(layout.secondBeakerPosition)
         }
         .border(Color.red)
     }
@@ -61,11 +77,8 @@ private struct SizedBalancedReactionScreen: View {
     private var moleculeLayout: BalancedReactionMoleculeLayout {
         BalancedReactionMoleculeLayout(
             rect: layout.moleculeTableRect,
-            reactants: .double(
-                first: .init(molecule: .ammonia, coefficient: 1),
-                second: .init(molecule: .ammonia, coefficient: 1)
-            ),
-            products: .single(molecule: .init(molecule: .carbonDioxide, coefficient: 1))
+            reactants: .double,
+            products: .single
         )
     }
 }

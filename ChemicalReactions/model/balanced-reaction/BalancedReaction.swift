@@ -23,6 +23,17 @@ struct BalancedReaction {
     enum Side {
         case single(molecule: MoleculeCount)
         case double(first: MoleculeCount, second: MoleculeCount)
+
+        var count: SideCount {
+            switch self {
+            case .single: return .single
+            case .double: return .double
+            }
+        }
+    }
+
+    enum SideCount {
+        case single, double
     }
 }
 
