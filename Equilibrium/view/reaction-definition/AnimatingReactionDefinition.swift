@@ -70,7 +70,6 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
         .accessibility(label: Text(label))
     }
 
-
     private var topMolecules: some View {
         ZStack(alignment: .leading) {
             if direction == .equilibrium {
@@ -285,6 +284,8 @@ extension AnimatingReactionDefinitionWithGeometry {
 
 extension AnimatingReactionDefinition {
     static let fontSizeToHeight: CGFloat = 0.21
+
+    static let moleculeFrameHeightToHeight: CGFloat = 0.28
 }
 
 extension AnimatingReactionDefinitionWithGeometry {
@@ -310,7 +311,7 @@ extension AnimatingReactionDefinitionWithGeometry {
         0.3 * height
     }
     var moleculeFrameHeight: CGFloat {
-        0.28 * height
+        AnimatingReactionDefinition.moleculeFrameHeightToHeight * height
     }
     var moleculeRadius: CGFloat {
         0.16 * moleculeFrameHeight

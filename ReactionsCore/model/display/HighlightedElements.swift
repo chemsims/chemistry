@@ -26,10 +26,21 @@ public struct HighlightedElements<Value: Equatable>: Equatable {
 
     public func colorMultiply(for element: Value?) -> Color {
         if elements.isEmpty || highlight(element) {
-            return .white
+            return highlightColor
         }
-        return Styling.inactiveScreenElement
+        return inactiveColor
     }
+
+    public func colorMultiply(anyOf elements: Value...) -> Color {
+        let anyAreHighlighted = elements.contains { highlight($0) }
+        if elements.isEmpty || anyAreHighlighted {
+            return highlightColor
+        }
+        return inactiveColor
+    }
+
+    private let highlightColor = Color.white
+    private let inactiveColor = Styling.inactiveScreenElement
 
     public mutating func clear() {
         elements = []
