@@ -12,5 +12,6 @@ enum GaseousScreenElement {
          pressureSlider,
          tempSlider,
          reactionDefinition,
+         reactionDefinitionWithAnimation,
          reactionToggle
 }

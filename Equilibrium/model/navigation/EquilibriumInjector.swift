@@ -18,7 +18,7 @@ class InMemoryEquilibriumInjector: EquilibriumInjector {
 
     let solubilityPersistence: SolubilityPersistence = InMemorySolubilityPersistence()
 
-    let screenPersistence = AnyScreenPersistence(NoOpScreenPersistence<EquilibriumScreen>())
+    let screenPersistence = AnyScreenPersistence(UserDefaultsScreenPersistence<EquilibriumScreen>(prefix: userDefaultsPrefix))
 
     let analytics = AnyAppAnalytics(NoOpAppAnalytics<EquilibriumScreen, EquilibriumQuestionSet>())
 

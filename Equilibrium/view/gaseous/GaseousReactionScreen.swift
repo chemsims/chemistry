@@ -103,14 +103,17 @@ private struct LeftStack: View {
                 plusHeat
                     .accessibility(hidden: true)
             }
-
         }
         .font(.system(size: AnimatingReactionDefinition.fontSizeToHeight * settings.common.reactionDefinitionHeight))
         .lineLimit(1)
         .minimumScaleFactor(0.6)
-        .background(background)
+        .background(reactionDefinitionBackground)
         .padding(.leading, settings.common.menuSize)
-        .colorMultiply(model.highlightedElements.colorMultiply(for: .reactionDefinition))
+        .colorMultiply(
+            model.highlightedElements.colorMultiply(
+                anyOf: .reactionDefinition, .reactionDefinitionWithAnimation
+            )
+        )
         .accessibilityElement(children: .combine)
     }
 
@@ -122,15 +125,18 @@ private struct LeftStack: View {
         model.selectedReaction.energyTransfer == .exothermic
     }
 
-    private var background: some View {
-        Group {
-            if model.highlightedElements.highlight(.reactionDefinition) {
-                Rectangle()
-                    .foregroundColor(.white)
-                    .padding(-0.1 * settings.common.reactionDefinitionHeight)
-            } else {
-                EmptyView()
-            }
+    @ViewBuilder
+    private var reactionDefinitionBackground: some View {
+        if model.highlightedElements.highlight(.reactionDefinitionWithAnimation) {
+            Rectangle()
+                .foregroundColor(.white)
+                .padding(-0.1 * settings.common.reactionDefinitionHeight)
+        } else if model.highlightedElements.highlight(.reactionDefinition) {
+            Rectangle()
+                .padding(
+                    .vertical, settings.common.reactionDefinitionHeight * AnimatingReactionDefinition.moleculeFrameHeightToHeight
+                )
+                .foregroundColor(.white)
         }
     }
 

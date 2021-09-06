@@ -212,7 +212,7 @@ private class RunReaction: GaseousScreenState {
             delayedState(GaseousStatements.midReaction(direction: model.components.equation.direction)),
             delayedState(
                 GaseousStatements.forwardEquilibriumReached,
-                [.chartEquilibrium, .reactionDefinition],
+                [.chartEquilibrium, .reactionDefinitionWithAnimation],
                 .equilibrium
             )
         ]
@@ -266,12 +266,12 @@ private class EndOfReaction: GaseousScreenState {
         model.statement = statement
         model.reactionDefinitionDirection = .equilibrium
         if isReapplying {
-            model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
+            model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinitionWithAnimation]
         }
         withAnimation(.easeOut(duration: 0.5)) {
             model.currentTime = timing.end * 1.001
             if !isReapplying {
-                model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinition]
+                model.highlightedElements.elements = [.chartEquilibrium, .reactionDefinitionWithAnimation]
             }
         }
     }
