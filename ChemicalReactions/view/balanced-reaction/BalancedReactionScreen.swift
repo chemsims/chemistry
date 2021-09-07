@@ -123,13 +123,20 @@ private struct BalancedReactionTopStack: View {
                     layout: layout
                 )
 
+                scales
+
                 Spacer(minLength: 0)
             }
             Spacer(minLength: 0)
         }
     }
 
-
+    private var scales: some View {
+        BalancedReactionScales(
+            model: .init(balancer: model.reactionBalancer),
+            layout: layout
+        )
+    }
 }
 
 struct BalancedReactionScreen_Previews: PreviewProvider {

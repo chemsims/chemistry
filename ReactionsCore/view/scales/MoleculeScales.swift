@@ -6,6 +6,7 @@ import SwiftUI
 
 public struct MoleculeScales: View {
 
+    /// A rotating with basket of molecules on the left and right, where the rotation fraction is explicitly provided
     public init(
         leftMolecules: MoleculeScales.Molecules,
         rightMolecules: MoleculeScales.Molecules,
@@ -23,6 +24,28 @@ public struct MoleculeScales: View {
         self.cols = cols
         self.rows = rows
     }
+
+    /// A rotating with basket of molecules on the left and right, where the rotation fraction is derived from the concentration
+    /// of each basket
+    public init(
+        leftMolecules: MoleculeScales.Molecules,
+        rightMolecules: MoleculeScales.Molecules,
+        equationInput: CGFloat,
+        badge: Badge? = nil,
+        cols: Int,
+        rows: Int
+    ) {
+        self.leftMolecules = leftMolecules
+        self.rightMolecules = rightMolecules
+        self.rotationFraction = Self.rotationEquation(
+            leftMolecules: leftMolecules, rightMolecules: rightMolecules
+        )
+        self.equationInput = equationInput
+        self.badge = badge
+        self.cols = cols
+        self.rows = rows
+    }
+    
 
     let leftMolecules: Molecules
     let rightMolecules: Molecules
@@ -80,6 +103,33 @@ public struct MoleculeScales: View {
         let label: String
         let fontColor: Color
         let backgroundColor: Color
+    }
+}
+
+extension MoleculeScales {
+    public static func gridCoords(cols: Int, rows: Int) -> [GridCoordinate] {
+        let maxRows = min(rows, cols)
+        return (0..<maxRows).flatMap { row in
+            (0..<(cols - row)).map { col in
+                GridCoordinate(col: col, row: row)
+            }
+        }
+    }
+
+    static func rotationEquation(
+        leftMolecules: MoleculeScales.Molecules,
+        rightMolecules: MoleculeScales.Molecules
+    ) -> Equation {
+        rightMolecules.combinedConcentration - leftMolecules.combinedConcentration
+    }
+}
+
+private extension MoleculeScales.Molecules {
+    var combinedConcentration: Equation {
+        switch self {
+        case let .single(concentration): return concentration.fractionToDraw
+        case let .double(left, right): return left.fractionToDraw + right.fractionToDraw
+        }
     }
 }
 

@@ -30,7 +30,7 @@ fileprivate extension Array where Element: BinaryFloatingPoint {
         limit: Element,
         minSize: Element
     ) -> [Element] {
-        let surplus = sum - limit
+        let surplus = sum() - limit
         if surplus <= 0 {
             return self
         }
@@ -45,7 +45,7 @@ fileprivate extension Array where Element: BinaryFloatingPoint {
             let previousElements = (0..<entry.offset).map { i in
                 result[i]
             }
-            let previousSum = previousElements.sum
+            let previousSum = previousElements.sum()
 
             let desiredScale = (limit - previousSum) / remainingSum
             let idealDelta = (1 - desiredScale) * entry.element
@@ -53,9 +53,5 @@ fileprivate extension Array where Element: BinaryFloatingPoint {
             result[entry.offset] = entry.element - Swift.min(maxDelta, idealDelta)
         }
         return result
-    }
-
-    var sum: Element {
-        reduce(0) { $0 + $1 }
     }
 }

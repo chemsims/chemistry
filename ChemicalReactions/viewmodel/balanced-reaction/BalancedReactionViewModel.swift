@@ -13,7 +13,7 @@ class BalancedReactionViewModel: ObservableObject {
     init() {
         let reaction = BalancedReaction(
             reactants: .two(
-                first: .init(molecule: .carbonDioxide, coefficient: 2),
+                first: .init(molecule: .methane, coefficient: 2),
                 second: .init(molecule: .ammonia, coefficient: 1)
             ),
             products: .two(

@@ -28,14 +28,6 @@ struct MoleculeScaleBasket: View {
 }
 
 extension MoleculeScaleBasket {
-    static func gridCoords(cols: Int, rows: Int) -> [GridCoordinate] {
-        let maxRows = min(rows, cols)
-        return (0..<maxRows).flatMap { row in
-            (0..<(cols - row)).map { col in
-                GridCoordinate(col: col, row: row)
-            }
-        }
-    }
 
     static func coordsToDraw(
         fractionToDraw: Equation,
@@ -43,13 +35,14 @@ extension MoleculeScaleBasket {
         cols: Int,
         rows: Int
     ) -> Int {
-        let gridSize = gridCoords(cols: cols, rows: rows).count
+        let gridSize = MoleculeScales.gridCoords(cols: cols, rows: rows).count
         let currentFraction = fractionToDraw.getY(at: equationInput)
         let numAsFloat = currentFraction * CGFloat(gridSize)
 
         // NB: SwiftUI may pass in a negative value for currentTime
         return max(0, Int(numAsFloat.rounded()))
     }
+    
 }
 
 private struct SizedMoleculeScaleBasket: View {

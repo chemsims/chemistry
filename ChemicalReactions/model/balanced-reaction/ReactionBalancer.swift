@@ -66,6 +66,13 @@ extension ReactionBalancer {
     func count(of molecule: BalancedReaction.Molecule) -> Int {
         reactantBalancer.count(of: molecule) ?? productBalancer.count(of: molecule) ?? 0
     }
+
+    func atomCount(of atom: BalancedReaction.Atom, elementType: BalancedReaction.ElementType) -> Int {
+        switch elementType {
+        case .reactant: return reactantBalancer.atomCount(of: atom)
+        case .product: return productBalancer.atomCount(of: atom)
+        }
+    }
 }
 
 private struct ReactionSideBalancer {
@@ -110,5 +117,16 @@ private struct ReactionSideBalancer {
             return nil
         }
         return counts.value(for: molecule)
+    }
+
+    /// Returns the count of atoms added to this side of the reaction
+    func atomCount(of atom: BalancedReaction.Atom) -> Int {
+        BalancedReaction.Molecule.allCases.map { molecule -> Int in
+            guard let moleculeCount = count(of: molecule),
+                  let atomCount = molecule.count(of: atom) else {
+                return 0
+            }
+            return atomCount * moleculeCount
+        }.sum()
     }
 }

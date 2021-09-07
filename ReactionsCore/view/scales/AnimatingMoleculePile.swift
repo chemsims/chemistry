@@ -29,7 +29,7 @@ struct AnimatingMoleculePile: Shape {
     }
 
     private var grid: [GridCoordinate] {
-        MoleculeScaleBasket.gridCoords(cols: cols, rows: rows)
+        MoleculeScales.gridCoords(cols: cols, rows: rows)
     }
 
     private var numToTake: Int {

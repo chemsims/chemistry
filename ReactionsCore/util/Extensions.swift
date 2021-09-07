@@ -73,8 +73,12 @@ extension Array where Self.Element: Equatable {
         let nextIndex = index.map { $0 + distance }
         return nextIndex.flatMap { self[safe: $0] }
     }
+}
 
-
+extension Array where Self.Element: Numeric {
+    public func sum() -> Self.Element {
+        self.reduce(Self.Element.zero) { $0 + $1 }
+    }
 }
 
 extension CMRotationRate {

@@ -37,14 +37,28 @@ extension BalancedReaction {
     }
 }
 
-extension BalancedReaction.MoleculeStructure {
-    var atoms: Set<BalancedReaction.Atom> {
-        switch self {
-        case let .double(atom): return [atom]
-        case let .oneToFour(single, quad): return [single, quad]
-        case let .oneToThree(single, triple): return [single, triple]
-        case let .oneToTwoHorizontal(single, double): return [single, double]
-        case let .oneToTwoPyramid(single, double): return [single, double]
+extension BalancedReaction.Molecule {
+
+    func count(of atom: BalancedReaction.Atom) -> Int? {
+        atoms.first { $0.atom == atom }?.count
+    }
+
+    var atoms: [BalancedReaction.AtomCount] {
+        switch self.structure {
+        case let .double(atom):
+            return [.init(atom: atom, count: 2)]
+
+        case let .oneToFour(single, quad):
+            return [.init(atom: single, count: 1), .init(atom: quad, count: 4)]
+
+        case let .oneToThree(single, triple):
+            return [.init(atom: single, count: 1), .init(atom: triple, count: 3)]
+
+        case let .oneToTwoHorizontal(single, double):
+            return [.init(atom: single, count: 1), .init(atom: double, count: 2)]
+
+        case let .oneToTwoPyramid(single, double):
+            return [.init(atom: single, count: 1), .init(atom: double, count: 2)]
         }
     }
 }
