@@ -42,6 +42,11 @@ private struct SizedBalancedReactionScreen: View {
                 .frame(size: layout.beakerSize)
                 .position(layout.secondBeakerPosition)
 
+            BalancedReactionTopStack(
+                model: model,
+                layout: layout
+            )
+
             ForEach(model.molecules) { molecule in
                 BalancedReactionMoleculeView(
                     structure: molecule.moleculeType.structure,
@@ -103,6 +108,28 @@ private struct SizedBalancedReactionScreen: View {
             products: model.reaction.products.count
         )
     }
+}
+
+private struct BalancedReactionTopStack: View {
+
+    @ObservedObject var model: BalancedReactionViewModel
+    let layout: BalancedReactionScreenLayout
+
+    var body: some View {
+        HStack(spacing: 0) {
+            VStack(spacing: 0) {
+                BalancedReactionDefinition(
+                    model: model.reactionBalancer,
+                    layout: layout
+                )
+
+                Spacer(minLength: 0)
+            }
+            Spacer(minLength: 0)
+        }
+    }
+
+
 }
 
 struct BalancedReactionScreen_Previews: PreviewProvider {

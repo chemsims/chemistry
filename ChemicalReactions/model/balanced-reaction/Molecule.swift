@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import ReactionsCore
 
 extension BalancedReaction {
     enum Molecule: CaseIterable {
@@ -67,6 +68,25 @@ extension BalancedReaction.Molecule {
             return .oneToTwoHorizontal(singleAtom: .nitrogen, doubleAtom: .oxygen)
         case .water:
             return .oneToTwoPyramid(singleAtom: .oxygen, doubleAtom: .hydrogen)
+        }
+    }
+
+    var textLine: TextLine {
+        switch self.structure {
+        case let .double(atom):
+            return "\(atom.symbol)_2_"
+
+        case let .oneToFour(single, quad):
+            return "\(single.symbol)\(quad.symbol)_4_"
+
+        case let .oneToThree(single, triple):
+            return "\(single.symbol)\(triple.symbol)_3_"
+
+        case let .oneToTwoHorizontal(single, double):
+            return "\(single.symbol)\(double.symbol)_2_"
+
+        case let .oneToTwoPyramid(single, double):
+            return "\(single.symbol)\(double.symbol)_2_"
         }
     }
 }

@@ -105,3 +105,18 @@ extension BalancedReactionScreenLayout {
         beakerWidth * BeakerSettings.heightToWidth
     }
 }
+
+// MARK: - Reaction definition
+extension BalancedReactionScreenLayout {
+
+    var reactionDefinitionSize: CGSize {
+        CGSize(
+            width: 0.5 * common.width,
+            height: 0.15 * common.height
+        )
+    }
+
+    var reactionDefinitionFontSize: CGFloat {
+        0.3 * reactionDefinitionSize.height
+    }
+}

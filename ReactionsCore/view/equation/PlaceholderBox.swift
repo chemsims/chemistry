@@ -104,24 +104,29 @@ private struct Box: View {
     let padding: CGFloat
 
     var body: some View {
-        EquationPlaceholderView()
+        PlaceholderBox()
             .padding(padding)
     }
 }
 
-struct EquationPlaceholderView: View {
+/// A box with a dashed border
+public struct PlaceholderBox: View {
 
-    var body: some View {
+    public init() {
+    }
+
+    public var body: some View {
         GeometryReader { geometry in
             Rectangle()
-                .stroke(style: StrokeStyle(
-                            lineWidth: 1,
-                            lineCap: .square,
-                            lineJoin: .round,
-                            miterLimit: 0,
-                            dash: dash2(geometry),
-                            dashPhase: geometry.size.height / 6
-                        )
+                .stroke(
+                    style: StrokeStyle(
+                        lineWidth: 1,
+                        lineCap: .square,
+                        lineJoin: .round,
+                        miterLimit: 0,
+                        dash: dash2(geometry),
+                        dashPhase: geometry.size.height / 6
+                    )
                 )
         }
     }
@@ -160,10 +165,10 @@ struct EquationPlaceholderView: View {
 struct EquationPlaceholderView_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            EquationPlaceholderView()
+            PlaceholderBox()
                 .frame(width: 100, height: 100)
 
-            EquationPlaceholderView()
+            PlaceholderBox()
                 .frame(width: 100, height: 70)
 
             VStack(alignment: .trailing) {

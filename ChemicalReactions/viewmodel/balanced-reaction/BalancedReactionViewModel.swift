@@ -6,8 +6,9 @@ import SwiftUI
 
 class BalancedReactionViewModel: ObservableObject {
 
-    @Published var molecules = [MovingMolecule]()
     let reaction: BalancedReaction
+    @Published var molecules = [MovingMolecule]()
+    @Published var reactionBalancer: ReactionBalancer
 
     init() {
         let reaction = BalancedReaction(
@@ -22,6 +23,7 @@ class BalancedReactionViewModel: ObservableObject {
         )
 
         self.reaction = reaction
+        self.reactionBalancer = ReactionBalancer(reaction: reaction)
 
         func addInitialMolecules(_ type: BalancedReaction.ElementType) {
             let elements = reaction.elements(ofType: type)
@@ -48,9 +50,7 @@ class BalancedReactionViewModel: ObservableObject {
     }
 
     func add(molecule: MovingMolecule) {
-        let countInBeaker = molecules.filter { m in
-            m.moleculeType == molecule.moleculeType && m.isInBeaker
-        }.count
+        let countInBeaker = reactionBalancer.count(of: molecule.moleculeType)
 
         guard countInBeaker < BalancedReactionBeakerMoleculeLayout.maxCount else {
             return
@@ -61,6 +61,8 @@ class BalancedReactionViewModel: ObservableObject {
             elementType: molecule.elementType,
             side: molecule.side
         )
+
+        reactionBalancer.add(molecule.moleculeType, to: molecule.elementType)
 
         withAnimation(.addMolecule) {
             molecules.append(newMoleculeInGrid)
@@ -76,6 +78,8 @@ class BalancedReactionViewModel: ObservableObject {
         guard let moleculeBeakerIndex = molecule.beakerIndex else {
             return
         }
+
+        reactionBalancer.remove(molecule.moleculeType, from: molecule.elementType)
 
         withAnimation(.removeMolecule) {
             molecules.removeAll { $0.id == molecule.id }
