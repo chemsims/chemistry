@@ -19,9 +19,7 @@ struct BalancedReactionBeakerMoleculeLayout {
             return nil
         }
 
-        let grid = GridCoordinateList.list(cols: Self.cols, rows: Self.rows)
-
-        guard let cell = grid[safe: index] else {
+        guard let cell = Self.grid[safe: index] else {
             return nil
         }
 
@@ -71,5 +69,7 @@ extension BalancedReactionBeakerMoleculeLayout {
     static let rows = 4
     static let cols = 2
 
-    fileprivate static let maxCount = cols * rows
+    static let maxCount = cols * rows
+
+    fileprivate static let grid = GridCoordinateList.list(cols: cols, rows: rows)
 }

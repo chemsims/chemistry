@@ -52,6 +52,10 @@ class BalancedReactionViewModel: ObservableObject {
             m.moleculeType == molecule.moleculeType && m.isInBeaker
         }.count
 
+        guard countInBeaker < BalancedReactionBeakerMoleculeLayout.maxCount else {
+            return
+        }
+
         let newMoleculeInGrid = MovingMolecule(
             moleculeType: molecule.moleculeType,
             elementType: molecule.elementType,
