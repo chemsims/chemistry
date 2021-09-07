@@ -24,7 +24,7 @@ extension BalancedReaction {
              oneToFour(singleAtom: BalancedReaction.Atom, quadAtom: BalancedReaction.Atom)
     }
 
-    struct MoleculeCount {
+    struct Element {
         init(molecule: BalancedReaction.Molecule, coefficient: Int) {
             assert(coefficient >= 1)
             self.molecule = molecule

@@ -6,29 +6,74 @@ import Foundation
 
 struct BalancedReaction {
 
-    init(reactants: [MoleculeCount], products: [MoleculeCount]) {
-        assert(!reactants.isEmpty)
-        assert(!products.isEmpty)
+    init(reactants: Elements, products: Elements) {
+        assert(Self.moleculesAreValid(reactants: reactants, products: products))
         self.reactants = reactants
         self.products = products
-
-        self.molecules = Set((reactants + products).map(\.molecule))
     }
 
-    let reactants: [MoleculeCount]
-    let products: [MoleculeCount]
-    let molecules: Set<BalancedReaction.Molecule>
+    let reactants: Elements
+    let products: Elements
 
-    enum SubstanceType {
-        case reactant, product
-    }
-
-    enum SideCount {
-        case single, double
-    }
-
-    enum SidePart {
-        case first, second
+    func elements(ofType type: ElementType) -> Elements {
+        switch type {
+        case .reactant: return reactants
+        case .product: return products
+        }
     }
 }
 
+extension BalancedReaction {
+    private static func moleculesAreValid(reactants: Elements, products: Elements) -> Bool {
+        let reactantMolecules = Set(reactants.asArray.map(\.molecule))
+        let productMolecules = Set(products.asArray.map(\.molecule))
+        return reactantMolecules.intersection(productMolecules).isEmpty
+    }
+}
+
+extension BalancedReaction {
+    enum ElementType {
+        case reactant, product
+    }
+
+    enum ElementCount {
+        case one, two
+    }
+
+    enum ElementOrder {
+        case first, second
+    }
+
+    enum Elements {
+        case one(element: Element)
+        case two(first: Element, second: Element)
+
+        var count: ElementCount {
+            switch self {
+            case .one: return .one
+            case .two: return .two
+            }
+        }
+
+        var first: Element {
+            switch self {
+            case let .one(element): return element
+            case let .two(first, _): return first
+            }
+        }
+
+        var second: Element? {
+            if case let .two(_, second) = self {
+                return second
+            }
+            return nil
+        }
+
+        var asArray: [Element] {
+            switch self {
+            case let .one(element): return [element]
+            case let .two(first, second): return [first, second]
+            }
+        }
+    }
+}

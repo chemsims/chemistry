@@ -11,8 +11,8 @@ struct ReactionBalancer {
 
     init(reaction: BalancedReaction) {
         self.reaction = reaction
-        self.reactantBalancer = ReactionSideBalancer(molecules: reaction.reactants)
-        self.productBalancer = ReactionSideBalancer(molecules: reaction.products)
+        self.reactantBalancer = ReactionSideBalancer(molecules: reaction.reactants.asArray)
+        self.productBalancer = ReactionSideBalancer(molecules: reaction.products.asArray)
     }
 
     let reaction: BalancedReaction
@@ -47,7 +47,7 @@ struct ReactionBalancer {
 }
 
 private struct ReactionSideBalancer {
-    let molecules: [BalancedReaction.MoleculeCount]
+    let molecules: [BalancedReaction.Element]
     private(set) var counts = EnumMap<BalancedReaction.Molecule, Int>.constant(0)
 
     var isBalanced: Bool {

@@ -9,8 +9,8 @@ struct BalancedReactionMoleculeGridLayout {
 
     init(
         rect: CGRect,
-        reactants: BalancedReaction.SideCount,
-        products: BalancedReaction.SideCount
+        reactants: BalancedReaction.ElementCount,
+        products: BalancedReaction.ElementCount
     ) {
         func pos(row: Int, colIndex: Int, cols: Int) -> CGPoint {
             TableCellPosition.position(in: rect, rows: 2, cols: cols, rowIndex: row, colIndex: colIndex)
@@ -23,27 +23,27 @@ struct BalancedReactionMoleculeGridLayout {
         }
 
         switch reactants {
-        case .single:
+        case .one:
             self.firstReactantPosition = singleElemPos(row: 0)
             self.secondReactantPosition = nil
-        case .double:
+        case .two:
             self.firstReactantPosition = doubleElemPos(row: 0, col: 0)
             self.secondReactantPosition = doubleElemPos(row: 0, col: 1)
         }
 
         switch products {
-        case .single:
+        case .one:
             self.firstProductPosition = singleElemPos(row: 1)
             self.secondProductPosition = nil
-        case .double:
+        case .two:
             self.firstProductPosition = doubleElemPos(row: 1, col: 0)
             self.secondProductPosition = doubleElemPos(row: 1, col: 1)
         }
     }
 
     func position(
-        substanceType: BalancedReaction.SubstanceType,
-        side: BalancedReaction.SidePart
+        substanceType: BalancedReaction.ElementType,
+        side: BalancedReaction.ElementOrder
     ) -> CGPoint? {
         switch (substanceType, side) {
         case (.reactant, .first): return firstReactantPosition

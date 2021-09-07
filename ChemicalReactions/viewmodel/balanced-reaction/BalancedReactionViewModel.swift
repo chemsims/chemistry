@@ -5,18 +5,46 @@
 import SwiftUI
 
 class BalancedReactionViewModel: ObservableObject {
+
     @Published var molecules = [MovingMolecule]()
+    let reaction: BalancedReaction
 
     init() {
-        let firstReactant = MovingMolecule(moleculeType: .ammonia, substanceType: .reactant, side: .first)
-        let secondReactant = MovingMolecule(moleculeType: .carbonDioxide, substanceType: .reactant, side: .second)
-        let firstProduct = MovingMolecule(moleculeType: .dioxygen, substanceType: .product, side: .first)
-        let secondProduct = MovingMolecule(moleculeType: .methane, substanceType: .product, side: .second)
+        let reaction = BalancedReaction(
+            reactants: .two(
+                first: .init(molecule: .carbonDioxide, coefficient: 2),
+                second: .init(molecule: .ammonia, coefficient: 1)
+            ),
+            products: .two(
+                first: .init(molecule: .dioxygen, coefficient: 3),
+                second: .init(molecule: .nitriteIon, coefficient: 4)
+            )
+        )
 
-        molecules.append(firstReactant)
-        molecules.append(secondReactant)
-        molecules.append(firstProduct)
-        molecules.append(secondProduct)
+        self.reaction = reaction
+
+        func addInitialMolecules(_ type: BalancedReaction.ElementType) {
+            let elements = reaction.elements(ofType: type)
+            molecules.append(
+                MovingMolecule(
+                    moleculeType: elements.first.molecule,
+                    elementType: type,
+                    side: .first
+                )
+            )
+            if let secondElement = elements.second {
+                molecules.append(
+                    MovingMolecule(
+                        moleculeType: secondElement.molecule,
+                        elementType: type,
+                        side: .second
+                    )
+                )
+            }
+        }
+
+        addInitialMolecules(.reactant)
+        addInitialMolecules(.product)
     }
 
     func add(molecule: MovingMolecule) {
@@ -26,7 +54,7 @@ class BalancedReactionViewModel: ObservableObject {
 
         let newMoleculeInGrid = MovingMolecule(
             moleculeType: molecule.moleculeType,
-            substanceType: molecule.substanceType,
+            elementType: molecule.elementType,
             side: molecule.side
         )
 
@@ -67,8 +95,8 @@ extension BalancedReactionViewModel {
     struct MovingMolecule: Identifiable {
         let id = UUID()
         let moleculeType: BalancedReaction.Molecule
-        let substanceType: BalancedReaction.SubstanceType
-        let side: BalancedReaction.SidePart
+        let elementType: BalancedReaction.ElementType
+        let side: BalancedReaction.ElementOrder
         var position: MoleculePosition = .grid
 
         var isInBeaker: Bool {

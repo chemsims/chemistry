@@ -9,11 +9,11 @@ class ReactionBalancerViewModelTests: XCTestCase {
 
     func testReactionIsBalancedAfterAddingCorrectNumberOfMolecules() {
         let reaction = BalancedReaction(
-            reactants: [.init(molecule: .water, coefficient: 1)],
-            products: [
-                .init(molecule: .dihydrogen, coefficient: 1),
-                .init(molecule: .dioxygen, coefficient: 1)
-            ]
+            reactants: .one(element: .init(molecule: .water, coefficient: 1)),
+            products: .two(
+                first: .init(molecule: .dihydrogen, coefficient: 1),
+                second: .init(molecule: .dioxygen, coefficient: 1)
+            )
         )
         var model = ReactionBalancer(reaction: reaction)
 
@@ -31,11 +31,11 @@ class ReactionBalancerViewModelTests: XCTestCase {
 
     func testReactionIsBalancedWhenMoleculeIsRemovedAfterAddingTooMany() {
         let reaction = BalancedReaction(
-            reactants: [.init(molecule: .ammonia, coefficient: 1)],
-            products: [
-                .init(molecule: .methane, coefficient: 2),
-                .init(molecule: .carbonDioxide, coefficient: 1)
-            ]
+            reactants: .one(element: .init(molecule: .ammonia, coefficient: 1)),
+            products: .two(
+                first: .init(molecule: .methane, coefficient: 2),
+                second: .init(molecule: .carbonDioxide, coefficient: 1)
+            )
         )
         var model = ReactionBalancer(reaction: reaction)
 
@@ -62,8 +62,8 @@ class ReactionBalancerViewModelTests: XCTestCase {
 
     func testRemovingAMoleculeBeforeItIsAddedHasNoEffect() {
         let reaction = BalancedReaction(
-            reactants: [.init(molecule: .ammonia, coefficient: 1)],
-            products: [.init(molecule: .carbonDioxide, coefficient: 1)]
+            reactants: .one(element: .init(molecule: .ammonia, coefficient: 1)),
+            products: .one(element: .init(molecule: .carbonDioxide, coefficient: 1))
         )
 
         var model = ReactionBalancer(reaction: reaction)

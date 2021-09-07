@@ -34,11 +34,6 @@ private struct SizedBalancedReactionScreen: View {
 
     var body: some View {
         ZStack {
-            Rectangle()
-                .foregroundColor(.purple)
-                .frame(size: layout.moleculeTableRect.size)
-                .position(layout.moleculeTableRect.center)
-
             EmptyBeaker(settings: layout.beakerSettings)
                 .frame(size: layout.beakerSize)
                 .position(layout.firstBeakerPosition)
@@ -62,7 +57,6 @@ private struct SizedBalancedReactionScreen: View {
                 }
             }
         }
-        .border(Color.red)
     }
 
     private func atomSize(of molecule: BalancedReactionViewModel.MovingMolecule) -> CGFloat {
@@ -81,29 +75,32 @@ private struct SizedBalancedReactionScreen: View {
     private func optPosition(of molecule: BalancedReactionViewModel.MovingMolecule) -> CGPoint? {
         switch molecule.position {
         case .grid:
-            return moleculeLayout.position(
-                substanceType: molecule.substanceType,
+            return moleculeGridLayout.position(
+                substanceType: molecule.elementType,
                 side: molecule.side
             )
         case let .beaker(index):
-            return beakerLayout.position(of: molecule.moleculeType, index: index)
+            return beakerLayout(elementType: molecule.elementType)
+                .position(of: molecule.moleculeType, index: index)
         }
     }
 
-    private var beakerLayout: BalancedReactionBeakerMoleculeLayout {
-        .init(
-            firstMolecule: .ammonia,
-            secondMolecule: .carbonDioxide,
-            beakerRect: layout.firstBeakerRect,
+    private func beakerLayout(elementType: BalancedReaction.ElementType) -> BalancedReactionBeakerMoleculeLayout {
+        let elements = model.reaction.elements(ofType: elementType)
+        let rect = elementType == .reactant ? layout.firstBeakerRect : layout.secondBeakerRect
+        return .init(
+            firstMolecule: elements.first.molecule,
+            secondMolecule: elements.second?.molecule,
+            beakerRect: rect,
             beakerSettings: layout.beakerSettings
         )
     }
 
-    private var moleculeLayout: BalancedReactionMoleculeGridLayout {
+    private var moleculeGridLayout: BalancedReactionMoleculeGridLayout {
         BalancedReactionMoleculeGridLayout(
             rect: layout.moleculeTableRect,
-            reactants: .double,
-            products: .double
+            reactants: model.reaction.reactants.count,
+            products: model.reaction.products.count
         )
     }
 }

@@ -13,8 +13,8 @@ class BalancedReactionMoleculeLayoutTests: XCTestCase {
         )
         let model = BalancedReactionMoleculeGridLayout(
             rect: rect,
-            reactants: .single,
-            products: .single
+            reactants: .one,
+            products: .one
         )
 
         let expectedReactant = CGPoint(x: 120, y: 55)
@@ -34,8 +34,8 @@ class BalancedReactionMoleculeLayoutTests: XCTestCase {
         )
         let model = BalancedReactionMoleculeGridLayout(
             rect: rect,
-            reactants: .double,
-            products: .double
+            reactants: .two,
+            products: .two
         )
 
         let expectedFirstReactant = CGPoint(x: 70, y: 55)
