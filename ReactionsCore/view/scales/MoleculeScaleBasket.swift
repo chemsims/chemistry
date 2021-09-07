@@ -68,9 +68,7 @@ private struct SizedMoleculeScaleBasket: View {
             case let .single(molecules):
                 Spacer(minLength: 0)
                 moleculeView(molecules)
-                    .frame(
-                        square: settings.singleMoleculePileSize
-                    )
+                    .frame(square: settings.singleMoleculePileSize)
                 Spacer(minLength: 0)
 
             case let .double(left, right):

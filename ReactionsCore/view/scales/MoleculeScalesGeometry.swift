@@ -49,7 +49,7 @@ public struct MoleculeScalesGeometry {
     var basketYOffset: CGFloat {
         basketHeight / 2
     }
-
+ 
     var badgeSize: CGFloat {
         0.5 * basketWidth
     }
@@ -95,8 +95,8 @@ struct MoleculeScaleBasketGeometry {
     }
 
     var singleMoleculePileSize: CGFloat {
-        let availableWidth = 0.9 * width
-        let availableHeight = 0.9 * (height - basketHeight)
+        let availableWidth = width
+        let availableHeight = height - basketHeight
         return min(availableWidth, availableHeight)
     }
 
