@@ -3,12 +3,15 @@
 //
 
 import SwiftUI
+import ReactionsCore
 
 class BalancedReactionViewModel: ObservableObject {
 
     let reaction: BalancedReaction
     @Published var molecules = [MovingMolecule]()
     @Published var reactionBalancer: ReactionBalancer
+    @Published var statement = [TextLine]()
+    @Published var canGoNext: Bool = true
 
     init() {
         let reaction = BalancedReaction(
@@ -47,6 +50,14 @@ class BalancedReactionViewModel: ObservableObject {
 
         addInitialMolecules(.reactant)
         addInitialMolecules(.product)
+    }
+
+    func next() {
+
+    }
+
+    func back() {
+
     }
 
     func dropped(molecule: MovingMolecule, on elementType: BalancedReaction.ElementType) {

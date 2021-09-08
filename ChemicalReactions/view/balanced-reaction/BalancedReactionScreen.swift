@@ -47,6 +47,8 @@ private struct SizedBalancedReactionScreen: View {
                 layout: layout
             )
 
+            beaker
+
             ForEach(model.molecules) { molecule in
                 BalancedReactionMoleculeView(
                     structure: molecule.moleculeType.structure,
@@ -64,6 +66,22 @@ private struct SizedBalancedReactionScreen: View {
                         model.remove(molecule: molecule)
                     }
                 }
+            }
+        }
+    }
+
+    private var beaker: some View {
+        HStack(spacing: 0) {
+            Spacer(minLength: 0)
+            VStack(spacing: 0) {
+                Spacer(minLength: 0)
+                BeakyBox(
+                    statement: model.statement,
+                    next: model.next,
+                    back: model.back,
+                    nextIsDisabled: !model.canGoNext,
+                    settings: layout.common.beakySettings
+                )
             }
         }
     }
