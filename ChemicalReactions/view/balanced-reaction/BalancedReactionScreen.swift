@@ -50,17 +50,46 @@ private struct SizedBalancedReactionScreen: View {
             ForEach(model.molecules) { molecule in
                 BalancedReactionMoleculeView(
                     structure: molecule.moleculeType.structure,
-                    atomSize: atomSize(of: molecule)
+                    atomSize: atomSize(of: molecule),
+                    dragEnabled: !molecule.isInBeaker,
+                    onDragEnd: {
+                        moleculeDragEnded(molecule: molecule, offset: $0)
+                    }
                 )
+                .animation(.easeOut(duration: 0.35))
                 .position(position(of: molecule))
                 .onTapGesture {
                     if molecule.isInBeaker {
                         model.remove(molecule: molecule)
-                    } else {
-                        model.add(molecule: molecule)
                     }
                 }
             }
+        }
+    }
+
+    private func moleculeDragEnded(
+        molecule: BalancedReactionViewModel.MovingMolecule,
+        offset: CGSize
+    ) {
+        guard !molecule.isInBeaker else {
+            return
+        }
+
+        let originalPosition = position(of: molecule)
+        let currentPosition = originalPosition.offset(offset)
+        let boxSize = layout.moleculeBoundingBoxSizeForOverlapDetection
+        let effectiveRect = CGRect(
+            origin: currentPosition.offset(dx: -boxSize / 2, dy: -boxSize / 2),
+            size: CGSize(width: boxSize, height: boxSize)
+        )
+
+        let overlappingLeftBeaker = layout.firstBeakerRect.intersects(effectiveRect)
+        let overlappingRightBeaker = layout.secondBeakerRect.intersects(effectiveRect)
+
+        if overlappingLeftBeaker {
+            model.dropped(molecule: molecule, on: .reactant)
+        } else if overlappingRightBeaker {
+            model.dropped(molecule: molecule, on: .product)
         }
     }
 

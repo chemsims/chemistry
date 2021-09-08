@@ -49,6 +49,13 @@ class BalancedReactionViewModel: ObservableObject {
         addInitialMolecules(.product)
     }
 
+    func dropped(molecule: MovingMolecule, on elementType: BalancedReaction.ElementType) {
+        guard !molecule.isInBeaker && molecule.elementType == elementType else {
+            return
+        }
+        add(molecule: molecule)
+    }
+
     func add(molecule: MovingMolecule) {
         let countInBeaker = reactionBalancer.count(of: molecule.moleculeType)
 
@@ -64,13 +71,14 @@ class BalancedReactionViewModel: ObservableObject {
 
         reactionBalancer.add(molecule.moleculeType, to: molecule.elementType)
 
+        for i in molecules.indices {
+            if molecules[i].id == molecule.id {
+                molecules[i].position = .beaker(index: countInBeaker)
+            }
+        }
+
         withAnimation(.addMolecule) {
             molecules.append(newMoleculeInGrid)
-            for i in molecules.indices {
-                if molecules[i].id == molecule.id {
-                    molecules[i].position = .beaker(index: countInBeaker)
-                }
-            }
         }
     }
 
@@ -81,13 +89,11 @@ class BalancedReactionViewModel: ObservableObject {
 
         reactionBalancer.remove(molecule.moleculeType, from: molecule.elementType)
 
-        withAnimation(.removeMolecule) {
-            molecules.removeAll { $0.id == molecule.id }
+        molecules.removeAll { $0.id == molecule.id }
 
-            for moleculeIndex in molecules.indices {
-                if molecules[moleculeIndex].moleculeType == molecule.moleculeType {
-                    molecules[moleculeIndex].decrementBeakerIndexIfGreaterThan(moleculeBeakerIndex)
-                }
+        for moleculeIndex in molecules.indices {
+            if molecules[moleculeIndex].moleculeType == molecule.moleculeType {
+                molecules[moleculeIndex].decrementBeakerIndexIfGreaterThan(moleculeBeakerIndex)
             }
         }
     }

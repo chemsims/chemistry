@@ -37,6 +37,12 @@ extension BalancedReactionScreenLayout {
         0.05 * beakerSize.height
     }
 
+    /// The size of a box around the center of a molecule, which is used to detect
+    /// if a molecule is overlapping a beaker at the end of the drag gesture.
+    var moleculeBoundingBoxSizeForOverlapDetection: CGFloat {
+        1.5 * moleculeTableAtomSize
+    }
+
     private var moleculeTableSize: CGSize {
         CGSize(
             width: 0.35 * common.width,

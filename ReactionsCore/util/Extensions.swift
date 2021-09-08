@@ -88,8 +88,13 @@ extension CMRotationRate {
 }
 
 extension CGPoint {
+    // TODO rename to offsetBy
     public func offset(dx: CGFloat, dy: CGFloat) -> CGPoint {
         CGPoint(x: self.x + dx, y: self.y + dy)
+    }
+
+    public func offset(_ size: CGSize) -> CGPoint {
+        self.offset(dx: size.width, dy: size.height)
     }
 }
 

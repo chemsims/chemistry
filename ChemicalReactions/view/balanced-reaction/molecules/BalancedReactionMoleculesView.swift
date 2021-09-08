@@ -8,9 +8,27 @@ struct BalancedReactionMoleculeView: View {
 
     let structure: BalancedReaction.MoleculeStructure
     let atomSize: CGFloat
+    let dragEnabled: Bool
+    let onDragEnd: (CGSize) -> Void
+
+    @GestureState private var offset: CGSize = .zero
+
+    var body: some View {
+        mainContent
+            .offset(offset)
+            .gesture(DragGesture().updating($offset) { (gesture, offsetState, _) in
+                guard dragEnabled else {
+                    return
+                }
+                offsetState = gesture.translation
+            }
+            .onEnded { gesture in
+                onDragEnd(gesture.translation)
+            })
+    }
 
     @ViewBuilder
-    var body: some View {
+    private var mainContent: some View {
         switch structure {
         case let .oneToFour(single, quad):
             oneToFour(single: single, quad: quad)
@@ -104,7 +122,9 @@ struct BalancedReactionMoleculesView_Previews: PreviewProvider {
     static var previews: some View {
         BalancedReactionMoleculeView(
             structure: BalancedReaction.Molecule.water.structure,
-            atomSize: 100
+            atomSize: 100,
+            dragEnabled: true,
+            onDragEnd: { _ in }
         )
     }
 }
