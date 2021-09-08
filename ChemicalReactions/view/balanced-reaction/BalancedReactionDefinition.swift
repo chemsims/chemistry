@@ -11,14 +11,33 @@ struct BalancedReactionDefinition: View {
     let layout: BalancedReactionScreenLayout
 
     var body: some View {
-        HStack(spacing: sideSpacing) {
-            side(elements: model.reaction.reactants)
-            Text("➝")
-            side(elements: model.reaction.products)
+        VStack(spacing: 0) {
+            row(showText: true)
+            row(showText: false)
         }
-        .frame(size: layout.reactionDefinitionSize)
+        .frame(width: layout.reactionDefinitionSize.width)
         .font(.system(size: layout.reactionDefinitionFontSize))
         .minimumScaleFactor(0.75)
+    }
+
+    private func row(showText: Bool) -> some View {
+        HStack(alignment: .top, spacing: sideSpacing) {
+            side(elements: model.reaction.reactants, showText: showText)
+            Text("➝")
+                .opacity(showText ? 1 : 0)
+            side(elements: model.reaction.products, showText: showText)
+        }
+    }
+
+    private func side(elements: BalancedReaction.Elements, showText: Bool) -> some View {
+        HStack(alignment: .top, spacing: elementSpacing) {
+            term(molecule: elements.first.molecule, showText: showText)
+            if let second = elements.second {
+                Text("+")
+                    .opacity(showText ? 1 : 0)
+                term(molecule: second.molecule, showText: showText)
+            }
+        }
     }
 
     private func side(elements: BalancedReaction.Elements) -> some View {
@@ -26,16 +45,49 @@ struct BalancedReactionDefinition: View {
             term(molecule: elements.first.molecule)
             if let second = elements.second {
                 Text("+")
+                    .frame(height: layout.reactionDefinitionSize.height)
                 term(molecule: second.molecule)
             }
         }
     }
+    
 
     private func term(molecule: BalancedReaction.Molecule) -> some View {
+        VStack(spacing: 0) {
+            HStack(alignment: .top, spacing: coeffSpacing) {
+                coefficientBox(model.count(of: molecule))
+
+                TextLinesView(line: molecule.textLine, fontSize: layout.reactionDefinitionFontSize)
+            }
+            .frame(height: layout.reactionDefinitionSize.height)
+
+            BalancedReactionMoleculeView(
+                structure: molecule.structure,
+                atomSize: layout.reactionDefinitionMoleculeAtomSize,
+                showSymbols: false
+            )
+        }
+    }
+
+
+    private func term(molecule: BalancedReaction.Molecule, showText: Bool) -> some View {
         HStack(alignment: .top, spacing: coeffSpacing) {
             coefficientBox(model.count(of: molecule))
 
             TextLinesView(line: molecule.textLine, fontSize: layout.reactionDefinitionFontSize)
+        }
+        .opacity(showText ? 1 : 0)
+        .overlay(moleculeView(molecule: molecule, show: !showText))
+    }
+
+    @ViewBuilder
+    private func moleculeView(molecule: BalancedReaction.Molecule, show: Bool) -> some View {
+        if show {
+            BalancedReactionMoleculeView(
+                structure: molecule.structure,
+                atomSize: layout.reactionDefinitionMoleculeAtomSize,
+                showSymbols: false
+            )
         }
     }
 

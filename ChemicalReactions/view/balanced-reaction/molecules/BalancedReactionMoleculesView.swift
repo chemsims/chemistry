@@ -6,6 +6,37 @@ import SwiftUI
 
 struct BalancedReactionMoleculeView: View {
 
+    /// Molecule view without drag support
+    init(
+        structure: BalancedReaction.MoleculeStructure,
+        atomSize: CGFloat,
+        showSymbols: Bool
+    ) {
+        self.init(
+            structure: structure,
+            atomSize: atomSize,
+            showSymbols: showSymbols,
+            dragEnabled: false,
+            onDragEnd: { _ in }
+        )
+    }
+
+    /// Molecule view with drag support
+    init(
+        structure: BalancedReaction.MoleculeStructure,
+        atomSize: CGFloat,
+        showSymbols: Bool,
+        dragEnabled: Bool,
+        onDragEnd: @escaping (CGSize) -> Void
+    ) {
+        self.structure = structure
+        self.atomSize = atomSize
+        self.showSymbols = showSymbols
+        self.dragEnabled = dragEnabled
+        self.onDragEnd = onDragEnd
+    }
+
+
     let structure: BalancedReaction.MoleculeStructure
     let atomSize: CGFloat
     let showSymbols: Bool

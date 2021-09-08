@@ -122,6 +122,15 @@ extension BalancedReactionScreenLayout {
         )
     }
 
+    var reactionDefinitionToMoleculeVSpacing: CGFloat {
+        0.1 * reactionDefinitionSize.height
+    }
+
+    var reactionDefinitionMoleculeAtomSize: CGFloat {
+        let availableHeight = common.height - reactionDefinitionSize.height - reactionDefinitionToMoleculeVSpacing - scalesHeight - beakerHeight
+        return availableHeight / 5
+    }
+
     var reactionDefinitionFontSize: CGFloat {
         0.3 * reactionDefinitionSize.height
     }
@@ -147,5 +156,4 @@ extension BalancedReactionScreenLayout {
         let maxHeightForMaxWidth = maxWidth / MoleculeScalesGeometry.widthToHeight
         return min(idealHeight, maxHeightForMaxWidth)
     }
-
 }
