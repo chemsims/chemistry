@@ -7,7 +7,7 @@ import ReactionsCore
 
 struct BalancedReactionScreen: View {
 
-    @ObservedObject var model: BalancedReactionViewModel
+    @ObservedObject var model: BalancedReactionScreenViewModel
 
     @Environment(\.verticalSizeClass) private var verticalSizeClass
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
@@ -16,6 +16,7 @@ struct BalancedReactionScreen: View {
         GeometryReader { geo in
             SizedBalancedReactionScreen(
                 model: model,
+                moleculeModel: model.moleculePosition,
                 layout: BalancedReactionScreenLayout(
                     common: ChemicalReactionsScreenLayout(
                         geometry: geo,
@@ -29,7 +30,10 @@ struct BalancedReactionScreen: View {
 }
 
 private struct SizedBalancedReactionScreen: View {
-    @ObservedObject var model: BalancedReactionViewModel
+
+    @ObservedObject var model: BalancedReactionScreenViewModel
+    @ObservedObject var moleculeModel: BalancedReactionMoleculePositionViewModel
+
     let layout: BalancedReactionScreenLayout
 
     var body: some View {
@@ -43,13 +47,13 @@ private struct SizedBalancedReactionScreen: View {
                 .position(layout.secondBeakerPosition)
 
             BalancedReactionTopStack(
-                model: model,
+                model: moleculeModel,
                 layout: layout
             )
 
             beaker
 
-            ForEach(model.molecules) { molecule in
+            ForEach(moleculeModel.molecules) { molecule in
                 BalancedReactionMoleculeView(
                     structure: molecule.moleculeType.structure,
                     atomSize: atomSize(of: molecule),
@@ -63,7 +67,7 @@ private struct SizedBalancedReactionScreen: View {
                 .position(position(of: molecule))
                 .onTapGesture {
                     if molecule.isInBeaker {
-                        model.remove(molecule: molecule)
+                        moleculeModel.remove(molecule: molecule)
                     }
                 }
             }
@@ -87,7 +91,7 @@ private struct SizedBalancedReactionScreen: View {
     }
 
     private func moleculeDragEnded(
-        molecule: BalancedReactionViewModel.MovingMolecule,
+        molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
         offset: CGSize
     ) {
         guard !molecule.isInBeaker else {
@@ -106,13 +110,13 @@ private struct SizedBalancedReactionScreen: View {
         let overlappingRightBeaker = layout.secondBeakerRect.intersects(effectiveRect)
 
         if overlappingLeftBeaker {
-            model.dropped(molecule: molecule, on: .reactant)
+            moleculeModel.dropped(molecule: molecule, on: .reactant)
         } else if overlappingRightBeaker {
-            model.dropped(molecule: molecule, on: .product)
+            moleculeModel.dropped(molecule: molecule, on: .product)
         }
     }
 
-    private func atomSize(of molecule: BalancedReactionViewModel.MovingMolecule) -> CGFloat {
+    private func atomSize(of molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule) -> CGFloat {
         if molecule.isInBeaker {
             return layout.beakerMoleculeAtomSize
         }
@@ -120,12 +124,12 @@ private struct SizedBalancedReactionScreen: View {
     }
 
     private func position(
-        of molecule: BalancedReactionViewModel.MovingMolecule
+        of molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule
     ) -> CGPoint {
         optPosition(of: molecule) ?? .zero
     }
 
-    private func optPosition(of molecule: BalancedReactionViewModel.MovingMolecule) -> CGPoint? {
+    private func optPosition(of molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule) -> CGPoint? {
         switch molecule.position {
         case .grid:
             return moleculeGridLayout.position(
@@ -160,7 +164,7 @@ private struct SizedBalancedReactionScreen: View {
 
 private struct BalancedReactionTopStack: View {
 
-    @ObservedObject var model: BalancedReactionViewModel
+    @ObservedObject var model: BalancedReactionMoleculePositionViewModel
     let layout: BalancedReactionScreenLayout
 
     var body: some View {
@@ -191,7 +195,7 @@ struct BalancedReactionScreen_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
             BalancedReactionScreen(
-                model: BalancedReactionViewModel()
+                model: BalancedReactionScreenViewModel()
             )
         }
         .previewLayout(.iPhone8Landscape)

@@ -11,7 +11,7 @@ public struct ChemicalReactionsRootView: View {
 
     public var body: some View {
         BalancedReactionScreen(
-            model: BalancedReactionViewModel()
+            model: BalancedReactionScreenViewModel()
         )
     }
 }

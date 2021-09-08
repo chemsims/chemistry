@@ -398,7 +398,7 @@
 		5772DA6026CD255C00A00EAA /* BalancedReactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA5F26CD255C00A00EAA /* BalancedReactionScreen.swift */; };
 		5772DA6326CD265800A00EAA /* ChemicalReactionsScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA6226CD265800A00EAA /* ChemicalReactionsScreenLayout.swift */; };
 		5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA6426CD268400A00EAA /* BalancedReactionScreenLayout.swift */; };
-		5772DA6826CD273C00A00EAA /* BalancedReactionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA6726CD273C00A00EAA /* BalancedReactionViewModel.swift */; };
+		5772DA6826CD273C00A00EAA /* BalancedReactionMoleculePositionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA6726CD273C00A00EAA /* BalancedReactionMoleculePositionViewModel.swift */; };
 		5773BCD6267A2EA500E52C81 /* CircleChartLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */; };
 		5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD8267A5F4500E52C81 /* TextLineTests.swift */; };
 		577A2609262822FF0060EC54 /* ValueWithPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577A2608262822FF0060EC54 /* ValueWithPrevious.swift */; };
@@ -1169,7 +1169,7 @@
 		5772DA5F26CD255C00A00EAA /* BalancedReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionScreen.swift; sourceTree = "<group>"; };
 		5772DA6226CD265800A00EAA /* ChemicalReactionsScreenLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsScreenLayout.swift; sourceTree = "<group>"; };
 		5772DA6426CD268400A00EAA /* BalancedReactionScreenLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionScreenLayout.swift; sourceTree = "<group>"; };
-		5772DA6726CD273C00A00EAA /* BalancedReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionViewModel.swift; sourceTree = "<group>"; };
+		5772DA6726CD273C00A00EAA /* BalancedReactionMoleculePositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionMoleculePositionViewModel.swift; sourceTree = "<group>"; };
 		5773B5EB25B84A9100889A2E /* MailComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerView.swift; sourceTree = "<group>"; };
 		5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSettingsTests.swift; sourceTree = "<group>"; };
 		5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleChartLabel.swift; sourceTree = "<group>"; };
@@ -2727,7 +2727,7 @@
 		5772DA6626CD272F00A00EAA /* balanced-reaction */ = {
 			isa = PBXGroup;
 			children = (
-				5772DA6726CD273C00A00EAA /* BalancedReactionViewModel.swift */,
+				5772DA6726CD273C00A00EAA /* BalancedReactionMoleculePositionViewModel.swift */,
 			);
 			path = "balanced-reaction";
 			sourceTree = "<group>";
@@ -5367,7 +5367,7 @@
 				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
 				5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */,
 				5772DA6326CD265800A00EAA /* ChemicalReactionsScreenLayout.swift in Sources */,
-				5772DA6826CD273C00A00EAA /* BalancedReactionViewModel.swift in Sources */,
+				5772DA6826CD273C00A00EAA /* BalancedReactionMoleculePositionViewModel.swift in Sources */,
 				57E48A4626CACC3500A9A421 /* ChemicalReactionsStyling.swift in Sources */,
 				5772DA5526CD12A300A00EAA /* BalancedReactionMoleculeGridLayout.swift in Sources */,
 				57E48A5826CADBDC00A9A421 /* OneToTwoHorizontal.swift in Sources */,

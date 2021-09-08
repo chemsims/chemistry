@@ -5,26 +5,38 @@
 import SwiftUI
 import ReactionsCore
 
-class BalancedReactionViewModel: ObservableObject {
+class BalancedReactionScreenViewModel: ObservableObject {
+
+    init() {
+        let initialReaction = BalancedReaction.firstReaction
+        self.reaction = initialReaction
+        self.moleculePosition = .init(reaction: initialReaction)
+    }
+
+    @Published var reaction: BalancedReaction
+    let moleculePosition: BalancedReactionMoleculePositionViewModel
+
+    @Published var statement = [TextLine]()
+    @Published var canGoNext = true
+}
+
+// MARK: - Navigation
+extension BalancedReactionScreenViewModel {
+    func next() {
+    }
+
+    func back() {
+    }
+}
+
+
+class BalancedReactionMoleculePositionViewModel: ObservableObject {
 
     let reaction: BalancedReaction
     @Published var molecules = [MovingMolecule]()
     @Published var reactionBalancer: ReactionBalancer
-    @Published var statement = [TextLine]()
-    @Published var canGoNext: Bool = true
 
-    init() {
-        let reaction = BalancedReaction(
-            reactants: .two(
-                first: .init(molecule: .methane, coefficient: 1),
-                second: .init(molecule: .dioxygen, coefficient: 2)
-            ),
-            products: .two(
-                first: .init(molecule: .carbonDioxide, coefficient: 1),
-                second: .init(molecule: .water, coefficient: 2)
-            )
-        )
-
+    init(reaction: BalancedReaction) {
         self.reaction = reaction
         self.reactionBalancer = ReactionBalancer(reaction: reaction)
 
@@ -50,14 +62,6 @@ class BalancedReactionViewModel: ObservableObject {
 
         addInitialMolecules(.reactant)
         addInitialMolecules(.product)
-    }
-
-    func next() {
-
-    }
-
-    func back() {
-
     }
 
     func dropped(molecule: MovingMolecule, on elementType: BalancedReaction.ElementType) {
@@ -112,10 +116,9 @@ class BalancedReactionViewModel: ObservableObject {
 
 private extension Animation {
     static let addMolecule = Animation.easeOut(duration: 0.5)
-    static let removeMolecule = Animation.easeOut(duration: 0.35)
 }
 
-extension BalancedReactionViewModel {
+extension BalancedReactionMoleculePositionViewModel {
 
     struct MovingMolecule: Identifiable {
         let id = UUID()
