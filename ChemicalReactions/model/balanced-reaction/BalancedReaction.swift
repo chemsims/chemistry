@@ -77,3 +77,11 @@ extension BalancedReaction {
         }
     }
 }
+
+extension BalancedReaction {
+    var setOfAtoms: Set<Atom> {
+        let reactantAtoms = reactants.asArray.flatMap { $0.molecule.atoms }.map(\.atom)
+        let productAtoms = products.asArray.flatMap { $0.molecule.atoms }.map(\.atom)
+        return Set(reactantAtoms + productAtoms)
+    }
+}

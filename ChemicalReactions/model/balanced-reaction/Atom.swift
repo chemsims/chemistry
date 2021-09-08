@@ -6,8 +6,12 @@ import SwiftUI
 import ReactionsCore
 
 extension BalancedReaction {
-    enum Atom {
+    enum Atom: Identifiable, CaseIterable {
         case carbon, hydrogen, nitrogen, oxygen
+
+        var id: String {
+            symbol
+        }
 
         var symbol: String {
             switch self {

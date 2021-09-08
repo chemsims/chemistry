@@ -12,11 +12,13 @@ struct BalancedReactionScales: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            scales(for: .hydrogen)
             Spacer(minLength: 0)
-            scales(for: .nitrogen)
-            Spacer(minLength: 0)
-            scales(for: .carbon)
+            ForEach(BalancedReaction.Atom.allCases) { atom in
+                if model.showScales(for: atom) {
+                    scales(for: atom)
+                    Spacer(minLength: 0)
+                }
+            }
         }
         .frame(width: layout.scalesTotalWidth)
     }
@@ -51,8 +53,8 @@ struct BalancedReactionScales: View {
 }
 
 struct BalancedReactionScalesModel {
-    static let cols = 8
-    static let rows = 8
+    static let cols = 6
+    static let rows = 6
     static let maxMoleculeCount = CGFloat(MoleculeScales.gridCoords(cols: cols, rows: rows).count)
 
     init(balancer: ReactionBalancer) {
@@ -64,5 +66,9 @@ struct BalancedReactionScalesModel {
     func atomFraction(of atom: BalancedReaction.Atom, elementType: BalancedReaction.ElementType) -> CGFloat {
         let count = balancer.atomCount(of: atom, elementType: elementType)
         return CGFloat(count) / Self.maxMoleculeCount
+    }
+
+    func showScales(for atom: BalancedReaction.Atom) -> Bool {
+        balancer.reaction.setOfAtoms.contains(atom)
     }
 }
