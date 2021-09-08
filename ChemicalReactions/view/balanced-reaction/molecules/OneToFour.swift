@@ -9,13 +9,15 @@ extension BalancedReactionMoleculeView {
         let atomSize: CGFloat
         let singleAtom: BalancedReaction.Atom
         let quadAtom: BalancedReaction.Atom
+        let showSymbols: Bool
 
         var body: some View {
             ZStack {
                 quadAtoms
                 BalancedReactionMoleculeView.Atom(
                     size: atomSize,
-                    atom: singleAtom
+                    atom: singleAtom,
+                    showSymbol: showSymbols
                 )
             }
         }
@@ -37,7 +39,8 @@ extension BalancedReactionMoleculeView {
         private var individualQuadAtom: some View {
             BalancedReactionMoleculeView.Atom(
                 size: atomSize,
-                atom: quadAtom
+                atom: quadAtom,
+                showSymbol: showSymbols
             )
         }
 
@@ -50,7 +53,8 @@ struct OneToFour_Previews: PreviewProvider {
         BalancedReactionMoleculeView.OneToFour(
             atomSize: 50,
             singleAtom: .carbon,
-            quadAtom: .hydrogen
+            quadAtom: .hydrogen,
+            showSymbols: true
         )
     }
 }

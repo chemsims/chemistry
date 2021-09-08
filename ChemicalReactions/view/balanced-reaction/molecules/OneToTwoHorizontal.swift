@@ -11,6 +11,7 @@ extension BalancedReactionMoleculeView {
         let atomSize: CGFloat
         let singleAtom: BalancedReaction.Atom
         let doubleAtom: BalancedReaction.Atom
+        let showSymbols: Bool
 
         var body: some View {
             HStack(spacing: Self.spacingToAtomSize * atomSize) {
@@ -24,14 +25,16 @@ extension BalancedReactionMoleculeView {
         private var individualSingle: some View {
             BalancedReactionMoleculeView.Atom(
                 size: atomSize,
-                atom: singleAtom
+                atom: singleAtom,
+                showSymbol: showSymbols
             )
         }
 
         private var individualDouble: some View {
             BalancedReactionMoleculeView.Atom(
                 size: atomSize,
-                atom: doubleAtom
+                atom: doubleAtom,
+                showSymbol: showSymbols
             )
         }
 
@@ -46,7 +49,8 @@ struct TripleHorizontal_Previews: PreviewProvider {
         BalancedReactionMoleculeView.OneToTwoHorizontal(
             atomSize: 50,
             singleAtom: .carbon,
-            doubleAtom: .oxygen
+            doubleAtom: .oxygen,
+            showSymbols: true
         )
     }
 }

@@ -51,6 +51,7 @@ private struct SizedBalancedReactionScreen: View {
                 BalancedReactionMoleculeView(
                     structure: molecule.moleculeType.structure,
                     atomSize: atomSize(of: molecule),
+                    showSymbols: !molecule.isInBeaker,
                     dragEnabled: !molecule.isInBeaker,
                     onDragEnd: {
                         moleculeDragEnded(molecule: molecule, offset: $0)

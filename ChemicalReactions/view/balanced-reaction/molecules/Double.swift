@@ -9,6 +9,7 @@ extension BalancedReactionMoleculeView {
     struct Double: View {
         let atomSize: CGFloat
         let atom: BalancedReaction.Atom
+        let showSymbol: Bool
 
         var body: some View {
             HStack(spacing: Self.spacingToAtomSize * atomSize) {
@@ -20,7 +21,8 @@ extension BalancedReactionMoleculeView {
         private var singleAtom: some View {
             BalancedReactionMoleculeView.Atom(
                 size: atomSize,
-                atom: atom
+                atom: atom,
+                showSymbol: showSymbol
             )
         }
 
@@ -32,7 +34,8 @@ struct Double_Previews: PreviewProvider {
     static var previews: some View {
         BalancedReactionMoleculeView.Double(
             atomSize: 20,
-            atom: .carbon
+            atom: .carbon,
+            showSymbol: true
         )
     }
 }

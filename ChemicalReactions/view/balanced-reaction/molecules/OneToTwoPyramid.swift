@@ -10,6 +10,7 @@ extension BalancedReactionMoleculeView {
         let atomSize: CGFloat
         let singleAtom: BalancedReaction.Atom
         let doubleAtom: BalancedReaction.Atom
+        let showSymbols: Bool
 
         var body: some View {
             ZStack {
@@ -22,7 +23,8 @@ extension BalancedReactionMoleculeView {
             VStack(spacing: 0) {
                 BalancedReactionMoleculeView.Atom(
                     size: atomSize,
-                    atom: singleAtom
+                    atom: singleAtom,
+                    showSymbol: showSymbols
                 )
 
                 Spacer(minLength: 0)
@@ -45,7 +47,8 @@ extension BalancedReactionMoleculeView {
         private var individualDoubleAtom: some View {
             BalancedReactionMoleculeView.Atom(
                 size: atomSize,
-                atom: doubleAtom
+                atom: doubleAtom,
+                showSymbol: showSymbols
             )
         }
 
@@ -67,7 +70,8 @@ struct OneToTwoPyramid_Previews: PreviewProvider {
         BalancedReactionMoleculeView.OneToTwoPyramid(
             atomSize: 50,
             singleAtom: .oxygen,
-            doubleAtom: .hydrogen
+            doubleAtom: .hydrogen,
+            showSymbols: true
         )
     }
 }

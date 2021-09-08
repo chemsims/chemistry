@@ -11,6 +11,7 @@ extension BalancedReactionMoleculeView {
         let atomSize: CGFloat
         let singleAtom: BalancedReaction.Atom
         let tripleAtom: BalancedReaction.Atom
+        let showSymbols: Bool
 
         var body: some View {
             VStack(spacing: Self.bottomAtomsVSpacingToAtomSize * atomSize) {
@@ -39,14 +40,16 @@ extension BalancedReactionMoleculeView {
         private var individualSingleAtom: some View {
             BalancedReactionMoleculeView.Atom(
                 size: atomSize,
-                atom: singleAtom
+                atom: singleAtom,
+                showSymbol: showSymbols
             )
         }
 
         private var individualTripleAtom: some View {
             BalancedReactionMoleculeView.Atom(
                 size: atomSize,
-                atom: tripleAtom
+                atom: tripleAtom,
+                showSymbol: showSymbols
             )
         }
 
@@ -63,7 +66,8 @@ struct OneToThree_Previews: PreviewProvider {
         BalancedReactionMoleculeView.OneToThree(
             atomSize: 100,
             singleAtom: .nitrogen,
-            tripleAtom: .hydrogen
+            tripleAtom: .hydrogen,
+            showSymbols: true
         )
     }
 }

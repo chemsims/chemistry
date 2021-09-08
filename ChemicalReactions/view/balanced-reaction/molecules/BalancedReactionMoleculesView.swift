@@ -8,6 +8,7 @@ struct BalancedReactionMoleculeView: View {
 
     let structure: BalancedReaction.MoleculeStructure
     let atomSize: CGFloat
+    let showSymbols: Bool
     let dragEnabled: Bool
     let onDragEnd: (CGSize) -> Void
 
@@ -50,7 +51,8 @@ struct BalancedReactionMoleculeView: View {
     private func double(atom: BalancedReaction.Atom) -> some View {
         BalancedReactionMoleculeView.Double(
             atomSize: atomSize,
-            atom: atom
+            atom: atom,
+            showSymbol: showSymbols
         )
     }
 
@@ -61,7 +63,8 @@ struct BalancedReactionMoleculeView: View {
         BalancedReactionMoleculeView.OneToTwoHorizontal(
             atomSize: atomSize,
             singleAtom: single,
-            doubleAtom: double
+            doubleAtom: double,
+            showSymbols: showSymbols
         )
     }
 
@@ -72,7 +75,8 @@ struct BalancedReactionMoleculeView: View {
         BalancedReactionMoleculeView.OneToTwoPyramid(
             atomSize: atomSize,
             singleAtom: single,
-            doubleAtom: double
+            doubleAtom: double,
+            showSymbols: showSymbols
         )
     }
 
@@ -83,7 +87,8 @@ struct BalancedReactionMoleculeView: View {
         BalancedReactionMoleculeView.OneToThree(
             atomSize: atomSize,
             singleAtom: single,
-            tripleAtom: triple
+            tripleAtom: triple,
+            showSymbols: showSymbols
         )
     }
 
@@ -94,7 +99,8 @@ struct BalancedReactionMoleculeView: View {
         BalancedReactionMoleculeView.OneToFour(
             atomSize: atomSize,
             singleAtom: single,
-            quadAtom: quad
+            quadAtom: quad,
+            showSymbols: showSymbols
         )
     }
 }
@@ -103,15 +109,19 @@ extension BalancedReactionMoleculeView {
     struct Atom: View {
         let size: CGFloat
         let atom: BalancedReaction.Atom
+        let showSymbol: Bool
 
         var body: some View {
             ZStack {
                 Circle()
                     .foregroundColor(atom.color)
-                
-                Text(atom.symbol)
-                    .font(.system(size: 0.75 * size))
-                    .foregroundColor(.white)
+
+                if showSymbol {
+                    Text(atom.symbol)
+                        .font(.system(size: 0.75 * size))
+                        .foregroundColor(.white)
+                        .transition(.identity)
+                }
             }
             .frame(square: size)
         }
@@ -120,11 +130,29 @@ extension BalancedReactionMoleculeView {
 
 struct BalancedReactionMoleculesView_Previews: PreviewProvider {
     static var previews: some View {
-        BalancedReactionMoleculeView(
-            structure: BalancedReaction.Molecule.water.structure,
-            atomSize: 100,
-            dragEnabled: true,
-            onDragEnd: { _ in }
-        )
+        ViewWrapper()
+    }
+
+    private struct ViewWrapper: View {
+        @State private var showSymbol = true
+
+        var body: some View {
+            VStack {
+                BalancedReactionMoleculeView(
+                    structure: BalancedReaction.Molecule.water.structure,
+                    atomSize: 100,
+                    showSymbols: showSymbol,
+                    dragEnabled: true,
+                    onDragEnd: { _ in }
+                )
+                .animation(.linear(duration: 1))
+
+                Button(action: {
+                    showSymbol.toggle()
+                }) {
+                    Text("Toggle symbol")
+                }
+            }
+        }
     }
 }
