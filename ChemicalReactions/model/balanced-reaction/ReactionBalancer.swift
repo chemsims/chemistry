@@ -25,6 +25,16 @@ struct ReactionBalancer {
         reactantBalancer.isBalanced && productBalancer.isBalanced
     }
 
+    /// Returns true if the number of molecules added is an exact multiple of the reaction coefficients,
+    /// where each multiple is the same, and greater than 1
+    var isMultipleOfBalanced: Bool {
+        if let reactantMultiple = reactantBalancer.multipleOfBalanced,
+           let productMultiple = productBalancer.multipleOfBalanced {
+            return reactantMultiple > 1 && reactantMultiple == productMultiple
+        }
+        return false
+    }
+
     mutating func add(_ molecule: BalancedReaction.Molecule, to type: BalancedReaction.ElementType) {
         switch type {
         case .reactant: addReactant(molecule)
@@ -91,6 +101,22 @@ private struct ReactionSideBalancer {
         elements.allSatisfy { molecule in
             counts.value(for: molecule.molecule) == molecule.coefficient
         }
+    }
+
+    var multipleOfBalanced: Int? {
+        let multiples = elements.compactMap { element -> Int? in
+            let count = counts.value(for: element.molecule)
+            if count % element.coefficient == 0 {
+                return count / element.coefficient
+            }
+            return nil
+        }
+
+        let setOfMultiples = Set(multiples)
+        if multiples.count == elements.count, setOfMultiples.count == 1 {
+            return setOfMultiples.first!
+        }
+        return nil
     }
 
     mutating func add(_ molecule: BalancedReaction.Molecule) {

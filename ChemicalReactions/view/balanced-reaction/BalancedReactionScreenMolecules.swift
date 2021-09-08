@@ -29,7 +29,7 @@ extension BalancedReactionScreen {
                 .position(position(of: molecule))
                 .onTapGesture {
                     if molecule.isInBeaker {
-                        moleculeModel.remove(molecule: molecule)
+                        model.remove(molecule: molecule)
                     }
                 }
             }
@@ -55,9 +55,9 @@ extension BalancedReactionScreen {
             let overlappingRightBeaker = layout.secondBeakerRect.intersects(effectiveRect)
 
             if overlappingLeftBeaker {
-                moleculeModel.dropped(molecule: molecule, on: .reactant)
+                model.drop(molecule: molecule, on: .reactant)
             } else if overlappingRightBeaker {
-                moleculeModel.dropped(molecule: molecule, on: .product)
+                model.drop(molecule: molecule, on: .product)
             }
         }
 

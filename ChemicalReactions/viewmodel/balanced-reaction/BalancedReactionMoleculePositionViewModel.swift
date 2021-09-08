@@ -29,6 +29,35 @@ extension BalancedReactionScreenViewModel {
     }
 }
 
+// MARK: - Adding molecule
+extension BalancedReactionScreenViewModel {
+    func drop(
+        molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
+        on elementType: BalancedReaction.ElementType
+    ) {
+        let didDrop = moleculePosition.drop(molecule: molecule, on: elementType)
+        if didDrop {
+            updateStatementPostMoleculeInteraction(molecule: molecule.moleculeType)
+        }
+    }
+
+    func remove(molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule) {
+        let didRemove = moleculePosition.remove(molecule: molecule)
+        if didRemove {
+            updateStatementPostMoleculeInteraction(molecule: molecule.moleculeType)
+        }
+    }
+
+    private func updateStatementPostMoleculeInteraction(
+        molecule: BalancedReaction.Molecule
+    ) {
+        let newStatement = BalancedReactionDynamicStatement.getStatement(
+            afterAdjusting: molecule,
+            reactionBalancer: moleculePosition.reactionBalancer
+        )
+        self.statement = newStatement
+    }
+}
 
 class BalancedReactionMoleculePositionViewModel: ObservableObject {
 
@@ -64,20 +93,28 @@ class BalancedReactionMoleculePositionViewModel: ObservableObject {
         addInitialMolecules(.product)
     }
 
-    func dropped(molecule: MovingMolecule, on elementType: BalancedReaction.ElementType) {
-        guard !molecule.isInBeaker && molecule.elementType == elementType else {
-            return
+    /// Attempts to drop the molecule on the beaker, returning true if the molecule was added
+    fileprivate func drop(
+        molecule: MovingMolecule,
+        on elementType: BalancedReaction.ElementType
+    ) -> Bool {
+        let countInBeaker = reactionBalancer.count(of: molecule.moleculeType)
+        guard countInBeaker < BalancedReactionBeakerMoleculeLayout.maxCount else {
+            return false
         }
-        add(molecule: molecule)
+
+        guard !molecule.isInBeaker && molecule.elementType == elementType else {
+            return false
+        }
+        add(molecule: molecule, withIndex: countInBeaker)
+        return true
     }
 
-    func add(molecule: MovingMolecule) {
-        let countInBeaker = reactionBalancer.count(of: molecule.moleculeType)
-
-        guard countInBeaker < BalancedReactionBeakerMoleculeLayout.maxCount else {
-            return
-        }
-
+    /// Attempts to add the molecule on the beaker, returning true if the molecule was added
+    private func add(
+        molecule: MovingMolecule,
+        withIndex index: Int
+    ) {
         let newMoleculeInGrid = MovingMolecule(
             moleculeType: molecule.moleculeType,
             elementType: molecule.elementType,
@@ -88,18 +125,20 @@ class BalancedReactionMoleculePositionViewModel: ObservableObject {
 
         for i in molecules.indices {
             if molecules[i].id == molecule.id {
-                molecules[i].position = .beaker(index: countInBeaker)
+                molecules[i].position = .beaker(index: index)
             }
         }
 
         withAnimation(.addMolecule) {
             molecules.append(newMoleculeInGrid)
         }
+
     }
 
-    func remove(molecule: MovingMolecule) {
+    /// Attempts to remove `molecule` from the beaker, returning true iff it was removed
+    fileprivate func remove(molecule: MovingMolecule) -> Bool {
         guard let moleculeBeakerIndex = molecule.beakerIndex else {
-            return
+            return false
         }
 
         reactionBalancer.remove(molecule.moleculeType, from: molecule.elementType)
@@ -111,6 +150,8 @@ class BalancedReactionMoleculePositionViewModel: ObservableObject {
                 molecules[moleculeIndex].decrementBeakerIndexIfGreaterThan(moleculeBeakerIndex)
             }
         }
+
+        return true
     }
 }
 

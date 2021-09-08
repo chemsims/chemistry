@@ -656,6 +656,7 @@
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
 		57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997F26615C4D00443C5A /* MovingPoint.swift */; };
 		57D54C7C26E8F59000907806 /* BalancedReactionScreenMolecules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D54C7B26E8F59000907806 /* BalancedReactionScreenMolecules.swift */; };
+		57D54C7E26E8F7EC00907806 /* BalancedReactionDynamicStatement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D54C7D26E8F7EC00907806 /* BalancedReactionDynamicStatement.swift */; };
 		57D60152265EAD0100017E25 /* PositiveInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D60151265EAD0100017E25 /* PositiveInt.swift */; };
 		57D9693C26D7B67900A629AB /* InAppPurchase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9693B26D7B67900A629AB /* InAppPurchase.swift */; };
 		57D9C3E726D964870023ED91 /* FixedDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9C3E626D964870023ED91 /* FixedDateProvider.swift */; };
@@ -1419,6 +1420,7 @@
 		57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeContainerViewModel.swift; sourceTree = "<group>"; };
 		57D3997F26615C4D00443C5A /* MovingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingPoint.swift; sourceTree = "<group>"; };
 		57D54C7B26E8F59000907806 /* BalancedReactionScreenMolecules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionScreenMolecules.swift; sourceTree = "<group>"; };
+		57D54C7D26E8F7EC00907806 /* BalancedReactionDynamicStatement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionDynamicStatement.swift; sourceTree = "<group>"; };
 		57D60151265EAD0100017E25 /* PositiveInt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositiveInt.swift; sourceTree = "<group>"; };
 		57D60154265ECA4600017E25 /* PHScaleBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScaleBar.swift; sourceTree = "<group>"; };
 		57D60157265ECA7B00017E25 /* PHScaleColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHScaleColors.swift; sourceTree = "<group>"; };
@@ -3859,6 +3861,7 @@
 				5772DA5426CD12A300A00EAA /* BalancedReactionMoleculeGridLayout.swift */,
 				5782FC9926E6890C00F97177 /* BalancedReactionBeakerMoleculesLayout.swift */,
 				5766FF9226E764B60061D2F1 /* BalancedReactionTypes.swift */,
+				57D54C7D26E8F7EC00907806 /* BalancedReactionDynamicStatement.swift */,
 			);
 			path = "balanced-reaction";
 			sourceTree = "<group>";
@@ -5377,6 +5380,7 @@
 				57E48A5426CADA0E00A9A421 /* OneToFour.swift in Sources */,
 				5772DA6026CD255C00A00EAA /* BalancedReactionScreen.swift in Sources */,
 				5766FF9526E78EF30061D2F1 /* BalancedReactionScales.swift in Sources */,
+				57D54C7E26E8F7EC00907806 /* BalancedReactionDynamicStatement.swift in Sources */,
 				5766FF9326E764B60061D2F1 /* BalancedReactionTypes.swift in Sources */,
 				57E48A4A26CACCD400A9A421 /* Molecule.swift in Sources */,
 				57FCA1C526CABEC3005EE93F /* ChemicalReactionsRootView.swift in Sources */,

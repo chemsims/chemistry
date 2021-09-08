@@ -6,11 +6,11 @@ import SwiftUI
 import ReactionsCore
 
 extension BalancedReaction {
-    enum Atom: Identifiable, CaseIterable {
+    enum Atom: String, Identifiable, CaseIterable {
         case carbon, hydrogen, nitrogen, oxygen
 
         var id: String {
-            symbol
+            rawValue
         }
 
         var symbol: String {
@@ -20,6 +20,10 @@ extension BalancedReaction {
             case .nitrogen: return "N"
             case .oxygen: return "O"
             }
+        }
+
+        var name: String {
+            rawValue
         }
 
         var color: Color {
