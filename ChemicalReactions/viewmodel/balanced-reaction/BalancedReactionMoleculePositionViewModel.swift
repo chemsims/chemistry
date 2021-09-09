@@ -14,7 +14,11 @@ class BalancedReactionScreenViewModel: ObservableObject {
         self.navigation = BalancedReactionNavigationModel.model(using: self)
     }
 
-    @Published var reaction: BalancedReaction
+    @Published var reaction: BalancedReaction {
+        didSet  {
+            resetMolecules()
+        }
+    }
     private(set) var moleculePosition: BalancedReactionMoleculePositionViewModel
 
     @Published var statement = [TextLine]()
