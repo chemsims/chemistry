@@ -2,11 +2,10 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 extension Image {
-    init(_ image: ImageType) {
+    public init(_ image: ImageType) {
         switch image {
         case let .framework(name, bundle): self.init(name, bundle: bundle)
         case let .core(name): self.init(name.name, bundle: .reactionsCore)

@@ -15,22 +15,32 @@ extension BalancedReactionScreen {
         let layout: BalancedReactionScreenLayout
 
         var body: some View {
-            ForEach(moleculeModel.molecules) { molecule in
-                BalancedReactionMoleculeView(
-                    structure: molecule.moleculeType.structure,
-                    atomSize: atomSize(of: molecule),
-                    showSymbols: !molecule.isInBeaker,
-                    dragEnabled: !molecule.isInBeaker,
-                    onDragEnd: {
-                        moleculeDragEnded(molecule: molecule, offset: $0)
+            ZStack {
+                ForEach(moleculeModel.molecules) { molecule in
+                    BalancedReactionMoleculeView(
+                        structure: molecule.moleculeType.structure,
+                        atomSize: atomSize(of: molecule),
+                        showSymbols: !molecule.isInBeaker,
+                        dragEnabled: !molecule.isInBeaker,
+                        onDragEnd: {
+                            moleculeDragEnded(molecule: molecule, offset: $0)
+                        }
+                    )
+                    .animation(.easeOut(duration: 0.35))
+                    .position(position(of: molecule))
+                    .onTapGesture {
+                        if molecule.isInBeaker {
+                            model.remove(molecule: molecule)
+                        }
                     }
-                )
-                .animation(.easeOut(duration: 0.35))
-                .position(position(of: molecule))
-                .onTapGesture {
-                    if molecule.isInBeaker {
-                        model.remove(molecule: molecule)
-                    }
+                }
+
+                if model.showDragTutorial {
+                    GhostMolecule(
+                        moleculeType: moleculeModel.reaction.reactants.first.molecule,
+                        originalPosition: moleculeGridLayout.firstReactantPosition,
+                        layout: layout
+                    )
                 }
             }
         }
@@ -108,3 +118,43 @@ extension BalancedReactionScreen {
     }
 }
 
+
+private struct GhostMolecule: View {
+
+    let moleculeType: BalancedReaction.Molecule
+    let originalPosition: CGPoint
+    let layout: BalancedReactionScreenLayout
+
+    @State private var moleculeIsInBeaker = false
+
+    var body: some View {
+        ZStack {
+            BalancedReactionMoleculeView(
+                structure: moleculeType.structure,
+                atomSize: layout.moleculeTableAtomSize,
+                showSymbols: false
+            )
+            .compositingGroup()
+            .opacity(0.5)
+
+            Image(.core(.openHand))
+                .resizable()
+                .offset(y: layout.moleculeTableAtomSize / 2)
+                .frame(size: layout.moleculeDragHandSize)
+        }
+        .position(position)
+        .onAppear {
+            withAnimation(.easeInOut(duration: 2.5).repeatForever(autoreverses: false)) {
+                moleculeIsInBeaker = true
+            }
+        }
+    }
+
+    private var position: CGPoint {
+        moleculeIsInBeaker ? positionInBeaker : originalPosition
+    }
+
+    private var positionInBeaker: CGPoint {
+        layout.firstBeakerRect.center
+    }
+}

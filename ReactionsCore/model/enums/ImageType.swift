@@ -21,11 +21,15 @@ public enum CoreImage {
     case quizIconSelected
     case filingCabinet
     case filingCabinetSelected
+    case openHand
+    case closedHand
 
     var name: String {
         switch self {
         case .quizIcon, .quizIconSelected: return "text-book-closed"
         case .filingCabinet, .filingCabinetSelected: return "archivebox-thinner"
+        case .openHand: return "openhand"
+        case .closedHand: return "closedhand"
         }
     }
 }

@@ -157,3 +157,10 @@ extension BalancedReactionScreenLayout {
         return min(idealHeight, maxHeightForMaxWidth)
     }
 }
+
+// MARK: - Misc
+extension BalancedReactionScreenLayout {
+    var moleculeDragHandSize: CGSize {
+        CGSize(width: 1.2 * moleculeTableAtomSize, height: 1.2 * moleculeTableAtomSize)
+    }
+}

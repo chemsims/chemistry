@@ -21,6 +21,8 @@ class BalancedReactionScreenViewModel: ObservableObject {
     @Published var canGoNext = true
     @Published var showReactionToggle = false
 
+    @Published var showDragTutorial = false
+
     private(set) var navigation: NavigationModel<BalancedReactionScreenState>!
 }
 
@@ -44,6 +46,9 @@ extension BalancedReactionScreenViewModel {
         let didDrop = moleculePosition.drop(molecule: molecule, on: elementType)
         if didDrop {
             updateStatementPostMoleculeInteraction(molecule: molecule.moleculeType)
+            if showDragTutorial {
+                showDragTutorial = false
+            }
         }
     }
 

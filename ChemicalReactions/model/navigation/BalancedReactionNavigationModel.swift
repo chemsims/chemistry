@@ -65,6 +65,10 @@ private class ShowDraggingTutorial: SetStatement {
 
     override func apply(on model: BalancedReactionScreenViewModel) {
         super.apply(on: model)
+        model.showDragTutorial = true
     }
 
+    override func unapply(on model: BalancedReactionScreenViewModel) {
+        model.showDragTutorial = false
+    }
 }
