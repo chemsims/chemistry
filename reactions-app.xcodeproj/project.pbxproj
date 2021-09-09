@@ -470,6 +470,8 @@
 		57B3B92F260B408500EB9B47 /* NavigationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B92E260B408500EB9B47 /* NavigationRow.swift */; };
 		57B3B935260B40C100EB9B47 /* GeneralRootNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B934260B40C100EB9B47 /* GeneralRootNavigationView.swift */; };
 		57B4572426EA29A60030D895 /* AvailableBalancedReactionsValidityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B4572326EA29A60030D895 /* AvailableBalancedReactionsValidityTests.swift */; };
+		57B4572726EA40E50030D895 /* BalancedReactionNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B4572626EA40E50030D895 /* BalancedReactionNavigationModel.swift */; };
+		57B4572A26EA42610030D895 /* ChemicalReactionStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B4572926EA42610030D895 /* ChemicalReactionStatements.swift */; };
 		57B5781D2639634C008DFAB5 /* AccessibilityExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5781C2639634C008DFAB5 /* AccessibilityExtensions.swift */; };
 		57B5781F2639953B008DFAB5 /* UniqueGridCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B5781E2639953B008DFAB5 /* UniqueGridCoordinates.swift */; };
 		57B57821263995E8008DFAB5 /* UniqueGridCoordinateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */; };
@@ -1331,6 +1333,8 @@
 		57B3B94C260B478800EB9B47 /* ReactionsEquilibriumNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionsEquilibriumNavigationModel.swift; sourceTree = "<group>"; };
 		57B3B961260B4BF500EB9B47 /* NavigationIconRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationIconRows.swift; sourceTree = "<group>"; };
 		57B4572326EA29A60030D895 /* AvailableBalancedReactionsValidityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableBalancedReactionsValidityTests.swift; sourceTree = "<group>"; };
+		57B4572626EA40E50030D895 /* BalancedReactionNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionNavigationModel.swift; sourceTree = "<group>"; };
+		57B4572926EA42610030D895 /* ChemicalReactionStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionStatements.swift; sourceTree = "<group>"; };
 		57B528E525B38A2300381550 /* ReviewPrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPrompter.swift; sourceTree = "<group>"; };
 		57B528E925B38A4E00381550 /* ReviewPromptPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptPersistence.swift; sourceTree = "<group>"; };
 		57B5312526440336002F7247 /* ReactionDefinitionArrowDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionArrowDirection.swift; sourceTree = "<group>"; };
@@ -3381,6 +3385,22 @@
 			path = util;
 			sourceTree = "<group>";
 		};
+		57B4572526EA40D60030D895 /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				57B4572626EA40E50030D895 /* BalancedReactionNavigationModel.swift */,
+			);
+			path = navigation;
+			sourceTree = "<group>";
+		};
+		57B4572826EA42550030D895 /* statements */ = {
+			isa = PBXGroup;
+			children = (
+				57B4572926EA42610030D895 /* ChemicalReactionStatements.swift */,
+			);
+			path = statements;
+			sourceTree = "<group>";
+		};
 		57B5781B2639633C008DFAB5 /* extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -4108,6 +4128,8 @@
 		57FCA1C126CABE9B005EE93F /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57B4572826EA42550030D895 /* statements */,
+				57B4572526EA40D60030D895 /* navigation */,
 				5772DA6126CD264B00A00EAA /* layout */,
 				57E48A4426CACC2A00A9A421 /* styling */,
 				57E48A4126CACB3700A9A421 /* balanced-reaction */,
@@ -5379,11 +5401,13 @@
 				57E48A5226CAD8B900A9A421 /* BalancedReactionMoleculesView.swift in Sources */,
 				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
 				5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */,
+				57B4572A26EA42610030D895 /* ChemicalReactionStatements.swift in Sources */,
 				5772DA6326CD265800A00EAA /* ChemicalReactionsScreenLayout.swift in Sources */,
 				5772DA6826CD273C00A00EAA /* BalancedReactionMoleculePositionViewModel.swift in Sources */,
 				57E48A4626CACC3500A9A421 /* ChemicalReactionsStyling.swift in Sources */,
 				5772DA5526CD12A300A00EAA /* BalancedReactionMoleculeGridLayout.swift in Sources */,
 				57E48A5826CADBDC00A9A421 /* OneToTwoHorizontal.swift in Sources */,
+				57B4572726EA40E50030D895 /* BalancedReactionNavigationModel.swift in Sources */,
 				57E48A5426CADA0E00A9A421 /* OneToFour.swift in Sources */,
 				5772DA6026CD255C00A00EAA /* BalancedReactionScreen.swift in Sources */,
 				5766FF9526E78EF30061D2F1 /* BalancedReactionScales.swift in Sources */,

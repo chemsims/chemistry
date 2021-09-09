@@ -11,6 +11,7 @@ class BalancedReactionScreenViewModel: ObservableObject {
         let initialReaction = BalancedReaction.firstReaction
         self.reaction = initialReaction
         self.moleculePosition = .init(reaction: initialReaction)
+        self.navigation = BalancedReactionNavigationModel.model(using: self)
     }
 
     @Published var reaction: BalancedReaction
@@ -18,16 +19,19 @@ class BalancedReactionScreenViewModel: ObservableObject {
 
     @Published var statement = [TextLine]()
     @Published var canGoNext = true
+    @Published var showReactionToggle = false
 
-    @Published var showReactionToggle = true
+    private(set) var navigation: NavigationModel<BalancedReactionScreenState>!
 }
 
 // MARK: - Navigation
 extension BalancedReactionScreenViewModel {
     func next() {
+        navigation.next()
     }
 
     func back() {
+        navigation.back()
     }
 }
 

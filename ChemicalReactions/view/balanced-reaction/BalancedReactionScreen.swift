@@ -135,10 +135,3 @@ struct BalancedReactionScreen_Previews: PreviewProvider {
         .previewLayout(.iPhone8Landscape)
     }
 }
-
-// TODO: remove
-extension Int: Identifiable {
-    public var id: Int {
-        self
-    }
-}
