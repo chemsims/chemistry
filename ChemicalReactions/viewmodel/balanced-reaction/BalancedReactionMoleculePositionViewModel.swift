@@ -15,7 +15,7 @@ class BalancedReactionScreenViewModel: ObservableObject {
     }
 
     @Published var reaction: BalancedReaction
-    let moleculePosition: BalancedReactionMoleculePositionViewModel
+    private(set) var moleculePosition: BalancedReactionMoleculePositionViewModel
 
     @Published var statement = [TextLine]()
     @Published var canGoNext = true
@@ -39,6 +39,11 @@ extension BalancedReactionScreenViewModel {
 
 // MARK: - Adding molecule
 extension BalancedReactionScreenViewModel {
+
+    func resetMolecules() {
+        moleculePosition = .init(reaction: reaction)
+    }
+
     func drop(
         molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
         on elementType: BalancedReaction.ElementType

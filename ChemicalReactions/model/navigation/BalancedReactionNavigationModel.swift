@@ -70,5 +70,6 @@ private class ShowDraggingTutorial: SetStatement {
 
     override func unapply(on model: BalancedReactionScreenViewModel) {
         model.showDragTutorial = false
+        model.resetMolecules()
     }
 }
