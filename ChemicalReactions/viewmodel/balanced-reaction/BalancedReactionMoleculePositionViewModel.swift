@@ -18,17 +18,37 @@ class BalancedReactionScreenViewModel: ObservableObject {
     private(set) var moleculePosition: BalancedReactionMoleculePositionViewModel
 
     @Published var statement = [TextLine]()
-    @Published var canGoNext = true
     @Published var showReactionToggle = false
 
     @Published var showDragTutorial = false
+    @Published var inputState: InputState? = nil
 
     private(set) var navigation: NavigationModel<BalancedReactionScreenState>!
+}
+
+extension BalancedReactionScreenViewModel {
+    enum InputState {
+        case dragMolecules, selectReaction
+    }
+
+    var canGoNext: Bool {
+        switch inputState {
+        case .dragMolecules: return moleculePosition.reactionBalancer.isBalanced
+        case .selectReaction: return false
+        case nil: return true
+        }
+    }
 }
 
 // MARK: - Navigation
 extension BalancedReactionScreenViewModel {
     func next() {
+        if canGoNext {
+            doGoNext()
+        }
+    }
+
+    private func doGoNext() {
         navigation.next()
     }
 
@@ -48,11 +68,17 @@ extension BalancedReactionScreenViewModel {
         molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
         on elementType: BalancedReaction.ElementType
     ) {
+        guard inputState == .dragMolecules else {
+            return
+        }
         let didDrop = moleculePosition.drop(molecule: molecule, on: elementType)
         if didDrop {
             updateStatementPostMoleculeInteraction(molecule: molecule.moleculeType)
             if showDragTutorial {
                 showDragTutorial = false
+            }
+            if moleculePosition.reactionBalancer.isBalanced {
+                doGoNext()
             }
         }
     }
@@ -61,17 +87,21 @@ extension BalancedReactionScreenViewModel {
         let didRemove = moleculePosition.remove(molecule: molecule)
         if didRemove {
             updateStatementPostMoleculeInteraction(molecule: molecule.moleculeType)
+            if moleculePosition.reactionBalancer.isBalanced {
+                doGoNext()
+            }
         }
     }
 
     private func updateStatementPostMoleculeInteraction(
         molecule: BalancedReaction.Molecule
     ) {
-        let newStatement = BalancedReactionDynamicStatement.getStatement(
+        if let newStatement = BalancedReactionDynamicStatement.getStatement(
             afterAdjusting: molecule,
             reactionBalancer: moleculePosition.reactionBalancer
-        )
-        self.statement = newStatement
+        ) {
+            self.statement = newStatement
+        }
     }
 }
 

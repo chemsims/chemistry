@@ -21,7 +21,7 @@ extension BalancedReactionScreen {
                         structure: molecule.moleculeType.structure,
                         atomSize: atomSize(of: molecule),
                         showSymbols: !molecule.isInBeaker,
-                        dragEnabled: !molecule.isInBeaker,
+                        dragEnabled: !molecule.isInBeaker && model.inputState == .dragMolecules,
                         onDragEnd: {
                             moleculeDragEnded(molecule: molecule, offset: $0)
                         }

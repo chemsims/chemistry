@@ -20,7 +20,8 @@ struct BalancedReactionNavigationModel {
         SetStatement(statements.empiricalFormulaExample),
         SetStatement(statements.explainStoichiometricCoeffs),
         SetStatement(statements.explainBalancedReaction),
-        ShowDraggingTutorial(statements.instructToDragMoleculeForFirstReaction)
+        ShowDraggingTutorial(statements.instructToDragMoleculeForFirstReaction),
+        ChooseNewReactionPostBalancing()
     ]
 }
 
@@ -66,10 +67,24 @@ private class ShowDraggingTutorial: SetStatement {
     override func apply(on model: BalancedReactionScreenViewModel) {
         super.apply(on: model)
         model.showDragTutorial = true
+        model.inputState = .dragMolecules
+    }
+
+    override func reapply(on model: BalancedReactionScreenViewModel) {
+        super.apply(on: model)
+        model.inputState = .dragMolecules
     }
 
     override func unapply(on model: BalancedReactionScreenViewModel) {
         model.showDragTutorial = false
         model.resetMolecules()
+        model.inputState = nil
+    }
+}
+
+private class ChooseNewReactionPostBalancing: BalancedReactionScreenState {
+    override func apply(on model: BalancedReactionScreenViewModel) {
+        model.statement = statements.instructToChooseReactionPostBalancing
+        model.inputState = .selectReaction
     }
 }

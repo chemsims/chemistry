@@ -12,12 +12,12 @@ struct BalancedReactionDynamicStatement {
     static func getStatement(
         afterAdjusting molecule: BalancedReaction.Molecule,
         reactionBalancer: ReactionBalancer
-    ) -> [TextLine] {
+    ) -> [TextLine]? {
         if reactionBalancer.isBalanced {
-            return statementForBalancedReaction()
+            return nil
         }
         if reactionBalancer.isMultipleOfBalanced {
-            return statementForMultipleOfBalanced()
+            return statementForMultipleOfBalanced
         }
 
         return statementForUnbalancedReaction(
@@ -26,24 +26,14 @@ struct BalancedReactionDynamicStatement {
         )
     }
 
-    private static func statementForBalancedReaction() -> [TextLine] {
-        [
-            """
-            *The equation is balanced!* This is what the real equation for this reaction looks \
-            like. There are the same number of atoms on both sides of the equation.
-            """,
-            "*Choose another one.*"
-        ]
-    }
 
-    private static func statementForMultipleOfBalanced() -> [TextLine] {
-        [
-            """
-            There are now the same number of atoms on both sides of the equation, but each \
-            coefficient could be smaller. *Try to remove molecules*.
-            """
-        ]
-    }
+    private static let statementForMultipleOfBalanced: [TextLine] = [
+        """
+        There are now the same number of atoms on both sides of the equation, but each \
+        coefficient could be smaller. *Try to remove molecules*.
+        """
+    ]
+
 
     private static func statementForUnbalancedReaction(
         afterAdding molecule: BalancedReaction.Molecule,

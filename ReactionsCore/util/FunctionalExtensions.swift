@@ -20,6 +20,7 @@ extension Optional {
 }
 
 extension Optional where Wrapped: Equatable {
+    /// Returns true if a value exists and it is equal to `other`
     public func contains(_ other: Wrapped) -> Bool {
         self.exists { $0 == other }
     }
