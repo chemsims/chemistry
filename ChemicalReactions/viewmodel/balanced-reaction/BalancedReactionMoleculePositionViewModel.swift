@@ -18,6 +18,8 @@ class BalancedReactionScreenViewModel: ObservableObject {
 
     @Published var statement = [TextLine]()
     @Published var canGoNext = true
+
+    @Published var showReactionToggle = true
 }
 
 // MARK: - Navigation

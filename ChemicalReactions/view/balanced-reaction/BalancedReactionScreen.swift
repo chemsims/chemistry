@@ -33,7 +33,6 @@ private struct SizedBalancedReactionScreen: View {
 
     @ObservedObject var model: BalancedReactionScreenViewModel
     @ObservedObject var moleculeModel: BalancedReactionMoleculePositionViewModel
-
     let layout: BalancedReactionScreenLayout
 
     var body: some View {
@@ -52,6 +51,8 @@ private struct SizedBalancedReactionScreen: View {
                 moleculeModel: moleculeModel,
                 layout: layout
             )
+
+            reactionSelection
         }
     }
 
@@ -68,19 +69,30 @@ private struct SizedBalancedReactionScreen: View {
     }
 
     private var beaky: some View {
-        HStack(spacing: 0) {
-            Spacer(minLength: 0)
-            VStack(spacing: 0) {
-                Spacer(minLength: 0)
-                BeakyBox(
-                    statement: model.statement,
-                    next: model.next,
-                    back: model.back,
-                    nextIsDisabled: !model.canGoNext,
-                    settings: layout.common.beakySettings
-                )
-            }
-        }
+        BeakyBox(
+            statement: model.statement,
+            next: model.next,
+            back: model.back,
+            nextIsDisabled: !model.canGoNext,
+            settings: layout.common.beakySettings
+        )
+        .spacing(horizontalAlignment: .trailing, verticalAlignment: .bottom)
+    }
+
+    private var reactionSelection: some View {
+        DropDownSelectionView(
+            title: "Choose a reaction",
+            options: BalancedReaction.availableReactions,
+            isToggled: $model.showReactionToggle,
+            selection: $model.reaction,
+            height: 20,
+            animation: nil,
+            displayString: { $0.display },
+            label: { $0.display.label },
+            disabledOptions: [],
+            onSelection: { }
+        )
+        .spacing(horizontalAlignment: .trailing, verticalAlignment: .top)
     }
 }
 
@@ -121,5 +133,12 @@ struct BalancedReactionScreen_Previews: PreviewProvider {
             )
         }
         .previewLayout(.iPhone8Landscape)
+    }
+}
+
+// TODO: remove
+extension Int: Identifiable {
+    public var id: Int {
+        self
     }
 }

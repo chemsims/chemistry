@@ -13,6 +13,17 @@ public enum HorizontalSpacingAlignment {
 }
 
 extension View {
+
+    /// Adds horizontal and vertical spacing around a view
+    public func spacing(
+        horizontalAlignment: HorizontalSpacingAlignment,
+        verticalAlignment: VerticalSpacingAlignment
+    ) -> some View {
+        self
+            .horizontalSpacing(alignment: horizontalAlignment)
+            .verticalSpacing(alignment: verticalAlignment)
+    }
+
     /// Adds horizontal spacing around the view
     public func horizontalSpacing(alignment: HorizontalSpacingAlignment) -> some View {
         self.modifier(HSpacingViewModifier(alignment: alignment))

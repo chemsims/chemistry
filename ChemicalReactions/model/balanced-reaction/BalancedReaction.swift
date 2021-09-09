@@ -3,8 +3,9 @@
 //
 
 import Foundation
+import ReactionsCore
 
-struct BalancedReaction {
+struct BalancedReaction: Equatable {
 
     init(reactants: Elements, products: Elements) {
         assert(Self.moleculesAreValid(reactants: reactants, products: products))
@@ -21,6 +22,13 @@ struct BalancedReaction {
         case .product: return products
         }
     }
+}
+
+extension BalancedReaction: Identifiable {
+    var id: String {
+        "\(reactants.id):\(products.id)"
+    }
+    
 }
 
 extension BalancedReaction {
@@ -44,7 +52,7 @@ extension BalancedReaction {
         case first, second
     }
 
-    enum Elements {
+    enum Elements: Equatable {
         case one(element: Element)
         case two(first: Element, second: Element)
 
@@ -83,5 +91,27 @@ extension BalancedReaction {
         let reactantAtoms = reactants.asArray.flatMap { $0.molecule.atoms }.map(\.atom)
         let productAtoms = products.asArray.flatMap { $0.molecule.atoms }.map(\.atom)
         return Set(reactantAtoms + productAtoms)
+    }
+}
+
+extension BalancedReaction.Elements {
+    var id: String {
+        asArray.map(\.id).reduce("") { $0 + $1 }
+    }
+}
+
+extension BalancedReaction.Elements {
+    var display: TextLine {
+        switch self {
+        case let .one(element): return element.molecule.textLine
+        case let .two(first, second):
+            return first.molecule.textLine + " + " + second.molecule.textLine
+        }
+    }
+}
+
+extension BalancedReaction {
+    var display: TextLine {
+        reactants.display + " ➝ " + products.display
     }
 }

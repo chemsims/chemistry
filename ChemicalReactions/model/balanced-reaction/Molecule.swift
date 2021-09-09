@@ -25,7 +25,7 @@ extension BalancedReaction {
              oneToFour(singleAtom: BalancedReaction.Atom, quadAtom: BalancedReaction.Atom)
     }
 
-    struct Element {
+    struct Element: Equatable {
         init(molecule: BalancedReaction.Molecule, coefficient: Int) {
             assert(coefficient >= 1)
             self.molecule = molecule
@@ -34,6 +34,14 @@ extension BalancedReaction {
 
         let molecule: BalancedReaction.Molecule
         let coefficient: Int
+    }
+}
+
+extension BalancedReaction.Element {
+    var id: String {
+        molecule.atoms.map { atomCount in
+            return "\(atomCount.count)\(atomCount.atom.name)"
+        }.reduce("") { $0 + $1 }
     }
 }
 
