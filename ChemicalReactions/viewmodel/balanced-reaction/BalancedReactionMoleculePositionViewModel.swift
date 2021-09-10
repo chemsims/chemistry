@@ -14,20 +14,16 @@ class BalancedReactionScreenViewModel: ObservableObject {
         self.navigation = BalancedReactionNavigationModel.model(using: self)
     }
 
-    @Published var reaction: BalancedReaction {
-        didSet  {
-            resetMolecules()
-        }
-    }
+    @Published var reaction: BalancedReaction
     private(set) var moleculePosition: BalancedReactionMoleculePositionViewModel
 
     @Published var statement = [TextLine]()
-    @Published var showReactionToggle = false
-
     @Published var showDragTutorial = false
     @Published var inputState: InputState? = nil
 
     private(set) var navigation: NavigationModel<BalancedReactionScreenState>!
+
+    private var moleculePositionHistory = [BalancedReactionMoleculePositionViewModel]()
 }
 
 extension BalancedReactionScreenViewModel {
@@ -58,6 +54,23 @@ extension BalancedReactionScreenViewModel {
 
     func back() {
         navigation.back()
+    }
+}
+
+// MARK: - Selecting reaction
+extension BalancedReactionScreenViewModel {
+
+    func didSelectReaction() {
+        moleculePositionHistory.append(moleculePosition)
+        moleculePosition = .init(reaction: reaction)
+        doGoNext()
+    }
+
+    func restorePreviousMolecules() {
+        if let previousMolecules = moleculePositionHistory.last {
+            reaction = previousMolecules.reaction
+            moleculePosition = previousMolecules
+        }
     }
 }
 
