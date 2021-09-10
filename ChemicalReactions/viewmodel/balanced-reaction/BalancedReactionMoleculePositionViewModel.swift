@@ -23,8 +23,15 @@ class BalancedReactionScreenViewModel: ObservableObject {
 
     @Published var emphasiseReactionCoefficients = true
 
+    var hasSelectedFirstReaction = false
+
     var unavailableReactions: [BalancedReaction] {
-        [reaction] + moleculePositionHistory.map(\.reaction)
+        // When there's nothing in history, then we should not block the current reaction
+        // from being chosen, as it is initial reaction on the screen
+        if !hasSelectedFirstReaction {
+            return []
+        }
+        return [reaction] + moleculePositionHistory.map(\.reaction)
     }
 
     private(set) var navigation: NavigationModel<BalancedReactionScreenState>!
@@ -67,7 +74,11 @@ extension BalancedReactionScreenViewModel {
 extension BalancedReactionScreenViewModel {
 
     func didSelectReaction() {
-        moleculePositionHistory.append(moleculePosition)
+        if hasSelectedFirstReaction {
+            moleculePositionHistory.append(moleculePosition)
+        } else {
+            hasSelectedFirstReaction = true
+        }
         moleculePosition = .init(reaction: reaction)
         doGoNext()
     }

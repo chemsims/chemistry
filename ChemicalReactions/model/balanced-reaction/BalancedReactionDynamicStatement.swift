@@ -44,7 +44,9 @@ struct BalancedReactionDynamicStatement {
 
         let moleculeString = coeff == 1 ? "molecule" : "molecules"
         let moleculeDisplay = "\(coeff) \(moleculeString) of \(symbol)"
-        let atomDisplays = molecule.atoms.map { $0.displayCount(coeff: coeff) }
+        let atomDisplays = molecule.atoms.map {
+            $0.effectiveDisplayCount(moleculeCoefficient: coeff)
+        }
 
         let displayComponents = [moleculeDisplay] + atomDisplays
 
@@ -59,13 +61,5 @@ struct BalancedReactionDynamicStatement {
         balance the reaction.*
         """
         ]
-    }
-}
-
-private extension BalancedReaction.AtomCount {
-    func displayCount(coeff: Int) -> String {
-        let resultingCount = coeff * count
-        let atomString = resultingCount == 1 ? "atom" : "atoms"
-        return "\(resultingCount) \(atomString) of \(atom.name)"
     }
 }

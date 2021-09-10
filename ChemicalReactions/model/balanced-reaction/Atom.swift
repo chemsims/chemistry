@@ -47,3 +47,28 @@ extension BalancedReaction {
         let count: Int
     }
 }
+
+extension BalancedReaction.AtomCount {
+    var displayCount: String {
+        effectiveDisplayCount(moleculeCoefficient: 1)
+    }
+
+    func displayCount(formatter: (BalancedReaction.Atom) -> String) -> String {
+        effectiveDisplayCount(moleculeCoefficient: 1, formatter: formatter)
+    }
+
+    func effectiveDisplayCount(moleculeCoefficient coeff: Int) -> String {
+        effectiveDisplayCount(moleculeCoefficient: coeff) { $0.name }
+    }
+
+
+    private func effectiveDisplayCount(
+        moleculeCoefficient coeff: Int,
+        formatter: (BalancedReaction.Atom) -> String
+    ) -> String {
+        let resultingCount = coeff * count
+        let atomString = resultingCount == 1 ? "atom" : "atoms"
+        let formattedAtom = formatter(atom)
+        return "\(resultingCount) \(atomString) of \(formattedAtom)"
+    }
+}

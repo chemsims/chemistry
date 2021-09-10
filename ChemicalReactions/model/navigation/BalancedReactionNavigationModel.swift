@@ -15,9 +15,9 @@ struct BalancedReactionNavigationModel {
     }
 
     private static let states: [BalancedReactionScreenState] = [
-        SetStatement(statements.intro),
-        SetStatement(statements.explainEmpiricalFormula),
-        SetStatement(statements.empiricalFormulaExample),
+        ChooseInitialReaction(statements.intro),
+        PostChooseInitialReaction(statements.explainEmpiricalFormula),
+        SetStatement { statements.empiricalFormulaExample(reaction: $0.reaction) },
         SetStatement(statements.explainStoichiometricCoeffs),
         SetStatement(statements.explainBalancedReaction),
         ShowDraggingTutorial(statements.instructToDragMoleculeForFirstReaction)
@@ -59,13 +59,36 @@ class BalancedReactionScreenState: ScreenState, SubState {
 private class SetStatement: BalancedReactionScreenState {
 
     init(_ statement: [TextLine]) {
+        self.statement = { _ in statement }
+    }
+
+    init(_ statement: @escaping (BalancedReactionScreenViewModel) -> [TextLine]) {
         self.statement = statement
     }
 
-    let statement: [TextLine]
+    private let statement: (BalancedReactionScreenViewModel) -> [TextLine]
 
     override func apply(on model: BalancedReactionScreenViewModel) {
-        model.statement = statement
+        model.statement = statement(model)
+    }
+}
+
+private class ChooseInitialReaction: SetStatement {
+    override func apply(on model: BalancedReactionScreenViewModel) {
+        super.apply(on: model)
+        model.inputState = .selectReaction
+        model.hasSelectedFirstReaction = false
+    }
+}
+
+private class PostChooseInitialReaction: SetStatement {
+    override func apply(on model: BalancedReactionScreenViewModel) {
+        super.apply(on: model)
+        model.inputState = nil
+    }
+
+    override func unapply(on model: BalancedReactionScreenViewModel) {
+        model.restorePreviousMolecules()
     }
 }
 

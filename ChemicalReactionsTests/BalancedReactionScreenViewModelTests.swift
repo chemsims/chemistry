@@ -9,6 +9,7 @@ class BalancedReactionScreenViewModelTests: XCTestCase {
 
     func testPreviousMoleculesAreMaintainedWhenGoingBack() {
         let model = BalancedReactionScreenViewModel()
+        model.didSelectReaction()
         let nav = model.navigation!
         nav.nextUntil { $0.inputState == .dragMolecules }
 
@@ -48,6 +49,7 @@ class BalancedReactionScreenViewModelTests: XCTestCase {
 
     func testPreviousMoleculesAreMaintainedWhenGoingBackTwice() {
         let model = BalancedReactionScreenViewModel()
+        model.didSelectReaction()
         let nav = model.navigation!
         let firstReaction = BalancedReaction.availableReactions[0]
         model.reaction = firstReaction
@@ -75,7 +77,10 @@ class BalancedReactionScreenViewModelTests: XCTestCase {
         let model = BalancedReactionScreenViewModel()
         let nav = model.navigation!
 
+        XCTAssertEqual(model.unavailableReactions, [])
+
         let firstReaction = model.reaction
+        model.didSelectReaction()
 
         var chosenReactions: [BalancedReaction] = [firstReaction]
 
@@ -94,6 +99,9 @@ class BalancedReactionScreenViewModelTests: XCTestCase {
             chosenReactions.append(nextReaction)
             model.didSelectReaction()
         }
+
+        nav.backWhile(\.hasSelectedFirstReaction)
+        XCTAssertEqual(model.unavailableReactions, [])
     }
 }
 

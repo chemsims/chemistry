@@ -9,10 +9,8 @@ struct BalancedReactionStatements {
     private init() { }
 
     static let intro: [TextLine] = [
-        """
-        Chemical reactions are represented as an equation. *Click next and let's find out \
-        more!*
-        """
+        "Chemical reactions are represented as an equation.",
+        "*Choose a reaction and then let's find out more about that!*"
     ]
 
     static let explainEmpiricalFormula: [TextLine] = [
@@ -23,13 +21,28 @@ struct BalancedReactionStatements {
         """
     ]
 
-    static let empiricalFormulaExample: [TextLine] = [
-        """
-        For example, in this case *CH_4_* is methane, and the molecule of methane has 4 atoms of \
-        *hydrogen (H)* and 1 atom of *carbon (C)*. *H_2_O* is water, and the molecule of water has \
-        1 atom of *oxygen (O)* and 2 atoms of *hydrogen (H).*
-        """
-    ]
+    static func empiricalFormulaExample(reaction: BalancedReaction) -> [TextLine] {
+        let firstMolecule = reaction.reactants.first.molecule
+        let secondMolecule = reaction.products.second?.molecule ?? reaction.products.first.molecule
+
+        func formatAtom(_ atom: BalancedReaction.Atom) -> String {
+            "*\(atom.name) (\(atom.symbol))*"
+        }
+
+        func description(_ molecule: BalancedReaction.Molecule) -> String {
+            let atomCounts = molecule.atoms.map {
+                $0.displayCount(formatter: formatAtom)
+            }
+            let atoms = StringUtil.combineStringsWithFinalAnd(atomCounts)
+            return "\(molecule.textLine.asMarkdown) is \(molecule.name) which has \(atoms)"
+        }
+
+        return [
+            """
+            For example, in this case \(description(firstMolecule)). \(description(secondMolecule)).
+            """
+        ]
+    }
 
     static let explainStoichiometricCoeffs: [TextLine] = [
         """

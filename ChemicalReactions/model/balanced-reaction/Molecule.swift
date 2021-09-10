@@ -6,7 +6,7 @@ import Foundation
 import ReactionsCore
 
 extension BalancedReaction {
-    enum Molecule: CaseIterable {
+    enum Molecule: String, CaseIterable {
         case dinitrogen,
              dihydrogen,
              ammonia,
@@ -108,7 +108,21 @@ extension BalancedReaction.Molecule {
             return "\(single.symbol)\(double.symbol)_2_"
 
         case let .oneToTwoPyramid(single, double):
-            return "\(single.symbol)\(double.symbol)_2_"
+            return "\(double.symbol)_2_\(single.symbol)"
         }
+    }
+}
+
+extension BalancedReaction.Molecule {
+
+    var name: String {
+        let parts = self.rawValue.split { $0.isUppercase }
+        if let firstPart = parts.first {
+            let subSequence = parts.dropFirst().reduce(firstPart) {
+                $0 + " \($1)"
+            }
+            return String(subSequence)
+        }
+        return ""
     }
 }
