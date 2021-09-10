@@ -89,7 +89,7 @@ private struct SizedBalancedReactionScreen: View {
             animation: nil,
             displayString: { $0.display },
             label: { $0.display.label },
-            disabledOptions: [],
+            disabledOptions: model.unavailableReactions,
             onSelection: model.didSelectReaction
         )
         .disabled(model.inputState != .selectReaction)

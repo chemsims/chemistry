@@ -29,7 +29,7 @@ extension BalancedReactionScreen {
                     .animation(.easeOut(duration: 0.35))
                     .position(position(of: molecule))
                     .onTapGesture {
-                        if molecule.isInBeaker {
+                        if molecule.isInBeaker && model.inputState == .dragMolecules {
                             model.remove(molecule: molecule)
                         }
                     }

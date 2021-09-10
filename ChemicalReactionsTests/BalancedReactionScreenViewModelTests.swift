@@ -45,6 +45,31 @@ class BalancedReactionScreenViewModelTests: XCTestCase {
         XCTAssertEqual(model.moleculePosition.molecules.count, firstReaction.totalElementCount + 2)
         XCTAssertEqual(model.moleculePosition.reactionBalancer.totalMolecules, 2)
     }
+
+    func testReactionsBecomeUnavailableWhenTheyAreUsed() {
+        let model = BalancedReactionScreenViewModel()
+        let nav = model.navigation!
+
+        let firstReaction = model.reaction
+
+        var chosenReactions: [BalancedReaction] = [firstReaction]
+
+        func goToNextReactionSelection() {
+            nav.nextUntil { $0.inputState == .selectReaction }
+        }
+
+        var nextNonSelectedReaction: BalancedReaction? {
+            BalancedReaction.availableReactions.filter { !chosenReactions.contains($0) }.first
+        }
+
+        while let nextReaction = nextNonSelectedReaction {
+            goToNextReactionSelection()
+            XCTAssertArraysContainTheSameElements(model.unavailableReactions, chosenReactions)
+            model.reaction = nextReaction
+            chosenReactions.append(nextReaction)
+            model.didSelectReaction()
+        }
+    }
 }
 
 private extension BalancedReaction {

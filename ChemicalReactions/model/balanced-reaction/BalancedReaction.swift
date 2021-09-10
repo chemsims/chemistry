@@ -115,3 +115,9 @@ extension BalancedReaction {
         reactants.display + " ➝ " + products.display
     }
 }
+
+extension BalancedReaction: CustomDebugStringConvertible {
+    var debugDescription: String {
+        display.asString
+    }
+}

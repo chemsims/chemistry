@@ -21,6 +21,10 @@ class BalancedReactionScreenViewModel: ObservableObject {
     @Published var showDragTutorial = false
     @Published var inputState: InputState? = nil
 
+    var unavailableReactions: [BalancedReaction] {
+        [reaction] + moleculePositionHistory.map(\.reaction)
+    }
+
     private(set) var navigation: NavigationModel<BalancedReactionScreenState>!
 
     private var moleculePositionHistory = [BalancedReactionMoleculePositionViewModel]()
