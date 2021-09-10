@@ -14,7 +14,12 @@ extension BalancedReactionScreenLayout {
 
     var moleculeTableRect: CGRect {
         let originX = common.width - moleculeTableSize.width
-        let originY = common.height - common.beakyBoxHeight - moleculeTableSize.height
+
+        let topY = common.reactionSelectionToggleHeight
+        let bottomY = common.height - common.beakyBoxHeight
+        let centerY = (topY + bottomY) / 2
+        let originY = centerY - (moleculeTableSize.height / 2)
+
         return CGRect(
             origin: CGPoint(x: originX, y: originY),
             size: moleculeTableSize
@@ -25,7 +30,7 @@ extension BalancedReactionScreenLayout {
         let cellWidth = moleculeTableSize.width / 2
         let cellHeight = moleculeTableSize.height / 2
 
-        let atomSizeToCellSize: CGFloat = 0.3
+        let atomSizeToCellSize: CGFloat = 0.33
 
         let maxForWidth = atomSizeToCellSize * cellWidth
         let maxForHeight = atomSizeToCellSize * cellHeight
@@ -46,7 +51,7 @@ extension BalancedReactionScreenLayout {
     private var moleculeTableSize: CGSize {
         CGSize(
             width: 0.35 * common.width,
-            height: 0.5 * common.height
+            height: 0.45 * common.height
         )
     }
 }

@@ -37,3 +37,10 @@ extension ChemicalReactionsScreenLayout {
         )
     }
 }
+
+// MARK: - Reaction selection
+extension ChemicalReactionsScreenLayout {
+    var reactionSelectionToggleHeight: CGFloat {
+        0.05 * height
+    }
+}
