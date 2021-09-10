@@ -198,6 +198,11 @@
 		573F2E6D26EB8CE000E9AB74 /* UserDefaultsExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9C025C45C81000C0397 /* UserDefaultsExtensions.swift */; };
 		573F2E6E26EB8CE000E9AB74 /* QuizTestMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD402D2648765700E352C1 /* QuizTestMethods.swift */; };
 		573F2E6F26EB8CE000E9AB74 /* NavigationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5760536F25AE519B0068B533 /* NavigationExtensions.swift */; };
+		573F2E7226EBB03A00E9AB74 /* ChemicalReactionsInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F2E7126EBB03A00E9AB74 /* ChemicalReactionsInjector.swift */; };
+		573F2E7426EBB0B900E9AB74 /* ChemicalReactionNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F2E7326EBB0B900E9AB74 /* ChemicalReactionNavigationModel.swift */; };
+		573F2E7626EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F2E7526EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift */; };
+		573F2E7926EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F2E7826EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift */; };
+		573F2E7B26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F2E7A26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift */; };
 		574103DF2642966300E6EDCB /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F82578CE7E00EF90A1 /* Tooltip.swift */; };
 		5742D1AD26AAAAC900049FCC /* ProductLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1AC26AAAAC900049FCC /* ProductLocker.swift */; };
 		5742D1B026AAB1A300049FCC /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 5742D1AF26AAB1A300049FCC /* SwiftKeychainWrapper */; };
@@ -1026,6 +1031,11 @@
 		573F169C2584C035001CE039 /* QuizQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestion.swift; sourceTree = "<group>"; };
 		573F16A625852D5D001CE039 /* BeakerReactionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerReactionState.swift; sourceTree = "<group>"; };
 		573F2E6926EB8C9D00E9AB74 /* BalancedReactionScreenViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedReactionScreenViewModelTests.swift; sourceTree = "<group>"; };
+		573F2E7126EBB03A00E9AB74 /* ChemicalReactionsInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsInjector.swift; sourceTree = "<group>"; };
+		573F2E7326EBB0B900E9AB74 /* ChemicalReactionNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionNavigationModel.swift; sourceTree = "<group>"; };
+		573F2E7526EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsScreen.swift; sourceTree = "<group>"; };
+		573F2E7826EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsQuestionSet.swift; sourceTree = "<group>"; };
+		573F2E7A26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsNavigationRows.swift; sourceTree = "<group>"; };
 		5742D1AC26AAAAC900049FCC /* ProductLocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLocker.swift; sourceTree = "<group>"; };
 		5742D1B126AAB39F00049FCC /* SKProductExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKProductExtension.swift; sourceTree = "<group>"; };
 		5742D1B326AABA0F00049FCC /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
@@ -2296,6 +2306,14 @@
 			path = quiz;
 			sourceTree = "<group>";
 		};
+		573F2E7726EBB4C000E9AB74 /* quiz */ = {
+			isa = PBXGroup;
+			children = (
+				573F2E7826EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift */,
+			);
+			path = quiz;
+			sourceTree = "<group>";
+		};
 		5742D1AB26AAAAB100049FCC /* purchasing */ = {
 			isa = PBXGroup;
 			children = (
@@ -3396,6 +3414,10 @@
 			isa = PBXGroup;
 			children = (
 				57B4572626EA40E50030D895 /* BalancedReactionNavigationModel.swift */,
+				573F2E7126EBB03A00E9AB74 /* ChemicalReactionsInjector.swift */,
+				573F2E7326EBB0B900E9AB74 /* ChemicalReactionNavigationModel.swift */,
+				573F2E7526EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift */,
+				573F2E7A26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -4136,6 +4158,7 @@
 		57FCA1C126CABE9B005EE93F /* model */ = {
 			isa = PBXGroup;
 			children = (
+				573F2E7726EBB4C000E9AB74 /* quiz */,
 				57B4572826EA42550030D895 /* statements */,
 				57B4572526EA40D60030D895 /* navigation */,
 				5772DA6126CD264B00A00EAA /* layout */,
@@ -5407,16 +5430,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				57E48A5226CAD8B900A9A421 /* BalancedReactionMoleculesView.swift in Sources */,
+				573F2E7926EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift in Sources */,
 				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
 				5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */,
 				57B4572A26EA42610030D895 /* BalancedReactionStatements.swift in Sources */,
 				5772DA6326CD265800A00EAA /* ChemicalReactionsScreenLayout.swift in Sources */,
 				5772DA6826CD273C00A00EAA /* BalancedReactionMoleculePositionViewModel.swift in Sources */,
+				573F2E7B26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift in Sources */,
 				57E48A4626CACC3500A9A421 /* ChemicalReactionsStyling.swift in Sources */,
 				5772DA5526CD12A300A00EAA /* BalancedReactionMoleculeGridLayout.swift in Sources */,
+				573F2E7226EBB03A00E9AB74 /* ChemicalReactionsInjector.swift in Sources */,
 				57E48A5826CADBDC00A9A421 /* OneToTwoHorizontal.swift in Sources */,
 				57B4572726EA40E50030D895 /* BalancedReactionNavigationModel.swift in Sources */,
 				57E48A5426CADA0E00A9A421 /* OneToFour.swift in Sources */,
+				573F2E7426EBB0B900E9AB74 /* ChemicalReactionNavigationModel.swift in Sources */,
 				5772DA6026CD255C00A00EAA /* BalancedReactionScreen.swift in Sources */,
 				5766FF9526E78EF30061D2F1 /* BalancedReactionScales.swift in Sources */,
 				57D54C7E26E8F7EC00907806 /* BalancedReactionDynamicStatement.swift in Sources */,
@@ -5426,6 +5453,7 @@
 				57D54C7C26E8F59000907806 /* BalancedReactionScreenMolecules.swift in Sources */,
 				5782FC9A26E6890C00F97177 /* BalancedReactionBeakerMoleculesLayout.swift in Sources */,
 				57E48A4E26CAD20E00A9A421 /* ReactionBalancer.swift in Sources */,
+				573F2E7626EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift in Sources */,
 				5766FF9126E764780061D2F1 /* BalancedReactionDefinition.swift in Sources */,
 				57E48A5C26CADEBC00A9A421 /* OneToThree.swift in Sources */,
 				57E48A5626CADB1600A9A421 /* Double.swift in Sources */,

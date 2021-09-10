@@ -92,7 +92,11 @@ class APChemRootNavigationModel: ObservableObject {
             )
 
         case .chemicalReactions:
-            return ChemicalReactionsScreenProvider()
+            return ChemicalReactionsScreenProvider(
+                injector: injector,
+                showUnitSelection: showUnitSelectionBinding,
+                showAboutPage: showAboutPageBinding
+            )
         }
     }
 
@@ -222,7 +226,28 @@ private class AcidsBasesScreenProvider: ScreenProvider {
 }
 
 private class ChemicalReactionsScreenProvider: ScreenProvider {
+
+    init(
+        injector: APChemInjector,
+        showUnitSelection: Binding<Bool>,
+        showAboutPage: Binding<Bool>
+    ) {
+        self.model = injector.chemicalReactionsInjector
+        self.showUnitSelection = showUnitSelection
+        self.showAboutPage = showAboutPage
+    }
+
+    private let model: RootNavigationViewModel<ChemicalReactionsAppNavInjector>
+    private let showUnitSelection: Binding<Bool>
+    private let showAboutPage: Binding<Bool>
+
     var screen: AnyView {
-        AnyView(ChemicalReactionsRootView())
+        AnyView(
+            ChemicalReactionsRootView(
+                model: model,
+                unitSelectionIsShowing: showUnitSelection,
+                aboutPageIsShowing: showAboutPage
+            )
+        )
     }
 }

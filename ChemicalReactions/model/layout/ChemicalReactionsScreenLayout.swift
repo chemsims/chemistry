@@ -17,6 +17,8 @@ struct ChemicalReactionsScreenLayout {
     var height: CGFloat {
         geometry.size.height
     }
+
+    static let topLevelScreenPadding: CGFloat = 10
 }
 
 // MARK: - Beaky

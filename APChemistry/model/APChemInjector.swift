@@ -6,6 +6,7 @@ import Foundation
 import ReactionRates
 import Equilibrium
 import AcidsBases
+import ChemicalReactions
 import ReactionsCore
 
 protocol APChemInjector {
@@ -19,6 +20,8 @@ protocol APChemInjector {
     var equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector> { get }
 
     var acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector> { get }
+
+    var chemicalReactionsInjector: RootNavigationViewModel<ChemicalReactionsAppNavInjector> { get }
 
     var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> { get }
 
@@ -67,6 +70,11 @@ class ProductionAPChemInjector: APChemInjector {
             appLaunchPersistence: appLaunch,
             analytics: analytics
         )
+        self.chemicalReactionsInjector = .production(
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunch,
+            analytics: analytics
+        )
     }
 
     let storeManager: StoreManager = StoreManager(
@@ -80,6 +88,8 @@ class ProductionAPChemInjector: APChemInjector {
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector>
 
     let acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector>
+
+    let chemicalReactionsInjector: RootNavigationViewModel<ChemicalReactionsAppNavInjector>
 
     let lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
         AnyScreenPersistence(
@@ -142,6 +152,11 @@ class DebugAPChemInjector: APChemInjector {
             appLaunchPersistence: appLaunch,
             analytics: analytics
         )
+        self.chemicalReactionsInjector = .inMemory(
+            sharePrompter: sharePrompter,
+            appLaunchPersistence: appLaunch,
+            analytics: analytics
+        )
     }
 
     let storeManager: StoreManager = StoreManager(
@@ -163,6 +178,8 @@ class DebugAPChemInjector: APChemInjector {
     let equilibriumInjector: RootNavigationViewModel<EquilibriumNavInjector>
 
     let acidsBasesInjector: RootNavigationViewModel<AcidAppNavInjector>
+
+    let chemicalReactionsInjector: RootNavigationViewModel<ChemicalReactionsAppNavInjector>
 
     var lastOpenedUnitPersistence: AnyScreenPersistence<Unit> =
         AnyScreenPersistence(UserDefaultsScreenPersistence(prefix: "apchem"))

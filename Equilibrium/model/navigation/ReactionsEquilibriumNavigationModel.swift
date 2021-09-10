@@ -114,7 +114,7 @@ private struct EquilibriumNavigationBehaviour: NavigationBehaviour {
     }
 
     func showReviewPromptOn(screen: EquilibriumScreen) -> Bool {
-        screen == .finalScreen
+        screen == .solubility
     }
 
     func showMenuOn(screen: EquilibriumScreen) -> Bool {

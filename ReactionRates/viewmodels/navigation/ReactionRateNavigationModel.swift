@@ -124,7 +124,7 @@ private struct ReactionsRateNavigationBehaviour: NavigationBehaviour {
     }
 
     func showReviewPromptOn(screen: ReactionRatesScreen) -> Bool {
-        screen == .finalAppScreen
+        screen == .secondOrderReaction
     }
 
     func showMenuOn(screen: ReactionRatesScreen) -> Bool {

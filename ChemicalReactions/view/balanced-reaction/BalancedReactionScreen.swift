@@ -26,6 +26,7 @@ struct BalancedReactionScreen: View {
                 )
             )
         }
+        .padding(ChemicalReactionsScreenLayout.topLevelScreenPadding)
     }
 }
 

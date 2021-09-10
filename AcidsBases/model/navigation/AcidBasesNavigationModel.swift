@@ -108,7 +108,7 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
     }
 
     func showReviewPromptOn(screen: AcidBasesScreen) -> Bool {
-        screen == .finalAppScreen
+        screen == .titration
     }
 
     func showMenuOn(screen: AcidBasesScreen) -> Bool {

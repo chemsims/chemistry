@@ -63,7 +63,6 @@ extension AcidBasesScreenLayout {
     }
 }
 
-
 struct AcidAppRootView_Previews: PreviewProvider {
     static var previews: some View {
         AcidAppRootView(
