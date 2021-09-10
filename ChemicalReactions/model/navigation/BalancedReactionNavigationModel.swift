@@ -75,11 +75,13 @@ private class ShowDraggingTutorial: SetStatement {
         super.apply(on: model)
         model.showDragTutorial = true
         model.inputState = .dragMolecules
+        model.resetMolecules()
     }
 
     override func reapply(on model: BalancedReactionScreenViewModel) {
         super.apply(on: model)
         model.inputState = .dragMolecules
+        model.resetMolecules()
     }
 
     override func unapply(on model: BalancedReactionScreenViewModel) {

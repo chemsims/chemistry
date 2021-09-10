@@ -76,6 +76,7 @@ extension BalancedReactionScreenViewModel {
         if let previousMolecules = moleculePositionHistory.last {
             reaction = previousMolecules.reaction
             moleculePosition = previousMolecules
+            moleculePositionHistory.removeLast()
         }
     }
 }
