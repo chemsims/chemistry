@@ -93,6 +93,11 @@ private class ChooseNewReactionPostBalancing: BalancedReactionScreenState {
     override func apply(on model: BalancedReactionScreenViewModel) {
         model.statement = statements.instructToChooseReactionPostBalancing
         model.inputState = .selectReaction
+        model.emphasiseReactionCoefficients = false
+    }
+
+    override func unapply(on model: BalancedReactionScreenViewModel) {
+        model.emphasiseReactionCoefficients = true
     }
 }
 
@@ -100,6 +105,7 @@ private class DragMolecules: BalancedReactionScreenState {
     override func apply(on model: BalancedReactionScreenViewModel) {
         model.statement = statements.instructToDragMoleculesForSubsequentReaction
         model.inputState = .dragMolecules
+        model.emphasiseReactionCoefficients = true
     }
 
     override func unapply(on model: BalancedReactionScreenViewModel) {
@@ -112,5 +118,10 @@ private class FinalState: BalancedReactionScreenState {
     override func apply(on model: BalancedReactionScreenViewModel) {
         model.statement = statements.finalStatement
         model.inputState = nil
+        model.emphasiseReactionCoefficients = false
+    }
+
+    override func unapply(on model: BalancedReactionScreenViewModel) {
+        model.emphasiseReactionCoefficients = true
     }
 }

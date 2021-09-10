@@ -21,6 +21,8 @@ class BalancedReactionScreenViewModel: ObservableObject {
     @Published var showDragTutorial = false
     @Published var inputState: InputState? = nil
 
+    @Published var emphasiseReactionCoefficients = true
+
     var unavailableReactions: [BalancedReaction] {
         [reaction] + moleculePositionHistory.map(\.reaction)
     }

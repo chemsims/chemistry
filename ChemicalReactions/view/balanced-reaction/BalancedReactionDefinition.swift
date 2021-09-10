@@ -8,6 +8,7 @@ import ReactionsCore
 struct BalancedReactionDefinition: View {
 
     let model: ReactionBalancer
+    let emphasiseCoefficients: Bool
     let layout: BalancedReactionScreenLayout
 
     var body: some View {
@@ -92,12 +93,13 @@ struct BalancedReactionDefinition: View {
     }
 
     private func coefficientBox(_ coeff: Int) -> some View {
-        Group {
+        let coeffString = (coeff == 1 && !emphasiseCoefficients) ? "" : "\(coeff)"
+        return Group {
             if coeff == 0 {
                 PlaceholderBox()
             } else {
-                Text("\(coeff)")
-                    .foregroundColor(.orangeAccent)
+                Text(coeffString)
+                    .foregroundColor(emphasiseCoefficients ? .orangeAccent : .black)
             }
         }
         .frame(size: placeholderSize, alignment: .topTrailing)
@@ -129,6 +131,7 @@ struct BalancedReactionDefinition_Previews: PreviewProvider {
         GeometryReader { geo in
             BalancedReactionDefinition(
                 model: .init(reaction: .firstReaction),
+                emphasiseCoefficients: true,
                 layout: .init(common: .init(
                     geometry: geo,
                     verticalSizeClass: nil,

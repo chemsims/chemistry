@@ -41,6 +41,7 @@ private struct SizedBalancedReactionScreen: View {
 
             BalancedReactionTopStack(
                 model: moleculeModel,
+                emphasiseCoefficients: model.emphasiseReactionCoefficients,
                 layout: layout
             )
 
@@ -100,6 +101,7 @@ private struct SizedBalancedReactionScreen: View {
 private struct BalancedReactionTopStack: View {
 
     @ObservedObject var model: BalancedReactionMoleculePositionViewModel
+    let emphasiseCoefficients: Bool
     let layout: BalancedReactionScreenLayout
 
     var body: some View {
@@ -107,6 +109,7 @@ private struct BalancedReactionTopStack: View {
             VStack(spacing: 0) {
                 BalancedReactionDefinition(
                     model: model.reactionBalancer,
+                    emphasiseCoefficients: emphasiseCoefficients,
                     layout: layout
                 )
 
