@@ -20,10 +20,16 @@ struct BalancedReactionNavigationModel {
         SetStatement(statements.empiricalFormulaExample),
         SetStatement(statements.explainStoichiometricCoeffs),
         SetStatement(statements.explainBalancedReaction),
-        ShowDraggingTutorial(statements.instructToDragMoleculeForFirstReaction),
-        ChooseNewReactionPostBalancing(),
-        DragMolecules()
-    ]
+        ShowDraggingTutorial(statements.instructToDragMoleculeForFirstReaction)
+    ] + balanceRemainingReactionStates + [FinalState()]
+
+    private static let balanceRemainingReactionStates =
+        (0..<(BalancedReaction.availableReactions.count - 1)).flatMap { _ in
+            [
+                ChooseNewReactionPostBalancing(),
+                DragMolecules()
+            ]
+        }
 }
 
 class BalancedReactionScreenState: ScreenState, SubState {
@@ -99,5 +105,12 @@ private class DragMolecules: BalancedReactionScreenState {
     override func unapply(on model: BalancedReactionScreenViewModel) {
         model.inputState = nil
         model.restorePreviousMolecules()
+    }
+}
+
+private class FinalState: BalancedReactionScreenState {
+    override func apply(on model: BalancedReactionScreenViewModel) {
+        model.statement = statements.finalStatement
+        model.inputState = nil
     }
 }
