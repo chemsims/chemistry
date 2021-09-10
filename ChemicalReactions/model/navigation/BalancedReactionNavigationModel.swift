@@ -5,7 +5,7 @@
 import Foundation
 import ReactionsCore
 
-private let statements = ChemicalReactionStatements.self
+private let statements = BalancedReactionStatements.self
 
 struct BalancedReactionNavigationModel {
     private init() { }

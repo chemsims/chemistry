@@ -5,7 +5,7 @@
 import Foundation
 import ReactionsCore
 
-struct ChemicalReactionStatements {
+struct BalancedReactionStatements {
     private init() { }
 
     static let intro: [TextLine] = [
@@ -25,7 +25,7 @@ struct ChemicalReactionStatements {
 
     static let empiricalFormulaExample: [TextLine] = [
         """
-        For example, this this *CH_4_* is methane, and the molecule of methane has 4 atoms of \
+        For example, in this case *CH_4_* is methane, and the molecule of methane has 4 atoms of \
         *hydrogen (H)* and 1 atom of *carbon (C)*. *H_2_O* is water, and the molecule of water has \
         1 atom of *oxygen (O)* and 2 atoms of *hydrogen (H).*
         """
