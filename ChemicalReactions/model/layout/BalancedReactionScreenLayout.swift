@@ -132,8 +132,7 @@ extension BalancedReactionScreenLayout {
     }
 
     var reactionDefinitionMoleculeAtomSize: CGFloat {
-        let availableHeight = common.height - reactionDefinitionSize.height - reactionDefinitionToMoleculeVSpacing - scalesHeight - beakerHeight
-        return availableHeight / 5
+        reactionDefinitionSize.height / 5
     }
 
     var reactionDefinitionFontSize: CGFloat {

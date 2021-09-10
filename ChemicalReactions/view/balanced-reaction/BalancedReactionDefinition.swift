@@ -140,6 +140,6 @@ struct BalancedReactionDefinition_Previews: PreviewProvider {
                 )
             )
         }
-        .previewLayout(.iPhoneSELandscape)
+        .previewLayout(.iPadAirLandscape)
     }
 }

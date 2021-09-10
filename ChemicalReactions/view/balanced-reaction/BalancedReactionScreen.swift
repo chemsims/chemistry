@@ -87,7 +87,7 @@ private struct SizedBalancedReactionScreen: View {
             options: BalancedReaction.availableReactions,
             isToggled: .constant(model.inputState == .selectReaction),
             selection: $model.reaction,
-            height: 20,
+            height: layout.common.reactionSelectionToggleHeight,
             animation: nil,
             displayString: { $0.display },
             label: { $0.display.label },
@@ -106,20 +106,21 @@ private struct BalancedReactionTopStack: View {
     let layout: BalancedReactionScreenLayout
 
     var body: some View {
-        HStack(spacing: 0) {
-            VStack(spacing: 0) {
-                BalancedReactionDefinition(
-                    model: model.reactionBalancer,
-                    emphasiseCoefficients: emphasiseCoefficients,
-                    layout: layout
-                )
+        VStack(spacing: 0) {
+            BalancedReactionDefinition(
+                model: model.reactionBalancer,
+                emphasiseCoefficients: emphasiseCoefficients,
+                layout: layout
+            )
 
-                scales
+            Spacer(minLength: 0)
 
-                Spacer(minLength: 0)
-            }
+            scales
+
             Spacer(minLength: 0)
         }
+        .padding(.bottom, layout.beakerSize.height)
+        .horizontalSpacing(alignment: .leading)
     }
 
     private var scales: some View {
