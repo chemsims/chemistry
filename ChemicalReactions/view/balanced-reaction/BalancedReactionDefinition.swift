@@ -51,7 +51,6 @@ struct BalancedReactionDefinition: View {
             }
         }
     }
-    
 
     private func term(molecule: BalancedReaction.Molecule) -> some View {
         VStack(spacing: 0) {
@@ -69,7 +68,6 @@ struct BalancedReactionDefinition: View {
             )
         }
     }
-
 
     private func term(molecule: BalancedReaction.Molecule, showText: Bool) -> some View {
         HStack(alignment: .top, spacing: coeffSpacing) {
