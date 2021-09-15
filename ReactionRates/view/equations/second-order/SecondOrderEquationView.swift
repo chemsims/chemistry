@@ -121,7 +121,7 @@ private struct SecondOrderRateFilled: View {
 
     var body: some View {
         HStack(spacing: 5) {
-            Text("k")
+            FixedText("k")
                 .frame(width: EquationSettings.boxWidth)
             FixedText("=")
 
@@ -137,7 +137,7 @@ private struct SecondOrderRateFilled: View {
                 }
                 Rectangle()
                     .frame(width: 225, height: 2)
-                Text("t")
+                FixedText("t")
                     .fixedSize()
             }
         }
@@ -151,11 +151,9 @@ private struct SecondOrderRateFilled: View {
 
     private func inverse<Content: View>(aTerm: () -> Content) -> some View {
         HStack(spacing: 0) {
-            Text("(1/")
-                .fixedSize()
+            FixedText("(1/")
             aTerm()
-            Text(")")
-                .fixedSize()
+            FixedText(")")
         }
     }
 }
@@ -254,7 +252,7 @@ private struct SecondOrderHalfLifeBlank: View {
                     .accessibility(label: Text("k"))
                 FixedText("(")
                     .accessibility(label: Text(Labels.openParen))
-                Text(a0)
+                FixedText(a0)
                     .frame(width: EquationSettings.boxWidth * 0.8)
                     .minimumScaleFactor(0.5)
                     .foregroundColor(rateConstant == nil ? .orangeAccent : .black)
