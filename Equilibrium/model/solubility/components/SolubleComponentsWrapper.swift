@@ -381,7 +381,7 @@ struct AddAcidComponentsWrapper: SolubleComponentsWrapper {
             x2: timing.equilibrium,
             y2: solubilityCurve.phForAcidSaturation
         )
-        .atLeast(solubilityCurve.phForAcidSaturation)
+        .within(min: solubilityCurve.phForAcidSaturation, max: solubilityCurve.startingPh)
     }
 
     var solubility: Equation {
