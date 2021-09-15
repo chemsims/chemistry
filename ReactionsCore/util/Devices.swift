@@ -96,10 +96,8 @@ extension UIDevice {
 
     fileprivate var model: Model? {
         if let code = modelCode, let model = Self.modelMap[code] {
-            print("Model is \(model)")
             return model
         }
-        print("No model")
         return nil
     }
 
