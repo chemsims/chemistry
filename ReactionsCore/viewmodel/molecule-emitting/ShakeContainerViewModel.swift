@@ -15,7 +15,7 @@ public class ShakeContainerViewModel: NSObject, ObservableObject, MoleculeEmitti
     ///    - addMolecules: A closure called when molecules enter the water. The integer passed to the
     ///                     closure will be the number of molecules entering the water. Note that this may be
     ///                     greater than 1.
-    ///                     
+    ///
     ///    - useBufferWhenAddingMolecules: Whether to call `addMolecules` once for any molecules which
     ///    hit the water within short buffer window. When false, molecules will be added immediately when they hit the water.
     ///    This may cause a performance issue if `addMolecules` is a relatively expensive operation.
@@ -63,8 +63,8 @@ public class ShakeContainerViewModel: NSObject, ObservableObject, MoleculeEmitti
 
     private var emitter: MoleculeEmitter?
 
-    public func manualAdd(amount: Int) {
-        guard let emitter = emitter, let location = initialLocation, let bottomY = bottomY else {
+    public func manualAdd(amount: Int, at location: CGPoint) {
+        guard let emitter = emitter, let bottomY = bottomY else {
             return
         }
         emitter.manualAdd(amount: amount, at: location, bottomY: bottomY)

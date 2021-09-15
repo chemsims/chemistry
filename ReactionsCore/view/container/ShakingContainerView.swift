@@ -16,7 +16,7 @@ public struct ShakingContainerView: View {
     public init(
         model: ShakeContainerViewModel,
         position: CoreMotionPositionViewModel,
-        onTap: @escaping () -> Void,
+        onTap: @escaping (CGPoint) -> Void,
         initialLocation: CGPoint,
         containerWidth: CGFloat,
         containerSettings: ParticleContainerSettings,
@@ -42,7 +42,7 @@ public struct ShakingContainerView: View {
     @ObservedObject var model: ShakeContainerViewModel
     @ObservedObject var position: CoreMotionPositionViewModel
 
-    let onTap: () -> Void
+    let onTap: (CGPoint) -> Void
     let initialLocation: CGPoint
     let containerWidth: CGFloat
     let containerSettings: ParticleContainerSettings
@@ -80,18 +80,21 @@ public struct ShakingContainerView: View {
                     .padding(-0.15 * containerWidth).opacity(includeContainerBackground ? 1 : 0)
             )
             .position(initialLocation)
-            .offset(
-                CGSize(
-                    width: (position.xOffset + simulatorOffset.0) * halfXRange,
-                    height: (position.yOffset + simulatorOffset.1) * halfYRange
-                )
-            )
+            .offset(offset)
             .onTapGesture {
-                onTap()
+                let location = initialLocation.offset(offset)
+                onTap(location)
             }
             .modifyIf(isSimulator) {
                 $0.gesture(simulatorDragGesture)
             }
+    }
+
+    private var offset: CGSize {
+        CGSize(
+            width: (position.xOffset + simulatorOffset.0) * halfXRange,
+            height: (position.yOffset + simulatorOffset.1) * halfYRange
+        )
     }
 
     private var simulatorDragGesture: some Gesture {
