@@ -224,7 +224,8 @@ struct AddMoleculeView_Previews: PreviewProvider {
                 AddMoleculesView(
                     model: MultiContainerShakeViewModel(
                         canAddMolecule: { _ in true },
-                        addMolecules: { (_, _) in }
+                        addMolecules: { (_, _) in },
+                        useBufferWhenAddingMolecules: false
                     ),
                     inputState: .addProducts,
                     topRowHeight: 50,

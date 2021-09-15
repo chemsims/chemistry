@@ -10,14 +10,20 @@ public class ShakeContainerViewModel: NSObject, ObservableObject, MoleculeEmitti
     /// Creates a new model
     ///
     /// - Parameters:
-    ///     - canAddMolecule: A closure to configure whether the container can emit new molecules
-    ///     - addMolecules: A closure called when molecules enter the water. The integer passed to the
+    ///    - canAddMolecule: A closure to configure whether the container can emit new molecules
+    ///
+    ///    - addMolecules: A closure called when molecules enter the water. The integer passed to the
     ///                     closure will be the number of molecules entering the water. Note that this may be
     ///                     greater than 1.
+    ///                     
+    ///    - useBufferWhenAddingMolecules: Whether to call `addMolecules` once for any molecules which
+    ///    hit the water within short buffer window. When false, molecules will be added immediately when they hit the water.
+    ///    This may cause a performance issue if `addMolecules` is a relatively expensive operation.
     public init(
         canAddMolecule: @escaping () -> Bool,
         didEmitMolecules: @escaping (Int) -> Void = { _ in },
-        addMolecules: @escaping (Int) -> Void
+        addMolecules: @escaping (Int) -> Void,
+        useBufferWhenAddingMolecules: Bool
     ) {
         self.motion = CoreMotionShakingViewModel(
             settings: .defaultBehavior
@@ -27,7 +33,7 @@ public class ShakeContainerViewModel: NSObject, ObservableObject, MoleculeEmitti
         self.didEmitMolecules = didEmitMolecules
         super.init()
         self.motion.delegate = self
-        self.emitter = MoleculeEmitter(underlyingMolecules: self)
+        self.emitter = MoleculeEmitter(underlyingMolecules: self, useBufferWhenAddingMolecules: useBufferWhenAddingMolecules)
     }
 
     public let motion: CoreMotionShakingViewModel
@@ -38,7 +44,7 @@ public class ShakeContainerViewModel: NSObject, ObservableObject, MoleculeEmitti
     }
 
     func addMolecules(count: Int) {
-        self.addMolecules(1)
+        self.addMolecules(count)
     }
 
     func didEmitMolecules(count: Int) {
