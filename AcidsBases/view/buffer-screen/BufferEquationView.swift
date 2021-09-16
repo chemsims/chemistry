@@ -829,7 +829,7 @@ private struct PHSumFilled: View {
             equation: equation,
             formatter: { $0.str(decimals: 2) }
         )
-        .frame(width: EquationSizing.boxWidth)
+        .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
     }
 }
 
@@ -885,14 +885,14 @@ struct BufferEquationView_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
             equation(
-                state: .baseWithAllConcentration,
-                substance: .weakAcids[0]
+                state: .baseFilled,
+                substance: .strongBases.first!
             )
 
-            equation(
-                state: .baseWithAllConcentration,
-                substance: .weakBases[2]
-            )
+//            equation(
+//                state: .baseWithAllConcentration,
+//                substance: .weakBases[2]
+//            )
         }
         .previewLayout(.sizeThatFits)
     }

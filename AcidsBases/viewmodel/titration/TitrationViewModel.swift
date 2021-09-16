@@ -38,17 +38,20 @@ class TitrationViewModel: ObservableObject {
             },
             addMolecules: { [weak self] in
                 self?.increment(substance: $0, count: $1)
-            }
+            },
+            useBufferWhenAddingMolecules: DeviceInfo.shouldThrottleAnimationRateIfNeeded()
         )
         self.dropperEmitModel = MoleculeEmittingViewModel(
             canAddMolecule: { [weak self] in self?.canAddIndicator ?? false },
             didEmitMolecules: { [weak self] in self?.didEmitIndicator(count: $0) },
-            doAddMolecule: { [weak self] in self?.incrementIndicator(count: $0) }
+            doAddMolecule: { [weak self] in self?.incrementIndicator(count: $0) },
+            useBufferWhenAddingMolecules: DeviceInfo.shouldThrottleAnimationRateIfNeeded()
         )
         self.buretteEmitModel = MoleculeEmittingViewModel(
             canAddMolecule: { [weak self] in self?.canAddTitrant ?? false },
             didEmitMolecules: { [weak self] (_) in self?.didEmitTitrant() },
-            doAddMolecule: { [weak self] in self?.incrementTitrant(count: $0) }
+            doAddMolecule: { [weak self] in self?.incrementTitrant(count: $0) },
+            useBufferWhenAddingMolecules: DeviceInfo.shouldThrottleAnimationRateIfNeeded()
         )
         self.availableSubstances = AcidOrBase.strongAcids
         self.navigation = TitrationNavigationModel.model(self, namePersistence: namePersistence)

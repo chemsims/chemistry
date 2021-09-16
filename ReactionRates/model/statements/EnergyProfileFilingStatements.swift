@@ -14,7 +14,7 @@ struct EnergyProfileFilingStatements {
         var lines = [
             TextLineGenerator.makeLine(
                 """
-                This is the \(order.name) Order reaction you completed earlier using *catalyst \
+                This is the \(order.name.lowercased()) order reaction you completed earlier using *catalyst \
                 \(catalyst.rawValue)*.
                 """
             )

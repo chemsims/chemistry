@@ -34,7 +34,8 @@ class BufferScreenViewModel: ObservableObject {
         self.navigation = BufferNavigationModel.model(self)
         self.shakeModel = MultiContainerShakeViewModel(
             canAddMolecule: canAddMolecule,
-            addMolecules: addMolecule
+            addMolecules: addMolecule,
+            useBufferWhenAddingMolecules: DeviceInfo.shouldThrottleAnimationRateIfNeeded()
         )
     }
 
