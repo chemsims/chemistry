@@ -450,7 +450,11 @@ private struct VaryingText: View {
                 }
 
             }
-            .frame(width: EquationSettings.boxWidth * widthFactor, alignment: alignment)
+            .frame(
+                width: EquationSettings.boxWidth * widthFactor,
+                height: EquationSettings.boxHeight * 0.85,
+                alignment: alignment
+            )
             .foregroundColor(.orangeAccent)
             .minimumScaleFactor(0.5)
             if withParens {
@@ -503,6 +507,7 @@ struct NewRateComparisonEquationView_Previews: PreviewProvider {
             .frame(width: width, height: height)
             .border(Color.red)
 
-        }.previewLayout(.fixed(width: width, height: (3 * height) + 100))
+        }
+        .previewLayout(.fixed(width: width, height: (3 * height) + 100))
     }
 }

@@ -57,7 +57,11 @@ class InMemoryReactionRatesInjector: ReactionRatesInjector {
 
     let energyPersistence: EnergyProfilePersistence = InMemoryEnergyProfilePersistence()
 
-    let screenPersistence = AnyScreenPersistence(InMemoryScreenPersistence<ReactionRatesScreen>(completedAllScreens: false))
+    let screenPersistence = AnyScreenPersistence(
+        UserDefaultsScreenPersistence<ReactionRatesScreen>(
+            prefix: userDefaultsPrefix
+        )
+    )
 
     let appAnalytics = AnyAppAnalytics(NoOpAppAnalytics<ReactionRatesScreen, ReactionsRateQuestionSet>())
 

@@ -22,7 +22,8 @@ class IntroScreenViewModel: ObservableObject {
         )
         self.addMoleculesModel = MultiContainerShakeViewModel(
             canAddMolecule: { _ in self.canAddMolecule },
-            addMolecules: self.increment
+            addMolecules: self.increment,
+            useBufferWhenAddingMolecules: DeviceInfo.shouldThrottleAnimationRateIfNeeded()
         )
         self.navigation = IntroNavigationModel.model(self, namePersistence: namePersistence)
     }

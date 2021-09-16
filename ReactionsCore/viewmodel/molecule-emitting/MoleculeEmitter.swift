@@ -17,14 +17,24 @@ protocol MoleculeEmittingContainer: AnyObject {
 class MoleculeEmitter {
 
     /// Create a new instance using the `underlyingMolecules`
-    init(underlyingMolecules: MoleculeEmittingContainer) {
+    /// 
+    /// - Parameter useBufferWhenAddingMolecules: Whether to call `addMolecules` once for any
+    /// molecules which hit the water within short buffer window. When false, molecules will be added immediately
+    /// when they hit the water. This may cause a performance issue if `addMolecules` is a relatively expensive operation.
+    init(
+        underlyingMolecules: MoleculeEmittingContainer,
+        useBufferWhenAddingMolecules: Bool
+    ) {
         self.underlyingMolecules = underlyingMolecules
+        self.useBufferWhenAddingMolecules = useBufferWhenAddingMolecules
     }
 
     weak var underlyingMolecules: MoleculeEmittingContainer?
 
     private let velocity = 200.0 // pts per second
     private let maxDuration: Double = 1.5
+
+    private let useBufferWhenAddingMolecules: Bool
 
     func manualAdd(amount: Int, at location: CGPoint, bottomY: CGFloat) {
         doManualAdd(remaining: amount, at: location, bottomY: bottomY)
@@ -77,13 +87,36 @@ class MoleculeEmitter {
         }
     }
 
+    private let moleculeFlushWindow: TimeInterval = 0.1
+    private var addMoleculeBuffer = [UUID]()
+    private var addMoleculeTimer: Timer? = nil
+
     private func moleculeHasHitWater(id: UUID) {
+        if useBufferWhenAddingMolecules {
+            if addMoleculeTimer == nil {
+                addMoleculeTimer = Timer.scheduledTimer(
+                    timeInterval: moleculeFlushWindow,
+                    target: self,
+                    selector: #selector(flushAddMoleculeBuffer),
+                    userInfo: nil,
+                    repeats: false
+                )
+            }
+            addMoleculeBuffer.append(id)
+        } else if let underlying = underlyingMolecules {
+            underlying.molecules.removeAll { $0.id == id }
+            underlying.addMolecules(count: 1)
+        }
+    }
+
+    @objc private func flushAddMoleculeBuffer() {
         guard let underlying = underlyingMolecules else {
             return
         }
-        if let index = underlying.molecules.firstIndex(where: { $0.id == id }) {
-            underlying.molecules.remove(at: index)
-        }
-        underlying.addMolecules(count: 1)
+        underlying.molecules.removeAll { addMoleculeBuffer.contains($0.id) }
+        underlying.addMolecules(count: addMoleculeBuffer.count)
+        addMoleculeBuffer.removeAll()
+        addMoleculeTimer?.invalidate()
+        addMoleculeTimer = nil
     }
 }

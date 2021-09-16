@@ -7,15 +7,23 @@ import SwiftUI
 /// A view model to handle emitting molecules from a fixed point
 public class MoleculeEmittingViewModel: ObservableObject, MoleculeEmittingContainer {
 
+
+    /// - Parameter useBufferWhenAddingMolecules: Whether to call `addMolecules` once for any
+    /// molecules which hit the water within short buffer window. When false, molecules will be added immediately
+    /// when they hit the water. This may cause a performance issue if `addMolecules` is a relatively expensive operation.
     public init(
         canAddMolecule: @escaping () -> Bool,
         didEmitMolecules: @escaping (Int) -> Void = { _ in },
-        doAddMolecule: @escaping (Int) -> Void
+        doAddMolecule: @escaping (Int) -> Void,
+        useBufferWhenAddingMolecules: Bool
     ) {
         self.canAddMolecule = canAddMolecule
         self.didEmitMolecules = didEmitMolecules
         self.doAddMolecule = doAddMolecule
-        self.emitter = MoleculeEmitter(underlyingMolecules: self)
+        self.emitter = MoleculeEmitter(
+            underlyingMolecules: self,
+            useBufferWhenAddingMolecules: useBufferWhenAddingMolecules
+        )
     }
 
     @Published public var molecules = [MovingPoint]()

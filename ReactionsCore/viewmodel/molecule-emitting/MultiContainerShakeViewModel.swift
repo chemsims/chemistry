@@ -10,14 +10,20 @@ public class MultiContainerShakeViewModel<MoleculeType>: ObservableObject
 
     @Published public var activeMolecule: MoleculeType?
 
+    /// - Parameters:
+    ///    - useBufferWhenAddingMolecules: Whether to call `addMolecules` once for any molecules which
+    ///    hit the water within short buffer window. When false, molecules will be added immediately when they hit the water.
+    ///    This may cause a performance issue if `addMolecules` is a relatively expensive operation.
     public init(
         canAddMolecule: @escaping (MoleculeType) -> Bool,
-        addMolecules: @escaping (MoleculeType, Int) -> Void
+        addMolecules: @escaping (MoleculeType, Int) -> Void,
+        useBufferWhenAddingMolecules: Bool
     ) {
         self.models = EnumMap { molecule in
             ShakeContainerViewModel(
                 canAddMolecule: { canAddMolecule(molecule) },
-                addMolecules: { addMolecules(molecule, $0) }
+                addMolecules: { addMolecules(molecule, $0) },
+                useBufferWhenAddingMolecules: useBufferWhenAddingMolecules
             )
         }
     }

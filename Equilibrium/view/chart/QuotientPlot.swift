@@ -47,7 +47,7 @@ struct QuotientPlot: View {
                 .fixedSize()
                 .minimumScaleFactor(0.8)
                 .offset(y: asymptoteYLabelOffset)
-                .animation(nil)
+                .animation(nil, value: asymptoteYLabelOffset)
                 .opacity(showData ? 1 : 0)
                 .accessibility(hidden: true)
         }
@@ -131,7 +131,7 @@ struct QuotientPlot: View {
                 x: settings.size / 2,
                 y: asymptoteYPosition
             )
-            .animation(nil)
+            .animation(nil, value: asymptoteYPosition)
             .zIndex(1)
     }
 

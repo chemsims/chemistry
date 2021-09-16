@@ -49,13 +49,14 @@ struct AddMoleculesView: View {
         return AddMoleculeContainerView(
             model: model.models.value(for: molecule),
             position: model.models.value(for: molecule).motion.position,
-            onTap: {
+            onTap: { loc in
                 didTap(
                     molecule: molecule,
                     width: width,
                     height: height,
                     index: index,
-                    bottomY: startOfWater + (moleculeSize / 2)
+                    bottomY: startOfWater + (moleculeSize / 2),
+                    location: loc
                 )
             },
             width: width,
@@ -106,10 +107,11 @@ struct AddMoleculesView: View {
         width: CGFloat,
         height: CGFloat,
         index: Int,
-        bottomY: CGFloat
+        bottomY: CGFloat,
+        location: CGPoint
     ) {
         guard model.activeMolecule != molecule else {
-            manualAdd(molecule: molecule, amount: manualAddAmount)
+            manualAdd(molecule: molecule, amount: manualAddAmount, location: location)
             return
         }
         
@@ -131,8 +133,8 @@ struct AddMoleculesView: View {
         onDrag()
     }
 
-    private func manualAdd(molecule: AqueousMolecule, amount: Int) {
-        model.models.value(for: molecule).manualAdd(amount: amount)
+    private func manualAdd(molecule: AqueousMolecule, amount: Int, location: CGPoint) {
+        model.models.value(for: molecule).manualAdd(amount: amount, at: location)
     }
 }
 
@@ -142,7 +144,7 @@ private struct AddMoleculeContainerView: View {
     @ObservedObject var model: ShakeContainerViewModel
     @ObservedObject var position: CoreMotionPositionViewModel
 
-    let onTap: () -> Void
+    let onTap: (CGPoint) -> Void
     let width: CGFloat
     let height: CGFloat
     let initialLocation: CGPoint
@@ -173,18 +175,21 @@ private struct AddMoleculeContainerView: View {
             .rotationEffect(rotation)
             .frame(width: containerWidth)
             .position(initialLocation)
-            .offset(
-                CGSize(
-                    width: (position.xOffset + simulatorOffset.0) * halfXRange,
-                    height: (position.yOffset + simulatorOffset.1) * halfYRange
-                )
-            )
+            .offset(offset)
             .onTapGesture {
-                onTap()
+                let location = initialLocation.offset(offset)
+                onTap(location)
             }
             .modifyIf(isSimulator) {
                 $0.gesture(simulatorDragGesture)
             }
+    }
+
+    private var offset: CGSize {
+        CGSize(
+            width: (position.xOffset + simulatorOffset.0) * halfXRange,
+            height: (position.yOffset + simulatorOffset.1) * halfYRange
+        )
     }
 
     private var isSimulator: Bool {
@@ -224,7 +229,8 @@ struct AddMoleculeView_Previews: PreviewProvider {
                 AddMoleculesView(
                     model: MultiContainerShakeViewModel(
                         canAddMolecule: { _ in true },
-                        addMolecules: { (_, _) in }
+                        addMolecules: { (_, _) in },
+                        useBufferWhenAddingMolecules: false
                     ),
                     inputState: .addProducts,
                     topRowHeight: 50,

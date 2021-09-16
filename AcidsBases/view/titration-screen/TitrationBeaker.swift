@@ -299,9 +299,15 @@ private struct TitrationToolsMoleculesView: View {
     @ObservedObject var buretteEmitModel: MoleculeEmittingViewModel
 
     var body: some View {
-        ZStack {
-            dropperMolecules
-            buretteMolecules
+        VStack(spacing: 0) {
+            ZStack {
+                dropperMolecules
+                buretteMolecules
+            }
+            .frame(height: layout.topOfWaterPosition(forRows: rows))
+            .clipped()
+
+            Spacer(minLength: 0)
         }
     }
 
@@ -324,16 +330,6 @@ private struct TitrationToolsMoleculesView: View {
                 .frame(square: size)
                 .position(molecule.position)
         }
-        .mask(
-            VStack(spacing: 0) {
-                Rectangle()
-                    .frame(
-                        width: layout.common.beakerWidth,
-                        height: layout.topOfWaterPosition(forRows: rows)
-                    )
-                Spacer()
-            }
-        )
     }
 }
 

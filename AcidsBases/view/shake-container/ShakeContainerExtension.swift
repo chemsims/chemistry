@@ -37,7 +37,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
         return ShakingContainerView(
             model: addModel,
             position: addModel.motion.position,
-            onTap: { didTapContainer(type) },
+            onTap: { loc in didTapContainer(type, location: loc) },
             initialLocation: isActive ? activeLocation : initialLocation,
             containerWidth: layout.containerSize.width,
             containerSettings: ParticleContainerSettings(
@@ -91,10 +91,11 @@ where ContainerType : CaseIterable, ContainerType : Hashable
     }
 
     private func didTapContainer(
-        _ element: ContainerType
+        _ element: ContainerType,
+        location: CGPoint
     ) {
         guard models.activeMolecule != element else {
-            models.model(for: element).manualAdd(amount: 5)
+            models.model(for: element).manualAdd(amount: 5, at: location)
             return
         }
 

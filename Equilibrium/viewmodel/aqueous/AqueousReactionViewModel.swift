@@ -100,7 +100,8 @@ class AqueousOrIntegrationReactionViewModel<NavigationState: ScreenState>: Obser
 
         self.addingMoleculesModel = MultiContainerShakeViewModel(
             canAddMolecule: { self.componentsWrapper.canIncrement(molecule: $0) },
-            addMolecules: { (molecule, num) in self.increment(molecule: molecule, count: num) }
+            addMolecules: { (molecule, num) in self.increment(molecule: molecule, count: num) },
+            useBufferWhenAddingMolecules: false
         )
     }
 
