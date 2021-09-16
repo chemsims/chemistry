@@ -64,8 +64,17 @@ extension ChemicalReactionsScreenLayout {
         )
     }
 
+    func topOfWaterPosition(rows: CGFloat) -> CGFloat {
+        let topFromSlider = beakerSliderAxis.getPosition(at: rows)
+        return beakerAreaHeight - beakerSliderHeight + topFromSlider
+    }
+
     var totalBeakerAreaWidth: CGFloat {
         beakerSliderSettings.handleWidth + beakerWidth
+    }
+
+    var beakerAreaHeight: CGFloat {
+        height
     }
 
     private var beakerWidth: CGFloat {
@@ -76,8 +85,21 @@ extension ChemicalReactionsScreenLayout {
         beakerWidth * BeakerSettings.heightToWidth
     }
 
+    private var innerBeakerWidth: CGFloat {
+        BeakerSettings(width: beakerWidth, hasLip: true).innerBeakerWidth
+    }
+
     private var beakerSliderHeight: CGFloat {
         0.8 * beakerHeight
+    }
+
+    private var beakerSliderAxis: AxisPositionCalculations<CGFloat> {
+        BeakerLiquidSliderAxis.axis(
+            minRows: ChemicalReactionsSettings.minRows,
+            maxRows: ChemicalReactionsSettings.maxRows,
+            beakerWidth: beakerWidth,
+            sliderHeight: beakerSliderHeight
+        )
     }
 
     private var beakerSliderSettings: SliderGeometrySettings {
@@ -105,7 +127,26 @@ extension ChemicalReactionsScreenLayout {
     }
 
     var containerMoleculeSize: CGFloat {
-        0.8 * containerWidth
+        innerBeakerWidth / CGFloat(MoleculeGridSettings.cols)
+    }
+
+    var containerShakeHalfXRange: CGFloat {
+        (innerBeakerWidth - containerMoleculeSize) / 2
+    }
+
+    var containerShakeHalfYRange: CGFloat {
+        1.5 * containerHeight
+    }
+
+    func containerAreaHeight(rows: CGFloat) -> CGFloat {
+        topOfWaterPosition(rows: rows)
+    }
+
+    // We add the container height on the beaker width, as the edge of a
+    // rotated container would otherwise be clipped when moved to the
+    // leading/trailing edge of the frame
+    var containerMaskWidth: CGFloat {
+        beakerWidth + containerHeight
     }
 
     func containerPosition(index: Int, active: Bool) -> CGPoint {

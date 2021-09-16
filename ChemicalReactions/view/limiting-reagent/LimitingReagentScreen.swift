@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 import ReactionsCore
 
@@ -52,7 +51,7 @@ private struct LimitingReagentScreenWithLayout: View {
 
     private var beaker: some View {
         LimitingReagentBeaker(
-            shakeModel: model.shakeReactantModel,
+            model: model,
             layout: layout
         )
     }
