@@ -45,4 +45,95 @@ extension ChemicalReactionsScreenLayout {
     var reactionSelectionToggleHeight: CGFloat {
         0.05 * height
     }
+
+    var reactionDefinitionHeight: CGFloat {
+        reactionSelectionToggleHeight
+    }
+}
+
+// MARK: - Beaker
+extension ChemicalReactionsScreenLayout {
+    var beakerSettings: AdjustableFluidBeakerSettings {
+        .init(
+            minRows: ChemicalReactionsSettings.minRows,
+            maxRows: ChemicalReactionsSettings.maxRows,
+            beakerWidth: beakerWidth,
+            beakerHeight: beakerHeight,
+            sliderSettings: beakerSliderSettings,
+            sliderHeight: beakerSliderHeight
+        )
+    }
+
+    var totalBeakerAreaWidth: CGFloat {
+        beakerSliderSettings.handleWidth + beakerWidth
+    }
+
+    private var beakerWidth: CGFloat {
+        0.23 * width
+    }
+
+    private var beakerHeight: CGFloat {
+        beakerWidth * BeakerSettings.heightToWidth
+    }
+
+    private var beakerSliderHeight: CGFloat {
+        0.8 * beakerHeight
+    }
+
+    private var beakerSliderSettings: SliderGeometrySettings {
+        .init(handleWidth: 0.13 * beakerWidth)
+    }
+
+    private var beakerCenterX: CGFloat {
+        beakerSliderSettings.handleWidth + (beakerWidth / 2)
+    }
+}
+
+
+// MARK: - Containers
+extension ChemicalReactionsScreenLayout {
+    var containerWidth: CGFloat {
+        0.1 * beakerWidth
+    }
+
+    private var containerHeight: CGFloat {
+        containerWidth * ParticleContainer.heightToWidth
+    }
+
+    var containerFontSize: CGFloat {
+        0.8 * containerWidth
+    }
+
+    var containerMoleculeSize: CGFloat {
+        0.8 * containerWidth
+    }
+
+    func containerPosition(index: Int, active: Bool) -> CGPoint {
+        active ? activeContainerPosition : initialContainerPosition(index: index)
+    }
+
+    private func initialContainerPosition(index: Int) -> CGPoint {
+        CGPoint(x: initialContainerX(index: index), y: initialContainerY)
+    }
+
+    private func initialContainerX(index: Int) -> CGFloat {
+        let startOfBeaker = beakerSliderSettings.handleWidth
+        let firstContainerX = startOfBeaker + (containerWidth / 2)
+        let spacing = 1.5 * containerWidth
+
+        return firstContainerX + (CGFloat(index) * spacing)
+    }
+
+    private var activeContainerPosition: CGPoint {
+        CGPoint(x: beakerCenterX, y: activeContainerY)
+    }
+
+    private var initialContainerY: CGFloat {
+        let topSpace = max(reactionSelectionToggleHeight, reactionDefinitionHeight)
+        return topSpace + containerHeight
+    }
+
+    private var activeContainerY: CGFloat {
+        initialContainerY + (0.75 * containerHeight)
+    }
 }

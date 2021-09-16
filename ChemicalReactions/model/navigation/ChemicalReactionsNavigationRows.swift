@@ -11,7 +11,7 @@ struct ChemicalReactionNavigationRows {
 }
 
 private enum TopLevelScreen: CaseIterable {
-    case balancedReactions
+    case balancedReactions, limitingReagent
 
     var row: NavigationRow<ChemicalReactionsScreen> {
         NavigationRow(
@@ -34,18 +34,21 @@ private enum TopLevelScreen: CaseIterable {
     var screen: ChemicalReactionsScreen {
         switch self {
         case .balancedReactions: return .balancedReactions
+        case .limitingReagent: return .limitingReagent
         }
     }
 
     var quiz: ChemicalReactionsScreen {
         switch self {
         case .balancedReactions: return .balancedReactionsQuiz
+        case .limitingReagent: return .limitingReagentQuiz
         }
     }
 
     var label: String {
         switch self {
         case .balancedReactions: return "Balanced reactions"
+        case .limitingReagent: return "Limiting reagent"
         }
     }
 }

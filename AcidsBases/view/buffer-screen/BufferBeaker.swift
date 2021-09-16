@@ -219,12 +219,6 @@ private struct BufferMoleculeContainers: View {
     }
 }
 
-struct IdentityViewModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-    }
-}
-
 private struct BufferBeakerAccessibilityModifier: ViewModifier {
 
     @ObservedObject var model: BufferScreenViewModel

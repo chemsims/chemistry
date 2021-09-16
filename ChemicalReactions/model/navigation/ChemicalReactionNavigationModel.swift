@@ -101,10 +101,20 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) -> ScreenProvider {
-        BalancedReactionScreenProvider(
-            nextScreen: nextScreen,
-            prevScreen: prevScreen
-        )
+        switch screen {
+        case .balancedReactions:
+            return BalancedReactionScreenProvider(
+                nextScreen: nextScreen,
+                prevScreen: prevScreen
+            )
+        case .limitingReagent:
+            return LimitingReagentScreenProvider(
+                nextScreen: nextScreen,
+                prevScreen: prevScreen
+            )
+        case .balancedReactionsQuiz, .limitingReagentQuiz:
+            return QuizScreenProvider()
+        }
     }
 }
 
@@ -124,4 +134,27 @@ private class BalancedReactionScreenProvider: ScreenProvider {
     var screen: AnyView {
         AnyView(BalancedReactionScreen(model: model))
     }
+}
+
+private class LimitingReagentScreenProvider: ScreenProvider {
+    init(
+        nextScreen: @escaping () -> Void,
+        prevScreen: @escaping () -> Void
+    ) {
+        self.model = LimitingReagentScreenViewModel()
+    }
+
+    private let model: LimitingReagentScreenViewModel
+
+    var screen: AnyView {
+        AnyView(LimitingReagentScreen(model: model))
+    }
+}
+
+private class QuizScreenProvider: ScreenProvider {
+
+    var screen: AnyView {
+        AnyView(EmptyView())
+    }
+
 }

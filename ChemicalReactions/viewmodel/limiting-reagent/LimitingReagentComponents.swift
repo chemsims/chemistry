@@ -92,3 +92,14 @@ class LimitingReagentComponents: ObservableObject {
         reaction.excessReactantMolecularMass * excessReactantActualMoles
     }
 }
+
+// MARK: - Types
+extension LimitingReagentComponents {
+    enum Reactant: Int, CaseIterable, Identifiable {
+        case limiting, excess
+
+        var id: Int {
+            self.rawValue
+        }
+    }
+}

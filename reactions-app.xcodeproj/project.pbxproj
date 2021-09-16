@@ -714,6 +714,10 @@
 		57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902B925ED561200758300 /* EquatableCounter.swift */; };
 		57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902C325ED585800758300 /* EquatableCounterTests.swift */; };
 		57EDCE1525FFDD6000796E62 /* FunctionalExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57EDCE1425FFDD6000796E62 /* FunctionalExtensions.swift */; };
+		57F6808226F33BDE007DDD5F /* LimitingReagentScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6808126F33BDE007DDD5F /* LimitingReagentScreen.swift */; };
+		57F6808426F33D97007DDD5F /* LimitingReagentScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6808326F33D97007DDD5F /* LimitingReagentScreenViewModel.swift */; };
+		57F6808626F3452D007DDD5F /* LimitingReagentBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6808526F3452D007DDD5F /* LimitingReagentBeaker.swift */; };
+		57F6808826F3456F007DDD5F /* IdentityModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F6808726F3456F007DDD5F /* IdentityModifier.swift */; };
 		57F8885C267E188400609671 /* SliderOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F8885B267E188400609671 /* SliderOverlay.swift */; };
 		57F88861267E675B00609671 /* MoleculeEmitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88860267E675B00609671 /* MoleculeEmitter.swift */; };
 		57F88864267E6DB900609671 /* MoleculeEmittingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F88863267E6DB900609671 /* MoleculeEmittingViewModel.swift */; };
@@ -1564,6 +1568,10 @@
 		57F4775F25617B240041D406 /* LimitConstraintsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitConstraintsTests.swift; sourceTree = "<group>"; };
 		57F4D1B7263D71E500449222 /* SolubilityBeakerAccessibilityLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityBeakerAccessibilityLabel.swift; sourceTree = "<group>"; };
 		57F5621F258D4F64008B2602 /* CatalystState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalystState.swift; sourceTree = "<group>"; };
+		57F6808126F33BDE007DDD5F /* LimitingReagentScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitingReagentScreen.swift; sourceTree = "<group>"; };
+		57F6808326F33D97007DDD5F /* LimitingReagentScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitingReagentScreenViewModel.swift; sourceTree = "<group>"; };
+		57F6808526F3452D007DDD5F /* LimitingReagentBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitingReagentBeaker.swift; sourceTree = "<group>"; };
+		57F6808726F3456F007DDD5F /* IdentityModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityModifier.swift; sourceTree = "<group>"; };
 		57F88852267E16C900609671 /* TitrationChartStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationChartStack.swift; sourceTree = "<group>"; };
 		57F88855267E16DD00609671 /* TitrationCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationCurve.swift; sourceTree = "<group>"; };
 		57F88857267E170800609671 /* TitrationBarsOrReactionProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationBarsOrReactionProgress.swift; sourceTree = "<group>"; };
@@ -3032,6 +3040,7 @@
 			isa = PBXGroup;
 			children = (
 				5791D23D26F0A3FE0094D711 /* LimitingReagentComponents.swift */,
+				57F6808326F33D97007DDD5F /* LimitingReagentScreenViewModel.swift */,
 			);
 			path = "limiting-reagent";
 			sourceTree = "<group>";
@@ -3348,6 +3357,7 @@
 				57B8946A26A043F300D71998 /* IgnoresKeyboardModifier.swift */,
 				57ADAA8626A4424C0008E8C2 /* BeakerAccessibilityActions.swift */,
 				57FF330526E9FF5F007116EB /* SpacingViewModifiers.swift */,
+				57F6808726F3456F007DDD5F /* IdentityModifier.swift */,
 			);
 			path = modifiers;
 			sourceTree = "<group>";
@@ -4105,6 +4115,15 @@
 			path = "energy-profile";
 			sourceTree = "<group>";
 		};
+		57F6808026F33BC9007DDD5F /* limiting-reagent */ = {
+			isa = PBXGroup;
+			children = (
+				57F6808126F33BDE007DDD5F /* LimitingReagentScreen.swift */,
+				57F6808526F3452D007DDD5F /* LimitingReagentBeaker.swift */,
+			);
+			path = "limiting-reagent";
+			sourceTree = "<group>";
+		};
 		57F88854267E16D000609671 /* charts */ = {
 			isa = PBXGroup;
 			children = (
@@ -4213,6 +4232,7 @@
 		57FCA1C326CABEA7005EE93F /* view */ = {
 			isa = PBXGroup;
 			children = (
+				57F6808026F33BC9007DDD5F /* limiting-reagent */,
 				57E48A4F26CAD8A800A9A421 /* balanced-reaction */,
 				57FCA1C426CABEC3005EE93F /* ChemicalReactionsRootView.swift */,
 			);
@@ -5203,6 +5223,7 @@
 				576F922E26F227230035D3F4 /* Devices.swift in Sources */,
 				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
+				57F6808826F3456F007DDD5F /* IdentityModifier.swift in Sources */,
 				574103DF2642966300E6EDCB /* Tooltip.swift in Sources */,
 				579EA8F5264687AE008461E8 /* BarChartAxis.swift in Sources */,
 				57FA3AB92660F27B0073A29B /* ColoredText.swift in Sources */,
@@ -5466,6 +5487,7 @@
 			files = (
 				5791D23B26F0A2C50094D711 /* BalancedReactionMoleculePositionViewModel.swift in Sources */,
 				57E48A5226CAD8B900A9A421 /* BalancedReactionMoleculesView.swift in Sources */,
+				57F6808426F33D97007DDD5F /* LimitingReagentScreenViewModel.swift in Sources */,
 				573F2E7926EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift in Sources */,
 				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
 				5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */,
@@ -5488,10 +5510,12 @@
 				5766FF9326E764B60061D2F1 /* BalancedReactionTypes.swift in Sources */,
 				57E48A4A26CACCD400A9A421 /* Molecule.swift in Sources */,
 				5791D24026F0A6BC0094D711 /* ChemicalReactionsSettings.swift in Sources */,
+				57F6808626F3452D007DDD5F /* LimitingReagentBeaker.swift in Sources */,
 				57FCA1C526CABEC3005EE93F /* ChemicalReactionsRootView.swift in Sources */,
 				57D54C7C26E8F59000907806 /* BalancedReactionScreenMolecules.swift in Sources */,
 				5782FC9A26E6890C00F97177 /* BalancedReactionBeakerMoleculesLayout.swift in Sources */,
 				57E48A4E26CAD20E00A9A421 /* ReactionBalancer.swift in Sources */,
+				57F6808226F33BDE007DDD5F /* LimitingReagentScreen.swift in Sources */,
 				573F2E7626EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift in Sources */,
 				5766FF9126E764780061D2F1 /* BalancedReactionDefinition.swift in Sources */,
 				57E48A5C26CADEBC00A9A421 /* OneToThree.swift in Sources */,

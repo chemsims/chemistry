@@ -23,8 +23,7 @@ public struct ShakingContainerView: View {
         moleculeSize: CGFloat,
         moleculeColor: Color,
         includeContainerBackground: Bool,
-        rotation: Angle,
-        isSimulator: Bool
+        rotation: Angle
     ) {
         self.model = model
         self.position = position
@@ -36,7 +35,6 @@ public struct ShakingContainerView: View {
         self.moleculeColor = moleculeColor
         self.includeContainerBackground = includeContainerBackground
         self.rotation = rotation
-        self.isSimulator = isSimulator
     }
 
     @ObservedObject var model: ShakeContainerViewModel
@@ -50,7 +48,6 @@ public struct ShakingContainerView: View {
     let moleculeColor: Color
     let includeContainerBackground: Bool
     let rotation: Angle
-    let isSimulator: Bool
 
     @GestureState private var simulatorOffset: (CGFloat, CGFloat) = (0, 0)
 
@@ -116,5 +113,13 @@ public struct ShakingContainerView: View {
 
     private var halfYRange: CGFloat {
         model.halfYRange ?? 0
+    }
+
+    private var isSimulator: Bool {
+    #if targetEnvironment(simulator)
+        return true
+    #else
+        return false
+    #endif
     }
 }

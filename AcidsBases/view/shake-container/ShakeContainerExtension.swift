@@ -50,8 +50,7 @@ where ContainerType : CaseIterable, ContainerType : Hashable
             moleculeSize: layout.moleculeSize,
             moleculeColor: color,
             includeContainerBackground: includeContainerBackground,
-            rotation: isActive ? .degrees(135) : .zero,
-            isSimulator: isSimulator
+            rotation: isActive ? .degrees(135) : .zero
         )
         .minimumScaleFactor(0.1)
         .zIndex(isActive ? 1 : 0)
@@ -70,14 +69,6 @@ where ContainerType : CaseIterable, ContainerType : Hashable
         .accessibility(label: Text(accessibilityLabel))
         .accessibility(addTraits: .isButton)
         .accessibility(hint: Text(getContainerHint(type: type, label: accessibilityName)))
-    }
-
-    private var isSimulator: Bool {
-        #if targetEnvironment(simulator)
-        return true
-        #else
-        return false
-        #endif
     }
 
     private func getContainerHint(type: ContainerType, label: String?) -> String {
