@@ -402,6 +402,7 @@
 		5769751926D64D9D00D30ECE /* TippingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769751826D64D9D00D30ECE /* TippingViewModel.swift */; };
 		5769751E26D66A7300D30ECE /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769751D26D66A7300D30ECE /* ActivityIndicator.swift */; };
 		576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
+		576F922E26F227230035D3F4 /* Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576F922D26F227230035D3F4 /* Devices.swift */; };
 		5772DA5526CD12A300A00EAA /* BalancedReactionMoleculeGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA5426CD12A300A00EAA /* BalancedReactionMoleculeGridLayout.swift */; };
 		5772DA5726CD164400A00EAA /* BalancedReactionMoleculeLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA5626CD164400A00EAA /* BalancedReactionMoleculeLayoutTests.swift */; };
 		5772DA5C26CD1D2E00A00EAA /* TableCellPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA5B26CD1D2E00A00EAA /* TableCellPosition.swift */; };
@@ -410,7 +411,6 @@
 		5772DA6326CD265800A00EAA /* ChemicalReactionsScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA6226CD265800A00EAA /* ChemicalReactionsScreenLayout.swift */; };
 		5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA6426CD268400A00EAA /* BalancedReactionScreenLayout.swift */; };
 		5772DA6826CD273C00A00EAA /* BalancedReactionScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA6726CD273C00A00EAA /* BalancedReactionScreenViewModel.swift */; };
-		576F922E26F227230035D3F4 /* Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576F922D26F227230035D3F4 /* Devices.swift */; };
 		5773BCD6267A2EA500E52C81 /* CircleChartLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */; };
 		5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD8267A5F4500E52C81 /* TextLineTests.swift */; };
 		577A2609262822FF0060EC54 /* ValueWithPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577A2608262822FF0060EC54 /* ValueWithPrevious.swift */; };
@@ -5941,6 +5941,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reaction.rate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -5966,6 +5967,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.3;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.reaction.rate;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -6439,8 +6441,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.5.0;
+				kind = exactVersion;
+				version = 8.7.0;
 			};
 		};
 		5742D1AE26AAB1A300049FCC /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
