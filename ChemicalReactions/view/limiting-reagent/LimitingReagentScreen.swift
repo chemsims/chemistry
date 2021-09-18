@@ -43,6 +43,7 @@ private struct LimitingReagentScreenWithLayout: View {
                 Spacer(minLength: 0)
                 LimitingReagentRightStack(
                     model: model,
+                    components: model.components,
                     layout: layout
                 )
             }
@@ -82,6 +83,7 @@ private struct LimitingReagentTopStack: View {
 private struct LimitingReagentRightStack: View {
 
     @ObservedObject var model: LimitingReagentScreenViewModel
+    @ObservedObject var components: LimitingReagentComponents
     let layout: LimitingReagentScreenLayout
 
     var body: some View {
@@ -96,7 +98,12 @@ private struct LimitingReagentRightStack: View {
     }
 
     private var equation: some View {
-        Text("Equation")
+        LimitingReagentEquationView(
+            data: model.equationData,
+            reactionProgress: components.reactionProgress,
+            showTheoreticalData: false,
+            showActualData: false
+        )
     }
 
     private var chart: some View {

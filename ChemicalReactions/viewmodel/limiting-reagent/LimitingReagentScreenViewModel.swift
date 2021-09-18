@@ -59,3 +59,27 @@ extension LimitingReagentScreenViewModel {
         }
     }
 }
+
+extension LimitingReagentScreenViewModel {
+    var equationData: LimitingReagentEquationData {
+        LimitingReagentEquationData(
+            limitingReactant: "A",
+            excessReactant: "B",
+            product: "C",
+            excessReactantCoefficient: 2,
+            excessReactantMolarMass: 10,
+            productMolarMass: 10,
+            volume: components.volume,
+            limitingReactantMoles: components.limitingReactantMoles,
+            limitingReactantMolarity: components.limitingReactantMolarity,
+            neededExcessReactantMoles: components.excessReactantTheoreticalMoles,
+            theoreticalProductMass: components.productTheoreticalMass,
+            theoreticalProductMoles: components.productTheoreticalMoles,
+            reactingExcessReactantMoles: components.excessReactantActualMoles,
+            reactingExcessReactantMass: components.excessReactantActualMass,
+            actualProductMass: components.productActualMass,
+            actualProductMoles: components.productActualMoles,
+            yield: components.yield
+        )
+    }
+}
