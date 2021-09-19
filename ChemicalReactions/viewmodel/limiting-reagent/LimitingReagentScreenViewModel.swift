@@ -8,12 +8,7 @@ import SwiftUI
 class LimitingReagentScreenViewModel: ObservableObject {
 
     init() {
-        let reaction = LimitingReagentReaction(
-            yield: 0.98,
-            excessReactantCoefficient: 1,
-            excessReactantMolecularMass: 1,
-            productMolecularMass: 50
-        )
+        let reaction = LimitingReagentReaction.firstReaction
         self.components = LimitingReagentComponents(reaction: reaction)
         self.shakeReactantModel = .init(
             canAddMolecule: self.canAdd,
@@ -57,29 +52,5 @@ extension LimitingReagentScreenViewModel {
         default:
             break
         }
-    }
-}
-
-extension LimitingReagentScreenViewModel {
-    var equationData: LimitingReagentEquationData {
-        LimitingReagentEquationData(
-            limitingReactant: "A",
-            excessReactant: "B",
-            product: "C",
-            excessReactantCoefficient: 2,
-            excessReactantMolarMass: 10,
-            productMolarMass: 10,
-            volume: components.volume,
-            limitingReactantMoles: components.limitingReactantMoles,
-            limitingReactantMolarity: components.limitingReactantMolarity,
-            neededExcessReactantMoles: components.excessReactantTheoreticalMoles,
-            theoreticalProductMass: components.productTheoreticalMass,
-            theoreticalProductMoles: components.productTheoreticalMoles,
-            reactingExcessReactantMoles: components.excessReactantActualMoles,
-            reactingExcessReactantMass: components.excessReactantActualMass,
-            actualProductMass: components.productActualMass,
-            actualProductMoles: components.productActualMoles,
-            yield: components.yield
-        )
     }
 }

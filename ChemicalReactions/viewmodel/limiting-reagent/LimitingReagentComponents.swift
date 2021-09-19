@@ -60,7 +60,7 @@ class LimitingReagentComponents: ObservableObject {
     }
 
     var excessReactantTheoreticalMoles: CGFloat {
-        CGFloat(reaction.excessReactantCoefficient) * limitingReactantMoles
+        CGFloat(reaction.excessReactant.coefficient) * limitingReactantMoles
     }
 
     var productTheoreticalMoles: CGFloat {
@@ -68,7 +68,7 @@ class LimitingReagentComponents: ObservableObject {
     }
 
     var productTheoreticalMass: CGFloat {
-        reaction.productMolecularMass * productTheoreticalMoles
+        CGFloat(reaction.product.molecularMass) * productTheoreticalMoles
     }
 
     /// Yield as a percentage between 0 and 1
@@ -81,15 +81,34 @@ class LimitingReagentComponents: ObservableObject {
     }
 
     var productActualMoles: Equation {
-        productActualMass / reaction.productMolecularMass
+        productActualMass / CGFloat(reaction.product.molecularMass)
     }
 
     var excessReactantActualMoles: Equation {
-        CGFloat(reaction.excessReactantCoefficient) * productActualMoles
+        CGFloat(reaction.excessReactant.coefficient) * productActualMoles
     }
 
     var excessReactantActualMass: Equation {
-        reaction.excessReactantMolecularMass * excessReactantActualMoles
+        CGFloat(reaction.excessReactant.molecularMass) * excessReactantActualMoles
+    }
+}
+
+extension LimitingReagentComponents {
+    var equationData: LimitingReagentEquationData {
+        LimitingReagentEquationData(
+            reaction: reaction,
+            volume: volume,
+            limitingReactantMoles: limitingReactantMoles,
+            limitingReactantMolarity: limitingReactantMolarity,
+            neededExcessReactantMoles: excessReactantTheoreticalMoles,
+            theoreticalProductMass: productTheoreticalMass,
+            theoreticalProductMoles: productTheoreticalMoles,
+            reactingExcessReactantMoles: excessReactantActualMoles,
+            reactingExcessReactantMass: excessReactantActualMass,
+            actualProductMass: productActualMass,
+            actualProductMoles: productActualMoles,
+            yield: yield
+        )
     }
 }
 

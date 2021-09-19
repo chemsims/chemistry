@@ -122,7 +122,7 @@ private struct LimitingReactantMoles: View {
         VStack(alignment: .trailing, spacing: relatedEquationVSpacing) {
             TermView(
                 base: "n",
-                subTerm: data.limitingReactant,
+                subTerm: data.reaction.limitingReactant.name,
                 underlineTerm: nil
             )
             .frame(height: singleRowEquationHeight)
@@ -142,7 +142,7 @@ private struct LimitingReactantMoles: View {
             FixedText("x")
             TermView(
                 base: "M",
-                subTerm: data.limitingReactant,
+                subTerm: data.reaction.limitingReactant.name,
                 underlineTerm: nil
             )
         }
@@ -182,7 +182,7 @@ private struct ExcessReactantNeededMoles: View {
         VStack(alignment: .trailing, spacing: relatedEquationVSpacing) {
             TermView(
                 base: "n",
-                subTerm: data.excessReactant,
+                subTerm: data.reaction.excessReactant.name,
                 underlineTerm: "needed"
             )
             .frame(height: singleRowEquationHeight)
@@ -199,11 +199,11 @@ private struct ExcessReactantNeededMoles: View {
         HStack(alignment: .top, spacing: termHSpacing) {
 
             FixedText("=")
-            FixedText("\(data.excessReactantCoefficient)")
+            FixedText("\(data.reaction.excessReactant.coefficient)")
             FixedText("x")
             TermView(
                 base: "n",
-                subTerm: data.limitingReactant,
+                subTerm: data.reaction.limitingReactant.name,
                 underlineTerm: nil
             )
         }
@@ -213,7 +213,7 @@ private struct ExcessReactantNeededMoles: View {
         HStack(spacing: termHSpacing) {
 
             FixedText("=")
-            FixedText("\(data.excessReactantCoefficient)")
+            FixedText("\(data.reaction.excessReactant.coefficient)")
             FixedText("x")
             PlaceholderTerm(
                 value: showData ? data.limitingReactantMoles.str(decimals: 2) : nil,
@@ -242,7 +242,7 @@ private struct TheoreticalProductMass: View {
         VStack(alignment: .trailing, spacing: relatedEquationVSpacing) {
             TermView(
                 base: "m",
-                subTerm: data.product,
+                subTerm: data.reaction.product.name,
                 underlineTerm: "theoretical"
             )
             .frame(height: singleRowEquationHeight)
@@ -260,13 +260,13 @@ private struct TheoreticalProductMass: View {
             FixedText("=")
             TermView(
                 base: "n",
-                subTerm: data.product,
+                subTerm: data.reaction.product.name,
                 underlineTerm: "theoretical"
             )
             FixedText("x")
             TermView(
                 base: "MM",
-                subTerm: data.product,
+                subTerm: data.reaction.product.name,
                 underlineTerm: nil
             )
         }
@@ -280,7 +280,7 @@ private struct TheoreticalProductMass: View {
                 emphasise: true
             )
             FixedText("x")
-            FixedText(data.productMolarMass.str(decimals: 0))
+            FixedText("\(data.reaction.product.molecularMass)")
         }
     }
 }
@@ -307,7 +307,7 @@ private struct ReactingExcessReactingMoles: View {
         VStack(alignment: .trailing, spacing: relatedEquationVSpacing) {
             TermView(
                 base: "n",
-                subTerm: data.excessReactant,
+                subTerm: data.reaction.excessReactant.name,
                 underlineTerm: "reacts"
             )
             .frame(height: doubleRowEquationHeight)
@@ -323,14 +323,14 @@ private struct ReactingExcessReactingMoles: View {
             VStack(spacing: fractionVSpacing) {
                 TermView(
                     base: "n",
-                    subTerm: data.excessReactant,
+                    subTerm: data.reaction.excessReactant.name,
                     underlineTerm: nil
                 )
                 Rectangle()
                     .frame(width: 110, height: 2)
                 TermView(
                     base: "MM",
-                    subTerm: data.excessReactant,
+                    subTerm: data.reaction.excessReactant.name,
                     underlineTerm: nil
                 )
             }
@@ -344,7 +344,7 @@ private struct ReactingExcessReactingMoles: View {
                 animatingNumber(data.reactingExcessReactantMass, decimals: 2)
                 Rectangle()
                     .frame(width: 50, height: 2)
-                FixedText(data.excessReactantMolarMass.str(decimals: 0))
+                FixedText("\(data.reaction.excessReactant.molecularMass)")
                     .frame(height: EquationSizing.boxHeight)
             }
         }
@@ -385,7 +385,7 @@ private struct ActualProductMoles: View {
         VStack(alignment: .trailing, spacing: relatedEquationVSpacing) {
             TermView(
                 base: "m",
-                subTerm: data.product,
+                subTerm: data.reaction.product.name,
                 underlineTerm: "actual"
             )
             .frame(height: doubleRowEquationHeight)
@@ -400,13 +400,13 @@ private struct ActualProductMoles: View {
             FixedText("=")
             TermView(
                 base: "n",
-                subTerm: data.product,
+                subTerm: data.reaction.product.name,
                 underlineTerm: "actual"
             )
             FixedText("x")
             TermView(
                 base: "MM",
-                subTerm: data.product,
+                subTerm: data.reaction.product.name,
                 underlineTerm: nil
             )
         }
@@ -417,7 +417,7 @@ private struct ActualProductMoles: View {
             FixedText("=")
             animatingNumber(data.actualProductMoles, decimals: 2)
             FixedText("x")
-            FixedText(data.productMolarMass.str(decimals: 0))
+            FixedText("\(data.reaction.product.molecularMass)")
         }
     }
 
@@ -470,14 +470,14 @@ private struct ProductYield: View {
             VStack(spacing: fractionVSpacing) {
                 TermView(
                     base: "m",
-                    subTerm: data.product,
+                    subTerm: data.reaction.product.name,
                     underlineTerm: "actual"
                 )
                 Rectangle()
                     .frame(width: 100, height: 2)
                 TermView(
                     base: "m",
-                    subTerm: data.product,
+                    subTerm: data.reaction.product.name,
                     underlineTerm: "theoretical"
                 )
             }
@@ -545,13 +545,7 @@ private struct TermView: View {
 
 struct LimitingReagentEquationData {
 
-    let limitingReactant: TextLine
-    let excessReactant: TextLine
-    let product: TextLine
-
-    let excessReactantCoefficient: Int
-    let excessReactantMolarMass: CGFloat
-    let productMolarMass: CGFloat
+    let reaction: LimitingReagentReaction
 
     let volume: CGFloat
 
@@ -586,12 +580,7 @@ struct LimitingReagentEquationView_Previews: PreviewProvider {
     }
 
     private static let previewData = LimitingReagentEquationData(
-        limitingReactant: "H_2_C_2_O_4_",
-        excessReactant: "NaHCO_3_",
-        product: "Na_2_C_2_O_4_",
-        excessReactantCoefficient: 2,
-        excessReactantMolarMass: 84,
-        productMolarMass: 134,
+        reaction: .firstReaction,
         volume: 0.1,
         limitingReactantMoles: 0.02,
         limitingReactantMolarity: 0.2,

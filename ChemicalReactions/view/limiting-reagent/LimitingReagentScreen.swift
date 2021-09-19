@@ -99,7 +99,7 @@ private struct LimitingReagentRightStack: View {
 
     private var equation: some View {
         LimitingReagentEquationView(
-            data: model.equationData,
+            data: components.equationData,
             reactionProgress: components.reactionProgress,
             showTheoreticalData: false,
             showActualData: false
