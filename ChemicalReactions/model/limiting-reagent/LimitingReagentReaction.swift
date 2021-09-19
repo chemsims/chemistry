@@ -82,5 +82,6 @@ extension LimitingReagentReaction {
 
     enum ElementState {
         case aqueous, liquid, solid, gaseous
+        
     }
 }

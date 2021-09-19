@@ -10,6 +10,7 @@ class LimitingReagentScreenViewModel: ObservableObject {
     init() {
         let reaction = LimitingReagentReaction.firstReaction
         self.components = LimitingReagentComponents(reaction: reaction)
+        self.navigation = LimitingReagentNavigationModel.model(using: self)
         self.shakeReactantModel = .init(
             canAddMolecule: self.canAdd,
             addMolecules: self.add,
@@ -21,17 +22,21 @@ class LimitingReagentScreenViewModel: ObservableObject {
     @Published var components: LimitingReagentComponents
 
     private(set) var shakeReactantModel: MultiContainerShakeViewModel<LimitingReagentComponents.Reactant>!
+    private(set) var navigation: NavigationModel<LimitingReagentScreenState>!
     
 }
 
 // MARK: - Navigation
 extension LimitingReagentScreenViewModel {
     func next() {
-
+        guard !nextIsDisabled else {
+            return
+        }
+        navigation.next()
     }
 
     func back() {
-
+        navigation.back()
     }
 
     var nextIsDisabled: Bool {

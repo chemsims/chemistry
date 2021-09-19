@@ -203,6 +203,8 @@
 		573F2E7626EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F2E7526EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift */; };
 		573F2E7926EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F2E7826EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift */; };
 		573F2E7B26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F2E7A26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift */; };
+		573F484D26F7313900D9AC3A /* LimitingReagentNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F484C26F7313900D9AC3A /* LimitingReagentNavigationModel.swift */; };
+		573F484F26F733CA00D9AC3A /* LimitingReagentStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F484E26F733CA00D9AC3A /* LimitingReagentStatements.swift */; };
 		574103DF2642966300E6EDCB /* Tooltip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F82578CE7E00EF90A1 /* Tooltip.swift */; };
 		5742D1AD26AAAAC900049FCC /* ProductLocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5742D1AC26AAAAC900049FCC /* ProductLocker.swift */; };
 		5742D1B026AAB1A300049FCC /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 5742D1AF26AAB1A300049FCC /* SwiftKeychainWrapper */; };
@@ -1047,6 +1049,8 @@
 		573F2E7526EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsScreen.swift; sourceTree = "<group>"; };
 		573F2E7826EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsQuestionSet.swift; sourceTree = "<group>"; };
 		573F2E7A26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsNavigationRows.swift; sourceTree = "<group>"; };
+		573F484C26F7313900D9AC3A /* LimitingReagentNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitingReagentNavigationModel.swift; sourceTree = "<group>"; };
+		573F484E26F733CA00D9AC3A /* LimitingReagentStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitingReagentStatements.swift; sourceTree = "<group>"; };
 		5742D1AC26AAAAC900049FCC /* ProductLocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductLocker.swift; sourceTree = "<group>"; };
 		5742D1B126AAB39F00049FCC /* SKProductExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKProductExtension.swift; sourceTree = "<group>"; };
 		5742D1B326AABA0F00049FCC /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
@@ -3459,6 +3463,7 @@
 				573F2E7326EBB0B900E9AB74 /* ChemicalReactionNavigationModel.swift */,
 				573F2E7526EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift */,
 				573F2E7A26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift */,
+				573F484C26F7313900D9AC3A /* LimitingReagentNavigationModel.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -3467,6 +3472,7 @@
 			isa = PBXGroup;
 			children = (
 				57B4572926EA42610030D895 /* BalancedReactionStatements.swift */,
+				573F484E26F733CA00D9AC3A /* LimitingReagentStatements.swift */,
 			);
 			path = statements;
 			sourceTree = "<group>";
@@ -5488,10 +5494,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				573F484D26F7313900D9AC3A /* LimitingReagentNavigationModel.swift in Sources */,
 				5791D23B26F0A2C50094D711 /* BalancedReactionMoleculePositionViewModel.swift in Sources */,
 				57E48A5226CAD8B900A9A421 /* BalancedReactionMoleculesView.swift in Sources */,
 				57F6808426F33D97007DDD5F /* LimitingReagentScreenViewModel.swift in Sources */,
 				573F2E7926EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift in Sources */,
+				573F484F26F733CA00D9AC3A /* LimitingReagentStatements.swift in Sources */,
 				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
 				5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */,
 				57B4572A26EA42610030D895 /* BalancedReactionStatements.swift in Sources */,
