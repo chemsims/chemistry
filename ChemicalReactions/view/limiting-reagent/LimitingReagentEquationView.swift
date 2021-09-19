@@ -280,7 +280,7 @@ private struct TheoreticalProductMass: View {
                 emphasise: true
             )
             FixedText("x")
-            FixedText("\(data.reaction.product.molecularMass)")
+            FixedText("\(data.reaction.product.molarMass)")
         }
     }
 }
@@ -344,7 +344,7 @@ private struct ReactingExcessReactingMoles: View {
                 animatingNumber(data.reactingExcessReactantMass, decimals: 2)
                 Rectangle()
                     .frame(width: 50, height: 2)
-                FixedText("\(data.reaction.excessReactant.molecularMass)")
+                FixedText("\(data.reaction.excessReactant.molarMass)")
                     .frame(height: EquationSizing.boxHeight)
             }
         }
@@ -417,7 +417,7 @@ private struct ActualProductMoles: View {
             FixedText("=")
             animatingNumber(data.actualProductMoles, decimals: 2)
             FixedText("x")
-            FixedText("\(data.reaction.product.molecularMass)")
+            FixedText("\(data.reaction.product.molarMass)")
         }
     }
 
@@ -580,7 +580,7 @@ struct LimitingReagentEquationView_Previews: PreviewProvider {
     }
 
     private static let previewData = LimitingReagentEquationData(
-        reaction: .firstReaction,
+        reaction: .availableReactions.first!,
         volume: 0.1,
         limitingReactantMoles: 0.02,
         limitingReactantMolarity: 0.2,

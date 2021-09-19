@@ -68,7 +68,7 @@ class LimitingReagentComponents: ObservableObject {
     }
 
     var productTheoreticalMass: CGFloat {
-        CGFloat(reaction.product.molecularMass) * productTheoreticalMoles
+        CGFloat(reaction.product.molarMass) * productTheoreticalMoles
     }
 
     /// Yield as a percentage between 0 and 1
@@ -81,7 +81,7 @@ class LimitingReagentComponents: ObservableObject {
     }
 
     var productActualMoles: Equation {
-        productActualMass / CGFloat(reaction.product.molecularMass)
+        productActualMass / CGFloat(reaction.product.molarMass)
     }
 
     var excessReactantActualMoles: Equation {
@@ -89,7 +89,7 @@ class LimitingReagentComponents: ObservableObject {
     }
 
     var excessReactantActualMass: Equation {
-        CGFloat(reaction.excessReactant.molecularMass) * excessReactantActualMoles
+        CGFloat(reaction.excessReactant.molarMass) * excessReactantActualMoles
     }
 }
 

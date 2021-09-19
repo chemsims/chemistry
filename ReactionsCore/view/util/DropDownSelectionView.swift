@@ -11,6 +11,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     @Binding var isToggled: Bool
     @Binding var selection: Data
     let height: CGFloat
+    let widthToHeight: CGFloat
     let animation: Animation?
     let displayString: (Data) -> TextLine
     let label: (Data) -> String
@@ -25,6 +26,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         isToggled: Binding<Bool>,
         selection: Binding<Data>,
         height: CGFloat,
+        widthToHeight: CGFloat = 8,
         animation: Animation?,
         displayString: @escaping (Data) -> TextLine,
         label: @escaping (Data) -> String,
@@ -36,6 +38,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         self._isToggled = isToggled
         self._selection = selection
         self.height = height
+        self.widthToHeight = widthToHeight
         self.animation = animation
         self.displayString = displayString
         self.label = label
@@ -118,7 +121,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
             .padding(.leading, height * 0.2)
             .padding(.trailing, height * 0.2)
             .frame(
-                width: 8 * height,
+                width: widthToHeight * height,
                 height: height,
                 alignment: .leading
             )

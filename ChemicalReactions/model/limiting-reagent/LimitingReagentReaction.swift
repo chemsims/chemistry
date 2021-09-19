@@ -5,7 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
-struct LimitingReagentReaction {
+struct LimitingReagentReaction: Equatable {
 
     let yield: CGFloat
 
@@ -17,8 +17,86 @@ struct LimitingReagentReaction {
     let secondExtraProduct: NonReactingProduct?
 }
 
+extension LimitingReagentReaction: Identifiable {
+    var id: String {
+        label
+    }
+}
+
 extension LimitingReagentReaction {
-    static let firstReaction = LimitingReagentReaction(
+    var displayString: TextLine {
+        let reactants = excessReactant.nameWithCoeff + " + " + limitingReactant.name
+        return reactants + " ➝ " + productsLine
+    }
+
+    private var productsLine: TextLine {
+        var builder: TextLine = ""
+        if let first = firstExtraProduct {
+            builder = builder + first.nameWithCoeff + " + "
+        }
+        builder = builder + product.name
+        if let second = secondExtraProduct {
+            builder = builder + " + " + second.nameWithCoeff
+        }
+        return builder
+    }
+
+    var label: String {
+        displayString.label
+    }
+}
+
+extension LimitingReagentReaction {
+
+    struct NonReactingProduct: Equatable {
+        let name: TextLine
+        let state: ElementState
+        let coefficient: Int
+
+        var nameWithCoeff: TextLine {
+            coefficient == 1 ? name : "\(coefficient)" + name
+        }
+    }
+
+    struct LimitingReactant: Equatable {
+        let name: TextLine
+        let state: ElementState
+        let color: Color
+    }
+
+    struct ExcessReactant: Equatable {
+        let name: TextLine
+        let state: ElementState
+        let color: Color
+        let coefficient: Int
+        let molarMass: Int
+
+        var nameWithCoeff: TextLine {
+            coefficient == 1 ? name : "\(coefficient)" + name
+        }
+    }
+
+    struct Product: Equatable {
+        let name: TextLine
+        let state: ElementState
+        let color: Color
+        let molarMass: Int
+    }
+
+    enum ElementState {
+        case aqueous, liquid, solid, gaseous
+        
+    }
+}
+
+extension LimitingReagentReaction {
+
+    static let availableReactions = [
+        firstReaction,
+        secondReaction
+    ]
+
+    private static let firstReaction = LimitingReagentReaction(
         yield: 0.98,
         limitingReactant: .init(
             name: "H_2_C_2_O_4_",
@@ -30,13 +108,13 @@ extension LimitingReagentReaction {
             state: .solid,
             color: .purple,
             coefficient: 2,
-            molecularMass: 84
+            molarMass: 84
         ),
         product: .init(
             name: "Na_2_C_2_O_4_",
             state: .aqueous,
             color: .blue,
-            molecularMass: 134
+            molarMass: 134
         ),
         firstExtraProduct: .init(
             name: "H_2_O",
@@ -49,39 +127,32 @@ extension LimitingReagentReaction {
             coefficient: 2
         )
     )
-}
 
-extension LimitingReagentReaction {
-
-    struct NonReactingProduct {
-        let name: TextLine
-        let state: ElementState
-        let coefficient: Int
-    }
-
-    struct LimitingReactant {
-        let name: TextLine
-        let state: ElementState
-        let color: Color
-    }
-
-    struct ExcessReactant {
-        let name: TextLine
-        let state: ElementState
-        let color: Color
-        let coefficient: Int
-        let molecularMass: Int
-    }
-
-    struct Product {
-        let name: TextLine
-        let state: ElementState
-        let color: Color
-        let molecularMass: Int
-    }
-
-    enum ElementState {
-        case aqueous, liquid, solid, gaseous
-        
-    }
+    private static let secondReaction = LimitingReagentReaction(
+        yield: 0.96,
+        limitingReactant: .init(
+            name: "HNO_3_",
+            state: .aqueous,
+            color: .red
+        ),
+        excessReactant: .init(
+            name: "NaOH",
+            state: .aqueous,
+            color: .purple,
+            coefficient: 1,
+            molarMass: 40
+        ),
+        product: .init(
+            name: "NaNO_3_",
+            state: .aqueous,
+            color: .black,
+            molarMass: 85
+        ),
+        firstExtraProduct: nil,
+        secondExtraProduct: .init(
+            name: "H_2_O",
+            state: .liquid,
+            coefficient: 1
+        )
+    )
 }

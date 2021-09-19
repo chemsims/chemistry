@@ -36,7 +36,7 @@ private struct LimitingReagentScreenWithLayout: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            LimitingReagentTopStack(layout: layout)
+            LimitingReagentTopStack(model: model, layout: layout)
             Spacer(minLength: 0)
             HStack(spacing: 0) {
                 beaker
@@ -60,23 +60,39 @@ private struct LimitingReagentScreenWithLayout: View {
 
 private struct LimitingReagentTopStack: View {
 
+    @ObservedObject var model: LimitingReagentScreenViewModel
     let layout: LimitingReagentScreenLayout
 
     var body: some View {
         HStack(spacing: 0) {
+            Spacer(minLength: 0)
             reactionDefinition
+            Spacer(minLength: 0)
             reactionToggle
         }
+        .padding(.leading, layout.common.menuSize + layout.common.menuHPadding)
     }
 
     private var reactionDefinition: some View {
         Text("Reaction")
+            .frame(height: layout.common.reactionDefinitionHeight)
     }
 
     private var reactionToggle: some View {
-        Rectangle()
-            .stroke()
-            .frame(square: layout.common.reactionSelectionToggleHeight)
+        DropDownSelectionView(
+            title: " Choose a reaction",
+            options: LimitingReagentReaction.availableReactions,
+            isToggled: .constant(true),
+            selection: $model.reaction,
+            height: layout.common.reactionDefinitionHeight,
+            widthToHeight: 12,
+            animation: nil,
+            displayString: { $0.displayString },
+            label: { $0.label },
+            disabledOptions: [],
+            onSelection: { }
+        )
+        .frame(height: layout.common.reactionSelectionToggleHeight)
     }
 }
 
