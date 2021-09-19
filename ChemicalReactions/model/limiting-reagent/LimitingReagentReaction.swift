@@ -25,18 +25,39 @@ extension LimitingReagentReaction: Identifiable {
 
 extension LimitingReagentReaction {
     var displayString: TextLine {
-        let reactants = excessReactant.nameWithCoeff + " + " + limitingReactant.name
-        return reactants + " ➝ " + productsLine
+        reactionLine(getName: \.nameWithCoeff)
     }
 
-    private var productsLine: TextLine {
+    var reactionDisplayWithElementState: TextLine {
+        reactionLine(getName: \.nameWithCoeffAndState)
+    }
+
+    private func reactionLine(
+        getName: KeyPath<ElementDisplay, TextLine>
+    ) -> TextLine {
+        let reactants = reactantLine(getName: getName)
+        let products = productsLine(getName: getName)
+        return reactants + " ➝ " + products
+    }
+
+    private func reactantLine(
+        getName: KeyPath<ElementDisplay, TextLine>
+    ) -> TextLine {
+        let reactant1 = excessReactant[keyPath: getName]
+        let reactant2 = limitingReactant[keyPath: getName]
+        return reactant1 + " + " + reactant2
+    }
+
+    private func productsLine(
+        getName: KeyPath<ElementDisplay, TextLine>
+    ) -> TextLine {
         var builder: TextLine = ""
         if let first = firstExtraProduct {
-            builder = builder + first.nameWithCoeff + " + "
+            builder = builder + first[keyPath: getName] + " + "
         }
-        builder = builder + product.name
+        builder = builder + product[keyPath: getName]
         if let second = secondExtraProduct {
-            builder = builder + " + " + second.nameWithCoeff
+            builder = builder + " + " + second[keyPath: getName]
         }
         return builder
     }
@@ -85,9 +106,50 @@ extension LimitingReagentReaction {
 
     enum ElementState {
         case aqueous, liquid, solid, gaseous
-        
+
+        var symbol: String {
+            switch self {
+            case .aqueous: return "aq"
+            case .liquid: return "l"
+            case .solid: return "s"
+            case .gaseous: return "g"
+            }
+        }
     }
 }
+
+
+private protocol ElementDisplay {
+    var name: TextLine { get }
+    var coefficient: Int { get }
+    var state: LimitingReagentReaction.ElementState { get }
+}
+
+extension ElementDisplay {
+    var nameWithCoeff: TextLine {
+        coefficient == 1 ? name : "\(coefficient)" + name
+    }
+
+    var nameWithCoeffAndState: TextLine {
+        nameWithCoeff + "_(\(state.symbol))_"
+    }
+}
+
+extension LimitingReagentReaction.LimitingReactant: ElementDisplay {
+    fileprivate var coefficient: Int {
+        1
+    }
+}
+
+extension LimitingReagentReaction.ExcessReactant: ElementDisplay { }
+
+extension LimitingReagentReaction.Product: ElementDisplay {
+    fileprivate var coefficient: Int {
+        1
+    }
+}
+
+extension LimitingReagentReaction.NonReactingProduct: ElementDisplay { }
 
 extension LimitingReagentReaction {
 

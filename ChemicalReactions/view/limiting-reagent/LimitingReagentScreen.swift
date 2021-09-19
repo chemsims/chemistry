@@ -37,6 +37,7 @@ private struct LimitingReagentScreenWithLayout: View {
     var body: some View {
         VStack(spacing: 0) {
             LimitingReagentTopStack(model: model, layout: layout)
+                .zIndex(1)
             Spacer(minLength: 0)
             HStack(spacing: 0) {
                 beaker
@@ -65,7 +66,6 @@ private struct LimitingReagentTopStack: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Spacer(minLength: 0)
             reactionDefinition
             Spacer(minLength: 0)
             reactionToggle
@@ -74,8 +74,11 @@ private struct LimitingReagentTopStack: View {
     }
 
     private var reactionDefinition: some View {
-        Text("Reaction")
-            .frame(height: layout.common.reactionDefinitionHeight)
+        TextLinesView(
+            line: model.reaction.reactionDisplayWithElementState,
+            fontSize: layout.common.reactionDefinitionFontSize
+        )
+        .frame(height: layout.common.reactionDefinitionHeight)
     }
 
     private var reactionToggle: some View {
@@ -92,7 +95,10 @@ private struct LimitingReagentTopStack: View {
             disabledOptions: [],
             onSelection: { }
         )
-        .frame(height: layout.common.reactionSelectionToggleHeight)
+        .frame(
+            height: layout.common.reactionSelectionToggleHeight,
+            alignment: .top
+        )
     }
 }
 

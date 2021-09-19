@@ -49,6 +49,10 @@ extension ChemicalReactionsScreenLayout {
     var reactionDefinitionHeight: CGFloat {
         reactionSelectionToggleHeight
     }
+
+    var reactionDefinitionFontSize: CGFloat {
+        0.8 * reactionDefinitionHeight
+    }
 }
 
 // MARK: - Beaker
