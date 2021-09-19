@@ -13,8 +13,8 @@ struct LimitingReagentReaction {
     let excessReactant: ExcessReactant
     let product: Product
 
-    let firstExtraProduct: NonReactingProduct
-    let secondExtraProduct: NonReactingProduct
+    let firstExtraProduct: NonReactingProduct?
+    let secondExtraProduct: NonReactingProduct?
 }
 
 extension LimitingReagentReaction {

@@ -9,12 +9,7 @@ import ReactionsCore
 class LimitingReagentComponentTests: XCTestCase {
 
     func testMolarityAndMolesOfLimitingReactant() {
-        let reaction = LimitingReagentReaction(
-            yield: 0.5,
-            excessReactantCoefficient: 1,
-            excessReactantMolecularMass: 1,
-            productMolecularMass: 1
-        )
+        let reaction = reaction()
         let model = LimitingReagentComponents(
             reaction: reaction,
             initialRows: 5,
@@ -32,12 +27,7 @@ class LimitingReagentComponentTests: XCTestCase {
 
     func testExcessReactantTheoreticalMoles() {
         let coeff = 3
-        let reaction = LimitingReagentReaction(
-            yield: 0.5,
-            excessReactantCoefficient: coeff,
-            excessReactantMolecularMass: 1,
-            productMolecularMass: 1
-        )
+        let reaction = reaction(excessReactantCoefficient: coeff)
         let model = LimitingReagentComponents(
             reaction: reaction,
             initialRows: 10,
@@ -51,11 +41,10 @@ class LimitingReagentComponentTests: XCTestCase {
     }
 
     func testProductTheoreticalMolesAndMass() {
-        let reaction = LimitingReagentReaction(
+        let reaction = reaction(
             yield: 0.5,
             excessReactantCoefficient: 2,
-            excessReactantMolecularMass: 1,
-            productMolecularMass: 50
+            excessReactantMolecularMass: 50
         )
         let model = LimitingReagentComponents(
             reaction: reaction,
@@ -65,16 +54,15 @@ class LimitingReagentComponentTests: XCTestCase {
 
         model.addLimitingReactant(count: 20)
 
-        let expectedMass = model.limitingReactantMoles * reaction.productMolecularMass
+        let expectedMass = model.limitingReactantMoles * CGFloat(reaction.product.molecularMass)
         XCTAssertEqual(model.productTheoreticalMoles, model.limitingReactantMoles)
         XCTAssertEqual(model.productTheoreticalMass, expectedMass)
     }
 
     func testActualProductMolesAndMass() {
-        let reaction = LimitingReagentReaction(
+        let reaction = reaction(
             yield: 0.5,
             excessReactantCoefficient: 2,
-            excessReactantMolecularMass: 1,
             productMolecularMass: 50
         )
         let model = LimitingReagentComponents(
@@ -94,15 +82,14 @@ class LimitingReagentComponentTests: XCTestCase {
         let initialMoles = model.productActualMoles.getY(at: 0)
         let finalMoles = model.productActualMoles.getY(at: 1)
         XCTAssertEqual(initialMoles, 0)
-        XCTAssertEqual(finalMoles, finalMass / reaction.productMolecularMass)
+        XCTAssertEqual(finalMoles, finalMass / CGFloat(reaction.product.molecularMass))
     }
 
     func testActualReactantMolesAndMass() {
         let coeff = 3
-        let reaction = LimitingReagentReaction(
+        let reaction = reaction(
             yield: 0.5,
             excessReactantCoefficient: coeff,
-            excessReactantMolecularMass: 1,
             productMolecularMass: 50
         )
         let model = LimitingReagentComponents(
@@ -126,6 +113,37 @@ class LimitingReagentComponentTests: XCTestCase {
         let finalMass = model.excessReactantActualMass.getY(at: 1)
 
         XCTAssertEqual(initialMass, 0)
-        XCTAssertEqual(finalMass, finalMoles * reaction.excessReactantMolecularMass)
+        XCTAssertEqual(finalMass, finalMoles * CGFloat(reaction.excessReactant.molecularMass))
+    }
+
+    private func reaction(
+        yield: CGFloat = 1,
+        excessReactantCoefficient: Int = 1,
+        excessReactantMolecularMass: Int = 1,
+        productMolecularMass: Int = 1
+    ) -> LimitingReagentReaction {
+        LimitingReagentReaction(
+            yield: yield,
+            limitingReactant: .init(
+                name: "",
+                state: .aqueous,
+                color: .red
+            ),
+            excessReactant: .init(
+                name: "",
+                state: .aqueous,
+                color: .red,
+                coefficient: excessReactantCoefficient,
+                molecularMass: excessReactantMolecularMass
+            ),
+            product: .init(
+                name: "",
+                state: .aqueous,
+                color: .red,
+                molecularMass: productMolecularMass
+            ),
+            firstExtraProduct: nil,
+            secondExtraProduct: nil
+        )
     }
 }
