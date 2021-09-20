@@ -22,7 +22,7 @@ class LimitingReagentComponentTests: XCTestCase {
         model.addLimitingReactant(count: 20)
 
         XCTAssertEqual(model.limitingReactantMolarity, 0.2)
-        XCTAssertEqual(model.limitingReactantMoles, 0.5 * 0.2)
+        XCTAssertEqual(model.equationData.limitingReactantMoles, 0.5 * 0.2)
     }
 
     func testExcessReactantTheoreticalMoles() {
@@ -36,8 +36,8 @@ class LimitingReagentComponentTests: XCTestCase {
 
         model.addLimitingReactant(count: 30)
 
-        let expectedMoles = CGFloat(coeff) * model.limitingReactantMoles
-        XCTAssertEqual(model.excessReactantTheoreticalMoles, expectedMoles)
+        let expectedMoles = CGFloat(coeff) * model.equationData.limitingReactantMoles
+        XCTAssertEqual(model.equationData.neededExcessReactantMoles, expectedMoles)
     }
 
     func testProductTheoreticalMolesAndMass() {
@@ -54,9 +54,9 @@ class LimitingReagentComponentTests: XCTestCase {
 
         model.addLimitingReactant(count: 20)
 
-        let expectedMass = model.limitingReactantMoles * CGFloat(reaction.product.molarMass)
-        XCTAssertEqual(model.productTheoreticalMoles, model.limitingReactantMoles)
-        XCTAssertEqual(model.productTheoreticalMass, expectedMass)
+        let expectedMass = model.equationData.limitingReactantMoles * CGFloat(reaction.product.molarMass)
+        XCTAssertEqual(model.equationData.theoreticalProductMoles, model.equationData.limitingReactantMoles)
+        XCTAssertEqual(model.equationData.theoreticalProductMass, expectedMass)
     }
 
     func testActualProductMolesAndMass() {
@@ -73,14 +73,14 @@ class LimitingReagentComponentTests: XCTestCase {
 
         model.addLimitingReactant(count: 20)
 
-        let initialMass = model.productActualMass.getY(at: 0)
-        let finalMass = model.productActualMass.getY(at: 1)
+        let initialMass = model.equationData.actualProductMass.getY(at: 0)
+        let finalMass = model.equationData.actualProductMass.getY(at: 1)
 
         XCTAssertEqual(initialMass, 0)
-        XCTAssertEqual(finalMass, model.productTheoreticalMass * 0.5)
+        XCTAssertEqual(finalMass, model.equationData.theoreticalProductMass * 0.5)
 
-        let initialMoles = model.productActualMoles.getY(at: 0)
-        let finalMoles = model.productActualMoles.getY(at: 1)
+        let initialMoles = model.equationData.actualProductMoles.getY(at: 0)
+        let finalMoles = model.equationData.actualProductMoles.getY(at: 1)
         XCTAssertEqual(initialMoles, 0)
         XCTAssertEqual(finalMoles, finalMass / CGFloat(reaction.product.molarMass))
     }
@@ -100,17 +100,17 @@ class LimitingReagentComponentTests: XCTestCase {
 
         model.addLimitingReactant(count: 20)
 
-        let initialMoles = model.excessReactantActualMoles.getY(at: 0)
-        let finalMoles = model.excessReactantActualMoles.getY(at: 1)
+        let initialMoles = model.equationData.reactingExcessReactantMoles.getY(at: 0)
+        let finalMoles = model.equationData.reactingExcessReactantMoles.getY(at: 1)
 
-        let finalProductMoles = model.productActualMoles.getY(at: 1)
+        let finalProductMoles = model.equationData.actualProductMoles.getY(at: 1)
         let expectedFinalMoles = CGFloat(coeff) * finalProductMoles
 
         XCTAssertEqual(initialMoles, 0)
         XCTAssertEqual(finalMoles, expectedFinalMoles)
 
-        let initialMass = model.excessReactantActualMass.getY(at: 0)
-        let finalMass = model.excessReactantActualMass.getY(at: 1)
+        let initialMass = model.equationData.reactingExcessReactantMass.getY(at: 0)
+        let finalMass = model.equationData.reactingExcessReactantMass.getY(at: 1)
 
         XCTAssertEqual(initialMass, 0)
         XCTAssertEqual(finalMass, finalMoles * CGFloat(reaction.excessReactant.molarMass))

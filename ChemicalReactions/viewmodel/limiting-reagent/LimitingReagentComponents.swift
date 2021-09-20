@@ -45,6 +45,10 @@ class LimitingReagentComponents: ObservableObject {
             rows: roundedRows,
             avoiding: limitingReactantCoords
         )
+        let p = CGFloat(excessReactantCoords.count) / CGFloat(limitingReactantCoords.count)
+        withAnimation(.linear(duration: 1)) {
+            reactionProgress = p
+        }
     }
 
     private var roundedRows: Int {
@@ -55,72 +59,59 @@ class LimitingReagentComponents: ObservableObject {
         rowsToVolume.getY(at: rows)
     }
 
-    var productCoords: FractionedCoordinates {
-        .init(coordinates: [], fractionToDraw: ConstantEquation(value: 0))
-    }
-
     var limitingReactantMolarity: CGFloat {
         let gridSize = CGFloat(beakerCols * roundedRows)
         let coordCount = CGFloat(limitingReactantCoords.count)
         return coordCount / gridSize
     }
-
-    var limitingReactantMoles: CGFloat {
-        limitingReactantMolarity * volume
-    }
-
-    var excessReactantTheoreticalMoles: CGFloat {
-        CGFloat(reaction.excessReactant.coefficient) * limitingReactantMoles
-    }
-
-    var productTheoreticalMoles: CGFloat {
-        limitingReactantMoles
-    }
-
-    var productTheoreticalMass: CGFloat {
-        CGFloat(reaction.product.molarMass) * productTheoreticalMoles
-    }
-
-    /// Yield as a percentage between 0 and 1
-    var yield: Equation {
-        LinearEquation(x1: 0, y1: 0, x2: 1, y2: reaction.yield)
-    }
-
-    var productActualMass: Equation {
-        productTheoreticalMass * yield
-    }
-
-    var productActualMoles: Equation {
-        productActualMass / CGFloat(reaction.product.molarMass)
-    }
-
-    var excessReactantActualMoles: Equation {
-        CGFloat(reaction.excessReactant.coefficient) * productActualMoles
-    }
-
-    var excessReactantActualMass: Equation {
-        CGFloat(reaction.excessReactant.molarMass) * excessReactantActualMoles
-    }
 }
 
 extension LimitingReagentComponents {
     var equationData: LimitingReagentEquationData {
-        LimitingReagentEquationData(
+        Self.makeEquationData(
             reaction: reaction,
             volume: volume,
-            limitingReactantMoles: limitingReactantMoles,
+            limitingReactantMolarity: limitingReactantMolarity
+        )
+    }
+}
+
+private extension LimitingReagentComponents {
+    static func makeEquationData(
+        reaction: LimitingReagentReaction,
+        volume: CGFloat,
+        limitingReactantMolarity: CGFloat
+    ) -> LimitingReagentEquationData {
+
+        let limitingMoles = limitingReactantMolarity * volume
+        let excessCoeff = CGFloat(reaction.excessReactant.coefficient)
+        let theoreticalProductMoles = limitingMoles
+        let theoreticalProductMass = CGFloat(reaction.product.molarMass) * theoreticalProductMoles
+
+        let yield = LinearEquation(x1: 0, y1: 0, x2: 1, y2: reaction.yield)
+        let productMass = theoreticalProductMass * yield
+        let productMoles = productMass / CGFloat(reaction.product.molarMass)
+
+        let excessReactantMoles = excessCoeff * productMoles
+        let excessReactantMass = CGFloat(reaction.excessReactant.molarMass) * excessReactantMoles
+
+        return LimitingReagentEquationData(
+            reaction: reaction,
+            volume: volume,
+            limitingReactantMoles: limitingMoles,
             limitingReactantMolarity: limitingReactantMolarity,
-            neededExcessReactantMoles: excessReactantTheoreticalMoles,
-            theoreticalProductMass: productTheoreticalMass,
-            theoreticalProductMoles: productTheoreticalMoles,
-            reactingExcessReactantMoles: excessReactantActualMoles,
-            reactingExcessReactantMass: excessReactantActualMass,
-            actualProductMass: productActualMass,
-            actualProductMoles: productActualMoles,
+            neededExcessReactantMoles: excessCoeff * limitingMoles,
+            theoreticalProductMass: theoreticalProductMass,
+            theoreticalProductMoles: theoreticalProductMoles,
+            reactingExcessReactantMoles: excessReactantMoles,
+            reactingExcessReactantMass: excessReactantMass,
+            actualProductMass: productMass,
+            actualProductMoles: productMoles,
             yield: yield
         )
     }
 }
+
 
 // MARK: - Types
 extension LimitingReagentComponents {

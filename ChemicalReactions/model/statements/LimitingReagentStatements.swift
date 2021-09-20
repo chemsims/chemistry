@@ -120,7 +120,7 @@ struct LimitingReagentReactionStatements {
     }
 
     var showLimitingReactantMoles: [TextLine] {
-        let moles = components.limitingReactantMoles.str(decimals: 2)
+        let moles = components.equationData.limitingReactantMoles.str(decimals: 2)
         let volume = components.volume.str(decimals: 2)
         return [
             """
@@ -135,7 +135,7 @@ struct LimitingReagentReactionStatements {
         let coeff = reaction.excessReactant.coefficient
         let singleMoleNeeded = coeff == 1
         let moleCount = singleMoleNeeded ? "mole" : "moles"
-        let neededMoles = components.excessReactantTheoreticalMoles.str(decimals: 2)
+        let neededMoles = components.equationData.neededExcessReactantMoles.str(decimals: 2)
         return [
             """
             So we know that for this reactant to be consumed completely, each *1 mol of \
@@ -147,8 +147,8 @@ struct LimitingReagentReactionStatements {
     }
 
     var showTheoreticalProductMoles: [TextLine] {
-        let reactantMoles = components.limitingReactantMoles.str(decimals: 2)
-        let productMoles = components.productTheoreticalMoles.str(decimals: 2)
+        let reactantMoles = components.equationData.limitingReactantMoles.str(decimals: 2)
+        let productMoles = components.equationData.theoreticalProductMoles.str(decimals: 2)
         return [
             """
             Let's look at the stoichiometric relation in the reaction. By each *1 mol of \
@@ -160,7 +160,7 @@ struct LimitingReagentReactionStatements {
     }
 
     var showTheoreticalProductMass: [TextLine] {
-        let mass = components.productTheoreticalMass.str(decimals: 2)
+        let mass = components.equationData.theoreticalProductMass.str(decimals: 2)
         return [
             """
             And by knowing the *molar mass (MM, sometimes referred to as M, in g/mol)* of the \
@@ -191,8 +191,8 @@ struct LimitingReagentReactionStatements {
     }
 
     var endOfReaction: [TextLine] {
-        let actualMass = components.productActualMass.getY(at: 1).str(decimals: 2)
-        let theoreticalMass = components.productTheoreticalMass.str(decimals: 2)
+        let actualMass = components.equationData.actualProductMass.getY(at: 1).str(decimals: 2)
+        let theoreticalMass = components.equationData.theoreticalProductMass.str(decimals: 2)
         return [
             """
             Done! You added the amount needed of *\(excessReactant)*. But wait a minute, the \
@@ -231,7 +231,7 @@ struct LimitingReagentReactionStatements {
     }
 
     var explainLimitingReagent: [TextLine] {
-        let moles = components.limitingReactantMoles.str(decimals: 2)
+        let moles = components.equationData.limitingReactantMoles.str(decimals: 2)
         return [
             """
             Very simple! There is not enough *\(product)*, as we only added so much of it \
