@@ -14,10 +14,14 @@ class LimitingReagentComponents: ObservableObject {
         rowsToVolume: Equation = ChemicalReactionsSettings.rowsToVolume
     ) {
         self.reaction = reaction
-        self.underlyingRows = CGFloat(initialRows)
+        self.rows = CGFloat(initialRows)
         self.beakerCols = cols
         self.rowsToVolume = rowsToVolume
-        self.shuffledCoords = GridCoordinateList.list(cols: cols, rows: initialRows).shuffled()
+        self.equationData = Self.makeEquationData(
+            reaction: reaction,
+            volume: rowsToVolume.getY(at: CGFloat(initialRows)),
+            limitingReactantMolarity: 0
+        )
     }
 
     let reaction: LimitingReagentReaction
@@ -26,68 +30,30 @@ class LimitingReagentComponents: ObservableObject {
 
     @Published var limitingReactantCoords = [GridCoordinate]()
     @Published var excessReactantCoords = [GridCoordinate]()
+    @Published var equationData: LimitingReagentEquationData
 
     @Published var productCoords = [GridCoordinate]()
     @Published var reactionProgress: CGFloat = 0
-
-    var state = State.settingRows {
-        didSet {
-            handleStateTransition(from: oldValue)
-        }
-    }
-
-    var rowsBinding: Binding<CGFloat> {
-        Binding(
-            get: { self.rows },
-            set: self.setRows
-        )
-    }
-
-    var rows: CGFloat {
-        underlyingRows
-    }
-
-    func setRows(to newValue: CGFloat) {
-        if state == .settingRows {
-            underlyingRows = newValue
-        }
-    }
-
-    private var underlyingRows: CGFloat
-
-    private var shuffledCoords: [GridCoordinate]
+    @Published var rows: CGFloat
 
     func addLimitingReactant(count: Int) {
-        guard state == .addingLimitingReactant else {
-            return
-        }
-        let currentCount = limitingReactantCoords.count
-        let desiredCount = currentCount + count
-        limitingReactantCoords = Array(shuffledCoords[0..<desiredCount])
+        limitingReactantCoords = GridCoordinateList.addingRandomElementsTo(
+            grid: limitingReactantCoords,
+            count: count,
+            cols: beakerCols,
+            rows: roundedRows
+        )
+        updateEquationData()
     }
 
     func addExcessReactant(count: Int) {
-        let currentCount = excessReactantCoords.count
-        let desiredCount = currentCount + count
-        let offset = limitingReactantCoords.count
-        let endIndex = offset + desiredCount
-        excessReactantCoords = Array(shuffledCoords[offset..<endIndex])
-//
-//        excessReactantCoords = GridCoordinateList.addingRandomElementsTo(
-//            grid: excessReactantCoords,
-//            count: count,
-//            cols: beakerCols,
-//            rows: roundedRows,
-//            avoiding: limitingReactantCoords
-//        )
-//        let p = CGFloat(excessReactantCoords.count) / CGFloat(limitingReactantCoords.count)
-//        withAnimation(.linear(duration: 1)) {
-//            reactionProgress = p
-//        }
-    }
-
-    private var roundedRows: Int {
-        GridCoordinateList.availableRows(for: rows)
+        excessReactantCoords = GridCoordinateList.addingRandomElementsTo(
+            grid: excessReactantCoords,
+            count: count,
+            cols: beakerCols,
+            rows: roundedRows,
+            avoiding: limitingReactantCoords
+        )
     }
 
     var volume: CGFloat {
@@ -99,25 +65,23 @@ class LimitingReagentComponents: ObservableObject {
         let coordCount = CGFloat(limitingReactantCoords.count)
         return coordCount / gridSize
     }
-}
 
-extension LimitingReagentComponents {
-    private func handleStateTransition(from prevState: State) {
-        switch (prevState, state) {
-        case (.settingRows, _): stoppedEditingRows()
-        default: break
-        }
-    }
-
-    /// Should be called whenever the rows have finished editing
-    private func stoppedEditingRows() {
-        shuffledCoords = GridCoordinateList.list(cols: beakerCols, rows: roundedRows).shuffled()
+    private var roundedRows: Int {
+        GridCoordinateList.availableRows(for: rows)
     }
 }
 
 extension LimitingReagentComponents {
-    var equationData: LimitingReagentEquationData {
-        Self.makeEquationData(
+
+    func prepareReaction() {
+        let coordsFromLimiting = limitingReactantCoords.dropLast()
+        let coordsFromExcess = excessReactantCoords.dropLast()
+
+        productCoords = Array(coordsFromLimiting + coordsFromExcess)
+    }
+
+    func updateEquationData() {
+        self.equationData = Self.makeEquationData(
             reaction: reaction,
             volume: volume,
             limitingReactantMolarity: limitingReactantMolarity
@@ -164,11 +128,6 @@ private extension LimitingReagentComponents {
 
 // MARK: - Types
 extension LimitingReagentComponents {
-
-    enum State {
-        case settingRows, addingLimitingReactant, addingExcessReactant
-    }
-
     enum Reactant: Int, CaseIterable, Identifiable {
         case limiting, excess
 

@@ -83,7 +83,7 @@ struct LimitingReagentBeaker: View {
 
     private var beaker: some View {
         AdjustableFluidBeaker(
-            rows: components.rowsBinding,
+            rows: $components.rows,
             molecules: [
                 BeakerMolecules(
                     coords: components.limitingReactantCoords,
@@ -96,8 +96,17 @@ struct LimitingReagentBeaker: View {
                     label: ""
                 )
             ],
-            animatingMolecules: [],
-            currentTime: 0,
+            animatingMolecules: [
+                AnimatingBeakerMolecules(
+                    molecules: BeakerMolecules(
+                        coords: components.productCoords,
+                        color: components.reaction.product.color,
+                        label: ""
+                    ),
+                    fractionToDraw: LinearEquation(x1: 0, y1: 0, x2: 1, y2: 1)
+                )
+            ],
+            currentTime: components.reactionProgress,
             settings: layout.common.beakerSettings,
             canSetLevel: model.input == .setWaterLevel,
             beakerColorMultiply: .white,
@@ -108,7 +117,7 @@ struct LimitingReagentBeaker: View {
 
     private func didTap(reactant: LimitingReagentComponents.Reactant, location: CGPoint) {
         if shakeModel.activeMolecule == reactant {
-            shakeModel.model(for: reactant).manualAdd(amount: 5, at: location)
+            shakeModel.model(for: reactant).manualAdd(amount: 1, at: location)
             return
         }
 

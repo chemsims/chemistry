@@ -13,14 +13,11 @@ class LimitingReagentComponentTests: XCTestCase {
         let model = newModel(
             reaction: reaction,
             rows: 5,
-            rowsToVolume: LinearEquation(x1: 0, y1: 0, x2: 10, y2: 0.5),
-            initialState: nil
+            rowsToVolume: LinearEquation(x1: 0, y1: 0, x2: 10, y2: 0.5)
         )
-        model.setRows(to: 10)
+        model.rows = 10
+        
         XCTAssertEqual(model.volume, 0.5)
-
-        model.state = .addingLimitingReactant
-
         model.addLimitingReactant(count: 20)
 
         XCTAssertEqual(model.limitingReactantMolarity, 0.2)
@@ -125,24 +122,36 @@ class LimitingReagentComponentTests: XCTestCase {
         XCTAssertEqual(limitingCoordsSet.intersection(excessCoordsSet).count, 0)
     }
 
+    func testProductCoordsAreProducedAfterAddingExcessReactant() {
+        let model = newModel(reaction: reaction())
+
+        model.addLimitingReactant(count: 10)
+        model.addExcessReactant(count: 10)
+
+        model.prepareReaction()
+
+        XCTAssertEqual(model.productCoords.count, 18)
+
+        let setOfProduct = Set(model.productCoords)
+        let setOfLimitingReactant = Set(model.limitingReactantCoords)
+        let setOfExcessReactant = Set(model.excessReactantCoords)
+
+        XCTAssertEqual(setOfProduct.intersection(setOfLimitingReactant).count, 9)
+        XCTAssertEqual(setOfProduct.intersection(setOfExcessReactant).count, 9)
+    }
 
     private func newModel(
         reaction: LimitingReagentReaction,
         rows: Int = 10,
         cols: Int = 10,
-        rowsToVolume: Equation = IdentityEquation(),
-        initialState: LimitingReagentComponents.State? = .addingLimitingReactant
+        rowsToVolume: Equation = IdentityEquation()
     ) -> LimitingReagentComponents {
-        let model = LimitingReagentComponents(
+        LimitingReagentComponents(
             reaction: reaction,
             initialRows: rows,
             cols: cols,
             rowsToVolume: rowsToVolume
         )
-        if let initialState = initialState {
-            model.state = initialState
-        }
-        return model
     }
 
     private func reaction(

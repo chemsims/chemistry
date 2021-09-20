@@ -110,7 +110,6 @@ private class AddLimitingReactant: SetStatement {
         super.apply(on: model)
         model.input = .addReactant(type: .limiting)
         model.equationState = .showTheoreticalData
-        model.components.state = .addingLimitingReactant
     }
 
     override func unapply(on model: LimitingReagentScreenViewModel) {
@@ -125,7 +124,6 @@ private class AddExcessReactant: SetStatement {
         super.apply(on: model)
         model.input = .addReactant(type: .excess)
         model.equationState = .showActualData
-        model.components.state = .addingExcessReactant
     }
 
     override func unapply(on model: LimitingReagentScreenViewModel) {
