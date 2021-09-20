@@ -28,6 +28,9 @@ class LimitingReagentScreenViewModel: ObservableObject {
         }
     }
 
+    @Published var input: InputState? = nil
+    @Published var equationState = EquationState.showVolume
+
     private(set) var shakeReactantModel: MultiContainerShakeViewModel<LimitingReagentComponents.Reactant>!
     private(set) var navigation: NavigationModel<LimitingReagentScreenState>!
 }
@@ -53,15 +56,36 @@ extension LimitingReagentScreenViewModel {
 // MARK: Adding reactant
 extension LimitingReagentScreenViewModel {
     func canAdd(reactant: LimitingReagentComponents.Reactant) -> Bool {
-        true
+        input == .addReactant(type: reactant)
     }
 
     func add(reactant: LimitingReagentComponents.Reactant, count: Int) {
+        guard input == .addReactant(type: reactant) else {
+            return
+        }
         switch reactant {
         case .limiting:
             components.addLimitingReactant(count: count)
         default:
             break
+        }
+    }
+}
+
+// MARK: - Input and equation states
+extension LimitingReagentScreenViewModel {
+    enum InputState: Equatable {
+        case selectReaction,
+             setWaterLevel,
+             addReactant(type: LimitingReagentComponents.Reactant)
+    }
+
+    enum EquationState: Int, Comparable {
+
+        case showVolume, showTheoreticalData, showActualData
+
+        static func < (lhs: EquationState, rhs: EquationState) -> Bool {
+            lhs.rawValue < rhs.rawValue
         }
     }
 }

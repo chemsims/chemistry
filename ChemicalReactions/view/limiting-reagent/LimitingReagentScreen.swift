@@ -85,7 +85,7 @@ private struct LimitingReagentTopStack: View {
         DropDownSelectionView(
             title: " Choose a reaction",
             options: LimitingReagentReaction.availableReactions,
-            isToggled: .constant(true),
+            isToggled: .constant(model.input == .selectReaction),
             selection: $model.reaction,
             height: layout.common.reactionDefinitionHeight,
             widthToHeight: 12,
@@ -93,8 +93,9 @@ private struct LimitingReagentTopStack: View {
             displayString: { $0.displayString },
             label: { $0.label },
             disabledOptions: [],
-            onSelection: { }
+            onSelection: model.next
         )
+        .disabled(model.input != .selectReaction)
         .frame(
             height: layout.common.reactionSelectionToggleHeight,
             alignment: .top
@@ -123,8 +124,8 @@ private struct LimitingReagentRightStack: View {
         LimitingReagentEquationView(
             data: components.equationData,
             reactionProgress: components.reactionProgress,
-            showTheoreticalData: false,
-            showActualData: false
+            showTheoreticalData: model.equationState >= .showTheoreticalData,
+            showActualData: model.equationState >= .showActualData
         )
     }
 

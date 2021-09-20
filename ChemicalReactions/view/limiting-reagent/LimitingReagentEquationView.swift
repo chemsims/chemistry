@@ -153,6 +153,7 @@ private struct LimitingReactantMoles: View {
             FixedText("=")
             FixedText(data.volume.str(decimals: 2))
                 .foregroundColor(.orangeAccent)
+                .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
             FixedText("x")
             PlaceholderTerm(
                 value: showData ? data.limitingReactantMolarity.str(decimals: 2) : nil,

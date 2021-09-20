@@ -8,11 +8,13 @@ import SwiftUI
 struct LimitingReagentBeaker: View {
 
     init(model: LimitingReagentScreenViewModel, layout: LimitingReagentScreenLayout) {
+        self.model = model
         self.components = model.components
         self.shakeModel = model.shakeReactantModel
         self.layout = layout
     }
 
+    @ObservedObject var model: LimitingReagentScreenViewModel
     @ObservedObject var components: LimitingReagentComponents
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<LimitingReagentComponents.Reactant>
     let layout: LimitingReagentScreenLayout
@@ -49,13 +51,15 @@ struct LimitingReagentBeaker: View {
     }
 
     private func container(reactant: LimitingReagentComponents.Reactant) -> some View {
-        let model = shakeModel.model(for: reactant)
+        let containerModel = shakeModel.model(for: reactant)
         let isActive = shakeModel.activeMolecule == reactant
         let location = layout.common.containerPosition(index: reactant.index, active: isActive)
 
+        let disabled = model.input != .addReactant(type: reactant)
+
         return ShakingContainerView(
-            model: model,
-            position: model.motion.position,
+            model: containerModel,
+            position: containerModel.motion.position,
             onTap: { loc in didTap(reactant: reactant, location: loc) },
             initialLocation: location,
             containerWidth: layout.common.containerWidth,
@@ -71,6 +75,8 @@ struct LimitingReagentBeaker: View {
             includeContainerBackground: false,
             rotation: isActive ? .degrees(135) : .zero
         )
+        .disabled(disabled)
+        .colorMultiply(disabled ? Styling.inactiveContainerMultiply : .white)
         .zIndex(isActive ? 1 : 0)
     }
 
@@ -92,7 +98,7 @@ struct LimitingReagentBeaker: View {
             animatingMolecules: [],
             currentTime: 0,
             settings: layout.common.beakerSettings,
-            canSetLevel: true,
+            canSetLevel: model.input == .setWaterLevel,
             beakerColorMultiply: .white,
             sliderColorMultiply: .white,
             beakerModifier: IdentityViewModifier()
