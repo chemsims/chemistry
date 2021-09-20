@@ -28,6 +28,8 @@ class LimitingReagentComponents: ObservableObject {
     let beakerCols: Int
     let rowsToVolume: Equation
 
+    var shouldReactExcessReactant = true
+
     @Published var limitingReactantCoords = [GridCoordinate]()
     @Published var excessReactantCoords = [GridCoordinate]()
     @Published var equationData: LimitingReagentEquationData

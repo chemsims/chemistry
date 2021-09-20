@@ -183,9 +183,9 @@ struct LimitingReagentReactionStatements {
     var reactionInProgress: [TextLine] {
         [
             """
-            Awesome! Now let's wait for the *\(product)* to be produced. Using the molar mass \
-            of *\(product)*, we can know how many grams are really being produced. Let's call that \
-            the *actual \(product).*
+            Awesome! Now let's watch as *\(limitingReactant)* and *\(excessReactant)* react to produce \
+            *\(product)*! We can use the molar mass of *\(product)* to know how many grams \
+            are actually being produced. Let's call that the *actual \(product)*
             """
         ]
     }

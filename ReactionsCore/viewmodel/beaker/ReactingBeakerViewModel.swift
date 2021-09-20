@@ -60,13 +60,13 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
     /// If there is no more `otherReactant` left in the beaker, then `reactant` will still be added, but will not produce `product`.
     ///
     /// - Parameters:
-    ///     - reactant: The reactant to add
-    ///     - consumedReactant: The other reactant that will also be turned into `product`
-    ///     - product: The product molecule to be produced
-    ///     - duration: Duration of the reaction
-    ///     - count: How many `reactant` molecules to add. If this is greater than the available `otherReactant`
-    ///    molecules, then additional `reactant` molecules will be added
-    ///     - minConsumableReactantCoords: Minimum number of `consumedReactant` which should remain after the
+    ///   - reactant: The reactant to add
+    ///   - consumedReactant: The other reactant that will also be turned into `product`
+    ///   - product: The product molecule to be produced
+    ///   - duration: Duration of the reaction
+    ///   - count: How many `reactant` molecules to add. If this is greater than the available `otherReactant`
+    ///     molecules, then additional `reactant` molecules will be added
+    ///   - minConsumableReactantCoords: Minimum number of `consumedReactant` which should remain after the
     ///     reaction. Note that the number of `consumedReactant` coords may already be less than this value, in which
     ///     case all of `count` is added as `reactant`.
     public func add(

@@ -4,6 +4,7 @@
 
 import ReactionsCore
 import AcidsBases
+import SwiftUI
 
 private let statements = LimitingReagentStatements.self
 
@@ -29,9 +30,19 @@ struct LimitingReagentNavigationModel {
         SetStatement(\.showNeededReactantMoles),
         SetStatement(\.showTheoreticalProductMoles),
         SetStatement(\.showTheoreticalProductMass),
-        AddExcessReactant(\.instructToAddExcessReactant)
+        AddExcessReactant(\.instructToAddExcessReactant),
+        RunReaction(\.reactionInProgress),
+        EndOfReaction(\.endOfReaction),
+        SetStatement(statements.explainYieldPercentage),
+        SetStatement(\.showYield),
+        AddNonReactantExcessReactant(\.instructToAddExtraReactant),
+        StopInput(\.explainExtraReactantNotReacting),
+        SetStatement(\.explainLimitingReagent),
+        SetStatement(\.explainExcessReactant)
     ]
 }
+
+private let reactionDuration: TimeInterval = 3
 
 class LimitingReagentScreenState: ScreenState, SubState {
 
@@ -130,5 +141,43 @@ private class AddExcessReactant: SetStatement {
         model.input = nil
         model.equationState = .showTheoreticalData
         model.shakeReactantModel.stopAll()
+    }
+}
+
+private class RunReaction: SetStatement {
+    override func apply(on model: LimitingReagentScreenViewModel) {
+        super.apply(on: model)
+        model.input = nil
+        model.shakeReactantModel.stopAll()
+        model.components.prepareReaction()
+        withAnimation(.linear(duration: reactionDuration)) {
+            model.components.reactionProgress = 1
+        }
+    }
+
+    override func nextStateAutoDispatchDelay(model: LimitingReagentScreenViewModel) -> Double? {
+        reactionDuration
+    }
+}
+
+private class EndOfReaction: SetStatement {
+    override func apply(on model: LimitingReagentScreenViewModel) {
+        super.apply(on: model)
+        withAnimation(.easeOut(duration: 0.2)) {
+            model.components.reactionProgress = 1.00001
+        }
+    }
+}
+
+private class AddNonReactantExcessReactant: SetStatement {
+    override func apply(on model: LimitingReagentScreenViewModel) {
+        super.apply(on: model)
+        model.input = .addReactant(type: .excess)
+        model.components.shouldReactExcessReactant = false
+    }
+
+    override func unapply(on model: LimitingReagentScreenViewModel) {
+        model.input = nil
+        model.components.shouldReactExcessReactant = true
     }
 }

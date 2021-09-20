@@ -117,7 +117,7 @@ struct LimitingReagentBeaker: View {
 
     private func didTap(reactant: LimitingReagentComponents.Reactant, location: CGPoint) {
         if shakeModel.activeMolecule == reactant {
-            shakeModel.model(for: reactant).manualAdd(amount: 1, at: location)
+            shakeModel.model(for: reactant).manualAdd(amount: 5, at: location)
             return
         }
 
