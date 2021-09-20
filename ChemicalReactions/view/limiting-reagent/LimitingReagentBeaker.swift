@@ -64,20 +64,21 @@ struct LimitingReagentBeaker: View {
             initialLocation: location,
             containerWidth: layout.common.containerWidth,
             containerSettings: .init(
-                labelColor: .red,
-                label: "\(reactant.rawValue)",
+                labelColor: containerColor(reactant),
+                label: containerLabel(reactant),
                 labelFontSize: layout.common.containerFontSize,
                 labelFontColor: .white,
                 strokeLineWidth: 0.4
             ),
             moleculeSize: layout.common.containerMoleculeSize,
-            moleculeColor: .red,
+            moleculeColor: containerColor(reactant),
             includeContainerBackground: false,
             rotation: isActive ? .degrees(135) : .zero
         )
         .disabled(disabled)
         .colorMultiply(disabled ? Styling.inactiveContainerMultiply : .white)
         .zIndex(isActive ? 1 : 0)
+        .minimumScaleFactor(0.4)
     }
 
     private var beaker: some View {
@@ -86,12 +87,12 @@ struct LimitingReagentBeaker: View {
             molecules: [
                 BeakerMolecules(
                     coords: components.limitingReactantCoords,
-                    color: .purple,
+                    color: components.reaction.limitingReactant.color,
                     label: "" // TODO
                 ),
                 BeakerMolecules(
                     coords: components.excessReactantCoords,
-                    color: .red,
+                    color: components.reaction.excessReactant.color,
                     label: ""
                 )
             ],
@@ -122,6 +123,20 @@ struct LimitingReagentBeaker: View {
             halfXRange: layout.common.containerShakeHalfXRange,
             halfYRange: layout.common.containerShakeHalfYRange
         )
+    }
+
+    private func containerColor(_ reactant: LimitingReagentComponents.Reactant) -> Color {
+        switch reactant {
+        case .limiting: return components.reaction.limitingReactant.color
+        case .excess: return components.reaction.excessReactant.color
+        }
+    }
+
+    private func containerLabel(_ reactant: LimitingReagentComponents.Reactant) -> TextLine {
+        switch reactant {
+        case .limiting: return components.reaction.limitingReactant.name
+        case .excess: return components.reaction.excessReactant.name
+        }
     }
 }
 

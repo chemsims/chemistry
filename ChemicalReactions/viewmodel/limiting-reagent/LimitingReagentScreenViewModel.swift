@@ -66,8 +66,8 @@ extension LimitingReagentScreenViewModel {
         switch reactant {
         case .limiting:
             components.addLimitingReactant(count: count)
-        default:
-            break
+        case .excess:
+            components.addExcessReactant(count: count)
         }
     }
 }

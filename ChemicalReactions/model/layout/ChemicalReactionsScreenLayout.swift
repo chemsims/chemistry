@@ -127,7 +127,7 @@ extension ChemicalReactionsScreenLayout {
     }
 
     var containerFontSize: CGFloat {
-        0.8 * containerWidth
+        0.3 * containerWidth
     }
 
     var containerMoleculeSize: CGFloat {

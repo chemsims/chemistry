@@ -37,6 +37,16 @@ class LimitingReagentComponents: ObservableObject {
         )
     }
 
+    func addExcessReactant(count: Int) {
+        excessReactantCoords = GridCoordinateList.addingRandomElementsTo(
+            grid: excessReactantCoords,
+            count: count,
+            cols: beakerCols,
+            rows: roundedRows,
+            avoiding: limitingReactantCoords
+        )
+    }
+
     private var roundedRows: Int {
         GridCoordinateList.availableRows(for: rows)
     }

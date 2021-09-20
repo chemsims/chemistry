@@ -116,6 +116,41 @@ class LimitingReagentComponentTests: XCTestCase {
         XCTAssertEqual(finalMass, finalMoles * CGFloat(reaction.excessReactant.molarMass))
     }
 
+    func testCoordsArePopulatedWhenAddingLimitingReactant() {
+        let model = newModel(reaction: reaction())
+
+        model.addLimitingReactant(count: 10)
+        XCTAssertEqual(Set(model.limitingReactantCoords).count, 10)
+    }
+
+    func testCoordsArePopulatedWhenAddingExcessReactant() {
+        let model = newModel(reaction: reaction())
+
+        model.addLimitingReactant(count: 10)
+        model.addExcessReactant(count: 10)
+
+        let limitingCoordsSet = Set(model.limitingReactantCoords)
+        let excessCoordsSet = Set(model.excessReactantCoords)
+
+        XCTAssertEqual(excessCoordsSet.count, 10)
+        XCTAssertEqual(limitingCoordsSet.intersection(excessCoordsSet).count, 0)
+    }
+
+
+    private func newModel(
+        reaction: LimitingReagentReaction,
+        rows: Int = 10,
+        cols: Int = 10,
+        rowsToVolume: Equation = IdentityEquation()
+    ) -> LimitingReagentComponents {
+        LimitingReagentComponents(
+            reaction: reaction,
+            initialRows: rows,
+            cols: cols,
+            rowsToVolume: rowsToVolume
+        )
+    }
+
     private func reaction(
         yield: CGFloat = 1,
         excessReactantCoefficient: Int = 1,
@@ -134,13 +169,13 @@ class LimitingReagentComponentTests: XCTestCase {
                 state: .aqueous,
                 color: .red,
                 coefficient: excessReactantCoefficient,
-                molecularMass: excessReactantMolecularMass
+                molarMass: excessReactantMolecularMass
             ),
             product: .init(
                 name: "",
                 state: .aqueous,
                 color: .red,
-                molecularMass: productMolecularMass
+                molarMass: productMolecularMass
             ),
             firstExtraProduct: nil,
             secondExtraProduct: nil

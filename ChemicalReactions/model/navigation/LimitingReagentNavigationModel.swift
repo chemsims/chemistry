@@ -3,6 +3,7 @@
 //
 
 import ReactionsCore
+import AcidsBases
 
 private let statements = LimitingReagentStatements.self
 
@@ -15,13 +16,20 @@ struct LimitingReagentNavigationModel {
 
     private static let states: [LimitingReagentScreenState] = [
         SelectReaction(statements.intro),
-        RemoveInput(statements.explainStoichiometry),
+        StopInput(statements.explainStoichiometry),
         SetStatement(statements.introducePhysicalStates),
         SetStatement(statements.explainStoichiometry),
         SetStatement(statements.explainMoles),
         SetStatement(statements.explainAvogadroNumber),
         SetWaterLevel(statements.instructToSetVolume),
-        AddLimitingReactant(\.instructToAddLimitingReactant)
+        AddLimitingReactant(\.instructToAddLimitingReactant),
+        StopInput(\.explainMolarity),
+        SetStatement(\.showLimitingReactantMolarity),
+        SetStatement(\.showLimitingReactantMoles),
+        SetStatement(\.showNeededReactantMoles),
+        SetStatement(\.showTheoreticalProductMoles),
+        SetStatement(\.showTheoreticalProductMass),
+        AddExcessReactant(\.instructToAddExcessReactant)
     ]
 }
 
@@ -67,10 +75,11 @@ private class SetStatement: LimitingReagentScreenState {
     }
 }
 
-private class RemoveInput: SetStatement {
+private class StopInput: SetStatement {
     override func apply(on model: LimitingReagentScreenViewModel) {
         super.apply(on: model)
         model.input = nil
+        model.shakeReactantModel.stopAll()
     }
 }
 
@@ -106,5 +115,20 @@ private class AddLimitingReactant: SetStatement {
     override func unapply(on model: LimitingReagentScreenViewModel) {
         model.input = nil
         model.equationState = .showVolume
+        model.shakeReactantModel.stopAll()
+    }
+}
+
+private class AddExcessReactant: SetStatement {
+    override func apply(on model: LimitingReagentScreenViewModel) {
+        super.apply(on: model)
+        model.input = .addReactant(type: .excess)
+        model.equationState = .showActualData
+    }
+
+    override func unapply(on model: LimitingReagentScreenViewModel) {
+        model.input = nil
+        model.equationState = .showTheoreticalData
+        model.shakeReactantModel.stopAll()
     }
 }
