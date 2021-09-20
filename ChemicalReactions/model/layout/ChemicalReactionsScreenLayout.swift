@@ -182,3 +182,18 @@ extension ChemicalReactionsScreenLayout {
         initialContainerY + (0.75 * containerHeight)
     }
 }
+
+// MARK: - Reaction progress chart
+extension ChemicalReactionsScreenLayout {
+    func reactionProgressGeometry<MoleculeType: CaseIterable>(
+        _ type: MoleculeType.Type
+    ) -> ReactionProgressChartGeometry<MoleculeType> {
+        let chartSize = 0.35 * height
+        return ReactionProgressChartGeometry(
+            chartSize: chartSize,
+            moleculeType: type,
+            topPadding: 0.1 * chartSize
+        )
+    }
+
+}

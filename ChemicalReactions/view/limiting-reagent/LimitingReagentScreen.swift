@@ -113,6 +113,7 @@ private struct LimitingReagentRightStack: View {
         VStack(spacing: 0) {
             equation
             HStack(spacing: 0) {
+                Spacer(minLength: 0)
                 chart
                 Spacer(minLength: 0)
                 beaky
@@ -130,7 +131,10 @@ private struct LimitingReagentRightStack: View {
     }
 
     private var chart: some View {
-        Text("Chart")
+        ReactionProgressChart(
+            model: components.reactionProgressModel,
+            geometry: layout.common.reactionProgressGeometry(LimitingReagentComponents.Element.self)
+        )
     }
 
     private var beaky: some View {

@@ -22,6 +22,7 @@ class LimitingReagentComponents: ObservableObject {
             volume: rowsToVolume.getY(at: CGFloat(initialRows)),
             limitingReactantMolarity: 0
         )
+        self.reactionProgressModel = Self.reactionProgressModel(reaction: reaction)
     }
 
     let reaction: LimitingReagentReaction
@@ -37,6 +38,8 @@ class LimitingReagentComponents: ObservableObject {
     @Published var productCoords = [GridCoordinate]()
     @Published var reactionProgress: CGFloat = 0
     @Published var rows: CGFloat
+
+    var reactionProgressModel: ReactionProgressChartViewModel<Element>
 
     func addLimitingReactant(count: Int) {
         limitingReactantCoords = GridCoordinateList.addingRandomElementsTo(
@@ -127,6 +130,30 @@ private extension LimitingReagentComponents {
     }
 }
 
+private extension LimitingReagentComponents {
+    static func reactionProgressModel(reaction: LimitingReagentReaction) -> ReactionProgressChartViewModel<Element> {
+        .init(
+            molecules: .init { element in
+                initialReactionProgressMolecules(reaction: reaction, element: element)
+            },
+            settings: .init(),
+            timing: .init()
+        )
+    }
+
+    private static func initialReactionProgressMolecules(
+        reaction: LimitingReagentReaction,
+        element: Element
+    ) -> ReactionProgressChartViewModel<Element>.MoleculeDefinition {
+        .init(
+            label: element.label(reaction: reaction),
+            columnIndex: element.colIndex,
+            initialCount: 0,
+            color: element.color(reaction: reaction)
+        )
+    }
+}
+
 
 // MARK: - Types
 extension LimitingReagentComponents {
@@ -137,4 +164,30 @@ extension LimitingReagentComponents {
             self.rawValue
         }
     }
+
+    enum Element: Int, CaseIterable {
+        case limitingReactant, excessReactant, product
+
+        var colIndex: Int {
+            self.rawValue
+        }
+
+        func label(reaction: LimitingReagentReaction) -> TextLine {
+            switch self {
+            case .limitingReactant: return reaction.limitingReactant.name
+            case .excessReactant: return reaction.excessReactant.name
+            case .product: return reaction.product.name
+            }
+        }
+
+        func color(reaction: LimitingReagentReaction) -> Color {
+            switch self {
+            case .limitingReactant: return reaction.limitingReactant.color
+            case .excessReactant: return reaction.excessReactant.color
+            case .product: return reaction.product.color
+            }
+        }
+    }
 }
+
+

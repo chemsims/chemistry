@@ -528,8 +528,10 @@ extension ReactionProgressChartViewModel {
     }
 
     public struct Settings {
+
+        /// Returns a new instance with default values.
         public init(
-            maxMolecules: Int
+            maxMolecules: Int = 10
         ) {
             self.maxMolecules = maxMolecules
         }

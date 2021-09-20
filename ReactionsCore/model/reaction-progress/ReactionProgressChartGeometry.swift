@@ -9,7 +9,7 @@ public struct ReactionProgressChartGeometry<MoleculeType: CaseIterable> {
     public init(
         chartSize: CGFloat,
         moleculeType: MoleculeType.Type,
-        maxMolecules: Int,
+        maxMolecules: Int = 10,
         topPadding: CGFloat
     ) {
         let colCount = moleculeType.allCases.count

@@ -10,9 +10,9 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
     /// Creates a new instance
     ///
     /// - Parameters:
-    ///     - initial: The initial beaker molecules
-    ///     - cols: Number of beaker columns
-    ///     - rows: Number of beaker rows
+    ///   - initial: The initial beaker molecules
+    ///   - cols: Number of beaker columns
+    ///   - rows: Number of beaker rows
     public init(
         initial: EnumMap<Molecule, BeakerMolecules>,
         cols: Int,
@@ -136,8 +136,8 @@ public class ReactingBeakerViewModel<Molecule>: ObservableObject where Molecule 
     /// Adds `molecule` directly to the beaker, with no reaction taking place.
     ///
     /// - Parameters:
-    ///     - molecule: The molecule to add
-    ///     - count: Number of molecules to add
+    ///   - molecule: The molecule to add
+    ///   - count: Number of molecules to add
     public func addDirectly(
         molecule: Molecule,
         count: Int
