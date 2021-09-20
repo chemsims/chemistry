@@ -10,14 +10,16 @@ class LimitingReagentComponentTests: XCTestCase {
 
     func testMolarityAndMolesOfLimitingReactant() {
         let reaction = reaction()
-        let model = LimitingReagentComponents(
+        let model = newModel(
             reaction: reaction,
-            initialRows: 5,
-            cols: 10,
-            rowsToVolume: LinearEquation(x1: 0, y1: 0, x2: 10, y2: 0.5)
+            rows: 5,
+            rowsToVolume: LinearEquation(x1: 0, y1: 0, x2: 10, y2: 0.5),
+            initialState: nil
         )
-        model.rows = 10
+        model.setRows(to: 10)
         XCTAssertEqual(model.volume, 0.5)
+
+        model.state = .addingLimitingReactant
 
         model.addLimitingReactant(count: 20)
 
@@ -28,11 +30,7 @@ class LimitingReagentComponentTests: XCTestCase {
     func testExcessReactantTheoreticalMoles() {
         let coeff = 3
         let reaction = reaction(excessReactantCoefficient: coeff)
-        let model = LimitingReagentComponents(
-            reaction: reaction,
-            initialRows: 10,
-            cols: 10
-        )
+        let model = newModel(reaction: reaction)
 
         model.addLimitingReactant(count: 30)
 
@@ -46,11 +44,7 @@ class LimitingReagentComponentTests: XCTestCase {
             excessReactantCoefficient: 2,
             excessReactantMolecularMass: 50
         )
-        let model = LimitingReagentComponents(
-            reaction: reaction,
-            initialRows: 10,
-            cols: 10
-        )
+        let model = newModel(reaction: reaction)
 
         model.addLimitingReactant(count: 20)
 
@@ -65,11 +59,7 @@ class LimitingReagentComponentTests: XCTestCase {
             excessReactantCoefficient: 2,
             productMolecularMass: 50
         )
-        let model = LimitingReagentComponents(
-            reaction: reaction,
-            initialRows: 10,
-            cols: 10
-        )
+        let model = newModel(reaction: reaction)
 
         model.addLimitingReactant(count: 20)
 
@@ -92,11 +82,7 @@ class LimitingReagentComponentTests: XCTestCase {
             excessReactantCoefficient: coeff,
             productMolecularMass: 50
         )
-        let model = LimitingReagentComponents(
-            reaction: reaction,
-            initialRows: 10,
-            cols: 10
-        )
+        let model = newModel(reaction: reaction)
 
         model.addLimitingReactant(count: 20)
 
@@ -121,6 +107,9 @@ class LimitingReagentComponentTests: XCTestCase {
 
         model.addLimitingReactant(count: 10)
         XCTAssertEqual(Set(model.limitingReactantCoords).count, 10)
+
+        model.addLimitingReactant(count: 5)
+        XCTAssertEqual(Set(model.limitingReactantCoords).count, 15)
     }
 
     func testCoordsArePopulatedWhenAddingExcessReactant() {
@@ -141,14 +130,19 @@ class LimitingReagentComponentTests: XCTestCase {
         reaction: LimitingReagentReaction,
         rows: Int = 10,
         cols: Int = 10,
-        rowsToVolume: Equation = IdentityEquation()
+        rowsToVolume: Equation = IdentityEquation(),
+        initialState: LimitingReagentComponents.State? = .addingLimitingReactant
     ) -> LimitingReagentComponents {
-        LimitingReagentComponents(
+        let model = LimitingReagentComponents(
             reaction: reaction,
             initialRows: rows,
             cols: cols,
             rowsToVolume: rowsToVolume
         )
+        if let initialState = initialState {
+            model.state = initialState
+        }
+        return model
     }
 
     private func reaction(

@@ -14,9 +14,10 @@ class LimitingReagentComponents: ObservableObject {
         rowsToVolume: Equation = ChemicalReactionsSettings.rowsToVolume
     ) {
         self.reaction = reaction
-        self.rows = CGFloat(initialRows)
+        self.underlyingRows = CGFloat(initialRows)
         self.beakerCols = cols
         self.rowsToVolume = rowsToVolume
+        self.shuffledCoords = GridCoordinateList.list(cols: cols, rows: initialRows).shuffled()
     }
 
     let reaction: LimitingReagentReaction
@@ -25,30 +26,64 @@ class LimitingReagentComponents: ObservableObject {
 
     @Published var limitingReactantCoords = [GridCoordinate]()
     @Published var excessReactantCoords = [GridCoordinate]()
-    @Published var rows: CGFloat
+
+    @Published var productCoords = [GridCoordinate]()
     @Published var reactionProgress: CGFloat = 0
 
-    func addLimitingReactant(count: Int) {
-        limitingReactantCoords = GridCoordinateList.addingRandomElementsTo(
-            grid: limitingReactantCoords,
-            count: count,
-            cols: beakerCols,
-            rows: roundedRows
+    var state = State.settingRows {
+        didSet {
+            handleStateTransition(from: oldValue)
+        }
+    }
+
+    var rowsBinding: Binding<CGFloat> {
+        Binding(
+            get: { self.rows },
+            set: self.setRows
         )
     }
 
-    func addExcessReactant(count: Int) {
-        excessReactantCoords = GridCoordinateList.addingRandomElementsTo(
-            grid: excessReactantCoords,
-            count: count,
-            cols: beakerCols,
-            rows: roundedRows,
-            avoiding: limitingReactantCoords
-        )
-        let p = CGFloat(excessReactantCoords.count) / CGFloat(limitingReactantCoords.count)
-        withAnimation(.linear(duration: 1)) {
-            reactionProgress = p
+    var rows: CGFloat {
+        underlyingRows
+    }
+
+    func setRows(to newValue: CGFloat) {
+        if state == .settingRows {
+            underlyingRows = newValue
         }
+    }
+
+    private var underlyingRows: CGFloat
+
+    private var shuffledCoords: [GridCoordinate]
+
+    func addLimitingReactant(count: Int) {
+        guard state == .addingLimitingReactant else {
+            return
+        }
+        let currentCount = limitingReactantCoords.count
+        let desiredCount = currentCount + count
+        limitingReactantCoords = Array(shuffledCoords[0..<desiredCount])
+    }
+
+    func addExcessReactant(count: Int) {
+        let currentCount = excessReactantCoords.count
+        let desiredCount = currentCount + count
+        let offset = limitingReactantCoords.count
+        let endIndex = offset + desiredCount
+        excessReactantCoords = Array(shuffledCoords[offset..<endIndex])
+//
+//        excessReactantCoords = GridCoordinateList.addingRandomElementsTo(
+//            grid: excessReactantCoords,
+//            count: count,
+//            cols: beakerCols,
+//            rows: roundedRows,
+//            avoiding: limitingReactantCoords
+//        )
+//        let p = CGFloat(excessReactantCoords.count) / CGFloat(limitingReactantCoords.count)
+//        withAnimation(.linear(duration: 1)) {
+//            reactionProgress = p
+//        }
     }
 
     private var roundedRows: Int {
@@ -63,6 +98,20 @@ class LimitingReagentComponents: ObservableObject {
         let gridSize = CGFloat(beakerCols * roundedRows)
         let coordCount = CGFloat(limitingReactantCoords.count)
         return coordCount / gridSize
+    }
+}
+
+extension LimitingReagentComponents {
+    private func handleStateTransition(from prevState: State) {
+        switch (prevState, state) {
+        case (.settingRows, _): stoppedEditingRows()
+        default: break
+        }
+    }
+
+    /// Should be called whenever the rows have finished editing
+    private func stoppedEditingRows() {
+        shuffledCoords = GridCoordinateList.list(cols: beakerCols, rows: roundedRows).shuffled()
     }
 }
 
@@ -115,6 +164,11 @@ private extension LimitingReagentComponents {
 
 // MARK: - Types
 extension LimitingReagentComponents {
+
+    enum State {
+        case settingRows, addingLimitingReactant, addingExcessReactant
+    }
+
     enum Reactant: Int, CaseIterable, Identifiable {
         case limiting, excess
 

@@ -83,7 +83,7 @@ struct LimitingReagentBeaker: View {
 
     private var beaker: some View {
         AdjustableFluidBeaker(
-            rows: $components.rows,
+            rows: components.rowsBinding,
             molecules: [
                 BeakerMolecules(
                     coords: components.limitingReactantCoords,
