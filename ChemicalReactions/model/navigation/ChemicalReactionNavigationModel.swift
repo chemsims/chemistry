@@ -77,10 +77,7 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
     typealias Screen = ChemicalReactionsScreen
 
     func deferCanSelect(of screen: ChemicalReactionsScreen) -> DeferCanSelect<ChemicalReactionsScreen>? {
-        if screen == .balancedReactions {
-            return nil
-        }
-        return .canSelect(other: .balancedReactions)
+        return nil
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: ChemicalReactionsScreen) -> Bool {
