@@ -191,7 +191,7 @@ extension LimitingReagentComponents {
 
     private func updateReactionProgressPostAddingLimitingReactant() {
         let currentCount = reactionProgressModel.moleculeCounts(ofType: .limitingReactant)
-        let equation = getEquationOfLinearBeakerCoordsToReactionProgressMolecules()
+        let equation = getEquationOfLimitingBeakerCoordsToReactionProgressMolecules()
         let desiredCount = equation.getY(
             at: CGFloat(limitingReactantCoords.count)
         ).roundedInt()
@@ -204,13 +204,7 @@ extension LimitingReagentComponents {
     }
 
     private func updateReactionProgressPostAddingExcessReactant() {
-        let equation = LinearEquation(
-            x1: 0,
-            y1: 0,
-            x2: CGFloat(maxExcessReactantCoords),
-            y2: CGFloat(settings.maxReactionProgressMolecules)
-        )
-
+        let equation = getEquationOfExcessBeakerCoordsToReactionProgressMolecules()
         let currentCount = reactionProgressModel.moleculeCounts(ofType: .excessReactant)
         let desiredCount = equation.getY(
             at: CGFloat(excessReactantCoords.count)
@@ -234,7 +228,25 @@ extension LimitingReagentComponents {
         }
     }
 
-    private func getEquationOfLinearBeakerCoordsToReactionProgressMolecules() -> Equation {
+    private func getEquationOfExcessBeakerCoordsToReactionProgressMolecules() -> Equation {
+        if shouldReactExcessReactant {
+            return LinearEquation(
+                x1: 0,
+                y1: 0,
+                x2: CGFloat(maxExcessReactantCoords),
+                y2: CGFloat(settings.maxReactionProgressMolecules)
+            )
+        }
+
+        return LinearEquation(
+            x1: CGFloat(reactingExcessReactantCount),
+            y1: 0,
+            x2: CGFloat(minExcessReactantCoords),
+            y2: CGFloat(settings.minLimitingReactantReactionProgressMolecules )
+        ).within(min: 0, max: CGFloat(settings.maxReactionProgressMolecules))
+    }
+
+    private func getEquationOfLimitingBeakerCoordsToReactionProgressMolecules() -> Equation {
         let maxMolecules = settings.maxReactionProgressMolecules / reaction.excessReactant.coefficient
 
         let endPoint = CGPoint(
