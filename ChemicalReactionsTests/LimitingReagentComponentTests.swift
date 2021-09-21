@@ -166,7 +166,7 @@ class LimitingReagentComponentTests: XCTestCase {
         XCTAssert(model.hasAddedEnough(of: .limiting))
     }
 
-    func testInputLimitsOfExcessReactant() {
+    func testInputLimitsOfExcessReactantWhenAddingTheMaximumLimitingReactant() {
         let minLimitingCoords = 5
         let minExtraToAdd = 10
         let settings = LimitingReagentComponents.Settings(
@@ -200,6 +200,25 @@ class LimitingReagentComponentTests: XCTestCase {
         model.addExcessReactant(count: 100)
         XCTAssertEqual(model.limitingReactantCoords.count, 10)
         XCTAssertEqual(model.excessReactantCoords.count, 90)
+    }
+
+    func testInputLimitsOfExcessReactantWhenAddingTheMinimumLimitingReactant() {
+        let minLimitingCoords = 10
+        let minExtraToAdd = 5
+        let settings = LimitingReagentComponents.Settings(
+            minLimitingReactantCoords: minLimitingCoords,
+            minExtraReactantCoordsToAdd: minExtraToAdd
+        )
+        let excessCoeff = 2
+        let reaction = reaction(excessReactantCoefficient: excessCoeff)
+        let model = newModel(reaction: reaction, settings: settings)
+
+        model.addLimitingReactant(count: minLimitingCoords)
+
+        let maxExcessCoords = excessCoeff * minLimitingCoords
+        model.addExcessReactant(count: maxExcessCoords)
+        XCTAssertFalse(model.canAdd(reactant: .excess))
+        XCTAssert(model.hasAddedEnough(of: .excess))
     }
 
     func testAllReactionsHaveValidInputLimits() {
@@ -239,7 +258,10 @@ class LimitingReagentComponentTests: XCTestCase {
             minExtraReactantCoordsToAdd: 10,
             minLimitingReactantReactionProgressMolecules: 2
         )
-        let model = newModel(reaction: reaction(excessReactantCoefficient: 2))
+        let model = newModel(
+            reaction: reaction(excessReactantCoefficient: 2),
+            settings: settings
+        )
 
         func countOf(_ element: LimitingReagentComponents.Element) -> Int {
             model.reactionProgressModel.moleculeCounts(ofType: element)
@@ -260,6 +282,103 @@ class LimitingReagentComponentTests: XCTestCase {
             model.addExcessReactant(count: 1)
         }
         XCTAssertEqual(countOf(.excessReactant), settings.maxReactionProgressMolecules)
+    }
+
+    func testExcessReactantReactionProgressMoleculesHaveDoubleTheLimitingReactantForCoefficientOfTwo() {
+        let settings = LimitingReagentComponents.Settings(
+            minLimitingReactantCoords: 10,
+            minExtraReactantCoordsToAdd: 10,
+            minLimitingReactantReactionProgressMolecules: 2
+        )
+        let model = newModel(
+            reaction: reaction(excessReactantCoefficient: 2),
+            settings: settings
+        )
+
+        func countOf(_ element: LimitingReagentComponents.Element) -> Int {
+            model.reactionProgressModel.moleculeCounts(ofType: element)
+        }
+
+        model.addLimitingReactant(count: 10)
+
+        XCTAssertGreaterThanOrEqual(countOf(.limitingReactant), 2)
+
+        model.addMaximumExcessReactant()
+        XCTAssertEqual(countOf(.excessReactant), 2 * countOf(.limitingReactant))
+    }
+
+    func testResettingLimitingReactantCoords() {
+        let model = newModel(reaction: reaction())
+        model.addMaximumLimitingReactant()
+
+        model.resetLimitingReactantCoords()
+
+        XCTAssertEqual(model.limitingReactantCoords.count, 0)
+        XCTAssertEqual(model.reactionProgressModel.moleculeCounts(ofType: .limitingReactant), 0)
+    }
+
+    func testResettingExcessReactantCoords() {
+        let model = newModel(reaction: reaction())
+
+        func countOfRPMolecules(_ element: LimitingReagentComponents.Element) -> Int {
+            model.reactionProgressModel.moleculeCounts(ofType: element)
+        }
+
+        model.addMaximumLimitingReactant()
+
+        let initialLimitingRPMolecules = countOfRPMolecules(.limitingReactant)
+
+        model.addMaximumExcessReactant()
+
+        model.resetExcessReactantCoords()
+
+        XCTAssertEqual(model.excessReactantCoords.count, 0)
+        XCTAssertEqual(countOfRPMolecules(.excessReactant), 0)
+        XCTAssertEqual(countOfRPMolecules(.limitingReactant), initialLimitingRPMolecules)
+    }
+
+    func testResettingReaction() {
+        func countOfRPMolecules(_ element: LimitingReagentComponents.Element) -> Int {
+            model.reactionProgressModel.moleculeCounts(ofType: element)
+        }
+
+        let model = newModel(reaction: reaction())
+        model.addMaximumLimitingReactant()
+        model.addMaximumExcessReactant()
+
+        let initialLimiting = countOfRPMolecules(.limitingReactant)
+        let initialExcess = countOfRPMolecules(.excessReactant)
+
+        model.runAllReactionProgressReactions(duration: 0)
+
+        model.resetReactionCoords()
+
+        XCTAssertEqual(countOfRPMolecules(.limitingReactant), initialLimiting)
+        XCTAssertEqual(countOfRPMolecules(.excessReactant), initialExcess)
+        XCTAssertEqual(countOfRPMolecules(.product), 0)
+    }
+
+    func testResettingNonReactingExcessReactantCoords() {
+        let model = newModel(reaction: reaction())
+        model.addMaximumLimitingReactant()
+        model.addMaximumExcessReactant()
+
+        model.shouldReactExcessReactant = false
+
+        let initialLimitingCount = model.limitingReactantCoords.count
+        let initialExcessCount = model.excessReactantCoords.count
+
+        model.runAllReactionProgressReactions(duration: 0)
+        model.addMaximumExcessReactant()
+        model.resetNonReactingExcessReactantCoords()
+
+        XCTAssertEqual(model.limitingReactantCoords.count, initialLimitingCount)
+        XCTAssertEqual(model.excessReactantCoords.count, initialExcessCount)
+
+        let excessRPCountPostReset = model.reactionProgressModel.moleculeCounts(
+            ofType: .excessReactant
+        )
+        XCTAssertEqual(excessRPCountPostReset, 0)
     }
 
     private func newModel(
@@ -307,5 +426,19 @@ class LimitingReagentComponentTests: XCTestCase {
             firstExtraProduct: nil,
             secondExtraProduct: nil
         )
+    }
+}
+
+private extension LimitingReagentComponents {
+    func addMaximumLimitingReactant() {
+        while canAdd(reactant: .limiting) {
+            addLimitingReactant(count: 1)
+        }
+    }
+
+    func addMaximumExcessReactant() {
+        while canAdd(reactant: .excess) {
+            addExcessReactant(count: 1)
+        }
     }
 }

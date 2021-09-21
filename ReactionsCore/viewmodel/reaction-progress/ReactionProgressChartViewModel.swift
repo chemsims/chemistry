@@ -234,7 +234,9 @@ extension ReactionProgressChartViewModel {
         duration: TimeInterval,
         getAction: () -> ActionSequence
     ) -> Bool {
-        precondition(count > 0, "Count must be above zero")
+        guard count > 0 else {
+            return false
+        }
         let dt = count == 1 ? 0 : duration / Double(count - 1)
 
         var didTriggerAll = true

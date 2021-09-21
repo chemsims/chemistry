@@ -98,7 +98,7 @@ extension LimitingReagentComponents {
         let coordsFromLimiting = limitingReactantCoords.dropLast()
         let coordsFromExcess = excessReactantCoords.dropLast()
 
-        productCoords = Array(coordsFromLimiting + coordsFromExcess)
+        productCoords = Array(coordsFromLimiting + coordsFromExcess).shuffled()
     }
 
     func updateEquationData() {
@@ -106,6 +106,68 @@ extension LimitingReagentComponents {
             reaction: reaction,
             volume: volume,
             limitingReactantMolarity: limitingReactantMolarity
+        )
+    }
+}
+
+extension LimitingReagentComponents {
+    func resetLimitingReactantCoords() {
+        limitingReactantCoords.removeAll()
+        reactionProgressModel = reactionProgressModel.copy(withCounts: .constant(0))
+    }
+
+    func resetExcessReactantCoords() {
+        excessReactantCoords.removeAll()
+        reactionProgressModel = reactionProgressModel.copy(
+            withCounts: .init {
+                switch $0 {
+                case .limitingReactant:
+                    return reactionProgressModel.moleculeCounts(ofType: .limitingReactant)
+                default:
+                    return 0
+                }
+            }
+        )
+    }
+
+    func resetReactionCoords() {
+        reactionProgressModel = reactionProgressModel.copy(
+            withCounts: .init {
+                switch $0 {
+                case .limitingReactant:
+                    let eq = getEquationOfLimitingBeakerCoordsToReactionProgressMolecules()
+                    return eq.getY(
+                        at: CGFloat(limitingReactantCoords.count)
+                    ).roundedInt()
+
+                case .excessReactant:
+                    let limitingEq = getEquationOfLimitingBeakerCoordsToReactionProgressMolecules()
+                    let coeff = reaction.excessReactant.coefficient
+                    let limitingCount = limitingEq.getY(
+                        at: CGFloat(limitingReactantCoords.count)
+                    ).roundedInt()
+                    return coeff * limitingCount
+                    
+                case .product: return 0
+                }
+            }
+        )
+    }
+
+    func resetNonReactingExcessReactantCoords() {
+        let extraCoords = excessReactantCoords.count - reactingExcessReactantCount
+        if extraCoords > 0 {
+            excessReactantCoords.removeLast(extraCoords)
+        }
+        reactionProgressModel = reactionProgressModel.copy(
+            withCounts: .init {
+                switch $0 {
+                case .limitingReactant: return 0
+                case .excessReactant: return 0
+                case .product:
+                    return reactionProgressModel.moleculeCounts(ofType: .product)
+                }
+            }
         )
     }
 }
@@ -230,11 +292,15 @@ extension LimitingReagentComponents {
 
     private func getEquationOfExcessBeakerCoordsToReactionProgressMolecules() -> Equation {
         if shouldReactExcessReactant {
+            let limitingCount = CGFloat(
+                reactionProgressModel.moleculeCounts(ofType: .limitingReactant)
+            )
+            let coeff = CGFloat(reaction.excessReactant.coefficient)
             return LinearEquation(
                 x1: 0,
                 y1: 0,
                 x2: CGFloat(maxExcessReactantCoords),
-                y2: CGFloat(settings.maxReactionProgressMolecules)
+                y2: coeff * CGFloat(limitingCount)
             )
         }
 
@@ -269,7 +335,7 @@ extension LimitingReagentComponents {
 
         let requiredAtMinBeakerCoords = settings.minLimitingReactantReactionProgressMolecules
 
-        // If the ideal equation produces to few molecules at the min beaker molecules,
+        // If the ideal equation produces too few molecules at the min beaker molecules,
         // then we need to use a switching equation
         if moleculesAtMinBeakerCoords < requiredAtMinBeakerCoords {
             return SwitchingEquation.linear(

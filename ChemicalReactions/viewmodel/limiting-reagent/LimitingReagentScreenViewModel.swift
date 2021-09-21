@@ -80,11 +80,11 @@ extension LimitingReagentScreenViewModel {
         switch reactant {
         case .limiting:
             components.addLimitingReactant(count: count)
-            if !components.canAdd(reactant: reactant) {
-                doGoNext()
-            }
         case .excess:
             components.addExcessReactant(count: count)
+        }
+        if !components.canAdd(reactant: reactant) {
+            doGoNext()
         }
     }
 }

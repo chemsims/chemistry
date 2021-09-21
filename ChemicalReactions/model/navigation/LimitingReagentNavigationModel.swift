@@ -3,7 +3,6 @@
 //
 
 import ReactionsCore
-import AcidsBases
 import SwiftUI
 
 private let statements = LimitingReagentStatements.self
@@ -123,10 +122,16 @@ private class AddLimitingReactant: SetStatement {
         model.equationState = .showTheoreticalData
     }
 
+    override func reapply(on model: LimitingReagentScreenViewModel) {
+        model.components.resetLimitingReactantCoords()
+        apply(on: model)
+    }
+
     override func unapply(on model: LimitingReagentScreenViewModel) {
         model.input = nil
         model.equationState = .showVolume
         model.shakeReactantModel.stopAll()
+        model.components.resetLimitingReactantCoords()
     }
 }
 
@@ -134,13 +139,17 @@ private class AddExcessReactant: SetStatement {
     override func apply(on model: LimitingReagentScreenViewModel) {
         super.apply(on: model)
         model.input = .addReactant(type: .excess)
-        model.equationState = .showActualData
+    }
+
+    override func reapply(on model: LimitingReagentScreenViewModel) {
+        model.components.resetExcessReactantCoords()
+        apply(on: model)
     }
 
     override func unapply(on model: LimitingReagentScreenViewModel) {
         model.input = nil
-        model.equationState = .showTheoreticalData
         model.shakeReactantModel.stopAll()
+        model.components.resetExcessReactantCoords()
     }
 }
 
@@ -151,6 +160,7 @@ private class RunReaction: SetStatement {
     override func apply(on model: LimitingReagentScreenViewModel) {
         super.apply(on: model)
         model.input = nil
+        model.equationState = .showActualData
         model.shakeReactantModel.stopAll()
         model.components.prepareReaction()
         reactionsToRun = model.components.reactionProgressReactionsToRun
@@ -158,6 +168,18 @@ private class RunReaction: SetStatement {
             model.components.reactionProgress = 1
         }
         model.components.runOneReactionProgressReaction()
+    }
+
+    override func reapply(on model: LimitingReagentScreenViewModel) {
+        model.components.resetReactionCoords()
+        model.components.reactionProgress = 0
+        apply(on: model)
+    }
+
+    override func unapply(on model: LimitingReagentScreenViewModel) {
+        model.components.reactionProgress = 0
+        model.components.resetReactionCoords()
+        model.equationState = .showTheoreticalData
     }
 
     override func nextStateAutoDispatchDelay(model: LimitingReagentScreenViewModel) -> Double? {
@@ -207,8 +229,15 @@ private class AddNonReactantExcessReactant: SetStatement {
         model.components.shouldReactExcessReactant = false
     }
 
+    override func reapply(on model: LimitingReagentScreenViewModel) {
+        model.components.resetNonReactingExcessReactantCoords()
+        apply(on: model)
+    }
+
     override func unapply(on model: LimitingReagentScreenViewModel) {
         model.input = nil
         model.components.shouldReactExcessReactant = true
+        model.components.resetNonReactingExcessReactantCoords()
+        model.shakeReactantModel.stopAll()
     }
 }

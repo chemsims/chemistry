@@ -21,12 +21,7 @@ private enum TopLevelScreen: CaseIterable {
                 selectedImage: .core(.quizIconSelected),
                 label: label
             ),
-            firstSecondaryIcon: NavigationIcon(
-                screen: .balancedReactionsQuiz,
-                image: .core(.quizIcon),
-                selectedImage: .core(.quizIconSelected),
-                label: "\(label) quiz"
-            ),
+            firstSecondaryIcon: nil,
             secondSecondaryIcon: nil
         )
     }
@@ -38,13 +33,6 @@ private enum TopLevelScreen: CaseIterable {
         }
     }
 
-    var quiz: ChemicalReactionsScreen {
-        switch self {
-        case .balancedReactions: return .balancedReactionsQuiz
-        case .limitingReagent: return .limitingReagentQuiz
-        }
-    }
-
     var label: String {
         switch self {
         case .balancedReactions: return "Balanced reactions"
@@ -52,5 +40,4 @@ private enum TopLevelScreen: CaseIterable {
         }
     }
 }
-
 

@@ -115,8 +115,6 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
                 nextScreen: nextScreen,
                 prevScreen: prevScreen
             )
-        case .balancedReactionsQuiz, .limitingReagentQuiz:
-            return QuizScreenProvider()
         }
     }
 }
@@ -152,12 +150,4 @@ private class LimitingReagentScreenProvider: ScreenProvider {
     var screen: AnyView {
         AnyView(LimitingReagentScreen(model: model))
     }
-}
-
-private class QuizScreenProvider: ScreenProvider {
-
-    var screen: AnyView {
-        AnyView(EmptyView())
-    }
-
 }
