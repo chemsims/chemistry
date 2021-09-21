@@ -202,7 +202,6 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         let consumedCExpectation = delegate.addWillFadeoutBottomMoleculesExpectation(molecules: [.A, .C])
         wait(for: [consumedCExpectation], timeout: 1)
 
-
         // We now produce a C molecule
         let produceC = model.startReaction(adding: .A, reactsWith: .B, producing: .C)
         XCTAssert(produceC)
@@ -262,6 +261,87 @@ class ReactionProgressChartViewModelTests: XCTestCase {
 
         let secondAdd = model.startReaction(adding: .B, reactsWith: .C, producing: .A)
         XCTAssertFalse(secondAdd)
+    }
+
+    func testConsumingMultipleMolecules() {
+        let counts = EnumMap<TestMolecule, Int> { _ in 3 }
+
+        let model = newModel(
+            timing: .init(fadeDuration: 0.1, dropSpeed: 50),
+            definitions: TestMolecule.definitions(withCounts: counts)
+        )
+        let delegate = TestReactionProgressChartViewModelDelegate()
+        model.delegate = delegate
+
+        let expectFadeOut = delegate.addWillFadeoutBottomMoleculesExpectation(
+            molecules: [.A]
+        )
+        let expectRemoval = delegate.addWillRemoveBottomMoleculesExpectation(
+            molecules: [.A]
+        )
+        let expectSlideDown = delegate.addWillSlideColumnsDownExpectation(
+            molecules: [.A]
+        )
+
+        let firstConsume = model.consume(.A, count: 2)
+        XCTAssert(firstConsume)
+        XCTAssertEqual(model.moleculeCounts(ofType: .A), 1)
+
+        wait(for: [expectFadeOut], timeout: 1)
+
+        let fadedOutMolecules = model.getMolecules(ofType: .A).filter {
+            $0.opacity == 0
+        }.count
+        XCTAssertEqual(fadedOutMolecules, 2)
+
+        wait(for: [expectRemoval], timeout: 1)
+        XCTAssertEqual(model.getMolecules(ofType: .A).count, 1)
+
+        wait(for: [expectSlideDown], timeout: 1)
+        XCTAssertEqual(model.getMolecules(ofType: .A).first!.rowIndex, 0)
+
+        let secondConsume = model.consume(.A, count: 2)
+        XCTAssertFalse(secondConsume)
+    }
+
+    func testConsumingMultipleMoleculesWhileOneIsInProgress() {
+        let counts = EnumMap<TestMolecule, Int> { _ in 5 }
+
+        let model = newModel(
+            timing: .init(fadeDuration: 0.1, dropSpeed: 50),
+            definitions: TestMolecule.definitions(withCounts: counts)
+        )
+        let delegate = TestReactionProgressChartViewModelDelegate()
+        model.delegate = delegate
+
+        // note - it's important to use a molecule other than A here, there
+        // was a bug which wasn't revealed when testing with the first column
+        let firstFadeOut = delegate.addWillFadeoutBottomMoleculesExpectation(molecules: [.B])
+        let secondFadeOut = delegate.addWillFadeoutBottomMoleculesExpectation(molecules: [.B])
+
+        let firstRemoval = delegate.addWillRemoveBottomMoleculesExpectation(molecules: [.B])
+        let secondRemoval = delegate.addWillRemoveBottomMoleculesExpectation(molecules: [.B])
+
+        let firstConsume = model.consume(.B, count: 2)
+        let secondConsume = model.consume(.B, count: 2)
+
+        XCTAssert(firstConsume)
+        XCTAssert(secondConsume)
+
+        XCTAssertEqual(model.moleculeCounts(ofType: .B), 1)
+
+        wait(for: [firstFadeOut], timeout: 1)
+        wait(for: [secondFadeOut], timeout: 1)
+
+        let fadedOutMolecules = model.getMolecules(ofType: .B).filter {
+            $0.opacity == 0
+        }.count
+        XCTAssertEqual(fadedOutMolecules, 4)
+
+        wait(for: [firstRemoval], timeout: 1)
+        wait(for: [secondRemoval], timeout: 1)
+
+        XCTAssertEqual(model.getMolecules(ofType: .B).count, 1)
     }
     
     private func newModel(
@@ -328,30 +408,30 @@ private class TestReactionProgressChartViewModelDelegate: ReactionProgressChartV
         return expectation
     }
 
-    func addWillFadeoutBottomMoleculesExpectation(molecules: [TestMolecule]) -> XCTestExpectation {
-        let expectation = XCTestExpectation(description: "Will fade out \(molecules)")
-        fadeOutBottomMoleculesExpectations[molecules] = expectation
-        return expectation
+    func addWillFadeoutBottomMoleculesExpectation(
+        molecules: [TestMolecule]
+    ) -> XCTestExpectation {
+        fadeOuts.addExpectation(molecules: molecules)
     }
 
     func addWillSlideColumnsDownExpectation(molecules: [TestMolecule]) -> XCTestExpectation {
-        let expectation = XCTestExpectation(description: "Will slide down columns \(molecules)")
-        var expectations = slideDownColumnsExpectations[molecules] ?? []
-        expectations.append(expectation)
-        slideDownColumnsExpectations[molecules] = expectations
-        return expectation
+        slideDowns.addExpectation(molecules: molecules)
     }
 
     func addWillAddMoleculeToTopOfColumnExpectation(ofTypes types: [TestMolecule]) -> XCTestExpectation {
-        let expectation = XCTestExpectation(description: "Will add molecule \(types)")
-        addMoleculeToTopOfColumnExpectations[types] = expectation
-        return expectation
+        addMolecules.addExpectation(molecules: types)
+    }
+
+    func addWillRemoveBottomMoleculesExpectation(molecules: [TestMolecule]) -> XCTestExpectation {
+        removeMolecules.addExpectation(molecules: molecules)
     }
 
     private var moveToTopOfColumnExpectations = [UUID : XCTestExpectation]()
-    private var fadeOutBottomMoleculesExpectations = [[TestMolecule] : XCTestExpectation]()
-    private var slideDownColumnsExpectations = [[TestMolecule] : [XCTestExpectation]]()
-    private var addMoleculeToTopOfColumnExpectations = [[TestMolecule] : XCTestExpectation]()
+    private let fadeOuts = ExpectationHolder(description: "fade out")
+    private let slideDowns = ExpectationHolder(description: "slide down")
+    private let addMolecules = ExpectationHolder(description: "add molecules")
+    private let removeMolecules = ExpectationHolder(description: "remove molecules")
+
 
     override func willMoveMoleculeToTopOfColumn(withId id: UUID) {
         if let expectation = moveToTopOfColumnExpectations[id] {
@@ -360,22 +440,45 @@ private class TestReactionProgressChartViewModelDelegate: ReactionProgressChartV
     }
 
     override func willFadeOutBottomMolecules(ofTypes types: [TestMolecule]) {
-        if let expectation = fadeOutBottomMoleculesExpectations[types] {
-            expectation.fulfill()
-        }
+        fadeOuts.fulfil(molecules: types)
     }
 
     override func willSlideColumnsDown(ofTypes types: [TestMolecule]) {
-        if let expectations = slideDownColumnsExpectations[types],
-           let first = expectations.first {
-            first.fulfill()
-            slideDownColumnsExpectations[types] = Array(expectations.dropFirst(1))
-        }
+        slideDowns.fulfil(molecules: types)
     }
 
     override func willAddMoleculeToTopOfColumn(ofTypes types: [TestMolecule]) {
-        if let expectation = addMoleculeToTopOfColumnExpectations[types] {
-            expectation.fulfill()
+        addMolecules.fulfil(molecules: types)
+    }
+
+    override func willRemoveBottomMolecules(ofTypes types: [TestMolecule]) {
+        removeMolecules.fulfil(molecules: types)
+    }
+}
+
+
+private class ExpectationHolder {
+
+    init(description: String) {
+        self.description = description
+    }
+
+    let description: String
+
+    private var expectations = [[TestMolecule] : [XCTestExpectation]]()
+    private var remainingCounts = [[TestMolecule] : Int]()
+
+    func addExpectation(molecules: [TestMolecule]) -> XCTestExpectation {
+        let expectation = XCTestExpectation(description: "\(description): \(molecules)")
+        let existing = expectations[molecules] ?? []
+        expectations[molecules] = existing + [expectation]
+        return expectation
+    }
+
+    func fulfil(molecules: [TestMolecule]) {
+        if let expectations = expectations[molecules], let first = expectations.first {
+            first.fulfill()
+            self.expectations[molecules] = Array(expectations.dropFirst())
         }
     }
 }

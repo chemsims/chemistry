@@ -12,4 +12,6 @@ open class ReactionProgressChartViewModelDelegate<MoleculeType> {
     func willSlideColumnsDown(ofTypes types: [MoleculeType]) { }
 
     func willAddMoleculeToTopOfColumn(ofTypes types: [MoleculeType]) { }
+
+    func willRemoveBottomMolecules(ofTypes types: [MoleculeType]) { }
 }

@@ -72,6 +72,7 @@ extension ReactionProgressChartViewModel {
         return triggerSequence(reaction)
     }
 
+    @discardableResult
     public func startReaction(
         adding addedMolecule: MoleculeType,
         reactsWith consumedMolecule: MoleculeType
@@ -87,19 +88,47 @@ extension ReactionProgressChartViewModel {
     /// of type `producedMolecule`.
     ///
     /// - Returns: True if the reaction was started, or false if it could not be started.
+    @discardableResult
     public func startReactionFromExisting(
         consuming consumedMolecule: MoleculeType,
         producing producedMolecules: [MoleculeType]
     ) -> Bool {
-        let reaction = ActionSequence.reactionFromExisting(consumed: consumedMolecule, produced: producedMolecules)
+        startReactionFromExisting(
+            consuming: [(consumedMolecule, 1)],
+            producing: producedMolecules
+        )
+    }
+
+    /// Triggers a reaction which consumes molecules of types `consumedMolecules`, using
+    /// the provided counts, and produces molecules of type `producedMolecule`.
+    ///
+    /// - Returns: True if the reaction was started, or false if it could not be started.
+    @discardableResult
+    public func startReactionFromExisting(
+        consuming consumedMolecules: [(MoleculeType, Int)],
+        producing producedMolecules: [MoleculeType]
+    ) -> Bool {
+        precondition(
+            consumedMolecules.allSatisfy { $0.1 > 0 },
+            "All consumed molecule counts must be at least 0"
+        )
+        let reaction = ActionSequence.reactionFromExisting(
+            consumed: consumedMolecules,
+            produced: producedMolecules
+        )
         return triggerSequence(reaction)
     }
 
-    /// Triggers a reaction which consumes a molecule of type `consumedMolecule`.
+    /// Triggers a reaction which consumes `count` molecules of type `consumedMolecule`.
     ///
     /// - Returns true if the reaction was started, or false if it could not be started
-    public func consume(_ consumedMolecule: MoleculeType) -> Bool {
-        let reaction = ActionSequence.consume(molecule: consumedMolecule)
+    @discardableResult
+    public func consume(_ consumedMolecule: MoleculeType, count: Int = 1) -> Bool {
+        precondition(count > 0, "Must consume at least 1 molecule")
+        let reaction = ActionSequence.consume(
+            molecule: consumedMolecule,
+            count: count
+        )
         return triggerSequence(reaction)
     }
 
@@ -130,6 +159,7 @@ extension ReactionProgressChartViewModel {
     ///
     /// - Returns: True if the molecule was added, or false if the molecule could not be added. Adding a molecule will fail
     /// if the column is already full.
+    @discardableResult
     public func addMolecule(_ type: MoleculeType) -> Bool {
         let sequence = ActionSequence.addMolecules(added: type)
         return triggerSequence(sequence)
@@ -139,7 +169,9 @@ extension ReactionProgressChartViewModel {
     public func moleculeCounts(ofType type: MoleculeType) -> Int {
         let currentMolecules = getMolecules(ofType: type)
         let pendingAdds = runningReactions.filter { $0.willAddMolecule(ofType: type) }.count
-        let pendingRemovals = runningReactions.filter { $0.willRemoveMolecule(ofType: type) }.count
+        let pendingRemovals = runningReactions.map {
+            $0.moleculesToBeRemoved(ofType: type)
+        }.sum()
 
         return currentMolecules.count + pendingAdds - pendingRemovals
     }
@@ -164,7 +196,7 @@ extension ReactionProgressChartViewModel {
     }
 }
 
-// MARK: Trigger actions
+// MARK: - Trigger actions
 extension ReactionProgressChartViewModel {
 
     /// Triggers the `sequence`, returning true if it could be triggered, or false if it was not triggered
@@ -209,15 +241,20 @@ extension ReactionProgressChartViewModel {
         case let .wait(delay): return delay
         case let .prepareMoleculeForDropping(type: type, id: id):
             return prepareMoleculeForDropping(type, id: id)
+
         case let .moveMoleculeToTopOfColumn(id: id):
             return moveMoleculeToTopOfColumn(withId: id)
+
         case let .fadeOutBottomMolecules(types: types):
             return fadeOutBottomMolecules(ofTypes: types)
+
         case let .deleteBottomMolecules(types: types):
             removeBottomMolecules(ofTypes: types)
             return 0
+
         case let .slideColumnsDown(types):
             return slideColumnsDown(ofTypes: types)
+
         case let .addMolecule(types):
             return addMoleculeToTopOfColumn(ofTypes: types)
         }
@@ -236,12 +273,12 @@ extension ReactionProgressChartViewModel {
         moleculeCounts(ofType: moleculeType) < settings.maxRowIndex + 1
     }
 
-    private func canConsume(_ moleculeType: MoleculeType) -> Bool {
-        moleculeCounts(ofType: moleculeType) > 0
+    private func canConsume(_ moleculeType: MoleculeType, count: Int) -> Bool {
+        moleculeCounts(ofType: moleculeType) >= count
     }
 }
 
-// MARK: Actions
+// MARK: - Actions
 extension ReactionProgressChartViewModel {
 
     private func prepareMoleculeForDropping(
@@ -302,43 +339,68 @@ extension ReactionProgressChartViewModel {
         return moveDuration
     }
 
-    /// Fades out the bottom molecule for each column with a matching molecule type
+    /// Fades out the bottom molecules using the given counts for each column with a matching molecule type
     private func fadeOutBottomMolecules(
-        ofTypes types: [MoleculeType]
+        ofTypes types: [(MoleculeType, Int)]
     ) -> TimeInterval {
-        delegate?.willFadeOutBottomMolecules(ofTypes: types)
+        delegate?.willFadeOutBottomMolecules(ofTypes: types.map(\.0))
 
-        func getFirstIndex(_ type: MoleculeType) -> Int? {
-            self.molecules.firstIndex { $0.type == type && $0.rowIndex == 0 }
+        func getIndexOfRow(_ type: MoleculeType, row: Int) -> Int? {
+            self.molecules.firstIndex {
+                $0.type == type && $0.rowIndex == row
+            }
         }
 
-        var ids = [UUID]()
-        withAnimation(.linear(duration: timing.fadeDuration)) {
-            types.forEach { type in
-                if let index = getFirstIndex(type) {
-                    ids.append(self.molecules[index].id)
-                    self.molecules[index].opacity = 0
+        // first row which isn't faded out
+        func getStartRow(_ type: MoleculeType) -> Int? {
+            getMolecules(ofType: type)
+                .filter { $0.opacity > 0 }
+                .min {
+                    $0.rowIndex < $1.rowIndex
+                }?.rowIndex
+        }
+
+        let indices = types.flatMap { (type, count) -> [Int] in
+            if let startRow = getStartRow(type) {
+                let endRow = startRow + count
+                return (startRow..<endRow).compactMap { row in
+                    return getIndexOfRow(type, row: row)
                 }
+            }
+            return []
+        }
+
+        withAnimation(.linear(duration: timing.fadeDuration)) {
+            indices.forEach { index in
+                self.molecules[index].opacity = 0
             }
         }
 
         return timing.fadeDuration
     }
 
-    /// Immediately removes any molecules matching `types` which are on the bottom row
-    private func removeBottomMolecules(ofTypes types: [MoleculeType]) {
+    /// Immediately removes molecules matching `types` from the bottom of the chart, up to
+    /// the provided count
+    private func removeBottomMolecules(ofTypes types: [(MoleculeType, Int)]) {
+        delegate?.willRemoveBottomMolecules(ofTypes: types.map(\.0))
+
+        let typesWithRowIndices = types.map { (type, count) in
+            (type, 0..<count)
+        }
+
         molecules.removeAll { molecule in
-            types.contains(molecule.type) && molecule.rowIndex == 0
+            typesWithRowIndices.contains { (type, rows) in
+                type == molecule.type && rows.contains(molecule.rowIndex)
+            }
         }
     }
-
 
     /// Slides all molecules down in the column containing `molecule`, so that there is no gap between the bottom
     /// molecule and the bottom of the chart
     private func slideColumnsDown(
-        ofTypes types: [MoleculeType]
+        ofTypes types: [(MoleculeType, Int)]
     ) -> TimeInterval {
-        delegate?.willSlideColumnsDown(ofTypes: types)
+        delegate?.willSlideColumnsDown(ofTypes: types.map(\.0))
 
         let duration = settings.moveDuration(
             from: 1,
@@ -346,19 +408,23 @@ extension ReactionProgressChartViewModel {
             moveSpeed: timing.dropSpeed
         )
 
+        func count(for molecule: Molecule) -> Int? {
+            types.first { $0.0 == molecule.type }?.1
+        }
+
         // First animate molecules which are still in transit
         var moleculesInTransit = Set<UUID>()
         for index in molecules.indices {
             let molecule = molecules[index]
-            if types.contains(molecule.type) {
+            if let count = count(for: molecule) {
                 if let dropDuration = molecule.durationToMoveToNewTarget(
-                    to: molecule.rowIndex - 1,
+                    to: molecule.rowIndex - count,
                     timing: timing,
                     settings: settings
                 ) {
                     moleculesInTransit.insert(molecule.id)
                     withAnimation(.linear(duration: dropDuration)) {
-                        molecules[index].rowIndex -= 1
+                        molecules[index].rowIndex -= count
                     }
                 }
             }
@@ -368,8 +434,8 @@ extension ReactionProgressChartViewModel {
         withAnimation(.linear(duration: duration)) {
             for index in molecules.indices {
                 let molecule = molecules[index]
-                if types.contains(molecule.type) && !moleculesInTransit.contains(molecule.id) {
-                    molecules[index].rowIndex -= 1
+                if let count = count(for: molecule), !moleculesInTransit.contains(molecule.id) {
+                    molecules[index].rowIndex -= count
                 }
             }
         }
@@ -417,7 +483,7 @@ extension ReactionProgressChartViewModel {
     }
 }
 
-// MARK: Data types
+// MARK: - Data types
 extension ReactionProgressChartViewModel {
     struct Molecule: Identifiable {
         let id: UUID
@@ -571,9 +637,9 @@ extension ReactionProgressChartViewModel {
     private enum ReactionAction {
         case prepareMoleculeForDropping(type: MoleculeType, id: UUID)
         case moveMoleculeToTopOfColumn(id: UUID)
-        case fadeOutBottomMolecules(types: [MoleculeType])
-        case deleteBottomMolecules(types: [MoleculeType])
-        case slideColumnsDown(types: [MoleculeType])
+        case fadeOutBottomMolecules(types: [(MoleculeType, Int)])
+        case deleteBottomMolecules(types: [(MoleculeType, Int)])
+        case slideColumnsDown(types: [(MoleculeType, Int)])
         case addMolecule(types: [MoleculeType])
         case wait(delay: TimeInterval)
     }
@@ -581,7 +647,7 @@ extension ReactionProgressChartViewModel {
     private struct ActionSequence {
         let id = UUID()
         let added: [MoleculeType]
-        let consumed: [MoleculeType]
+        let consumed: [(MoleculeType, Int)]
         var pendingActions: [ReactionAction]
 
         static func reaction(
@@ -592,13 +658,13 @@ extension ReactionProgressChartViewModel {
             let newMoleculeId = UUID()
             return ActionSequence(
                 added: [added, produced],
-                consumed: [consumed],
+                consumed: [(consumed, 1)],
                 pendingActions: [
                     .prepareMoleculeForDropping(type: added, id: newMoleculeId),
                     .moveMoleculeToTopOfColumn(id: newMoleculeId),
-                    .fadeOutBottomMolecules(types: [added, consumed]),
-                    .deleteBottomMolecules(types: [added, consumed]),
-                    .slideColumnsDown(types: [added, consumed]),
+                    .fadeOutBottomMolecules(types: [(added, 1), (consumed, 1)]),
+                    .deleteBottomMolecules(types: [(added, 1), (consumed, 1)]),
+                    .slideColumnsDown(types: [(added, 1), (consumed, 1)]),
                     .addMolecule(types: [produced])
                 ]
             )
@@ -611,13 +677,15 @@ extension ReactionProgressChartViewModel {
             let newMoleculeId = UUID()
             return ActionSequence(
                 added: [added],
-                consumed: [consumed],
+                consumed: [(consumed, 1)],
                 pendingActions: [
                     .prepareMoleculeForDropping(type: added, id: newMoleculeId),
                     .moveMoleculeToTopOfColumn(id: newMoleculeId),
-                    .fadeOutBottomMolecules(types: [added, consumed]),
-                    .deleteBottomMolecules(types: [added, consumed]),
-                    .slideColumnsDown(types: [added, consumed])
+                    .fadeOutBottomMolecules(
+                        types: [(added, 1), (consumed, 1)]
+                    ),
+                    .deleteBottomMolecules(types: [(added, 1), (consumed, 1)]),
+                    .slideColumnsDown(types: [(added, 1), (consumed, 1)])
                 ]
             )
         }
@@ -640,40 +708,44 @@ extension ReactionProgressChartViewModel {
         }
 
         static func reactionFromExisting(
-            consumed: MoleculeType,
+            consumed: [(MoleculeType, Int)],
             produced: [MoleculeType]
         ) -> ActionSequence {
             return ActionSequence(
                 added: produced,
-                consumed: [consumed],
+                consumed: consumed,
                 pendingActions: [
-                    .fadeOutBottomMolecules(types: [consumed]),
-                    .deleteBottomMolecules(types: [consumed]),
-                    .slideColumnsDown(types: [consumed]),
+                    .fadeOutBottomMolecules(types: consumed),
+                    .deleteBottomMolecules(types: consumed),
+                    .slideColumnsDown(types: consumed),
                     .addMolecule(types: produced)
                 ]
             )
         }
 
-        static func consume(molecule: MoleculeType) -> ActionSequence {
-            ActionSequence(
+        static func consume(molecule: MoleculeType, count: Int) -> ActionSequence {
+            let withCount = [(molecule, count)]
+            return ActionSequence(
                 added: [],
-                consumed: [molecule],
+                consumed: [(molecule, count)],
                 pendingActions: [
-                    .fadeOutBottomMolecules(types: [molecule]),
-                    .deleteBottomMolecules(types: [molecule]),
-                    .slideColumnsDown(types: [molecule])
+                    .fadeOutBottomMolecules(types: withCount),
+                    .deleteBottomMolecules(types: withCount),
+                    .slideColumnsDown(types: withCount)
                 ]
             )
         }
 
-        func willRemoveMolecule(ofType moleculeType: MoleculeType) -> Bool {
-            pendingActions.contains { action in
+        func moleculesToBeRemoved(ofType moleculeType: MoleculeType) -> Int {
+            pendingActions.map { action in
                 switch action {
-                case let .deleteBottomMolecules(types): return types.contains(moleculeType)
-                default: return false
+                case let .deleteBottomMolecules(types):
+                    return types.map { (type, count) in
+                        type == moleculeType ? count : 0
+                    }.sum()
+                default: return 0
                 }
-            }
+            }.sum()
         }
 
         func willAddMolecule(ofType moleculeType: MoleculeType) -> Bool {
