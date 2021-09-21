@@ -161,6 +161,34 @@ extension LimitingReagentComponents {
 
 // MARK: - Updating reaction progress
 extension LimitingReagentComponents {
+
+    var reactionProgressReactionsToRun: Int {
+        reactionProgressModel.moleculeCounts(ofType: .limitingReactant)
+    }
+
+    func runOneReactionProgressReaction() {
+        reactionProgressModel.startReactionFromExisting(
+            consuming: [
+                (.limitingReactant, 1),
+                (.excessReactant, reaction.excessReactant.coefficient)
+            ],
+            producing: [.product]
+        )
+    }
+
+    func runAllReactionProgressReactions(duration: TimeInterval) {
+        let count = reactionProgressModel.moleculeCounts(ofType: .limitingReactant)
+        reactionProgressModel.startReactionFromExisting(
+            consuming: [
+                (.limitingReactant, 1),
+                (.excessReactant, reaction.excessReactant.coefficient)
+            ],
+            producing: [.product],
+            count: count,
+            duration: duration
+        )
+    }
+
     private func updateReactionProgressPostAddingLimitingReactant() {
         let currentCount = reactionProgressModel.moleculeCounts(ofType: .limitingReactant)
         let equation = getEquationOfLinearBeakerCoordsToReactionProgressMolecules()

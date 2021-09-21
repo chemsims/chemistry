@@ -119,6 +119,38 @@ extension ReactionProgressChartViewModel {
         return triggerSequence(reaction)
     }
 
+    /// Triggers a repeating reaction which consumes molecules of types `consumedMolecules`, using
+    /// the provided counts, and produces molecules of type `producedMolecule`.
+    ///
+    /// The reaction repeats `count` times over the given `duration`.
+    ///
+    /// - Note: Reactions are triggered until the first one which fails to triggered. This means
+    /// if any reaction fails to trigger, then any previous reactions will still run.
+    ///
+    /// - Returns: True if the reaction was started, or false if it could not be started.
+    @discardableResult
+    public func startReactionFromExisting(
+        consuming consumedMolecules: [(MoleculeType, Int)],
+        producing producedMolecules: [MoleculeType],
+        count: Int,
+        duration: TimeInterval
+    ) -> Bool {
+        precondition(
+            consumedMolecules.allSatisfy { $0.1 > 0 },
+            "All consumed molecule counts must be at least 0"
+        )
+        return triggerRepeatingActions(
+            count: count,
+            duration: duration
+        ) {
+            ActionSequence.reactionFromExisting(
+                consumed: consumedMolecules,
+                produced: producedMolecules
+            )
+        }
+    }
+
+
     /// Triggers a reaction which consumes `count` molecules of type `consumedMolecule`.
     ///
     /// - Returns true if the reaction was started, or false if it could not be started
@@ -140,19 +172,12 @@ extension ReactionProgressChartViewModel {
     /// for example.
     @discardableResult
     public func addMolecules(_ type: MoleculeType, count: Int, duration: TimeInterval) -> Bool {
-        precondition(count > 0, "Count must be above zero")
-        let dt = count == 1 ? 0 : duration / Double(count - 1)
-
-        var didTriggerAll = true
-
-        (0..<count).forEach { i in
-            let reactionWithDelay = ActionSequence.addMolecules(added: type, delay: Double(i) * dt)
-            let didTrigger = triggerSequence(reactionWithDelay)
-            if !didTrigger {
-                didTriggerAll = false
-            }
+        triggerRepeatingActions(
+            count: count,
+            duration: duration
+        ) {
+            ActionSequence.addMolecules(added: type)
         }
-        return didTriggerAll
     }
 
     /// Triggers adding a molecule of type `type`.
@@ -198,6 +223,31 @@ extension ReactionProgressChartViewModel {
 
 // MARK: - Trigger actions
 extension ReactionProgressChartViewModel {
+
+    /// Schedules repeating an action over the given duration.
+    ///
+    /// - Returns: True if all of the reactions were triggers, otherwise false. Note that the reactions will be triggered
+    /// until the first one fails to trigger. This means if a reaction fails to trigger, any reactions prior to the failing one will still run.
+    /// Therefore the provided `count` is not guaranteed to run.
+    private func triggerRepeatingActions(
+        count: Int,
+        duration: TimeInterval,
+        getAction: () -> ActionSequence
+    ) -> Bool {
+        precondition(count > 0, "Count must be above zero")
+        let dt = count == 1 ? 0 : duration / Double(count - 1)
+
+        var didTriggerAll = true
+
+        (0..<count).forEach { i in
+            let reactionWithDelay = getAction().withDelay(Double(i) * dt)
+            let didTrigger = triggerSequence(reactionWithDelay)
+            if !didTrigger {
+                didTriggerAll = false
+            }
+        }
+        return didTriggerAll
+    }
 
     /// Triggers the `sequence`, returning true if it could be triggered, or false if it was not triggered
     private func triggerSequence(_ sequence: ActionSequence) -> Bool {
@@ -691,16 +741,13 @@ extension ReactionProgressChartViewModel {
         }
 
         static func addMolecules(
-            added: MoleculeType,
-            delay: TimeInterval? = nil
+            added: MoleculeType
         ) -> ActionSequence {
             let newMoleculeId = UUID()
-            let waitOpt = delay.map { ReactionAction.wait(delay: $0) }
-            let wait = [waitOpt].compactMap(identity)
             return ActionSequence(
                 added: [added],
                 consumed: [],
-                pendingActions: wait + [
+                pendingActions: [
                     .prepareMoleculeForDropping(type: added, id: newMoleculeId),
                     .moveMoleculeToTopOfColumn(id: newMoleculeId)
                 ]
@@ -756,6 +803,15 @@ extension ReactionProgressChartViewModel {
                 default: return false
                 }
             }
+        }
+
+        // Returns a sequence with a delay prepended to the actions
+        func withDelay(_ delay: TimeInterval) -> ActionSequence {
+            ActionSequence(
+                added: added,
+                consumed: consumed,
+                pendingActions: [ReactionAction.wait(delay: delay)] + pendingActions
+            )
         }
     }
 }

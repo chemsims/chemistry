@@ -145,27 +145,58 @@ private class AddExcessReactant: SetStatement {
 }
 
 private class RunReaction: SetStatement {
+
+    private var reactionsToRun: Int = 0
+
     override func apply(on model: LimitingReagentScreenViewModel) {
         super.apply(on: model)
         model.input = nil
         model.shakeReactantModel.stopAll()
         model.components.prepareReaction()
+        reactionsToRun = model.components.reactionProgressReactionsToRun
         withAnimation(.linear(duration: reactionDuration)) {
             model.components.reactionProgress = 1
         }
+        model.components.runOneReactionProgressReaction()
     }
 
     override func nextStateAutoDispatchDelay(model: LimitingReagentScreenViewModel) -> Double? {
         reactionDuration
+    }
+
+    override func delayedStates(model: LimitingReagentScreenViewModel) -> [DelayedState<LimitingReagentScreenState>] {
+        guard reactionsToRun > 1 else {
+            return []
+        }
+
+        // note we run the first reaction in the apply method, so only
+        // need to trigger the remaining ones
+        let dt = reactionDuration / Double(reactionsToRun)
+        let indices = (1..<reactionsToRun)
+
+        return indices.map { _ in
+            DelayedState(
+                state: RunOneReactionState(),
+                delay: dt
+            )
+        }
+    }
+
+    private class RunOneReactionState: LimitingReagentScreenState {
+        override func apply(on model: LimitingReagentScreenViewModel) {
+            model.components.runOneReactionProgressReaction()
+        }
     }
 }
 
 private class EndOfReaction: SetStatement {
     override func apply(on model: LimitingReagentScreenViewModel) {
         super.apply(on: model)
-        withAnimation(.easeOut(duration: 0.2)) {
+        let duration = 0.2
+        withAnimation(.easeOut(duration: duration)) {
             model.components.reactionProgress = 1.00001
         }
+        model.components.runAllReactionProgressReactions(duration: duration)
     }
 }
 
