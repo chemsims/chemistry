@@ -11,12 +11,14 @@ class LimitingReagentComponents: ObservableObject {
         reaction: LimitingReagentReaction,
         initialRows: Int = ChemicalReactionsSettings.initialRows,
         cols: Int = MoleculeGridSettings.cols,
-        rowsToVolume: Equation = ChemicalReactionsSettings.rowsToVolume
+        rowsToVolume: Equation = ChemicalReactionsSettings.rowsToVolume,
+        settings: Settings = Settings()
     ) {
         self.reaction = reaction
         self.rows = CGFloat(initialRows)
         self.beakerCols = cols
         self.rowsToVolume = rowsToVolume
+        self.settings = settings
         self.equationData = Self.makeEquationData(
             reaction: reaction,
             volume: rowsToVolume.getY(at: CGFloat(initialRows)),
@@ -28,6 +30,7 @@ class LimitingReagentComponents: ObservableObject {
     let reaction: LimitingReagentReaction
     let beakerCols: Int
     let rowsToVolume: Equation
+    let settings: Settings
 
     var shouldReactExcessReactant = true
 
@@ -42,9 +45,15 @@ class LimitingReagentComponents: ObservableObject {
     var reactionProgressModel: ReactionProgressChartViewModel<Element>
 
     func addLimitingReactant(count: Int) {
+        let maxToAdd = maxLimitingReactantCount - limitingReactantCoords.count
+        let toAdd = min(count, maxToAdd)
+        guard toAdd > 0 else {
+            return
+        }
+
         limitingReactantCoords = GridCoordinateList.addingRandomElementsTo(
             grid: limitingReactantCoords,
-            count: count,
+            count: toAdd,
             cols: beakerCols,
             rows: roundedRows
         )
@@ -52,9 +61,14 @@ class LimitingReagentComponents: ObservableObject {
     }
 
     func addExcessReactant(count: Int) {
+        let maxToAdd = maxExcessReactantCoords - excessReactantCoords.count
+        let toAdd = min(count, maxToAdd)
+        guard toAdd > 0 else {
+            return
+        }
         excessReactantCoords = GridCoordinateList.addingRandomElementsTo(
             grid: excessReactantCoords,
-            count: count,
+            count: toAdd,
             cols: beakerCols,
             rows: roundedRows,
             avoiding: limitingReactantCoords
@@ -91,6 +105,55 @@ extension LimitingReagentComponents {
             volume: volume,
             limitingReactantMolarity: limitingReactantMolarity
         )
+    }
+}
+
+extension LimitingReagentComponents {
+    func canAdd(reactant: Reactant) -> Bool {
+        switch reactant {
+        case .limiting:
+            return limitingReactantCoords.count < maxLimitingReactantCount
+        case .excess:
+            return excessReactantCoords.count < maxExcessReactantCoords
+        }
+    }
+
+    func hasAddedEnough(of reactant: Reactant) -> Bool {
+        switch reactant {
+        case .limiting:
+            return limitingReactantCoords.count >= settings.minLimitingReactantCoords
+        case .excess:
+            return excessReactantCoords.count >= minExcessReactantCoords
+        }
+    }
+
+    private var maxLimitingReactantCount: Int {
+        let maxReactantCoords = gridCount - settings.minExtraReactantCoordsToAdd
+        let result = maxReactantCoords / (1 + reaction.excessReactant.coefficient)
+        assert(result >= settings.minLimitingReactantCoords)
+        return result
+    }
+
+    private var maxExcessReactantCoords: Int {
+        if shouldReactExcessReactant {
+            return reactingExcessReactantCount
+        }
+        return gridCount - limitingReactantCoords.count
+    }
+
+    private var minExcessReactantCoords: Int {
+        if shouldReactExcessReactant {
+            return reactingExcessReactantCount
+        }
+        return reactingExcessReactantCount + settings.minExtraReactantCoordsToAdd
+    }
+
+    private var reactingExcessReactantCount: Int {
+        limitingReactantCoords.count * reaction.excessReactant.coefficient
+    }
+
+    private var gridCount: Int {
+        roundedRows * beakerCols
     }
 }
 
@@ -187,6 +250,20 @@ extension LimitingReagentComponents {
             case .product: return reaction.product.color
             }
         }
+    }
+
+    struct Settings {
+
+        init(
+            minLimitingReactantCoords: Int = 12,
+            minExtraReactantCoordsToAdd: Int = 12
+        ) {
+            self.minLimitingReactantCoords = minLimitingReactantCoords
+            self.minExtraReactantCoordsToAdd = minExtraReactantCoordsToAdd
+        }
+
+        let minLimitingReactantCoords: Int
+        let minExtraReactantCoordsToAdd: Int
     }
 }
 

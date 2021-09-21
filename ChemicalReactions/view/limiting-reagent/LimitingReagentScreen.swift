@@ -93,7 +93,7 @@ private struct LimitingReagentTopStack: View {
             displayString: { $0.displayString },
             label: { $0.label },
             disabledOptions: [],
-            onSelection: model.next
+            onSelection: model.didSelectReaction
         )
         .disabled(model.input != .selectReaction)
         .frame(

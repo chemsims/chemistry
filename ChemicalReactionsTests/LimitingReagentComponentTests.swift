@@ -140,17 +140,112 @@ class LimitingReagentComponentTests: XCTestCase {
         XCTAssertEqual(setOfProduct.intersection(setOfExcessReactant).count, 9)
     }
 
+    func testInputLimitsOfLimitingReactant() {
+        let minLimitingCoords = 15
+        let minExtraToAdd = 10
+        let settings = LimitingReagentComponents.Settings(
+            minLimitingReactantCoords: minLimitingCoords,
+            minExtraReactantCoordsToAdd: minExtraToAdd
+        )
+        let excessCoeff = 3
+        let reaction = reaction(excessReactantCoefficient: excessCoeff)
+        let model = newModel(reaction: reaction, settings: settings)
+        XCTAssert(model.canAdd(reactant: .limiting))
+        XCTAssertFalse(model.hasAddedEnough(of: .limiting))
+
+        model.addLimitingReactant(count: minLimitingCoords)
+        XCTAssert(model.canAdd(reactant: .limiting))
+        XCTAssert(model.hasAddedEnough(of: .limiting))
+
+        let maxCountOfReactants = 100 - minExtraToAdd
+        let maxCountOfLimitingReactant = maxCountOfReactants / (1 + excessCoeff)
+
+        model.addLimitingReactant(count: 100)
+        XCTAssertEqual(model.limitingReactantCoords.count, maxCountOfLimitingReactant)
+        XCTAssertFalse(model.canAdd(reactant: .limiting))
+        XCTAssert(model.hasAddedEnough(of: .limiting))
+    }
+
+    func testInputLimitsOfExcessReactant() {
+        let minLimitingCoords = 5
+        let minExtraToAdd = 10
+        let settings = LimitingReagentComponents.Settings(
+            minLimitingReactantCoords: minLimitingCoords,
+            minExtraReactantCoordsToAdd: minExtraToAdd
+        )
+        let excessCoeff = 2
+        let reaction = reaction(excessReactantCoefficient: excessCoeff)
+        let model = newModel(reaction: reaction, settings: settings)
+
+        model.addLimitingReactant(count: 10)
+
+        XCTAssertFalse(model.hasAddedEnough(of: .excess))
+        XCTAssert(model.canAdd(reactant: .excess))
+
+        let neededExcessCoords = 10 * excessCoeff
+        model.addExcessReactant(count: 2 * neededExcessCoords)
+        XCTAssertEqual(model.excessReactantCoords.count, neededExcessCoords)
+        XCTAssert(model.hasAddedEnough(of: .excess))
+        XCTAssertFalse(model.canAdd(reactant: .excess))
+
+        model.shouldReactExcessReactant = false
+        XCTAssert(model.canAdd(reactant: .excess))
+        XCTAssertFalse(model.hasAddedEnough(of: .excess))
+
+        model.addExcessReactant(count: minExtraToAdd)
+        XCTAssertEqual(model.excessReactantCoords.count, neededExcessCoords + minExtraToAdd)
+        XCTAssert(model.canAdd(reactant: .excess))
+        XCTAssert(model.hasAddedEnough(of: .excess))
+
+        model.addExcessReactant(count: 100)
+        XCTAssertEqual(model.limitingReactantCoords.count, 10)
+        XCTAssertEqual(model.excessReactantCoords.count, 90)
+    }
+
+    func testAllReactionsHaveValidInputLimits() {
+        func doTest(reaction: LimitingReagentReaction) {
+            let model = LimitingReagentComponents(reaction: reaction)
+            model.rows = CGFloat(ChemicalReactionsSettings.minRows)
+
+            XCTAssert(model.canAdd(reactant: .limiting))
+            XCTAssertFalse(model.hasAddedEnough(of: .limiting))
+
+            model.addLimitingReactant(count: model.settings.minLimitingReactantCoords)
+            XCTAssert(model.hasAddedEnough(of: .limiting))
+
+            while(!model.hasAddedEnough(of: .excess)) {
+                model.addExcessReactant(count: 1)
+            }
+
+            model.shouldReactExcessReactant = false
+            while(!model.hasAddedEnough(of: .excess)) {
+                model.addExcessReactant(count: 1)
+            }
+
+            let limitingCount = model.limitingReactantCoords.count
+            let excessCount = model.excessReactantCoords.count
+            let gridSize = model.beakerCols * ChemicalReactionsSettings.minRows
+            XCTAssertLessThanOrEqual(limitingCount + excessCount, gridSize)
+        }
+
+        LimitingReagentReaction.availableReactions.forEach { reaction in
+            doTest(reaction: reaction)
+        }
+    }
+
     private func newModel(
         reaction: LimitingReagentReaction,
         rows: Int = 10,
         cols: Int = 10,
-        rowsToVolume: Equation = IdentityEquation()
+        rowsToVolume: Equation = IdentityEquation(),
+        settings: LimitingReagentComponents.Settings = .init()
     ) -> LimitingReagentComponents {
         LimitingReagentComponents(
             reaction: reaction,
             initialRows: rows,
             cols: cols,
-            rowsToVolume: rowsToVolume
+            rowsToVolume: rowsToVolume,
+            settings: settings
         )
     }
 

@@ -41,22 +41,36 @@ extension LimitingReagentScreenViewModel {
         guard !nextIsDisabled else {
             return
         }
-        navigation.next()
+        doGoNext()
     }
 
     func back() {
         navigation.back()
     }
 
+    func didSelectReaction() {
+        doGoNext()
+    }
+
+    private func doGoNext() {
+        navigation.next()
+    }
+
     var nextIsDisabled: Bool {
-        false
+        switch input {
+        case let .addReactant(type):
+            return !components.hasAddedEnough(of: type)
+        case .selectReaction:
+            return true
+        default: return false
+        }
     }
 }
 
 // MARK: Adding reactant
 extension LimitingReagentScreenViewModel {
     func canAdd(reactant: LimitingReagentComponents.Reactant) -> Bool {
-        input == .addReactant(type: reactant)
+        input == .addReactant(type: reactant) && components.canAdd(reactant: reactant)
     }
 
     func add(reactant: LimitingReagentComponents.Reactant, count: Int) {
@@ -66,6 +80,9 @@ extension LimitingReagentScreenViewModel {
         switch reactant {
         case .limiting:
             components.addLimitingReactant(count: count)
+            if !components.canAdd(reactant: reactant) {
+                doGoNext()
+            }
         case .excess:
             components.addExcessReactant(count: count)
         }
