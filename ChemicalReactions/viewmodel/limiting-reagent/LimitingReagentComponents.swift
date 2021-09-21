@@ -57,6 +57,7 @@ class LimitingReagentComponents: ObservableObject {
             cols: beakerCols,
             rows: roundedRows
         )
+        updateReactionProgressPostAddingLimitingReactant()
         updateEquationData()
     }
 
@@ -73,6 +74,7 @@ class LimitingReagentComponents: ObservableObject {
             rows: roundedRows,
             avoiding: limitingReactantCoords
         )
+        updateReactionProgressPostAddingExcessReactant()
     }
 
     var volume: CGFloat {
@@ -157,6 +159,93 @@ extension LimitingReagentComponents {
     }
 }
 
+// MARK: - Updating reaction progress
+extension LimitingReagentComponents {
+    private func updateReactionProgressPostAddingLimitingReactant() {
+        let currentCount = reactionProgressModel.moleculeCounts(ofType: .limitingReactant)
+        let equation = getEquationOfLinearBeakerCoordsToReactionProgressMolecules()
+        let desiredCount = equation.getY(
+            at: CGFloat(limitingReactantCoords.count)
+        ).roundedInt()
+
+        addToReactionProgress(
+            .limitingReactant,
+            currentCount: currentCount,
+            desiredCount: desiredCount
+        )
+    }
+
+    private func updateReactionProgressPostAddingExcessReactant() {
+        let equation = LinearEquation(
+            x1: 0,
+            y1: 0,
+            x2: CGFloat(maxExcessReactantCoords),
+            y2: CGFloat(settings.maxReactionProgressMolecules)
+        )
+
+        let currentCount = reactionProgressModel.moleculeCounts(ofType: .excessReactant)
+        let desiredCount = equation.getY(
+            at: CGFloat(excessReactantCoords.count)
+        ).roundedInt()
+
+        addToReactionProgress(
+            .excessReactant,
+            currentCount: currentCount,
+            desiredCount: desiredCount
+        )
+    }
+
+    private func addToReactionProgress(
+        _ element: Element,
+        currentCount: Int,
+        desiredCount: Int
+    ) {
+        let deficit = desiredCount - currentCount
+        if deficit > 0 {
+            reactionProgressModel.addMolecules(element, count: deficit, duration: 1)
+        }
+    }
+
+    private func getEquationOfLinearBeakerCoordsToReactionProgressMolecules() -> Equation {
+        let maxMolecules = settings.maxReactionProgressMolecules / reaction.excessReactant.coefficient
+
+        let endPoint = CGPoint(
+            x: CGFloat(maxLimitingReactantCount),
+            y: CGFloat(maxMolecules)
+        )
+
+        // Ideally we just linearly add reaction molecules as
+        // beaker molecules are added
+        let idealEquation = LinearEquation(
+            x1: 0,
+            y1: 0,
+            x2: endPoint.x,
+            y2: endPoint.y
+        )
+
+        let moleculesAtMinBeakerCoords = idealEquation.getY(
+            at: CGFloat(settings.minLimitingReactantCoords)
+        ).roundedInt()
+
+        let requiredAtMinBeakerCoords = settings.minLimitingReactantReactionProgressMolecules
+
+        // If the ideal equation produces to few molecules at the min beaker molecules,
+        // then we need to use a switching equation
+        if moleculesAtMinBeakerCoords < requiredAtMinBeakerCoords {
+            return SwitchingEquation.linear(
+                initial: .zero,
+                mid: CGPoint(
+                    x: settings.minLimitingReactantCoords,
+                    y: settings.minLimitingReactantReactionProgressMolecules
+                ),
+                final: endPoint
+            )
+        }
+
+        return idealEquation
+    }
+}
+
 private extension LimitingReagentComponents {
     static func makeEquationData(
         reaction: LimitingReagentReaction,
@@ -217,7 +306,6 @@ private extension LimitingReagentComponents {
     }
 }
 
-
 // MARK: - Types
 extension LimitingReagentComponents {
     enum Reactant: Int, CaseIterable, Identifiable {
@@ -256,14 +344,20 @@ extension LimitingReagentComponents {
 
         init(
             minLimitingReactantCoords: Int = 12,
-            minExtraReactantCoordsToAdd: Int = 12
+            minExtraReactantCoordsToAdd: Int = 12,
+            minLimitingReactantReactionProgressMolecules: Int = 2
         ) {
             self.minLimitingReactantCoords = minLimitingReactantCoords
             self.minExtraReactantCoordsToAdd = minExtraReactantCoordsToAdd
+            self.minLimitingReactantReactionProgressMolecules = minLimitingReactantReactionProgressMolecules
         }
 
         let minLimitingReactantCoords: Int
         let minExtraReactantCoordsToAdd: Int
+        let minLimitingReactantReactionProgressMolecules: Int
+
+        // Max number of molecules for any column
+        let maxReactionProgressMolecules = 10
     }
 }
 

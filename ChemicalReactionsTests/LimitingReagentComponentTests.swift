@@ -233,6 +233,35 @@ class LimitingReagentComponentTests: XCTestCase {
         }
     }
 
+    func testReactionProgressIsPopulatedWhenAddingReactants() {
+        let settings = LimitingReagentComponents.Settings(
+            minLimitingReactantCoords: 10,
+            minExtraReactantCoordsToAdd: 10,
+            minLimitingReactantReactionProgressMolecules: 2
+        )
+        let model = newModel(reaction: reaction(excessReactantCoefficient: 2))
+
+        func countOf(_ element: LimitingReagentComponents.Element) -> Int {
+            model.reactionProgressModel.moleculeCounts(ofType: element)
+        }
+
+        model.addLimitingReactant(count: 10)
+
+        XCTAssertGreaterThanOrEqual(countOf(.limitingReactant), 2)
+
+        while(model.canAdd(reactant: .limiting)) {
+            model.addLimitingReactant(count: 1)
+        }
+
+        // there will be double the number of excess reactant, so should only fill half
+        XCTAssertEqual(countOf(.limitingReactant), settings.maxReactionProgressMolecules / 2)
+
+        while(model.canAdd(reactant: .excess)) {
+            model.addExcessReactant(count: 1)
+        }
+        XCTAssertEqual(countOf(.excessReactant), settings.maxReactionProgressMolecules)
+    }
+
     private func newModel(
         reaction: LimitingReagentReaction,
         rows: Int = 10,

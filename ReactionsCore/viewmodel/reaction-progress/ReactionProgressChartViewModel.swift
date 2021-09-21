@@ -109,6 +109,7 @@ extension ReactionProgressChartViewModel {
     /// until the first one fails to trigger. This means any reactions will run, prior to the first reaction which was triggered.
     /// Therefore the provided `count` is not guaranteed to run, in case there is not enough capacity in the column
     /// for example.
+    @discardableResult
     public func addMolecules(_ type: MoleculeType, count: Int, duration: TimeInterval) -> Bool {
         precondition(count > 0, "Count must be above zero")
         let dt = count == 1 ? 0 : duration / Double(count - 1)
