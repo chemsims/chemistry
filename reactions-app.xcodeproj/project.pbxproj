@@ -370,6 +370,7 @@
 		574BF91627047F1C0079CA8F /* LimitedGridCoords.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF91527047F1C0079CA8F /* LimitedGridCoords.swift */; };
 		574BF91827047F8D0079CA8F /* BeakerGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF91727047F8D0079CA8F /* BeakerGrid.swift */; };
 		574BF91A270481AA0079CA8F /* LimitedGridCoordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF919270481AA0079CA8F /* LimitedGridCoordsTests.swift */; };
+		574BF91D27048F520079CA8F /* SpiralBeakerGridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF91C27048F520079CA8F /* SpiralBeakerGridTests.swift */; };
 		57567B422605F156009711D4 /* GridElementSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B412605F156009711D4 /* GridElementSetter.swift */; };
 		57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B472605F1A0009711D4 /* GridElementToBalance.swift */; };
 		57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */; };
@@ -1133,6 +1134,7 @@
 		574BF91527047F1C0079CA8F /* LimitedGridCoords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedGridCoords.swift; sourceTree = "<group>"; };
 		574BF91727047F8D0079CA8F /* BeakerGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerGrid.swift; sourceTree = "<group>"; };
 		574BF919270481AA0079CA8F /* LimitedGridCoordsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitedGridCoordsTests.swift; sourceTree = "<group>"; };
+		574BF91C27048F520079CA8F /* SpiralBeakerGridTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpiralBeakerGridTests.swift; sourceTree = "<group>"; };
 		574E54E4266B653100D6E05E /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
 		574E54E8266B666F00D6E05E /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
 		574F14BB25B4898700EB316C /* InputLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLimits.swift; sourceTree = "<group>"; };
@@ -2587,6 +2589,7 @@
 				57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */,
 				57B57820263995E8008DFAB5 /* UniqueGridCoordinateTests.swift */,
 				574BF919270481AA0079CA8F /* LimitedGridCoordsTests.swift */,
+				574BF91C27048F520079CA8F /* SpiralBeakerGridTests.swift */,
 			);
 			path = "beaker-grid";
 			sourceTree = "<group>";
@@ -5376,6 +5379,7 @@
 				57FD400C26484F4800E352C1 /* speechBubbleLineGeneratorTests.swift in Sources */,
 				57FD401526484FA600E352C1 /* QuizViewModelTests.swift in Sources */,
 				57FD402226486F8300E352C1 /* NavigationTestMethods.swift in Sources */,
+				574BF91D27048F520079CA8F /* SpiralBeakerGridTests.swift in Sources */,
 				57FD401B2648506300E352C1 /* NavigationViewModelTests.swift in Sources */,
 				572B1A732675D3EE00302B8E /* ReactionProgressChartViewModelTests.swift in Sources */,
 				57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */,
