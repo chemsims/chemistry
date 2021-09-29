@@ -360,6 +360,10 @@
 		574865BF26A97770007FA314 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5711E00225C4840D00B28E45 /* GoogleService-Info.plist */; };
 		57491BF9263B363200962B92 /* AccessibilityLabelUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57491BF8263B363200962B92 /* AccessibilityLabelUtil.swift */; };
 		574978252683498800EFA71C /* CommonTestAssertions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574978242683498800EFA71C /* CommonTestAssertions.swift */; };
+		574BF90627045C940079CA8F /* PrecipitationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF90527045C940079CA8F /* PrecipitationScreen.swift */; };
+		574BF90927045E5E0079CA8F /* PrecipitationScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF90827045E5E0079CA8F /* PrecipitationScreenViewModel.swift */; };
+		574BF90B2704644C0079CA8F /* PrecipitationNavigationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF90A2704644C0079CA8F /* PrecipitationNavigationModel.swift */; };
+		574BF90D270465180079CA8F /* PrecipitationStatements.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF90C270465180079CA8F /* PrecipitationStatements.swift */; };
 		57567B422605F156009711D4 /* GridElementSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B412605F156009711D4 /* GridElementSetter.swift */; };
 		57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B472605F1A0009711D4 /* GridElementToBalance.swift */; };
 		57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */; };
@@ -1113,6 +1117,10 @@
 		574978352683D03600EFA71C /* TitrationWeakSubstancePostEPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakSubstancePostEPModel.swift; sourceTree = "<group>"; };
 		574978372683D05000EFA71C /* TitrationWeakAcidPostEPModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationWeakAcidPostEPModelTests.swift; sourceTree = "<group>"; };
 		5749811A25A51FD500EEE42B /* RootNavigationModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationModelTest.swift; sourceTree = "<group>"; };
+		574BF90527045C940079CA8F /* PrecipitationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationScreen.swift; sourceTree = "<group>"; };
+		574BF90827045E5E0079CA8F /* PrecipitationScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationScreenViewModel.swift; sourceTree = "<group>"; };
+		574BF90A2704644C0079CA8F /* PrecipitationNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationNavigationModel.swift; sourceTree = "<group>"; };
+		574BF90C270465180079CA8F /* PrecipitationStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationStatements.swift; sourceTree = "<group>"; };
 		574E54E4266B653100D6E05E /* gaseous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gaseous-quiz.csv"; sourceTree = "<group>"; };
 		574E54E8266B666F00D6E05E /* aqueous-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "aqueous-quiz.csv"; sourceTree = "<group>"; };
 		574F14BB25B4898700EB316C /* InputLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLimits.swift; sourceTree = "<group>"; };
@@ -2533,6 +2541,22 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		574BF90427045C7A0079CA8F /* precipitation */ = {
+			isa = PBXGroup;
+			children = (
+				574BF90527045C940079CA8F /* PrecipitationScreen.swift */,
+			);
+			path = precipitation;
+			sourceTree = "<group>";
+		};
+		574BF90727045D310079CA8F /* precipitation */ = {
+			isa = PBXGroup;
+			children = (
+				574BF90827045E5E0079CA8F /* PrecipitationScreenViewModel.swift */,
+			);
+			path = precipitation;
+			sourceTree = "<group>";
+		};
 		574F14B625B488D400EB316C /* axis */ = {
 			isa = PBXGroup;
 			children = (
@@ -3466,6 +3490,7 @@
 				573F2E7526EBB4AD00E9AB74 /* ChemicalReactionsScreen.swift */,
 				573F2E7A26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift */,
 				573F484C26F7313900D9AC3A /* LimitingReagentNavigationModel.swift */,
+				574BF90A2704644C0079CA8F /* PrecipitationNavigationModel.swift */,
 			);
 			path = navigation;
 			sourceTree = "<group>";
@@ -3475,6 +3500,7 @@
 			children = (
 				57B4572926EA42610030D895 /* BalancedReactionStatements.swift */,
 				573F484E26F733CA00D9AC3A /* LimitingReagentStatements.swift */,
+				574BF90C270465180079CA8F /* PrecipitationStatements.swift */,
 			);
 			path = statements;
 			sourceTree = "<group>";
@@ -4235,6 +4261,7 @@
 		57FCA1C226CABEA0005EE93F /* viewmodel */ = {
 			isa = PBXGroup;
 			children = (
+				574BF90727045D310079CA8F /* precipitation */,
 				5791D23C26F0A3800094D711 /* limiting-reagent */,
 				5772DA6626CD272F00A00EAA /* balanced-reaction */,
 			);
@@ -4244,6 +4271,7 @@
 		57FCA1C326CABEA7005EE93F /* view */ = {
 			isa = PBXGroup;
 			children = (
+				574BF90427045C7A0079CA8F /* precipitation */,
 				57F6808026F33BC9007DDD5F /* limiting-reagent */,
 				57E48A4F26CAD8A800A9A421 /* balanced-reaction */,
 				57FCA1C426CABEC3005EE93F /* ChemicalReactionsRootView.swift */,
@@ -5499,6 +5527,7 @@
 			files = (
 				573F484D26F7313900D9AC3A /* LimitingReagentNavigationModel.swift in Sources */,
 				5791D23B26F0A2C50094D711 /* BalancedReactionMoleculePositionViewModel.swift in Sources */,
+				574BF90627045C940079CA8F /* PrecipitationScreen.swift in Sources */,
 				57E48A5226CAD8B900A9A421 /* BalancedReactionMoleculesView.swift in Sources */,
 				57F6808426F33D97007DDD5F /* LimitingReagentScreenViewModel.swift in Sources */,
 				573F2E7926EBB4CB00E9AB74 /* ChemicalReactionsQuestionSet.swift in Sources */,
@@ -5506,11 +5535,13 @@
 				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
 				5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */,
 				57B4572A26EA42610030D895 /* BalancedReactionStatements.swift in Sources */,
+				574BF90927045E5E0079CA8F /* PrecipitationScreenViewModel.swift in Sources */,
 				5772DA6326CD265800A00EAA /* ChemicalReactionsScreenLayout.swift in Sources */,
 				5778517D26F37DC8002F2000 /* LimitingReagentEquationView.swift in Sources */,
 				5772DA6826CD273C00A00EAA /* BalancedReactionScreenViewModel.swift in Sources */,
 				573F2E7B26EBB56F00E9AB74 /* ChemicalReactionsNavigationRows.swift in Sources */,
 				57E48A4626CACC3500A9A421 /* ChemicalReactionsStyling.swift in Sources */,
+				574BF90B2704644C0079CA8F /* PrecipitationNavigationModel.swift in Sources */,
 				5772DA5526CD12A300A00EAA /* BalancedReactionMoleculeGridLayout.swift in Sources */,
 				573F2E7226EBB03A00E9AB74 /* ChemicalReactionsInjector.swift in Sources */,
 				5791D23826F0A2130094D711 /* LimitingReagentReaction.swift in Sources */,
@@ -5525,6 +5556,7 @@
 				5766FF9326E764B60061D2F1 /* BalancedReactionTypes.swift in Sources */,
 				57E48A4A26CACCD400A9A421 /* Molecule.swift in Sources */,
 				5791D24026F0A6BC0094D711 /* ChemicalReactionsSettings.swift in Sources */,
+				574BF90D270465180079CA8F /* PrecipitationStatements.swift in Sources */,
 				57F6808626F3452D007DDD5F /* LimitingReagentBeaker.swift in Sources */,
 				57FCA1C526CABEC3005EE93F /* ChemicalReactionsRootView.swift in Sources */,
 				57D54C7C26E8F59000907806 /* BalancedReactionScreenMolecules.swift in Sources */,
@@ -5970,7 +6002,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 2.3;
 				DEVELOPMENT_ASSET_PATHS = "\"APChemistry/Preview Content\"";
 				DEVELOPMENT_TEAM = 7H845U3D2J;
 				ENABLE_PREVIEWS = YES;
@@ -5996,7 +6028,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 2.3;
 				DEVELOPMENT_ASSET_PATHS = "\"APChemistry/Preview Content\"";
 				DEVELOPMENT_TEAM = 7H845U3D2J;
 				ENABLE_PREVIEWS = YES;

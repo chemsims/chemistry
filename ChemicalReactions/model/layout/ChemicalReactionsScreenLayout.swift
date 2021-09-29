@@ -78,7 +78,7 @@ extension ChemicalReactionsScreenLayout {
     }
 
     var beakerAreaHeight: CGFloat {
-        height
+        height - max(reactionDefinitionHeight, reactionSelectionToggleHeight)
     }
 
     private var beakerWidth: CGFloat {

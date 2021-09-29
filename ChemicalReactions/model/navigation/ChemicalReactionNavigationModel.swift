@@ -112,6 +112,11 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
                 nextScreen: nextScreen,
                 prevScreen: prevScreen
             )
+        case .precipitation:
+            return PrecipitationScreenProvider(
+                nextScreen: nextScreen,
+                prevScreen: prevScreen
+            )
         }
     }
 }
@@ -139,12 +144,33 @@ private class LimitingReagentScreenProvider: ScreenProvider {
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) {
-        self.model = LimitingReagentScreenViewModel()
+        let model = LimitingReagentScreenViewModel()
+        model.navigation.nextScreen = nextScreen
+        model.navigation.prevScreen = prevScreen
+        self.model = model
     }
 
     private let model: LimitingReagentScreenViewModel
 
     var screen: AnyView {
         AnyView(LimitingReagentScreen(model: model))
+    }
+}
+
+private class PrecipitationScreenProvider: ScreenProvider {
+    init(
+        nextScreen: @escaping () -> Void,
+        prevScreen: @escaping () -> Void
+    ) {
+        let model = PrecipitationScreenViewModel()
+        model.navigation.nextScreen = nextScreen
+        model.navigation.prevScreen = prevScreen
+        self.model = model
+    }
+
+    private let model: PrecipitationScreenViewModel
+
+    var screen: AnyView {
+        AnyView(PrecipitationScreen(model: model))
     }
 }
