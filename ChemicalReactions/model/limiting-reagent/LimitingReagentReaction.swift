@@ -103,26 +103,13 @@ extension LimitingReagentReaction {
         let color: Color
         let molarMass: Int
     }
-
-    enum ElementState {
-        case aqueous, liquid, solid, gaseous
-
-        var symbol: String {
-            switch self {
-            case .aqueous: return "aq"
-            case .liquid: return "l"
-            case .solid: return "s"
-            case .gaseous: return "g"
-            }
-        }
-    }
 }
 
 
 private protocol ElementDisplay {
     var name: TextLine { get }
     var coefficient: Int { get }
-    var state: LimitingReagentReaction.ElementState { get }
+    var state: ElementState { get }
 }
 
 extension ElementDisplay {

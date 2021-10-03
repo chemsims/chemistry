@@ -8,6 +8,9 @@ import ReactionsCore
 class PrecipitationScreenViewModel: ObservableObject {
 
     init() {
+        let availableReactions = PrecipitationReaction.availableReactionsWithRandomMetals()
+        self.availableReactions = availableReactions
+        self.chosenReaction = availableReactions.first!
         self.shakeModel = .init(
             canAddMolecule: self.canAdd,
             addMolecules: self.add,
@@ -18,9 +21,11 @@ class PrecipitationScreenViewModel: ObservableObject {
         )
     }
 
+    let availableReactions: [PrecipitationReaction]
     @Published var statement = [TextLine]()
-    @Published var input: Input? = nil
+    @Published var input: Input? = .selectReaction
     @Published var rows: CGFloat = CGFloat(ChemicalReactionsSettings.initialRows)
+    @Published var chosenReaction: PrecipitationReaction
 
     private(set) var navigation: NavigationModel<PrecipitationScreenState>!
 
@@ -82,6 +87,7 @@ extension PrecipitationScreenViewModel {
 // MARK: - Input state
 extension PrecipitationScreenViewModel {
     enum Input: Equatable {
+        case selectReaction
         case setWaterLevel
         case addReactant(type: PrecipitationComponents.Reactant)
     }

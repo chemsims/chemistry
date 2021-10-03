@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 import ReactionsCore
 
@@ -36,7 +35,11 @@ private struct PrecipitationScreenWithLayout: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            PrecipitationTopStack(layout: layout)
+            PrecipitationTopStack(
+                model: model,
+                layout: layout
+            )
+            .zIndex(1)
 
             Spacer(minLength: 0)
 
@@ -65,17 +68,38 @@ private struct PrecipitationScreenWithLayout: View {
 
 private struct PrecipitationTopStack: View {
 
+    @ObservedObject var model: PrecipitationScreenViewModel
     let layout: PrecipitationScreenLayout
 
     var body: some View {
         HStack(spacing: 0) {
             Text("reaction definition")
             Spacer(minLength: 0)
-            Text("selection toggle")
+            selectionToggle
         }
         .padding(.leading, layout.common.menuSize + layout.common.menuHPadding)
         .font(.system(size: layout.common.reactionDefinitionFontSize))
         .frame(height: layout.common.reactionDefinitionHeight)
+    }
+
+    private var selectionToggle: some View {
+        DropDownSelectionView(
+            title: "Choose a reaction",
+            options: model.availableReactions,
+            isToggled: .constant(model.input == .selectReaction),
+            selection: $model.chosenReaction,
+            height: layout.common.reactionSelectionToggleHeight,
+            animation: nil,
+            displayString: { $0.displayWithoutUnknownMetal },
+            label: { $0.displayWithoutUnknownMetal.label },
+            disabledOptions: [],
+            onSelection: model.next
+        )
+        .disabled(model.input != .selectReaction)
+        .frame(
+            height: layout.common.reactionSelectionToggleHeight,
+            alignment: .top
+        )
     }
 }
 
