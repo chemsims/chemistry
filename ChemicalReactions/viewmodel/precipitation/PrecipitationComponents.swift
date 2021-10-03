@@ -21,6 +21,21 @@ class PrecipitationComponents: ObservableObject {
 
     @Published private var currentComponents: PhaseComponents
 
+    var reactionProgressModel: ReactionProgressChartViewModel<Molecule> {
+        .init(
+            molecules: .init { molecule in
+                .init(
+                    label: "A",
+                    columnIndex: molecule.rawValue,
+                    initialCount: 0,
+                    color: .red
+                )
+            },
+            settings: .init(),
+            timing: .init()
+        )
+    }
+
     func coords(for molecule: Molecule) -> FractionedCoordinates {
         currentComponents.coords(for: molecule)
     }
@@ -74,7 +89,7 @@ extension PrecipitationComponents {
         }
     }
 
-    enum Molecule: CaseIterable {
+    enum Molecule: Int, CaseIterable {
         case knownReactant, unknownReactant, product
     }
 }

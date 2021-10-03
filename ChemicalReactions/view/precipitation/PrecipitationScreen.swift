@@ -48,6 +48,7 @@ private struct PrecipitationScreenWithLayout: View {
                 Spacer(minLength: 0)
 
                 PrecipitationMiddleStack(
+                    components: model.components,
                     layout: layout
                 )
 
@@ -76,6 +77,7 @@ private struct PrecipitationTopStack: View {
 
 private struct PrecipitationMiddleStack: View {
 
+    let components: PrecipitationComponents
     let layout: PrecipitationScreenLayout
 
     var body: some View {
@@ -99,7 +101,12 @@ private struct PrecipitationMiddleStack: View {
     }
 
     private var chart: some View {
-        Text("chart")
+        ReactionProgressChart(
+            model: components.reactionProgressModel,
+            geometry: layout.common.reactionProgressGeometry(
+                PrecipitationComponents.Molecule.self
+            )
+        )
     }
 }
 
