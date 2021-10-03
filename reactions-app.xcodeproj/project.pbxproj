@@ -377,6 +377,7 @@
 		575317D12709F234003CBA25 /* PrecipitationReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575317D02709F234003CBA25 /* PrecipitationReaction.swift */; };
 		575317D32709F6D6003CBA25 /* ElementType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575317D22709F6D6003CBA25 /* ElementType.swift */; };
 		575317D52709F7EF003CBA25 /* PrecipitationReactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575317D42709F7EF003CBA25 /* PrecipitationReactionList.swift */; };
+		575317D72709FEC0003CBA25 /* PrecipitationReactionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575317D62709FEC0003CBA25 /* PrecipitationReactionDefinition.swift */; };
 		57567B422605F156009711D4 /* GridElementSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B412605F156009711D4 /* GridElementSetter.swift */; };
 		57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B472605F1A0009711D4 /* GridElementToBalance.swift */; };
 		57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */; };
@@ -1156,6 +1157,7 @@
 		575317D02709F234003CBA25 /* PrecipitationReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationReaction.swift; sourceTree = "<group>"; };
 		575317D22709F6D6003CBA25 /* ElementType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElementType.swift; sourceTree = "<group>"; };
 		575317D42709F7EF003CBA25 /* PrecipitationReactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationReactionList.swift; sourceTree = "<group>"; };
+		575317D62709FEC0003CBA25 /* PrecipitationReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationReactionDefinition.swift; sourceTree = "<group>"; };
 		57567B412605F156009711D4 /* GridElementSetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementSetter.swift; sourceTree = "<group>"; };
 		57567B472605F1A0009711D4 /* GridElementToBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementToBalance.swift; sourceTree = "<group>"; };
 		57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementSetterTests.swift; sourceTree = "<group>"; };
@@ -2578,6 +2580,7 @@
 				574BF90527045C940079CA8F /* PrecipitationScreen.swift */,
 				57E12BD82705CDB20081C52A /* PrecipitationBeaker.swift */,
 				575317CD2709D741003CBA25 /* PrecipitationEquationView.swift */,
+				575317D62709FEC0003CBA25 /* PrecipitationReactionDefinition.swift */,
 			);
 			path = precipitation;
 			sourceTree = "<group>";
@@ -5613,6 +5616,7 @@
 				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
 				5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */,
 				57B4572A26EA42610030D895 /* BalancedReactionStatements.swift in Sources */,
+				575317D72709FEC0003CBA25 /* PrecipitationReactionDefinition.swift in Sources */,
 				574BF90927045E5E0079CA8F /* PrecipitationScreenViewModel.swift in Sources */,
 				5772DA6326CD265800A00EAA /* ChemicalReactionsScreenLayout.swift in Sources */,
 				5778517D26F37DC8002F2000 /* LimitingReagentEquationView.swift in Sources */,

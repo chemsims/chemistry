@@ -73,13 +73,21 @@ private struct PrecipitationTopStack: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            Text("reaction definition")
+            reactionDefinition
             Spacer(minLength: 0)
             selectionToggle
         }
         .padding(.leading, layout.common.menuSize + layout.common.menuHPadding)
         .font(.system(size: layout.common.reactionDefinitionFontSize))
         .frame(height: layout.common.reactionDefinitionHeight)
+    }
+
+    private var reactionDefinition: some View {
+        PrecipitationReactionDefinition(
+            reaction: model.chosenReaction,
+            showMetal: false,
+            fontSize: layout.common.reactionDefinitionFontSize
+        )
     }
 
     private var selectionToggle: some View {

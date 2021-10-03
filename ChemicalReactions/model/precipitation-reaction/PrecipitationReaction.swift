@@ -113,9 +113,9 @@ extension PrecipitationReaction {
 
         private var metalTextLine: TextLine {
             if metalAtomCount > 1 {
-                return "\(metal.rawValue)_\(metalAtomCount)_"
+                return "*\(metal.rawValue)*_\(metalAtomCount)_"
             }
-            return "\(metal.rawValue)"
+            return "*\(metal.rawValue)*"
         }
     }
 }
