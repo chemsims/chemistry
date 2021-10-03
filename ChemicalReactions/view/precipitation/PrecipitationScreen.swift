@@ -46,7 +46,11 @@ private struct PrecipitationScreenWithLayout: View {
                     layout: layout
                 )
                 Spacer(minLength: 0)
-                Text("chart + table")
+
+                PrecipitationMiddleStack(
+                    layout: layout
+                )
+
                 Spacer(minLength: 0)
                 PrecipitationRightStack(model: model, layout: layout)
             }
@@ -67,6 +71,35 @@ private struct PrecipitationTopStack: View {
         .padding(.leading, layout.common.menuSize + layout.common.menuHPadding)
         .font(.system(size: layout.common.reactionDefinitionFontSize))
         .frame(height: layout.common.reactionDefinitionHeight)
+    }
+}
+
+private struct PrecipitationMiddleStack: View {
+
+    let layout: PrecipitationScreenLayout
+
+    var body: some View {
+        VStack(spacing: 0) {
+            table
+            Spacer(minLength: 0)
+            chart
+        }
+    }
+
+    private var table: some View {
+        Table(
+            rows: [
+                .init(cells: ["Compound", "Molar Mass (g/mol)"]),
+                .init(cells: ["Na_2_CO_3_", "106"]),
+                .init(cells: ["Li_2_CO_3_", "74"]),
+                .init(cells: ["K_2_CO_3_", "138"])
+            ]
+        )
+        .frame(size: layout.tableSize)
+    }
+
+    private var chart: some View {
+        Text("chart")
     }
 }
 
@@ -112,8 +145,16 @@ struct PrecipitationScreenLayout {
         let commonTop = common.topOfWaterPosition(rows: rows)
         return commonTop - beakerToggleTextHeight
     }
-}
 
+    var tableSize: CGSize {
+        let availableWidth = common.width - common.totalBeakerAreaWidth - common.beakyBoxWidth
+
+        return CGSize(
+            width: 0.7 * availableWidth,
+            height: 0.35 * common.height
+        )
+    }
+}
 
 struct PrecipitationScreen_Previews: PreviewProvider {
     static var previews: some View {

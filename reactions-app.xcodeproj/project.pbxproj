@@ -372,6 +372,7 @@
 		574BF91A270481AA0079CA8F /* LimitedGridCoordsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF919270481AA0079CA8F /* LimitedGridCoordsTests.swift */; };
 		574BF91D27048F520079CA8F /* SpiralBeakerGridTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574BF91C27048F520079CA8F /* SpiralBeakerGridTests.swift */; };
 		575317CA2709ADA4003CBA25 /* MultiShakingContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575317C92709ADA4003CBA25 /* MultiShakingContainerView.swift */; };
+		575317CC2709BF12003CBA25 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575317CB2709BF12003CBA25 /* Table.swift */; };
 		57567B422605F156009711D4 /* GridElementSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B412605F156009711D4 /* GridElementSetter.swift */; };
 		57567B482605F1A0009711D4 /* GridElementToBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B472605F1A0009711D4 /* GridElementToBalance.swift */; };
 		57567B4E2605F24C009711D4 /* GridElementSetterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */; };
@@ -1146,6 +1147,7 @@
 		57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrderSelection.swift; sourceTree = "<group>"; };
 		57517F3225739E5200EB79C7 /* ReactionOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrder.swift; sourceTree = "<group>"; };
 		575317C92709ADA4003CBA25 /* MultiShakingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiShakingContainerView.swift; sourceTree = "<group>"; };
+		575317CB2709BF12003CBA25 /* Table.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Table.swift; sourceTree = "<group>"; };
 		57567B412605F156009711D4 /* GridElementSetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementSetter.swift; sourceTree = "<group>"; };
 		57567B472605F1A0009711D4 /* GridElementToBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementToBalance.swift; sourceTree = "<group>"; };
 		57567B4D2605F24C009711D4 /* GridElementSetterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementSetterTests.swift; sourceTree = "<group>"; };
@@ -2407,6 +2409,7 @@
 			isa = PBXGroup;
 			children = (
 				57D2F31825EA601B00AEE0D8 /* ICETable.swift */,
+				575317CB2709BF12003CBA25 /* Table.swift */,
 			);
 			path = table;
 			sourceTree = "<group>";
@@ -5278,6 +5281,7 @@
 				57CD325C2672549800C94109 /* AnimatingNumberPlaceholder.swift in Sources */,
 				57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */,
 				57812A8E25EABA950099D720 /* AnimatableRotation.swift in Sources */,
+				575317CC2709BF12003CBA25 /* Table.swift in Sources */,
 				575A886825E435FB00AEE448 /* BeakyBox.swift in Sources */,
 				57072BEF26C96C9C00DC6F0E /* PositionEquation.swift in Sources */,
 				57F88861267E675B00609671 /* MoleculeEmitter.swift in Sources */,

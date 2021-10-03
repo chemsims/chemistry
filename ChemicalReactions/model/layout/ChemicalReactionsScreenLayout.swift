@@ -207,4 +207,5 @@ extension ChemicalReactionsScreenLayout {
             topPadding: 0.1 * chartSize
         )
     }
+
 }
