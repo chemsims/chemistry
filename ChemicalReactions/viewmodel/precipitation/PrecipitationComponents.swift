@@ -29,6 +29,14 @@ class PrecipitationComponents: ObservableObject {
         currentComponents.add(reactant: reactant, count: count)
     }
 
+    func canAdd(reactant: Reactant) -> Bool {
+        currentComponents.canAdd(reactant: reactant)
+    }
+
+    func hasAddedEnough(of reactant: Reactant) -> Bool {
+        currentComponents.hasAddedEnough(of: reactant)
+    }
+
     struct Reaction {
         let unknownReactantCoeff: Int
         let unknownReactantMolarMass: Int

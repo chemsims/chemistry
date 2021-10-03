@@ -9,8 +9,8 @@ class PrecipitationScreenViewModel: ObservableObject {
 
     init() {
         self.shakeModel = .init(
-            canAddMolecule: { _ in true },
-            addMolecules: { _, _ in  },
+            canAddMolecule: self.canAdd,
+            addMolecules: self.add,
             useBufferWhenAddingMolecules: false // TODO perf test
         )
         self.navigation = PrecipitationNavigationModel.model(
@@ -19,12 +19,13 @@ class PrecipitationScreenViewModel: ObservableObject {
     }
 
     @Published var statement = [TextLine]()
-    private(set) var navigation: NavigationModel<PrecipitationScreenState>!
-
+    @Published var input: Input? = nil
     @Published var rows: CGFloat = CGFloat(ChemicalReactionsSettings.initialRows)
 
+    private(set) var navigation: NavigationModel<PrecipitationScreenState>!
+
     let components = PrecipitationComponents()
-    let shakeModel: MultiContainerShakeViewModel<PrecipitationComponents.Reactant>
+    private(set) var shakeModel: MultiContainerShakeViewModel<PrecipitationComponents.Reactant>!
 }
 
 // MARK: - Navigation
@@ -41,5 +42,26 @@ extension PrecipitationScreenViewModel {
 
     var nextIsDisabled : Bool {
         false
+    }
+}
+
+// MARK: - Adding molecules
+extension PrecipitationScreenViewModel {
+    private func canAdd(reactant: PrecipitationComponents.Reactant) -> Bool {
+        input == .addReactant(type: reactant) && components.canAdd(reactant: reactant)
+    }
+
+    private func add(reactant: PrecipitationComponents.Reactant, count: Int) {
+        if canAdd(reactant: reactant) {
+            components.add(reactant: reactant, count: count)
+        }
+    }
+}
+
+// MARK: - Input state
+extension PrecipitationScreenViewModel {
+    enum Input: Equatable {
+        case setWaterLevel
+        case addReactant(type: PrecipitationComponents.Reactant)
     }
 }

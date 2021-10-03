@@ -51,7 +51,9 @@ struct PrecipitationBeaker: View {
             activeContainerPosition: { _ in
                 layout.common.activeContainerPosition
             },
-            disabled: { _ in false },
+            disabled: {
+                model.input != .addReactant(type: $0)
+            },
             containerWidth: layout.common.containerWidth,
             containerSettings: {
                 $0.containerSettings(layout: layout.common)
@@ -72,7 +74,7 @@ struct PrecipitationBeaker: View {
                 animatingMolecules: animatingMolecules,
                 currentTime: 0,
                 settings: layout.common.beakerSettings,
-                canSetLevel: true,
+                canSetLevel: model.input == .setWaterLevel,
                 beakerColorMultiply: .white,
                 sliderColorMultiply: .white,
                 beakerModifier: IdentityViewModifier()
