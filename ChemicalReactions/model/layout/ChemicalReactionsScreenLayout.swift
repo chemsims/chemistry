@@ -142,9 +142,17 @@ extension ChemicalReactionsScreenLayout {
         1.5 * containerHeight
     }
 
+    func containerMaskSize(rows: CGFloat) -> CGSize {
+        CGSize(
+            width: containerMaskWidth,
+            height: containerAreaHeight(rows: rows)
+        )
+    }
+
     func containerAreaHeight(rows: CGFloat) -> CGFloat {
         topOfWaterPosition(rows: rows)
     }
+
 
     // We add the container height on the beaker width, as the edge of a
     // rotated container would otherwise be clipped when moved to the
@@ -157,7 +165,7 @@ extension ChemicalReactionsScreenLayout {
         active ? activeContainerPosition : initialContainerPosition(index: index)
     }
 
-    private func initialContainerPosition(index: Int) -> CGPoint {
+    func initialContainerPosition(index: Int) -> CGPoint {
         CGPoint(x: initialContainerX(index: index), y: initialContainerY)
     }
 
@@ -169,7 +177,7 @@ extension ChemicalReactionsScreenLayout {
         return firstContainerX + (CGFloat(index) * spacing)
     }
 
-    private var activeContainerPosition: CGPoint {
+    var activeContainerPosition: CGPoint {
         CGPoint(x: beakerCenterX, y: activeContainerY)
     }
 
@@ -180,6 +188,10 @@ extension ChemicalReactionsScreenLayout {
 
     private var activeContainerY: CGFloat {
         initialContainerY + (0.75 * containerHeight)
+    }
+
+    var containerLineWidth: CGFloat {
+        0.4
     }
 }
 
@@ -195,5 +207,4 @@ extension ChemicalReactionsScreenLayout {
             topPadding: 0.1 * chartSize
         )
     }
-
 }

@@ -41,7 +41,10 @@ private struct PrecipitationScreenWithLayout: View {
             Spacer(minLength: 0)
 
             HStack(spacing: 0) {
-                Text("beaker")
+                PrecipitationBeaker(
+                    model: model,
+                    layout: layout
+                )
                 Spacer(minLength: 0)
                 Text("chart + table")
                 Spacer(minLength: 0)
@@ -89,6 +92,26 @@ private struct PrecipitationRightStack: View {
 
 struct PrecipitationScreenLayout {
     let common: ChemicalReactionsScreenLayout
+
+    var beakerToggleTextHeight: CGFloat {
+        0.1 * common.beakerSettings.beakerHeight
+    }
+
+    var beakerToggleFontSize: CGFloat {
+        0.5 * beakerToggleTextHeight
+    }
+
+    func containerAreaMask(rows: CGFloat) -> CGSize {
+        CGSize(
+            width: common.containerMaskWidth,
+            height: topOfWaterPosition(rows: rows)
+        )
+    }
+
+    func topOfWaterPosition(rows: CGFloat) -> CGFloat {
+        let commonTop = common.topOfWaterPosition(rows: rows)
+        return commonTop - beakerToggleTextHeight
+    }
 }
 
 

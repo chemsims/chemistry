@@ -31,8 +31,9 @@ struct LimitingReagentBeaker: View {
                     VStack(spacing: 0) {
                         Rectangle()
                             .frame(
-                                width: layout.common.containerMaskWidth,
-                                height: layout.common.containerAreaHeight(rows: components.rows)
+                                size: layout.common.containerMaskSize(
+                                    rows: components.rows
+                                )
                             )
                         Spacer(minLength: 0)
                     }
