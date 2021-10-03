@@ -43,43 +43,27 @@ struct LimitingReagentBeaker: View {
     }
 
     private var containers: some View {
-        ZStack {
-            ForEach(LimitingReagentComponents.Reactant.allCases) { reactant in
-                container(reactant: reactant)
-            }
-        }
-        .frame(width: layout.common.totalBeakerAreaWidth)
-    }
-
-    private func container(reactant: LimitingReagentComponents.Reactant) -> some View {
-        let containerModel = shakeModel.model(for: reactant)
-        let isActive = shakeModel.activeMolecule == reactant
-        let location = layout.common.containerPosition(index: reactant.index, active: isActive)
-
-        let disabled = model.input != .addReactant(type: reactant)
-
-        return ShakingContainerView(
-            model: containerModel,
-            position: containerModel.motion.position,
-            onTap: { loc in didTap(reactant: reactant, location: loc) },
-            initialLocation: location,
+        MultiShakingContainerView(
+            shakeModel: shakeModel,
+            containerPosition: { layout.common.initialContainerPosition(index: $0.index) },
+            activeContainerPosition: { _ in layout.common.activeContainerPosition },
+            disabled: { model.input != .addReactant(type: $0) },
             containerWidth: layout.common.containerWidth,
-            containerSettings: .init(
-                labelColor: containerColor(reactant),
-                label: containerLabel(reactant),
-                labelFontSize: layout.common.containerFontSize,
-                labelFontColor: .white,
-                strokeLineWidth: 0.4
-            ),
+            containerSettings: { reactant in
+                .init(
+                    labelColor: containerColor(reactant),
+                    label: containerLabel(reactant),
+                    labelFontSize: layout.common.containerFontSize,
+                    labelFontColor: .white,
+                    strokeLineWidth: 0.4
+                )
+            },
             moleculeSize: layout.common.containerMoleculeSize,
-            moleculeColor: containerColor(reactant),
-            includeContainerBackground: false,
-            rotation: isActive ? .degrees(135) : .zero
+            topOfWaterY: layout.common.topOfWaterPosition(rows: components.rows),
+            halfXShakeRange: layout.common.containerShakeHalfYRange,
+            halfYShakeRange: layout.common.containerShakeHalfYRange
         )
-        .disabled(disabled)
-        .colorMultiply(disabled ? Styling.inactiveContainerMultiply : .white)
-        .zIndex(isActive ? 1 : 0)
-        .minimumScaleFactor(0.4)
+        .frame(width: layout.common.totalBeakerAreaWidth)
     }
 
     private var beaker: some View {
@@ -113,25 +97,6 @@ struct LimitingReagentBeaker: View {
             beakerColorMultiply: .white,
             sliderColorMultiply: .white,
             beakerModifier: IdentityViewModifier()
-        )
-    }
-
-    private func didTap(reactant: LimitingReagentComponents.Reactant, location: CGPoint) {
-        if shakeModel.activeMolecule == reactant {
-            shakeModel.model(for: reactant).manualAdd(amount: 5, at: location)
-            return
-        }
-
-        withAnimation(.easeOut(duration: 0.25)) {
-            shakeModel.activeMolecule = reactant
-        }
-
-        shakeModel.start(
-            for: reactant,
-            at: layout.common.containerPosition(index: reactant.index, active: true),
-            bottomY: layout.common.topOfWaterPosition(rows: components.rows),
-            halfXRange: layout.common.containerShakeHalfXRange,
-            halfYRange: layout.common.containerShakeHalfYRange
         )
     }
 
