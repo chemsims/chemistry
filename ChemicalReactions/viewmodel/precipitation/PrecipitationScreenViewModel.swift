@@ -58,6 +58,27 @@ extension PrecipitationScreenViewModel {
     }
 }
 
+// MARK: - Equation data
+extension PrecipitationScreenViewModel {
+    var equationData: PrecipitationEquationView.EquationData {
+        .init(
+            beakerVolume: 0.3,
+            knownReactant: "A",
+            product: "B",
+            unknownReactant: "C",
+            highlightUnknownReactantFirstTerm: false,
+            knownReactantMolarity: 0.3,
+            knownReactantMoles: 0.5,
+            productMolarMass: 123,
+            productMoles: ConstantEquation(value: 0.23),
+            productMass: ConstantEquation(value: 0.23),
+            unknownReactantMolarMass: 180,
+            unknownReactantMoles: ConstantEquation(value: 0.23),
+            unknownReactantMass: ConstantEquation(value: 0.23)
+        )
+    }
+}
+
 // MARK: - Input state
 extension PrecipitationScreenViewModel {
     enum Input: Equatable {

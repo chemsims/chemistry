@@ -64,16 +64,3 @@ class PrecipitationComponentsReactantPreparationTests: XCTestCase {
         XCTAssertEqual(maxToAdd, 30)
     }
 }
-
-extension PrecipitationComponents.KnownReactantPreparation {
-    convenience init(
-        unknownReactantCoeff: Int = 1,
-        settings: PrecipitationComponents.Settings = .init()
-    ) {
-        self.init(
-            unknownReactantCoeff: unknownReactantCoeff,
-            grid: BeakerGrid(rows: 10, cols: 10),
-            settings: settings
-        )
-    }
-}

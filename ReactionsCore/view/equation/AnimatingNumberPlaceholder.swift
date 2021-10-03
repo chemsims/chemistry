@@ -10,7 +10,7 @@ public struct AnimatingNumberPlaceholder: View {
         showTerm: Bool,
         progress: CGFloat,
         equation: Equation,
-        formatter: @escaping (CGFloat) -> String
+        formatter: @escaping (CGFloat) -> String = { $0.str(decimals: 2) }
     ) {
         self.showTerm = showTerm
         self.progress = progress

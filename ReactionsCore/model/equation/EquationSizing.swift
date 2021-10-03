@@ -17,5 +17,6 @@ public struct EquationSizing {
 
     public static let boxHeight: CGFloat = 50
     public static let boxWidth: CGFloat = 70
+    public static let boxSize = CGSize(width: boxWidth, height: boxHeight)
     public static let boxPadding: CGFloat = 10
 }

@@ -53,7 +53,11 @@ private struct PrecipitationScreenWithLayout: View {
                 )
 
                 Spacer(minLength: 0)
-                PrecipitationRightStack(model: model, layout: layout)
+                PrecipitationRightStack(
+                    model: model,
+                    components: model.components,
+                    layout: layout
+                )
             }
         }
     }
@@ -82,6 +86,7 @@ private struct PrecipitationMiddleStack: View {
 
     var body: some View {
         VStack(spacing: 0) {
+            Spacer(minLength: 0)
             table
             Spacer(minLength: 0)
             chart
@@ -113,12 +118,21 @@ private struct PrecipitationMiddleStack: View {
 private struct PrecipitationRightStack: View {
 
     @ObservedObject var model: PrecipitationScreenViewModel
+    @ObservedObject var components: PrecipitationComponents
     let layout: PrecipitationScreenLayout
 
     var body: some View {
         VStack(spacing: 0) {
-            Text("equation")
             Spacer(minLength: 0)
+
+            PrecipitationEquationView(
+                data: model.equationData,
+                reactionProgress: components.reactionProgress
+            )
+            .frame(size: layout.equationSize)
+
+            Spacer(minLength: 0)
+
             BeakyBox(
                 statement: model.statement,
                 next: model.next,
@@ -159,6 +173,14 @@ struct PrecipitationScreenLayout {
         return CGSize(
             width: 0.7 * availableWidth,
             height: 0.35 * common.height
+        )
+    }
+
+    var equationSize: CGSize {
+        let availableHeight = common.height - common.beakyBoxHeight - common.reactionSelectionToggleHeight
+        return CGSize(
+            width: common.beakyBoxWidth,
+            height: 0.85 * availableHeight
         )
     }
 }

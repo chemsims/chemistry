@@ -20,6 +20,7 @@ class PrecipitationComponents: ObservableObject {
     }
 
     @Published private var currentComponents: PhaseComponents
+    @Published var reactionProgress: CGFloat = 0
 
     var reactionProgressModel: ReactionProgressChartViewModel<Molecule> {
         .init(
