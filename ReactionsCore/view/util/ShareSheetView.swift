@@ -41,10 +41,10 @@ public struct ShareSettings {
         self.message = Self.message
     }
 
-    public static let url = "https://apps.apple.com/app/ap-chemistry-reactions/id1531309001"
+    public static let url = "https://apps.apple.com/app/id1531309001"
 
     public static let message = """
-    Hey, check out this great AP Chemistry app! Download it at \(url).
+    Hey, check out ChemSims, a great app to learn chemistry using interactive simulations! Download it at \(url).
     """
 }
 
