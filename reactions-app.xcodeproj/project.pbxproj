@@ -145,6 +145,7 @@
 		57072BED26C96AE900DC6F0E /* MoleculeScalesGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E902C925ED6A7800758300 /* MoleculeScalesGeometryTests.swift */; };
 		57072BEF26C96C9C00DC6F0E /* PositionEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BEE26C96C9C00DC6F0E /* PositionEquation.swift */; };
 		57072BF126C96CC700DC6F0E /* AnimatablePosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57072BF026C96CC700DC6F0E /* AnimatablePosition.swift */; };
+		57091818270CDA890087A060 /* PrecipitationComponentsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57091817270CDA890087A060 /* PrecipitationComponentsTests.swift */; };
 		570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */; };
 		5710E22226272A3800CF6FBE /* ShakeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5710E22126272A3800CF6FBE /* ShakeText.swift */; };
 		5713D8CC267B7CC2009C65AC /* ArcGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5713D8CB267B7CC2009C65AC /* ArcGeometryTests.swift */; };
@@ -942,6 +943,7 @@
 		57072BEE26C96C9C00DC6F0E /* PositionEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionEquation.swift; sourceTree = "<group>"; };
 		57072BF026C96CC700DC6F0E /* AnimatablePosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatablePosition.swift; sourceTree = "<group>"; };
 		57080AFB258D2A220077A48C /* EnergyProfileScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreenElement.swift; sourceTree = "<group>"; };
+		57091817270CDA890087A060 /* PrecipitationComponentsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationComponentsTests.swift; sourceTree = "<group>"; };
 		570A765A266BC3D9009329FB /* solubility-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "solubility-quiz.csv"; sourceTree = "<group>"; };
 		570A7660266CC30A009329FB /* ReactingBeakerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactingBeakerViewModel.swift; sourceTree = "<group>"; };
 		570A7663266CD900009329FB /* BufferSaltComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferSaltComponents.swift; sourceTree = "<group>"; };
@@ -2599,6 +2601,7 @@
 			children = (
 				574BF91127046C7E0079CA8F /* PrecipitationComponentsReactantPreparationTests.swift */,
 				574BF91327047E250079CA8F /* PrecipitationComponentsUnknownReactionPreparationTests.swift */,
+				57091817270CDA890087A060 /* PrecipitationComponentsTests.swift */,
 			);
 			path = precipitation;
 			sourceTree = "<group>";
@@ -5675,6 +5678,7 @@
 				574BF91227046C7E0079CA8F /* PrecipitationComponentsReactantPreparationTests.swift in Sources */,
 				573F2E6F26EB8CE000E9AB74 /* NavigationExtensions.swift in Sources */,
 				5791D24226F0A8110094D711 /* LimitingReagentComponentTests.swift in Sources */,
+				57091818270CDA890087A060 /* PrecipitationComponentsTests.swift in Sources */,
 				5790013226FA45490039C753 /* LimitingReagentScreenNavigationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -21,4 +21,8 @@ public struct BeakerGrid {
     public func count(concentration: CGFloat) -> Int {
         (concentration * CGFloat(size)).roundedInt()
     }
+
+    public func concentration(count: Int) -> CGFloat {
+        CGFloat(count) / CGFloat(size)
+    }
 }

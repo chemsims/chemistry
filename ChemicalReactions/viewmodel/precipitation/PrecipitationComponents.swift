@@ -7,15 +7,23 @@ import ReactionsCore
 
 class PrecipitationComponents: ObservableObject {
 
-    init(reaction: PrecipitationReaction) {
+    init(
+        reaction: PrecipitationReaction,
+        rows: Int,
+        cols: Int = MoleculeGridSettings.cols,
+        volume: CGFloat
+    ) {
+        let grid = BeakerGrid(rows: rows, cols: cols)
+        let settings = Settings()
+
         self.reaction = reaction
+        self.grid = grid
+        self.volume = volume
+        self.settings = settings
         currentComponents = KnownReactantPreparation.components(
             unknownReactantCoeff: reaction.unknownReactant.coeff,
-            grid: BeakerGrid(
-                rows: ChemicalReactionsSettings.initialRows,
-                cols: MoleculeGridSettings.cols
-            ),
-            settings: .init()
+            grid: grid,
+            settings: settings
         )
     }
 
@@ -23,6 +31,17 @@ class PrecipitationComponents: ObservableObject {
     static let reactionProgressAtEndOfFinalReaction: CGFloat = 1
 
     let reaction: PrecipitationReaction
+    let grid: BeakerGrid
+    let volume: CGFloat
+
+    private let settings: Settings
+
+    var phase: Phase = .addKnownReactant {
+        didSet {
+            currentComponents = getComponentsForCurrentPhase()
+        }
+    }
+
     @Published private var currentComponents: PhaseComponents
     @Published var reactionProgress: CGFloat = 0
 
@@ -57,18 +76,63 @@ class PrecipitationComponents: ObservableObject {
         currentComponents.hasAddedEnough(of: reactant)
     }
 
-    struct Reaction {
-        let unknownReactantCoeff: Int
-        let unknownReactantMolarMass: Int
-        let productMolarMass: Int
+    var knownReactantMolarity: CGFloat {
+        molarity(of: .knownReactant)
+    }
+
+    var knownReactantMoles: CGFloat {
+        moles(of: .knownReactant)
+    }
+
+    var unknownReactantMass: CGFloat {
+        moles(of: .unknownReactant) * CGFloat(reaction.unknownReactant.molarMass)
+    }
+
+    var unknownReactantMoles: CGFloat {
+        moles(of: .unknownReactant)
+    }
+
+    private func moles(of molecule: Molecule) -> CGFloat {
+        volume * molarity(of: molecule)
+    }
+
+    private func molarity(of molecule: Molecule) -> CGFloat {
+        let count = coords(for: molecule).coordinates.count
+        return grid.concentration(count: count)
+    }
+
+    private func getComponentsForCurrentPhase() -> PhaseComponents {
+        switch phase {
+        case .addKnownReactant:
+            return KnownReactantPreparation.components(
+                unknownReactantCoeff: reaction.unknownReactant.coeff,
+                grid: grid,
+                settings: settings
+            )
+        case .addUnknownReactant:
+            return UnknownReactantPreparation.components(
+                unknownReactantCoeff: reaction.unknownReactant.coeff,
+                previous: currentComponents,
+                grid: grid,
+                settings: settings
+            )
+        }
+    }
+}
+
+
+extension PrecipitationComponents {
+    enum Phase {
+        case addKnownReactant,
+             addUnknownReactant
     }
 }
 
 extension PrecipitationComponents {
     struct Settings {
         init(
-            minConcentrationOfKnownReactantPostFirstReaction: CGFloat = 0.15,
-            minConcentrationOfUnknownReactantToReact: CGFloat = 0.15
+            minConcentrationOfKnownReactantPostFirstReaction: CGFloat = 0.1,
+            minConcentrationOfUnknownReactantToReact: CGFloat = 0.1
         ) {
             self.minConcentrationOfKnownReactantPostFirstReaction = minConcentrationOfKnownReactantPostFirstReaction
             self.minConcentrationOfUnknownReactantToReact = minConcentrationOfUnknownReactantToReact
@@ -116,7 +180,7 @@ extension PrecipitationComponents {
     }
 }
 
-private protocol PhaseComponents {
+protocol PhaseComponents {
     func coords(for molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates
 
     func canAdd(reactant: PrecipitationComponents.Reactant) -> Bool
@@ -186,7 +250,7 @@ extension PrecipitationComponents {
     struct UnknownReactantPreparation {
         static func components(
             unknownReactantCoeff: Int,
-            previous: ReactantPreparation,
+            previous: PhaseComponents,
             grid: BeakerGrid,
             settings: Settings
         ) -> ReactantPreparation {
@@ -240,7 +304,7 @@ extension PrecipitationComponents {
             reactant: Reactant,
             minToAdd: Int,
             maxToAdd: Int,
-            previous: ReactantPreparation?
+            previous: PhaseComponents?
         ) {
             let otherMolecules = Molecule.allCases.filter { $0 != reactant.molecule}
             let otherCoords = otherMolecules.flatMap { m in
@@ -258,7 +322,7 @@ extension PrecipitationComponents {
 
         private var underlying: LimitedGridCoords
         private let reactant: Reactant
-        @Indirect private var previous: ReactantPreparation?
+        @Indirect private var previous: PhaseComponents?
 
         mutating func add(reactant: PrecipitationComponents.Reactant, count: Int) {
             guard reactant == self.reactant && underlying.canAdd else {

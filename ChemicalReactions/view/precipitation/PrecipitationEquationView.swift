@@ -124,13 +124,19 @@ private struct KnownReactantMolesToVolume: View {
 
     private var blank: some View {
         HStack(spacing: termHSpacing) {
-            PlaceholderTerm(value: showData ? data.knownReactantMoles.str(decimals: 2) : nil)
+            PlaceholderTerm(
+                value: showData ? data.knownReactantMoles.str(decimals: 2) : nil,
+                emphasise: true
+            )
             FixedText("=")
             FixedText(data.beakerVolume.str(decimals: 2))
                 .foregroundColor(.orangeAccent)
                 .frame(width: EquationSizing.boxWidth)
             FixedText("x")
-            PlaceholderTerm(value: showData ? data.knownReactantMolarity.str(decimals: 2) : nil)
+            PlaceholderTerm(
+                value: showData ? data.knownReactantMolarity.str(decimals: 2) : nil,
+                emphasise: true
+            )
         }
     }
 }

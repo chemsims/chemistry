@@ -56,7 +56,7 @@ struct PrecipitationBeaker: View {
             },
             containerWidth: layout.common.containerWidth,
             containerSettings: {
-                $0.containerSettings(layout: layout.common)
+                $0.containerSettings(reaction: model.chosenReaction, layout: layout.common)
             },
             moleculeSize: layout.common.containerMoleculeSize,
             topOfWaterY: layout.topOfWaterPosition(rows: model.rows),
@@ -116,7 +116,7 @@ struct PrecipitationBeaker: View {
             return AnimatingBeakerMolecules(
                 molecules: BeakerMolecules(
                     coords: coords.coordinates,
-                    color: .red,
+                    color: molecule.color(reaction: model.chosenReaction),
                     label: "" // TODO
                 ),
                 fractionToDraw: coords.fractionToDraw
@@ -130,10 +130,13 @@ private extension PrecipitationComponents.Reactant {
         Self.allCases.firstIndex(of: self) ?? -1
     }
 
-    func containerSettings(layout: ChemicalReactionsScreenLayout) -> ParticleContainerSettings {
+    func containerSettings(
+        reaction: PrecipitationReaction,
+        layout: ChemicalReactionsScreenLayout
+    ) -> ParticleContainerSettings {
         ParticleContainerSettings(
-            labelColor: .red,
-            label: "",
+            labelColor: self.molecule.color(reaction: reaction),
+            label: self.molecule.name(reaction: reaction),
             labelFontSize: layout.containerFontSize,
             labelFontColor: .white,
             strokeLineWidth: layout.containerLineWidth

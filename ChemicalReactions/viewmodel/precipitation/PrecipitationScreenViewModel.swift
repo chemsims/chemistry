@@ -4,15 +4,24 @@
 
 import CoreGraphics
 import ReactionsCore
+import AcidsBases
 
 class PrecipitationScreenViewModel: ObservableObject {
 
     init() {
         let availableReactions = PrecipitationReaction.availableReactionsWithRandomMetals()
         let chosenReaction = availableReactions.first!
+        let initialRows = ChemicalReactionsSettings.initialRows
+        let initialVolume = ChemicalReactionsSettings.rowsToVolume.getY(at: CGFloat(initialRows))
+
+        self.rows = CGFloat(initialRows)
         self.availableReactions = availableReactions
         self.chosenReaction = chosenReaction
-        self.components = PrecipitationComponents(reaction: chosenReaction)
+        self.components = PrecipitationComponents(
+            reaction: chosenReaction,
+            rows: initialRows,
+            volume: initialVolume
+        )
         self.shakeModel = .init(
             canAddMolecule: self.canAdd,
             addMolecules: self.add,
@@ -26,9 +35,9 @@ class PrecipitationScreenViewModel: ObservableObject {
     let availableReactions: [PrecipitationReaction]
     @Published var statement = [TextLine]()
     @Published var input: Input? = .selectReaction
-    @Published var rows: CGFloat = CGFloat(ChemicalReactionsSettings.initialRows)
-    @Published var chosenReaction: PrecipitationReaction
     @Published var equationState = EquationState.blank
+    @Published var rows: CGFloat
+    @Published var chosenReaction: PrecipitationReaction
 
     private(set) var navigation: NavigationModel<PrecipitationScreenState>!
 
@@ -49,7 +58,12 @@ extension PrecipitationScreenViewModel {
     }
 
     var nextIsDisabled : Bool {
-        false
+        switch input {
+        case let .addReactant(type):
+            return !components.hasAddedEnough(of: type)
+        default:
+            return false
+        }
     }
 }
 
@@ -75,14 +89,14 @@ extension PrecipitationScreenViewModel {
             product: chosenReaction.product.name.asString,
             unknownReactant: chosenReaction.unknownReactant.name(showMetal: false).asString,
             highlightUnknownReactantFirstTerm: false,
-            knownReactantMolarity: 0.3,
-            knownReactantMoles: 0.5,
-            productMolarMass: 123,
+            knownReactantMolarity: components.knownReactantMolarity,
+            knownReactantMoles: components.knownReactantMoles,
+            productMolarMass: chosenReaction.product.molarMass,
             productMoles: ConstantEquation(value: 0.23),
             productMass: ConstantEquation(value: 0.23),
-            unknownReactantMolarMass: 180,
-            unknownReactantMoles: ConstantEquation(value: 0.23),
-            unknownReactantMass: ConstantEquation(value: 0.23)
+            unknownReactantMolarMass: chosenReaction.unknownReactant.molarMass,
+            unknownReactantMoles: ConstantEquation(value: components.unknownReactantMoles),
+            unknownReactantMass: ConstantEquation(value: components.unknownReactantMass)
         )
     }
 }

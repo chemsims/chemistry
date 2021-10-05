@@ -95,6 +95,7 @@ private class InstructToAddKnownReactant: SetStatement {
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.input = nil
         model.equationState = .blank
+        model.shakeModel.stopAll()
     }
 }
 
@@ -104,10 +105,14 @@ private class InstructToAddUnknownReactant: PrecipitationScreenState {
         let molesAdded = model.equationData.knownReactantMoles
         model.statement = statements.instructToAddUnknownReactant(molesAdded: molesAdded)
         model.input = .addReactant(type: .unknown)
+        model.shakeModel.stopAll()
+        model.components.phase = .addUnknownReactant
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.input = nil
+        model.shakeModel.stopAll()
+        model.components.phase = .addKnownReactant
     }
 }
 
