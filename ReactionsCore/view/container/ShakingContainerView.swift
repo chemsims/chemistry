@@ -23,7 +23,8 @@ public struct ShakingContainerView: View {
         moleculeSize: CGFloat,
         moleculeColor: Color,
         includeContainerBackground: Bool,
-        rotation: Angle
+        rotation: Angle,
+        toolTipText: TextLine? = nil
     ) {
         self.model = model
         self.position = position
@@ -35,6 +36,7 @@ public struct ShakingContainerView: View {
         self.moleculeColor = moleculeColor
         self.includeContainerBackground = includeContainerBackground
         self.rotation = rotation
+        self.toolTipText = toolTipText
     }
 
     @ObservedObject var model: ShakeContainerViewModel
@@ -48,6 +50,7 @@ public struct ShakingContainerView: View {
     let moleculeColor: Color
     let includeContainerBackground: Bool
     let rotation: Angle
+    let toolTipText: TextLine?
 
     @GestureState private var simulatorOffset: (CGFloat, CGFloat) = (0, 0)
 
@@ -64,6 +67,9 @@ public struct ShakingContainerView: View {
             }
 
             container
+            if let toolTipText = toolTipText {
+                toolTip(text: toolTipText)
+            }
         }
     }
 
@@ -85,6 +91,21 @@ public struct ShakingContainerView: View {
             .modifyIf(isSimulator) {
                 $0.gesture(simulatorDragGesture)
             }
+    }
+
+    private func toolTip(text: TextLine) -> some View {
+        let width = 2 * containerWidth
+        let height = containerWidth
+        return Tooltip(
+            text: text,
+            fontSize: 1.5 * containerSettings.labelFontSize,
+            arrowPosition: .bottom,
+            arrowLocation: .inside
+        )
+        .frame(width: width, height: height)
+        .position(initialLocation)
+        .offset(offset)
+        .offset(y: -0.75 * containerHeight)
     }
 
     private var offset: CGSize {
@@ -113,6 +134,10 @@ public struct ShakingContainerView: View {
 
     private var halfYRange: CGFloat {
         model.halfYRange ?? 0
+    }
+
+    private var containerHeight: CGFloat {
+        ParticleContainer.heightToWidth * containerWidth
     }
 
     private var isSimulator: Bool {

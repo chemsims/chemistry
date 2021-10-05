@@ -8,9 +8,9 @@ public struct Tooltip: View {
 
     public init(
         text: TextLine,
-        color: Color,
-        background: Color,
-        border: Color,
+        color: Color = Styling.tooltipText,
+        background: Color = Styling.tooltipBackground,
+        border: Color = Styling.tooltipBorder,
         fontSize: CGFloat,
         arrowPosition: ArrowPosition,
         arrowLocation: ArrowLocation,

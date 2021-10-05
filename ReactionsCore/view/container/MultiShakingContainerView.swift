@@ -16,7 +16,8 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
         moleculeSize: CGFloat,
         topOfWaterY: CGFloat,
         halfXShakeRange: CGFloat,
-        halfYShakeRange: CGFloat
+        halfYShakeRange: CGFloat,
+        activeToolTipText: @escaping (Molecule) -> TextLine? = { _ in nil }
     ) {
         self.shakeModel = shakeModel
         self.containerPosition = containerPosition
@@ -28,6 +29,7 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
         self.topOfWaterY = topOfWaterY
         self.halfXShakeRange = halfXShakeRange
         self.halfYShakeRange = halfYShakeRange
+        self.activeToolTipText = activeToolTipText
     }
 
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<Molecule>
@@ -40,6 +42,7 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
     let topOfWaterY: CGFloat
     let halfXShakeRange: CGFloat
     let halfYShakeRange: CGFloat
+    let activeToolTipText: (Molecule) -> TextLine?
 
     public var body: some View {
         ZStack {
@@ -54,6 +57,7 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
         let isActive = shakeModel.activeMolecule == molecule
         let location = isActive ? activeContainerPosition(molecule) : containerPosition(molecule)
         let isDisabled = disabled(molecule)
+        let toolTipText = isActive ? activeToolTipText(molecule) : nil
 
         return ShakingContainerView(
             model: containerModel,
@@ -67,7 +71,8 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
             moleculeSize: moleculeSize,
             moleculeColor: containerSettings(molecule).labelColor,
             includeContainerBackground: false,
-            rotation: isActive ? .degrees(135) : .zero
+            rotation: isActive ? .degrees(135) : .zero,
+            toolTipText: toolTipText
         )
         .disabled(isDisabled)
         .colorMultiply(isDisabled ? Styling.inactiveContainerMultiply : .white)

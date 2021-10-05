@@ -61,7 +61,14 @@ struct PrecipitationBeaker: View {
             moleculeSize: layout.common.containerMoleculeSize,
             topOfWaterY: layout.topOfWaterPosition(rows: model.rows),
             halfXShakeRange: layout.common.containerShakeHalfXRange,
-            halfYShakeRange: layout.common.containerShakeHalfYRange
+            halfYShakeRange: layout.common.containerShakeHalfYRange,
+            activeToolTipText: { reactant in
+                if reactant == .unknown {
+                    let mass = components.unknownReactantMass.str(decimals: 2)
+                    return "\(mass)g"
+                }
+                return nil
+            }
         )
         .frame(width: layout.common.totalBeakerAreaWidth)
     }
