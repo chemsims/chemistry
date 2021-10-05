@@ -79,7 +79,6 @@ private struct PrecipitationTopStack: View {
         }
         .padding(.leading, layout.common.menuSize + layout.common.menuHPadding)
         .font(.system(size: layout.common.reactionDefinitionFontSize))
-        .frame(height: layout.common.reactionDefinitionHeight)
     }
 
     private var reactionDefinition: some View {
@@ -88,6 +87,8 @@ private struct PrecipitationTopStack: View {
             showMetal: false,
             fontSize: layout.common.reactionDefinitionFontSize
         )
+        .frame(height: layout.common.reactionDefinitionHeight)
+        .padding(.top, layout.common.reactionDefinitionTopPadding)
     }
 
     private var selectionToggle: some View {
@@ -98,8 +99,8 @@ private struct PrecipitationTopStack: View {
             selection: $model.chosenReaction,
             height: layout.common.reactionSelectionToggleHeight,
             animation: nil,
-            displayString: { $0.displayWithoutUnknownMetal },
-            label: { $0.displayWithoutUnknownMetal.label },
+            displayString: { $0.name(showMetal: false) },
+            label: { $0.name(showMetal: false).label },
             disabledOptions: [],
             onSelection: model.next
         )

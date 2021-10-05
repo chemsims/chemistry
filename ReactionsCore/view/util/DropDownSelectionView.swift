@@ -20,6 +20,33 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion: Bool
 
+    /// Initialise the drop down where the label is taken from the display string
+    public init(
+        title: String,
+        options: [Data],
+        isToggled: Binding<Bool>,
+        selection: Binding<Data>,
+        height: CGFloat,
+        widthToHeight: CGFloat = 8,
+        animation: Animation?,
+        displayString: @escaping (Data) -> TextLine,
+        disabledOptions: [Data],
+        onSelection: (() -> Void)?
+    ) {
+        self.title = title
+        self.options = options
+        self._isToggled = isToggled
+        self._selection = selection
+        self.height = height
+        self.widthToHeight = widthToHeight
+        self.animation = animation
+        self.displayString = displayString
+        self.label = { displayString($0).label }
+        self.disabledOptions = disabledOptions
+        self.onSelection = onSelection
+    }
+
+    /// Initialise all properties, including an explicit label
     public init(
         title: String,
         options: [Data],

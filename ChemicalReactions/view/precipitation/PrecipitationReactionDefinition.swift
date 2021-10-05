@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 import ReactionsCore
 
@@ -18,33 +17,35 @@ struct PrecipitationReactionDefinition: View {
             knownReactant
             FixedText("➝")
             product
+            secondaryProduct
         }
     }
 
     private var unknownReactant: some View {
         TextLinesView(
-            line: showMetal ? reaction.unknownReactant.knownDisplay : reaction.unknownReactant.unknownDisplay,
+            line: reaction.unknownReactant.nameWithState(showMetal: showMetal),
             fontSize: fontSize
         )
     }
 
     private var knownReactant: some View {
         TextLinesView(
-            line: reaction.knownReactant.display,
+            line: reaction.knownReactant.nameWithState,
             fontSize: fontSize
         )
     }
 
     private var product: some View {
         TextLinesView(
-            line: reaction.product.display,
+            line: reaction.product.nameWithState,
+            fontSize: fontSize
+        )
+    }
+
+    private var secondaryProduct: some View {
+        TextLinesView(
+            line: reaction.secondaryProduct.nameWithState(showMetal: showMetal),
             fontSize: fontSize
         )
     }
 }
-
-//struct PrecipitationReactionDefinition_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PrecipitationReactionDefinition()
-//    }
-//}

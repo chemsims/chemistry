@@ -4,19 +4,42 @@
 
 import Foundation
 import ReactionsCore
+import AVFoundation
 
 struct PrecipitationReaction: Identifiable, Equatable {
-    let knownReactant: Element
+    let knownReactant: KnownReactant
     let unknownReactant: UnknownPrecipitationReactant
     let product: Product
+    let secondaryProduct: SecondaryProduct
 
     var id: String {
-        "\(knownReactant.id):\(unknownReactant.id):\(product.id)"
+        "\(knownReactant.id):\(unknownReactant.id):\(product.id):\(secondaryProduct.id)"
     }
 
-    var displayWithoutUnknownMetal: TextLine {
-        let reactants = unknownReactant.unknownDisplay + " + " + knownReactant.display
-        let products = product.display
+    func name(showMetal: Bool) -> TextLine {
+        getName(
+            elementName: \.name,
+            elementWithMetalName: { $0.name(showMetal: showMetal) }
+        )
+    }
+
+    func nameWithState(showMetal: Bool) -> TextLine {
+        getName(
+            elementName: \.nameWithState,
+            elementWithMetalName: { $0.nameWithState(showMetal: showMetal) }
+        )
+    }
+
+    private func getName(
+        elementName: KeyPath<PrecipitationElement, TextLine>,
+        elementWithMetalName: (PrecipitationElementWithUnknownMetal) -> TextLine
+    ) -> TextLine {
+        let r1 = elementWithMetalName(unknownReactant)
+        let r2 = knownReactant[keyPath: elementName]
+        let p1 = product[keyPath: elementName]
+        let p2 = elementWithMetalName(secondaryProduct)
+        let reactants = r1 + " + " + r2
+        let products = p1 + " + " + p2
         return reactants + " ➝ " + products
     }
 }
@@ -37,37 +60,66 @@ extension PrecipitationReaction {
     }
 }
 
+protocol PrecipitationElement {
+    var name: TextLine { get }
+    var state: ElementState { get }
+}
+
+extension PrecipitationElement {
+
+    var id: String {
+        nameWithState.asString
+    }
+
+    var nameWithState: TextLine {
+        name + "_\(state.symbol)_"
+    }
+}
+
+protocol PrecipitationElementWithUnknownMetal {
+    var latterPart: TextLine { get }
+    var coeff: Int { get }
+    var metal: PrecipitationReaction.Metal { get }
+    var metalAtomCount: Int { get }
+    var state: ElementState { get }
+}
+
+extension PrecipitationElementWithUnknownMetal {
+
+    var id: String {
+        nameWithState(showMetal: true).asString
+    }
+
+    func nameWithState(showMetal: Bool) -> TextLine {
+        name(showMetal: showMetal) + "_\(state.symbol)_"
+    }
+
+    func name(showMetal: Bool) -> TextLine {
+        let coeffNum = coeff == 1 ? "" : "\(coeff)"
+        let metal = showMetal ? metalStr : "M"
+        return "\(coeffNum)\(metal)" + latterPart
+    }
+
+    private var metalStr: String {
+        let countSuffix = metalAtomCount == 1 ? "" : "_\(metalAtomCount)_"
+        return "\(metal.rawValue)\(countSuffix)"
+    }
+}
 
 extension PrecipitationReaction {
 
-    struct Element: Equatable {
+    struct KnownReactant: Equatable, PrecipitationElement {
         let name: TextLine
         let state: ElementState
-
-        var id: String {
-            display.asString
-        }
-
-        var display: TextLine {
-            name + "_(\(state.symbol))_"
-        }
     }
 
-    struct Product: Equatable {
+    struct Product: Equatable, PrecipitationElement {
         let name: TextLine
         let state: ElementState
         let molarMass: Int
-
-        var display: TextLine {
-            name + "_(\(state.symbol))_"
-        }
-
-        var id: String {
-            display.asString
-        }
     }
 
-    struct UnknownPrecipitationReactant: Equatable {
+    struct UnknownPrecipitationReactant: Equatable, PrecipitationElementWithUnknownMetal {
         let latterPart: TextLine
         let state: ElementState
         let latterPartMolarMass: Int
@@ -76,20 +128,8 @@ extension PrecipitationReaction {
         let metalAtomCount: Int
         let coeff: Int
 
-        var id: String {
-            knownDisplay.asString + state.symbol
-        }
-
         var molarMass: Int {
             latterPartMolarMass + (metalAtomCount * metal.atomicWeight)
-        }
-
-        var unknownDisplay: TextLine {
-            coeffTextLine + "M" + latterPartWithState
-        }
-
-        var knownDisplay: TextLine {
-            coeffTextLine + metalTextLine + latterPartWithState
         }
 
         func replacingMetal(with newMetal: Metal) -> UnknownPrecipitationReactant {
@@ -102,20 +142,13 @@ extension PrecipitationReaction {
                 coeff: coeff
             )
         }
+    }
 
-        private var latterPartWithState: TextLine {
-            latterPart + "_(\(state.symbol))_"
-        }
-
-        private var coeffTextLine: TextLine {
-            coeff > 1 ? "\(coeff)" : ""
-        }
-
-        private var metalTextLine: TextLine {
-            if metalAtomCount > 1 {
-                return "*\(metal.rawValue)*_\(metalAtomCount)_"
-            }
-            return "*\(metal.rawValue)*"
-        }
+    struct SecondaryProduct: Equatable, PrecipitationElementWithUnknownMetal {
+        let latterPart: TextLine
+        let coeff: Int
+        let metal: Metal
+        let metalAtomCount: Int
+        let state: ElementState
     }
 }

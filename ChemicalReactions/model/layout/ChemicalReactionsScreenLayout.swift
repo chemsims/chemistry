@@ -47,7 +47,11 @@ extension ChemicalReactionsScreenLayout {
     }
 
     var reactionDefinitionHeight: CGFloat {
-        reactionSelectionToggleHeight
+        menuSize
+    }
+
+    var reactionDefinitionTopPadding: CGFloat {
+        menuHPadding - Self.topLevelScreenPadding
     }
 
     var reactionDefinitionFontSize: CGFloat {

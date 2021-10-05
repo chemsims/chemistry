@@ -39,19 +39,19 @@ struct PrecipitationReactionStatements {
     let reaction: PrecipitationReaction
 
     private var product: String {
-        reaction.product.display.asMarkdown
+        reaction.product.name.asMarkdown
     }
 
     private var knownReactant: String {
-        reaction.knownReactant.display.asMarkdown
+        reaction.knownReactant.name.asMarkdown
     }
 
     private var unknownReactant: String {
-        reaction.unknownReactant.unknownDisplay.asMarkdown
+        reaction.unknownReactant.name(showMetal: false).asMarkdown
     }
 
     private var unknownReactantWithMetal: String {
-        reaction.unknownReactant.knownDisplay.asMarkdown
+        reaction.unknownReactant.name(showMetal: true).asMarkdown
     }
 
     var explainPrecipitation: [TextLine] {
