@@ -160,7 +160,8 @@ private struct PrecipitationRightStack: View {
 
             PrecipitationEquationView(
                 data: model.equationData,
-                reactionProgress: components.reactionProgress
+                reactionProgress: components.reactionProgress,
+                state: model.equationState
             )
             .frame(size: layout.equationSize)
 

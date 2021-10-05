@@ -2,15 +2,15 @@
 // Reactions App
 //
 
-import Foundation
-import CoreGraphics
+import SwiftUI
 import ReactionsCore
 
 class PrecipitationComponents: ObservableObject {
 
-    init() {
+    init(reaction: PrecipitationReaction) {
+        self.reaction = reaction
         currentComponents = KnownReactantPreparation.components(
-            unknownReactantCoeff: 2,
+            unknownReactantCoeff: reaction.unknownReactant.coeff,
             grid: BeakerGrid(
                 rows: ChemicalReactionsSettings.initialRows,
                 cols: MoleculeGridSettings.cols
@@ -19,6 +19,10 @@ class PrecipitationComponents: ObservableObject {
         )
     }
 
+    static let reactionProgressAtEndOfInitialReaction: CGFloat = 0.5
+    static let reactionProgressAtEndOfFinalReaction: CGFloat = 1
+
+    let reaction: PrecipitationReaction
     @Published private var currentComponents: PhaseComponents
     @Published var reactionProgress: CGFloat = 0
 
@@ -26,10 +30,10 @@ class PrecipitationComponents: ObservableObject {
         .init(
             molecules: .init { molecule in
                 .init(
-                    label: "A",
+                    label: molecule.name(reaction: reaction),
                     columnIndex: molecule.rawValue,
                     initialCount: 0,
-                    color: .red
+                    color: molecule.color(reaction: reaction)
                 )
             },
             settings: .init(),
@@ -92,6 +96,23 @@ extension PrecipitationComponents {
 
     enum Molecule: Int, CaseIterable {
         case knownReactant, unknownReactant, product
+
+        func name(reaction: PrecipitationReaction) -> TextLine {
+            switch self {
+            case .knownReactant: return reaction.knownReactant.name
+            case .unknownReactant: return reaction.unknownReactant.name(showMetal: false)
+            case .product: return reaction.product.name
+            }
+        }
+
+        // TODO, store color on the reaction definition
+        func color(reaction: PrecipitationReaction) -> Color {
+            switch self {
+            case .knownReactant: return .red
+            case .unknownReactant: return .blue
+            case .product: return .orange
+            }
+        }
     }
 }
 

@@ -9,8 +9,10 @@ class PrecipitationScreenViewModel: ObservableObject {
 
     init() {
         let availableReactions = PrecipitationReaction.availableReactionsWithRandomMetals()
+        let chosenReaction = availableReactions.first!
         self.availableReactions = availableReactions
-        self.chosenReaction = availableReactions.first!
+        self.chosenReaction = chosenReaction
+        self.components = PrecipitationComponents(reaction: chosenReaction)
         self.shakeModel = .init(
             canAddMolecule: self.canAdd,
             addMolecules: self.add,
@@ -26,10 +28,11 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var input: Input? = .selectReaction
     @Published var rows: CGFloat = CGFloat(ChemicalReactionsSettings.initialRows)
     @Published var chosenReaction: PrecipitationReaction
+    @Published var equationState = EquationState.blank
 
     private(set) var navigation: NavigationModel<PrecipitationScreenState>!
 
-    let components = PrecipitationComponents()
+    let components: PrecipitationComponents
     private(set) var shakeModel: MultiContainerShakeViewModel<PrecipitationComponents.Reactant>!
 }
 
@@ -67,10 +70,10 @@ extension PrecipitationScreenViewModel {
 extension PrecipitationScreenViewModel {
     var equationData: PrecipitationEquationView.EquationData {
         .init(
-            beakerVolume: 0.3,
-            knownReactant: "A",
-            product: "B",
-            unknownReactant: "C",
+            beakerVolume: ChemicalReactionsSettings.rowsToVolume.getY(at: rows),
+            knownReactant: chosenReaction.knownReactant.name.asString,
+            product: chosenReaction.product.name.asString,
+            unknownReactant: chosenReaction.unknownReactant.name(showMetal: false).asString,
             highlightUnknownReactantFirstTerm: false,
             knownReactantMolarity: 0.3,
             knownReactantMoles: 0.5,
@@ -84,11 +87,24 @@ extension PrecipitationScreenViewModel {
     }
 }
 
-// MARK: - Input state
+// MARK: - Input & equation state
 extension PrecipitationScreenViewModel {
     enum Input: Equatable {
         case selectReaction
         case setWaterLevel
         case addReactant(type: PrecipitationComponents.Reactant)
+    }
+
+    enum EquationState: Int, Comparable {
+
+        case blank,
+            showKnownReactantMolarity
+
+        static func < (
+            lhs: PrecipitationScreenViewModel.EquationState,
+            rhs: PrecipitationScreenViewModel.EquationState
+        ) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
     }
 }

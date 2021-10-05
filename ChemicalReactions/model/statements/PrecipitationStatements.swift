@@ -58,7 +58,7 @@ struct PrecipitationReactionStatements {
         [
             """
             This is a precipitation reaction. How do I know? Well, one way \
-            is to notice that one of the products is a *sold (s)*, so once \
+            is to notice that one of the products is a *solid (s)*, so once \
             the reaction takes place, this solid will be produced and \
             deposit as a precipitate. In this case, *\(product)*.
             """
@@ -75,7 +75,6 @@ struct PrecipitationReactionStatements {
         ]
     }
 
-
     func instructToAddUnknownReactant(molesAdded: CGFloat) -> [TextLine] {
         [
             """
@@ -89,10 +88,11 @@ struct PrecipitationReactionStatements {
         ]
     }
 
-    var runInitialReaction: [TextLine] {
-        [
+    func runInitialReaction(unknownReactantGramsAdded: CGFloat) -> [TextLine] {
+        let grams = gramString(grams: unknownReactantGramsAdded)
+        return [
             """
-            Perfect! You added 1.38 grams of *\(unknownReactant)*. Now, \
+            Perfect! You added \(grams) of *\(unknownReactant)*. Now, \
             let's watch the reaction going.
             """,
             "*Watch how \(product) is produced.*"
