@@ -5,6 +5,7 @@
 
 import Foundation
 import ReactionsCore
+import SwiftUI
 
 private let statements = PrecipitationStatements.self
 
@@ -21,7 +22,8 @@ struct PrecipitationNavigationModel {
         SetStatement(statements.explainUnknownMetal),
         InstructToSetWaterLevel(statements.instructToSetWaterLevel),
         InstructToAddKnownReactant(\.instructToAddKnownReactant),
-        InstructToAddUnknownReactant()
+        InstructToAddUnknownReactant(),
+        RunReaction()
     ]
 }
 
@@ -122,7 +124,13 @@ private class RunReaction: PrecipitationScreenState {
         let massEquation = model.equationData.unknownReactantMass
         let reactionProgress = PrecipitationComponents.reactionProgressAtEndOfFinalReaction
         let massAdded = massEquation.getY(at: reactionProgress)
+
         model.statement = statements.runInitialReaction(unknownReactantGramsAdded: massAdded)
+        model.shakeModel.stopAll()
         model.input = nil
+        model.components.phase = .runReaction
+        withAnimation(.linear(duration: 3)) {
+            model.components.runInitialReaction()
+        }
     }
 }

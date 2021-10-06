@@ -673,6 +673,7 @@
 		57B92EBA2665258A00023E7C /* SelectionToggleText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AAD2600D22C005BD328 /* SelectionToggleText.swift */; };
 		57B92EBD2665356600023E7C /* TextLineUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBC2665356600023E7C /* TextLineUtil.swift */; };
 		57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBE266537F900023E7C /* TextLineUtilTests.swift */; };
+		57BBC804270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC803270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift */; };
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BDFF4E26415540001B97CC /* ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4D26415540001B97CC /* ImageType.swift */; };
 		57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4F26415745001B97CC /* ImageTypeView.swift */; };
@@ -1441,6 +1442,7 @@
 		57B92EBE266537F900023E7C /* TextLineUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineUtilTests.swift; sourceTree = "<group>"; };
 		57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinition.swift; sourceTree = "<group>"; };
 		57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousReactionType.swift; sourceTree = "<group>"; };
+		57BBC803270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationComponentsInitialReactionTests.swift; sourceTree = "<group>"; };
 		57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonLinearEquationSolver.swift; sourceTree = "<group>"; };
 		57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolver.swift; sourceTree = "<group>"; };
 		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
@@ -2602,6 +2604,7 @@
 				574BF91127046C7E0079CA8F /* PrecipitationComponentsReactantPreparationTests.swift */,
 				574BF91327047E250079CA8F /* PrecipitationComponentsUnknownReactionPreparationTests.swift */,
 				57091817270CDA890087A060 /* PrecipitationComponentsTests.swift */,
+				57BBC803270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift */,
 			);
 			path = precipitation;
 			sourceTree = "<group>";
@@ -5680,6 +5683,7 @@
 				5791D24226F0A8110094D711 /* LimitingReagentComponentTests.swift in Sources */,
 				57091818270CDA890087A060 /* PrecipitationComponentsTests.swift in Sources */,
 				5790013226FA45490039C753 /* LimitingReagentScreenNavigationTests.swift in Sources */,
+				57BBC804270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

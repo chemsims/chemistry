@@ -79,7 +79,7 @@ struct PrecipitationBeaker: View {
                 rows: $model.rows,
                 molecules: [],
                 animatingMolecules: animatingMolecules,
-                currentTime: 0,
+                currentTime: components.reactionProgress,
                 settings: layout.common.beakerSettings,
                 canSetLevel: model.input == .setWaterLevel,
                 beakerColorMultiply: .white,
