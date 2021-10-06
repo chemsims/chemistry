@@ -3,7 +3,7 @@
 //
 
 import ReactionsCore
-import Foundation
+import CoreGraphics
 
 extension PrecipitationComponents {
     struct ReactantPreparation: PhaseComponents {
@@ -27,6 +27,10 @@ extension PrecipitationComponents {
                 maxToAdd: maxToAdd
             )
         }
+
+        let startOfReaction: CGFloat = 0
+        let endOfReaction: CGFloat = 0
+        let previouslyReactingUnknownReactantMoles: CGFloat = 0
 
         private var underlying: LimitedGridCoords
         private let reactant: Reactant

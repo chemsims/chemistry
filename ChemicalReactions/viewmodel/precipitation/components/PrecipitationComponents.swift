@@ -97,6 +97,17 @@ class PrecipitationComponents: ObservableObject {
         moles(of: .knownReactant)
     }
 
+    var reactingMolesOfUnknownReactant: Equation {
+        let molarity = dynamicMolarity(of: .unknownReactant)
+        let initialMolarity = molarity.getY(at: currentComponents.startOfReaction)
+        let consumedMolarity = initialMolarity - molarity
+        return currentComponents.previouslyReactingUnknownReactantMoles + consumedMolarity
+    }
+
+    var reactingMassOfUnknownReactant: Equation {
+        CGFloat(reaction.unknownReactant.molarMass) * reactingMolesOfUnknownReactant
+    }
+
     var unknownReactantMass: CGFloat {
         moles(of: .unknownReactant) * CGFloat(reaction.unknownReactant.molarMass)
     }
@@ -152,7 +163,7 @@ class PrecipitationComponents: ObservableObject {
             return InitialReaction(
                 unknownReactantCoeff: reaction.unknownReactant.coeff,
                 previous: currentComponents,
-                finalReactionProgress: Self.reactionProgressAtEndOfInitialReaction,
+                endOfReaction: Self.reactionProgressAtEndOfInitialReaction,
                 grid: grid
             )
         }

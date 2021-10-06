@@ -12,12 +12,12 @@ extension PrecipitationComponents {
         init(
             unknownReactantCoeff: Int,
             previous: PhaseComponents,
-            finalReactionProgress: CGFloat,
+            endOfReaction: CGFloat,
             grid: BeakerGrid
         ) {
             self.unknownReactantCoeff = unknownReactantCoeff
             self.previous = previous
-            self.finalReactionProgress = finalReactionProgress
+            self.endOfReaction = endOfReaction
             self.grid = grid
 
             let unknownReactantCount = previous.coords(for: .unknownReactant).coordinates.count
@@ -47,10 +47,14 @@ extension PrecipitationComponents {
 
         }
 
+        let startOfReaction: CGFloat = 0
+        let endOfReaction: CGFloat
+
         let unknownReactantCoeff: Int
         let previous: PhaseComponents
-        let finalReactionProgress: CGFloat
         let grid: BeakerGrid
+
+        let previouslyReactingUnknownReactantMoles: CGFloat = 0
 
         func coords(for molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates {
             switch molecule {
@@ -70,7 +74,7 @@ extension PrecipitationComponents {
                 fractionToDraw: LinearEquation(
                     x1: 0,
                     y1: 1,
-                    x2: finalReactionProgress,
+                    x2: endOfReaction,
                     y2: finalFraction
                 )
             )
@@ -82,7 +86,7 @@ extension PrecipitationComponents {
                 fractionToDraw: LinearEquation(
                     x1: 0,
                     y1: 1,
-                    x2: finalReactionProgress,
+                    x2: endOfReaction,
                     y2: 0
                 )
             )
@@ -94,7 +98,7 @@ extension PrecipitationComponents {
                 fractionToDraw: LinearEquation(
                     x1: 0,
                     y1: 0,
-                    x2: finalReactionProgress,
+                    x2: endOfReaction,
                     y2: 1
                 )
             )

@@ -96,8 +96,8 @@ extension PrecipitationScreenViewModel {
             productMoles: components.productMoles,
             productMass: components.productMass,
             unknownReactantMolarMass: chosenReaction.unknownReactant.molarMass,
-            unknownReactantMoles: ConstantEquation(value: components.unknownReactantMoles),
-            unknownReactantMass: ConstantEquation(value: components.unknownReactantMass)
+            unknownReactantMoles: components.reactingMolesOfUnknownReactant,
+            unknownReactantMass: components.reactingMassOfUnknownReactant
         )
     }
 }

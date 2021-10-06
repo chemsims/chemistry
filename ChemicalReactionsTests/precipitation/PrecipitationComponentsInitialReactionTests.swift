@@ -15,7 +15,7 @@ class PrecipitationComponentsInitialReactionTests: XCTestCase {
         let model = PrecipitationComponents.InitialReaction(
             unknownReactantCoeff: 1,
             previous: prevModel,
-            finalReactionProgress: 1,
+            endOfReaction: 1,
             grid: .init(rows: 10, cols: 10)
         )
 
@@ -40,7 +40,7 @@ class PrecipitationComponentsInitialReactionTests: XCTestCase {
         let model = PrecipitationComponents.InitialReaction(
             unknownReactantCoeff: 1,
             previous: prevModel,
-            finalReactionProgress: 1,
+            endOfReaction: 1,
             grid: .init(rows: 11, cols: 10)
         )
 
@@ -74,6 +74,10 @@ private struct TestPreviousPhaseComponents: PhaseComponents {
 
     private let knownReactantCoords: [GridCoordinate]
     private let unknownReactantCoords: [GridCoordinate]
+
+    let startOfReaction: CGFloat = 0
+    let endOfReaction: CGFloat = 0
+    let previouslyReactingUnknownReactantMoles: CGFloat = 0
 
     func coords(for molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates {
         FractionedCoordinates(
