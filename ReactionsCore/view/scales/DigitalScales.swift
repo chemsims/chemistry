@@ -80,8 +80,8 @@ public struct DigitalScalesLayout {
         self.height = Self.idealHeightToWidth * width
     }
 
-    let width: CGFloat
-    let height: CGFloat
+    public let width: CGFloat
+    public let height: CGFloat
 
     var containerSize: CGSize {
         CGSize(width: 0.8 * width, height: 0.7 * height)

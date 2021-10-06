@@ -23,6 +23,8 @@ struct PrecipitationBeaker: View {
 
     var body: some View {
         ZStack(alignment: .top) {
+            scales
+
             VStack(spacing: 0) {
                 Spacer(minLength: 0)
                 beaker
@@ -41,7 +43,7 @@ struct PrecipitationBeaker: View {
                     }
                 )
         }
-        .frame(height: layout.common.beakerAreaHeight)
+        .frame(width: layout.common.totalBeakerAreaWidth, height: layout.common.beakerAreaHeight)
     }
 
     private var containers: some View {
@@ -73,6 +75,14 @@ struct PrecipitationBeaker: View {
             }
         )
         .frame(width: layout.common.totalBeakerAreaWidth)
+    }
+
+    private var scales: some View {
+        DigitalScales(
+            label: nil,
+            layout: layout.scalesLayout
+        )
+        .position(layout.scalesPosition)
     }
 
     private var beaker: some View {

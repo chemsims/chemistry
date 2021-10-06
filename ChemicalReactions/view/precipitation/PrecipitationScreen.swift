@@ -221,6 +221,31 @@ struct PrecipitationScreenLayout {
             height: 0.85 * availableHeight
         )
     }
+
+    var scalesLayout: DigitalScalesLayout {
+        .init(width: scalesWidth)
+    }
+
+    var scalesPosition: CGPoint {
+        let x = common.totalBeakerAreaWidth - (scalesWidth / 2)
+        let scalesHeight = scalesLayout.height
+
+        let totalHeight = common.beakerAreaHeight
+        let beakerHeight = common.beakerSettings.beakerHeight
+        let toggleHeight = beakerToggleTextHeight
+
+        let topOfBeaker = totalHeight - beakerHeight - toggleHeight
+
+        let minY = scalesHeight / 2
+        let maxY = topOfBeaker - (scalesHeight / 2)
+
+        let y = (minY + maxY) / 2
+        return CGPoint(x: x, y: y)
+    }
+
+    private var scalesWidth: CGFloat {
+        0.5 * common.beakerSettings.beakerWidth
+    }
 }
 
 struct PrecipitationScreen_Previews: PreviewProvider {
