@@ -27,4 +27,6 @@ protocol PhaseComponents {
     func runOneReactionProgressReaction()
 
     func runAllReactionProgressReactions(duration: TimeInterval)
+
+    var previous: PhaseComponents? { get }
 }

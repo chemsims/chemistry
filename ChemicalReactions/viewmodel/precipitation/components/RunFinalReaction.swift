@@ -19,7 +19,7 @@ extension PrecipitationComponents {
             self.unknownReactantCoeff = unknownReactantCoeff
             self.startOfReaction = startOfReaction
             self.endOfReaction = endOfReaction
-            self.previous = previous
+            self.underlyingPrevious = previous
             self.previouslyReactingUnknownReactantMoles = previouslyReactingUnknownReactantMoles
             self.grid = grid
 
@@ -42,9 +42,13 @@ extension PrecipitationComponents {
         let unknownReactantCoeff: Int
         let startOfReaction: CGFloat
         let endOfReaction: CGFloat
-        let previous: PhaseComponents
+        let underlyingPrevious: PhaseComponents
         let previouslyReactingUnknownReactantMoles: CGFloat
         let grid: BeakerGrid
+
+        var previous: PhaseComponents? {
+            underlyingPrevious
+        }
 
         let reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
 
@@ -71,7 +75,7 @@ extension PrecipitationComponents {
         private let initialProductCoordFraction: CGFloat
 
         private func decreasingMoleculesToZero(molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates {
-            let prevCoords = previous.coords(for: molecule).coords(at: startOfReaction)
+            let prevCoords = underlyingPrevious.coords(for: molecule).coords(at: startOfReaction)
             return FractionedCoordinates(
                 coordinates: prevCoords,
                 fractionToDraw: LinearEquation(

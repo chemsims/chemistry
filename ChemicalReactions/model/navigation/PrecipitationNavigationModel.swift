@@ -70,7 +70,7 @@ private class SetStatement: PrecipitationScreenState {
         }
     }
 
-    private let getStatement: (PrecipitationScreenViewModel) -> [TextLine]
+    let getStatement: (PrecipitationScreenViewModel) -> [TextLine]
 
     override func apply(on model: PrecipitationScreenViewModel) {
         model.statement = getStatement(model)
@@ -100,17 +100,28 @@ private class InstructToAddKnownReactant: SetStatement {
         super.apply(on: model)
         model.input = .addReactant(type: .known)
         model.equationState = .showKnownReactantMolarity
+        model.components.phase = .addKnownReactant
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.input = nil
         model.equationState = .blank
         model.shakeModel.stopAll()
+        model.components.resetPhase()
     }
 }
 
 private class InstructToAddUnknownReactant: PrecipitationScreenState {
     override func apply(on model: PrecipitationScreenViewModel) {
+        model.components.phase = .addUnknownReactant
+        doApply(on: model)
+    }
+
+    override func reapply(on model: PrecipitationScreenViewModel) {
+        doApply(on: model)
+    }
+
+    private func doApply(on model: PrecipitationScreenViewModel) {
         let statements = PrecipitationReactionStatements(reaction: model.chosenReaction)
         let molesAdded = model.equationData.knownReactantMoles
         model.statement = statements.instructToAddUnknownReactant(molesAdded: molesAdded)
@@ -122,7 +133,7 @@ private class InstructToAddUnknownReactant: PrecipitationScreenState {
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.input = nil
         model.shakeModel.stopAll()
-        model.components.phase = .addKnownReactant
+        model.components.goBackToPreviousPhase()
     }
 }
 
@@ -141,9 +152,17 @@ private class RunReaction: PrecipitationScreenState {
     private var reactionsToRun: Int = 0
 
     override func apply(on model: PrecipitationScreenViewModel) {
+        model.components.phase = phase
+        doApply(on: model)
+    }
+
+    override func reapply(on model: PrecipitationScreenViewModel) {
+        doApply(on: model)
+    }
+
+    private func doApply(on model: PrecipitationScreenViewModel) {
         model.shakeModel.stopAll()
         model.input = nil
-        model.components.phase = phase
         model.statement = statement(model)
 
         reactionsToRun = model.components.currentComponents.reactionsToRun
@@ -155,6 +174,10 @@ private class RunReaction: PrecipitationScreenState {
         if reactionsToRun > 0 {
             model.components.currentComponents.runOneReactionProgressReaction()
         }
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.components.goBackToPreviousPhase()
     }
 
     override func nextStateAutoDispatchDelay(model: PrecipitationScreenViewModel) -> Double? {
@@ -245,14 +268,23 @@ private class RevealUnknownMetal: PrecipitationScreenState {
 
 private class AddExtraKnownReactant: SetStatement {
     override func apply(on model: PrecipitationScreenViewModel) {
-        super.apply(on: model)
-        model.input = .addReactant(type: .unknown)
         model.components.phase = .addExtraUnknownReactant
+        doApply(on: model)
+    }
+
+    override func reapply(on model: PrecipitationScreenViewModel) {
+        doApply(on: model)
+    }
+
+    private func doApply(on model: PrecipitationScreenViewModel) {
+        model.statement = getStatement(model)
+        model.input = .addReactant(type: .unknown)
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.input = nil
         model.shakeModel.stopAll()
+        model.components.goBackToPreviousPhase()
     }
 }
 

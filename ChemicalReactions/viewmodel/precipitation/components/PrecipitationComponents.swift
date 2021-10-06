@@ -52,6 +52,19 @@ class PrecipitationComponents: ObservableObject {
         currentComponents.reactionProgressModel
     }
 
+    func resetPhase() {
+        if let prev = currentComponents.previous {
+            currentComponents = prev
+        }
+        currentComponents = getComponentsForCurrentPhase()
+    }
+
+    func goBackToPreviousPhase() {
+        if let prev = currentComponents.previous {
+            currentComponents = prev
+        }
+    }
+
     func runReaction() {
         reactionProgress = currentComponents.endOfReaction
         precipitate = precipitate.grow(by: settings.precipitateGrowthMagnitude)

@@ -16,7 +16,7 @@ extension PrecipitationComponents {
             grid: BeakerGrid
         ) {
             self.unknownReactantCoeff = unknownReactantCoeff
-            self.previous = previous
+            self.underlyingPrevious = previous
             self.endOfReaction = endOfReaction
             self.grid = grid
 
@@ -50,8 +50,12 @@ extension PrecipitationComponents {
         let startOfReaction: CGFloat = 0
         let endOfReaction: CGFloat
 
+        var previous: PhaseComponents? {
+            underlyingPrevious
+        }
+
         let unknownReactantCoeff: Int
-        let previous: PhaseComponents
+        let underlyingPrevious: PhaseComponents
         let grid: BeakerGrid
 
         let previouslyReactingUnknownReactantMoles: CGFloat = 0
@@ -84,7 +88,7 @@ extension PrecipitationComponents {
 
         private var unknownReactantCoords: FractionedCoordinates {
             FractionedCoordinates(
-                coordinates: previous.coords(for: .unknownReactant).coordinates,
+                coordinates: underlyingPrevious.coords(for: .unknownReactant).coordinates,
                 fractionToDraw: LinearEquation(
                     x1: 0,
                     y1: 1,

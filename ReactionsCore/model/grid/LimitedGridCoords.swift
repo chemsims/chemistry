@@ -24,9 +24,9 @@ public struct LimitedGridCoords {
 
     public private(set) var coords: [GridCoordinate]
     public let grid: BeakerGrid
-    private let otherCoords: [GridCoordinate]
-    private let minToAdd: Int
-    private let maxToAdd: Int
+    public let otherCoords: [GridCoordinate]
+    public let minToAdd: Int
+    public let maxToAdd: Int
 
     public mutating func add(count: Int) {
         let availableToAdd = maxToAdd - coords.count

@@ -39,7 +39,7 @@ extension PrecipitationComponents {
 
         private var underlying: LimitedGridCoords
         private let reactant: Reactant
-        private var previous: PhaseComponents?
+        let previous: PhaseComponents?
 
         mutating func add(reactant: PrecipitationComponents.Reactant, count: Int) {
             guard reactant == self.reactant && underlying.canAdd else {
