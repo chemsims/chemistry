@@ -66,6 +66,17 @@ private struct SizedTable: View {
                 cellView(content: row.cells[cellIndex])
             }
         }
+        .background(rowBackground(row: row))
+    }
+
+    @ViewBuilder
+    private func rowBackground(row: Table.Row) -> some View {
+        if row.emphasised {
+            Rectangle()
+                .stroke()
+                .padding(0.1 * cellHeight)
+                .foregroundColor(.orangeAccent)
+        }
     }
 
     private func cellView(content: TextLine) -> some View {

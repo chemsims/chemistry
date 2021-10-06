@@ -51,6 +51,7 @@ private struct PrecipitationScreenWithLayout: View {
                 Spacer(minLength: 0)
 
                 PrecipitationMiddleStack(
+                    model: model,
                     components: model.components,
                     layout: layout
                 )
@@ -114,6 +115,7 @@ private struct PrecipitationTopStack: View {
 
 private struct PrecipitationMiddleStack: View {
 
+    @ObservedObject var model: PrecipitationScreenViewModel
     @ObservedObject var components: PrecipitationComponents
     let layout: PrecipitationScreenLayout
 
@@ -128,14 +130,19 @@ private struct PrecipitationMiddleStack: View {
 
     private var table: some View {
         Table(
-            rows: [
-                .init(cells: ["Compound", "Molar Mass (g/mol)"]),
-                .init(cells: ["Na_2_CO_3_", "106"]),
-                .init(cells: ["Li_2_CO_3_", "74"]),
-                .init(cells: ["K_2_CO_3_", "138"])
-            ]
+            rows: [.init(cells: ["Compound", "Molar Mass (g/mol)"])] + tableRows
         )
         .frame(size: layout.tableSize)
+    }
+
+    private var tableRows: [Table.Row] {
+        PrecipitationReaction.Metal.allCases.map { metal in
+            let compound = model.chosenReaction.unknownReactant.replacingMetal(with: metal)
+            return .init(
+                cells: [compound.name(showMetal: true), "\(compound.molarMass)"],
+                emphasised: model.showUnknownMetal && metal == model.chosenReaction.unknownReactant.metal
+            )
+        }
     }
 
     private var chart: some View {

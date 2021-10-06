@@ -36,16 +36,31 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var statement = [TextLine]()
     @Published var input: Input? = .selectReaction
     @Published var equationState = EquationState.blank
-    @Published var rows: CGFloat
-    @Published var chosenReaction: PrecipitationReaction
+    @Published var rows: CGFloat {
+        didSet {
+            setComponents()
+        }
+    }
+    @Published var chosenReaction: PrecipitationReaction {
+        didSet {
+            setComponents()
+        }
+    }
     @Published var showUnknownMetal = false
     @Published var beakerView = BeakerView.microscopic
     @Published var precipitatePosition = PrecipitatePosition.beaker
 
     private(set) var navigation: NavigationModel<PrecipitationScreenState>!
-
-    let components: PrecipitationComponents
+    private(set) var components: PrecipitationComponents
     private(set) var shakeModel: MultiContainerShakeViewModel<PrecipitationComponents.Reactant>!
+
+    private func setComponents() {
+        self.components = PrecipitationComponents(
+            reaction: chosenReaction,
+            rows: GridCoordinateList.availableRows(for: rows),
+            volume: ChemicalReactionsSettings.rowsToVolume.getY(at: rows)
+        )
+    }
 }
 
 // MARK: - Navigation

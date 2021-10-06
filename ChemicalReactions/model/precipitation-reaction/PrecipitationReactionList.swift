@@ -42,24 +42,24 @@ extension PrecipitationReaction {
 
     private static func secondReaction(metal: Metal) -> PrecipitationReaction {
         .init(
-            knownReactant: .init(name: "2KI", state: .aqueous),
+            knownReactant: .init(name: "Pb(NO_3_)_2_", state: .aqueous),
             unknownReactant: .init(
-                latterPart: "(NO_3_)_2_",
+                latterPart: "I",
                 state: .aqueous,
-                latterPartMolarMass: 124,
+                latterPartMolarMass: 127,
                 metal: metal,
                 metalAtomCount: 1,
-                coeff: 1
+                coeff: 2
             ),
             product: .init(
-                name: "CaCO_4_",
+                name: "PbI_2_",
                 state: .solid,
-                molarMass: 120
+                molarMass: 334
             ),
             secondaryProduct: .init(
-                latterPart: "ABC",
-                coeff: 1,
-                metal: .Na,
+                latterPart: "NO_3_",
+                coeff: 2,
+                metal: metal,
                 metalAtomCount: 1,
                 state: .aqueous
             )

@@ -94,6 +94,7 @@ private struct SizedPrecipitationEquationView: View {
             }
         }
         .font(.system(size: EquationSizing.fontSize))
+        .minimumScaleFactor(0.5)
     }
 }
 
@@ -118,7 +119,7 @@ private struct KnownReactantMolesToVolume: View {
                 .frame(width: EquationSizing.boxWidth)
             FixedText("x")
             TermView(base: "M", subTerm: data.knownReactant)
-                .frame(minWidth: EquationSizing.boxWidth)
+                .frame(width: EquationSizing.boxWidth)
         }
     }
 
