@@ -97,8 +97,16 @@ extension ChemicalReactionsScreenLayout {
         beakerWidth * BeakerSettings.heightToWidth
     }
 
-    private var innerBeakerWidth: CGFloat {
-        BeakerSettings(width: beakerWidth, hasLip: true).innerBeakerWidth
+    var innerBeakerWidth: CGFloat {
+        beakerGeometry.innerBeakerWidth
+    }
+
+    var beakerLipWidthLeft: CGFloat {
+        beakerGeometry.lipRadius + beakerGeometry.lipWidthLeft
+    }
+
+    var beakerGeometry: BeakerSettings {
+        BeakerSettings(width: beakerWidth, hasLip: true)
     }
 
     private var beakerSliderHeight: CGFloat {
@@ -109,12 +117,16 @@ extension ChemicalReactionsScreenLayout {
         beakerSettings.sliderAxis
     }
 
-    private var beakerSliderSettings: SliderGeometrySettings {
+    var beakerSliderSettings: SliderGeometrySettings {
         .init(handleWidth: 0.13 * beakerWidth)
     }
 
-    private var beakerCenterX: CGFloat {
-        beakerSliderSettings.handleWidth + (beakerWidth / 2)
+    var beakerCenterX: CGFloat {
+        beakerHandleWidth + (beakerWidth / 2)
+    }
+
+    var beakerHandleWidth: CGFloat {
+        beakerSliderSettings.handleWidth
     }
 }
 

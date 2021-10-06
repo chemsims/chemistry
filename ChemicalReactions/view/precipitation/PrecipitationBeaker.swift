@@ -19,7 +19,11 @@ struct PrecipitationBeaker: View {
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<PrecipitationComponents.Reactant>
     let layout: PrecipitationScreenLayout
 
-    @State private var showMicroscopicView: Bool = true
+    @State private var showMicroscopicView = false
+
+    @GestureState private var precipitateOffset: CGSize = .zero
+
+    @State private var precipitateIsOnScales = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -79,20 +83,27 @@ struct PrecipitationBeaker: View {
 
     private var scales: some View {
         DigitalScales(
-            label: nil,
-            layout: layout.scalesLayout
+            label: precipitateIsOnScales ? "XX g" : nil,
+            layout: layout.scalesLayout,
+            emphasise: !precipitateIsOnScales && precipitateIsOverlappingScales(offset: precipitateOffset)
         )
         .position(layout.scalesPosition)
     }
 
     private var beaker: some View {
         VStack(alignment: .trailing, spacing: 0) {
+            beakers
+            selectionToggle
+        }
+    }
+
+    private var beakers: some View {
+        ZStack(alignment: .bottom) {
+            macroBeaker
+            precipitate
             if showMicroscopicView {
                 microscopicBeaker
-            } else {
-                macroBeaker
             }
-            selectionToggle
         }
     }
 
@@ -118,11 +129,76 @@ struct PrecipitationBeaker: View {
             highlightBeaker: true,
             settings: layout.fillableBeakerSettings
         ) {
-            Polygon(points: components.precipitate.points)
-                .frame(height: waterHeight)
+            EmptyView()
         }
         .padding(.leading, layout.common.beakerSettings.sliderSettings.handleWidth)
         .frame(width: layout.common.totalBeakerAreaWidth)
+    }
+
+    private var precipitate: some View {
+        Polygon(points: components.precipitate.points)
+            .frame(
+                width: layout.common.innerBeakerWidth,
+                height: layout.common.waterHeight(rows: model.rows)
+            )
+            .position(precipitateIsOnScales ? layout.scalesPosition : layout.precipitatePositionInBeaker(rows: model.rows))
+            .offset(precipitateOffset)
+            .gesture(
+                DragGesture().updating($precipitateOffset) { (gesture, offsetState, _) in
+                offsetState = gesture.translation
+            }.onEnded { gesture in
+                let isOverlapping = precipitateIsOverlappingScales(offset: gesture.translation)
+                precipitateIsOnScales = isOverlapping
+            })
+            .animation(.easeOut(duration: 0.25), value: precipitateOffset)
+            .animation(.easeOut(duration: 0.25), value: precipitateIsOnScales)
+    }
+
+    // A rect surrounding the precipitate, without accounting for drag offset.
+    // we have the rect using relative points between 0 and 1, in the reference of the containing shape.
+    // i.e., when precipitate is in water, then 0,0 is the top left of the water, and 1,1 is the
+    // bottom right.
+    // We need to convert the relative points into absolute coordinates, and then change
+    // the frame of reference so we are measuring the origin from the parent view, rather than
+    // the containing shape.
+    private var precipitateRect: CGRect {
+        let baseRect = components.precipitate.boundingRect
+
+        let shapeWidth = layout.common.innerBeakerWidth
+        let shapeHeight = layout.common.waterHeight(rows: model.rows)
+
+        let scaledSize = CGSize(
+            width: shapeWidth * baseRect.size.width,
+            height: shapeHeight * baseRect.size.height
+        )
+
+        // Distance of precipitate rect origin from the shape origin (top left of the shape, not the center)
+        let scaledOriginInShape = CGPoint(
+            x: shapeWidth * baseRect.origin.x,
+            y: shapeHeight * baseRect.origin.y
+        )
+
+        let shapeCenterFromParentView = precipitatePosition
+        let shapeOriginFromCenter = CGPoint(x: -shapeWidth / 2, y: -shapeHeight / 2)
+
+        // If you draw out these origins out as lines, it is clearer that we need to sum each 3
+        // components. Imagine we are at the parent origin, we first move to the shape
+        // center. We then move to the shape origin, and finally to the precipitate rect origin.
+        let newOrigin = CGPoint(
+            x: shapeCenterFromParentView.x + shapeOriginFromCenter.x + scaledOriginInShape.x,
+            y: shapeCenterFromParentView.y + shapeOriginFromCenter.y + scaledOriginInShape.y
+        )
+
+        return CGRect(origin: newOrigin, size: scaledSize)
+    }
+
+    private var precipitatePosition: CGPoint {
+        precipitateIsOnScales ? layout.scalesPosition : layout.precipitatePositionInBeaker(rows: model.rows)
+    }
+
+    private func precipitateIsOverlappingScales(offset: CGSize) -> Bool {
+        let offsetRect = precipitateRect.offsetBy(dx: offset.width, dy: offset.height)
+        return offsetRect.intersects(layout.scalesRect)
     }
 
     private var selectionToggle: some View {

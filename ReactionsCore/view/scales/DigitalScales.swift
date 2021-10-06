@@ -6,13 +6,19 @@ import SwiftUI
 
 public struct DigitalScales: View {
 
-    public init(label: String?, layout: DigitalScalesLayout) {
+    public init(
+        label: String?,
+        layout: DigitalScalesLayout,
+        emphasise: Bool
+    ) {
         self.label = label
         self.layout = layout
+        self.emphasise = emphasise
     }
 
     let label: String?
     let layout: DigitalScalesLayout
+    let emphasise: Bool
 
     public var body: some View {
         VStack(spacing: 0) {
@@ -28,8 +34,8 @@ public struct DigitalScales: View {
     private var container: some View {
         ZStack(alignment: .bottom) {
             Rectangle()
-                .stroke()
-                .foregroundColor(lightColor)
+                .stroke(lineWidth: emphasise ? 2 : 1)
+                .foregroundColor(emphasise ? .orangeAccent : lightColor)
 
             VStack(spacing: 0) {
                 Rectangle()
@@ -128,7 +134,8 @@ struct DigitalScales_Previews: PreviewProvider {
     static var previews: some View {
         DigitalScales(
             label: "1.0 g",
-            layout: .init(width: 300)
+            layout: .init(width: 300),
+            emphasise: true
         )
     }
 }

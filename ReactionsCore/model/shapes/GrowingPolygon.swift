@@ -18,6 +18,28 @@ public struct GrowingPolygon {
         directedPoints.map(\.point)
     }
 
+    /// The fractional `CGRect` which encloses all points. This is in terms of the fractional points - i.e.,
+    /// the bounds of the rect lie between 0 and 1
+    public var boundingRect: CGRect {
+        guard !directedPoints.isEmpty else {
+            return .zero
+        }
+        var minX: CGFloat = directedPoints[0].point.x
+        var maxX: CGFloat = directedPoints[0].point.x
+        var minY: CGFloat = directedPoints[0].point.y
+        var maxY: CGFloat = directedPoints[0].point.y
+        for point in points {
+            minX = min(minX, point.x)
+            maxX = max(maxX, point.x)
+            minY = min(minY, point.y)
+            maxY = max(maxY, point.y)
+        }
+        return CGRect(
+            origin: CGPoint(x: minX, y: minY),
+            size: CGSize(width: maxX - minX, height: maxY - minY)
+        )
+    }
+
     public func grow(by magnitude: Range<CGFloat>) -> GrowingPolygon {
         doGrow(magnitude: { CGFloat.random(in: magnitude) })
     }
@@ -61,7 +83,7 @@ extension GrowingPolygon {
     public init(
         center: CGPoint
     ) {
-        let numPoints = 5
+        let numPoints = 7
         let deltaAngle = 360 / Double(numPoints)
         let initialAngle = Double.random(in: 0..<(deltaAngle / 2))
 
