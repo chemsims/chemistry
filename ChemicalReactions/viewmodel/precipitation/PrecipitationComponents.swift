@@ -13,6 +13,7 @@ class PrecipitationComponents: ObservableObject {
         cols: Int = MoleculeGridSettings.cols,
         volume: CGFloat
     ) {
+        self.precipitate = GrowingPolygon(center: .init(x: 0.5, y: 0.5))
         let grid = BeakerGrid(rows: rows, cols: cols)
         let settings = Settings()
 
@@ -44,6 +45,7 @@ class PrecipitationComponents: ObservableObject {
 
     @Published private var currentComponents: PhaseComponents
     @Published var reactionProgress: CGFloat = 0
+    @Published var precipitate: GrowingPolygon
 
     var reactionProgressModel: ReactionProgressChartViewModel<Molecule> {
         .init(
@@ -62,6 +64,7 @@ class PrecipitationComponents: ObservableObject {
 
     func runInitialReaction() {
         reactionProgress = Self.reactionProgressAtEndOfInitialReaction
+        precipitate = precipitate.grow(by: settings.precipitateGrowthMagnitude)
     }
 
     func coords(for molecule: Molecule) -> FractionedCoordinates {
@@ -150,6 +153,8 @@ extension PrecipitationComponents {
         }
         let minConcentrationOfKnownReactantPostFirstReaction: CGFloat
         let minConcentrationOfUnknownReactantToReact: CGFloat
+
+        let precipitateGrowthMagnitude: Range<CGFloat> = 0.15..<0.25
     }
 }
 

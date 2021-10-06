@@ -108,7 +108,7 @@ struct PrecipitationBeaker: View {
             highlightBeaker: true,
             settings: layout.fillableBeakerSettings
         ) {
-            Rectangle()
+            Polygon(points: components.precipitate.points)
                 .frame(height: waterHeight)
         }
         .padding(.leading, layout.common.beakerSettings.sliderSettings.handleWidth)

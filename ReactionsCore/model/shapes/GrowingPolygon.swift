@@ -55,24 +55,32 @@ public struct GrowingPolygon {
 }
 
 extension GrowingPolygon {
+
+    /// Creates a new polygon at the given `center`, using a default number of points, and a random growth
+    /// trajectory for the points
     public init(
         center: CGPoint
     ) {
+        let numPoints = 5
+        let deltaAngle = 360 / Double(numPoints)
+        let initialAngle = Double.random(in: 0..<(deltaAngle / 2))
+
+        // we must ensure two angles don't overlap. If two adjacent points change their
+        // starting angle by deltaAngle / 2, then they would be form the same line. So
+        // we use deltaAngle / 3 to leave a little space between adjacent points
+        let degreeRange = deltaAngle / 3
+
         func point(baseDegrees: Double) -> DirectedPoint {
-            let degreeRange: Double = 10
             let minDegrees = baseDegrees - degreeRange
             let maxDegrees = baseDegrees + degreeRange
             let randomDegrees = Double.random(in: minDegrees...maxDegrees)
             return DirectedPoint(point: center, angle: .degrees(randomDegrees))
         }
 
-        self.directedPoints = [
-            point(baseDegrees: 45), // bottom right
-            point(baseDegrees: 135), // bottom left
-            point(baseDegrees: 225), // top right
-            point(baseDegrees: 270), // top middle
-            point(baseDegrees: 315) // top right
-        ]
+        self.directedPoints = (0..<numPoints).map { i in
+            let degrees = initialAngle + (Double(i) * deltaAngle)
+            return point(baseDegrees: degrees)
+        }
     }
 }
 
