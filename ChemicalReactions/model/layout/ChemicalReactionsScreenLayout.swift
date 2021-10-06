@@ -77,6 +77,10 @@ extension ChemicalReactionsScreenLayout {
         return beakerAreaHeight - beakerSliderHeight + topFromSlider
     }
 
+    func waterHeight(rows: CGFloat) -> CGFloat {
+        beakerSettings.waterHeight(rows: rows)
+    }
+
     var totalBeakerAreaWidth: CGFloat {
         beakerSliderSettings.handleWidth + beakerWidth
     }
@@ -102,12 +106,7 @@ extension ChemicalReactionsScreenLayout {
     }
 
     private var beakerSliderAxis: AxisPositionCalculations<CGFloat> {
-        BeakerLiquidSliderAxis.axis(
-            minRows: ChemicalReactionsSettings.minRows,
-            maxRows: ChemicalReactionsSettings.maxRows,
-            beakerWidth: beakerWidth,
-            sliderHeight: beakerSliderHeight
-        )
+        beakerSettings.sliderAxis
     }
 
     private var beakerSliderSettings: SliderGeometrySettings {

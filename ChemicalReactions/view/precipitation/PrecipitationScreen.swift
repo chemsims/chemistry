@@ -189,6 +189,10 @@ struct PrecipitationScreenLayout {
         0.5 * beakerToggleTextHeight
     }
 
+    var fillableBeakerSettings: FillableBeakerSettings {
+        .init(beakerWidth: common.beakerSettings.beakerWidth)
+    }
+
     func containerAreaMask(rows: CGFloat) -> CGSize {
         CGSize(
             width: common.containerMaskWidth,

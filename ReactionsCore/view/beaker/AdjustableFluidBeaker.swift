@@ -124,6 +124,12 @@ public struct AdjustableFluidBeakerSettings {
             sliderHeight: sliderHeight
         )
     }
+
+    /// Height of the water, measured from the bottom of the beaker
+    public func waterHeight(rows: CGFloat) -> CGFloat {
+        let topFromAxis = sliderAxis.getPosition(at: rows)
+        return sliderHeight - topFromAxis
+    }
 }
 
 public struct BeakerLiquidSliderAxis {

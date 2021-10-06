@@ -19,6 +19,8 @@ struct PrecipitationBeaker: View {
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<PrecipitationComponents.Reactant>
     let layout: PrecipitationScreenLayout
 
+    @State private var showMicroscopicView: Bool = true
+
     var body: some View {
         ZStack(alignment: .top) {
             VStack(spacing: 0) {
@@ -75,19 +77,42 @@ struct PrecipitationBeaker: View {
 
     private var beaker: some View {
         VStack(alignment: .trailing, spacing: 0) {
-            AdjustableFluidBeaker(
-                rows: $model.rows,
-                molecules: [],
-                animatingMolecules: animatingMolecules,
-                currentTime: components.reactionProgress,
-                settings: layout.common.beakerSettings,
-                canSetLevel: model.input == .setWaterLevel,
-                beakerColorMultiply: .white,
-                sliderColorMultiply: .white,
-                beakerModifier: IdentityViewModifier()
-            )
+            if showMicroscopicView {
+                microscopicBeaker
+            } else {
+                macroBeaker
+            }
             selectionToggle
         }
+    }
+
+    private var microscopicBeaker: some View {
+        AdjustableFluidBeaker(
+            rows: $model.rows,
+            molecules: [],
+            animatingMolecules: animatingMolecules,
+            currentTime: components.reactionProgress,
+            settings: layout.common.beakerSettings,
+            canSetLevel: model.input == .setWaterLevel,
+            beakerColorMultiply: .white,
+            sliderColorMultiply: .white,
+            beakerModifier: IdentityViewModifier()
+        )
+    }
+
+    private var macroBeaker: some View {
+        let waterHeight = layout.common.waterHeight(rows: model.rows)
+        return FillableBeaker(
+            waterColor: Styling.beakerLiquid,
+            waterHeight: waterHeight,
+            highlightBeaker: true,
+            settings: layout.fillableBeakerSettings
+        ) {
+            Rectangle()
+                .frame(height: waterHeight)
+        }
+        .padding(.leading, layout.common.beakerSettings.sliderSettings.handleWidth)
+        .frame(width: layout.common.totalBeakerAreaWidth)
     }
 
     private var selectionToggle: some View {
@@ -95,14 +120,14 @@ struct PrecipitationBeaker: View {
             Spacer(minLength: 0)
             SelectionToggleText(
                 text: "Microscopic",
-                isSelected: true,
-                action: { }
+                isSelected: showMicroscopicView,
+                action: { showMicroscopicView = true }
             )
             Spacer(minLength: 0)
             SelectionToggleText(
                 text: "Macroscopic",
-                isSelected: false,
-                action: { }
+                isSelected: !showMicroscopicView,
+                action: { showMicroscopicView = false }
             )
             Spacer(minLength: 0)
         }
