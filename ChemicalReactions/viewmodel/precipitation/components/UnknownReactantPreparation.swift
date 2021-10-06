@@ -28,6 +28,7 @@ extension PrecipitationComponents {
                 reactant: .unknown,
                 minToAdd: minToAdd,
                 maxToAdd: maxToAdd,
+                reactionProgressModel: previous.reactionProgressModel.copy(),
                 previous: previous
             )
         }

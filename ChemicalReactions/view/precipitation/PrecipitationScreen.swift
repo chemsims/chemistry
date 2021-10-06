@@ -114,7 +114,7 @@ private struct PrecipitationTopStack: View {
 
 private struct PrecipitationMiddleStack: View {
 
-    let components: PrecipitationComponents
+    @ObservedObject var components: PrecipitationComponents
     let layout: PrecipitationScreenLayout
 
     var body: some View {

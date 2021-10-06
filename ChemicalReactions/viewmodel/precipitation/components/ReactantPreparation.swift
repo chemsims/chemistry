@@ -12,6 +12,7 @@ extension PrecipitationComponents {
             reactant: Reactant,
             minToAdd: Int,
             maxToAdd: Int,
+            reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>,
             previous: PhaseComponents?,
             previouslyReactingUnknownReactantMoles: CGFloat = 0
         ) {
@@ -28,8 +29,10 @@ extension PrecipitationComponents {
                 maxToAdd: maxToAdd
             )
             self.previouslyReactingUnknownReactantMoles = previouslyReactingUnknownReactantMoles
+            self.reactionProgressModel = reactionProgressModel
         }
 
+        let reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
         let startOfReaction: CGFloat = 0
         let endOfReaction: CGFloat = 0
         let previouslyReactingUnknownReactantMoles: CGFloat
@@ -43,6 +46,13 @@ extension PrecipitationComponents {
                 return
             }
             underlying.add(count: count)
+            let concentration = underlying.grid.concentration(count: underlying.coords.count)
+            let desiredRPMolecules = (concentration * 10).roundedInt()
+            let currentRPMolecules = reactionProgressModel.moleculeCounts(ofType: reactant.molecule)
+            let deficit = desiredRPMolecules - currentRPMolecules
+            if deficit > 0 {
+                reactionProgressModel.addMolecules(reactant.molecule, count: deficit, duration: 0.5)
+            }
         }
 
         func coords(for molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates {
@@ -67,6 +77,14 @@ extension PrecipitationComponents {
 
         func hasAddedEnough(of reactant: PrecipitationComponents.Reactant) -> Bool {
             reactant != self.reactant || underlying.hasAddedEnough
+        }
+
+        let reactionsToRun = 0
+
+        func runOneReactionProgressReaction() {
+        }
+
+        func runAllReactionProgressReactions(duration: TimeInterval) {
         }
     }
 }

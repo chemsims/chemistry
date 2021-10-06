@@ -23,14 +23,17 @@ struct PrecipitationNavigationModel {
         InstructToSetWaterLevel(statements.instructToSetWaterLevel),
         InstructToAddKnownReactant(\.instructToAddKnownReactant),
         InstructToAddUnknownReactant(),
-        RunReaction(),
-        EndReaction(\.instructToWeighProduct),
+        RunInitialReaction(),
+        EndInitialReaction(\.instructToWeighProduct),
         PostWeighingProduct(),
         RevealUnknownMetal(),
         AddExtraKnownReactant(\.instructToAddFurtherUnknownReactant),
-        RunFinalReaction(\.runFinalReaction)
+        RunFinalReaction(),
+        EndFinalReaction(\.finalStatement)
     ]
 }
+
+private let reactionDuration: TimeInterval = 3
 
 class PrecipitationScreenState: ScreenState, SubState {
     typealias Model = PrecipitationScreenViewModel
@@ -124,27 +127,87 @@ private class InstructToAddUnknownReactant: PrecipitationScreenState {
 }
 
 private class RunReaction: PrecipitationScreenState {
-    override func apply(on model: PrecipitationScreenViewModel) {
-        let statements = PrecipitationReactionStatements(reaction: model.chosenReaction)
-        let massEquation = model.components.reactingMassOfUnknownReactant
-        let reactionProgress = model.components.currentComponents.endOfReaction
-        let massAdded = massEquation.getY(at: reactionProgress)
+    init(
+        statement: @escaping (PrecipitationScreenViewModel) -> [TextLine],
+        phase: PrecipitationComponents.Phase
+    ) {
+        self.statement = statement
+        self.phase = phase
+    }
 
-        model.statement = statements.runInitialReaction(unknownReactantGramsAdded: massAdded)
+    let statement: (PrecipitationScreenViewModel) -> [TextLine]
+    let phase: PrecipitationComponents.Phase
+
+    private var reactionsToRun: Int = 0
+
+    override func apply(on model: PrecipitationScreenViewModel) {
+        model.statement = statement(model)
         model.shakeModel.stopAll()
         model.input = nil
-        model.components.phase = .runReaction
-        withAnimation(.linear(duration: 3)) {
-            model.components.runInitialReaction()
+        model.components.phase = phase
+
+        reactionsToRun = model.components.currentComponents.reactionsToRun
+
+        withAnimation(.linear(duration: reactionDuration)) {
+            model.components.runReaction()
+        }
+
+        if reactionsToRun > 0 {
+            model.components.currentComponents.runOneReactionProgressReaction()
+        }
+    }
+
+    override func nextStateAutoDispatchDelay(model: PrecipitationScreenViewModel) -> Double? {
+        reactionDuration
+    }
+
+    override func delayedStates(model: PrecipitationScreenViewModel) -> [DelayedState<PrecipitationScreenState>] {
+        guard reactionsToRun > 1 else {
+            return []
+        }
+
+        // note we run the first reaction in the apply method, so only
+        // need to trigger the remaining ones
+        let dt = reactionDuration / Double(reactionsToRun)
+        let indices = (1..<reactionsToRun)
+
+        return indices.map { _ in
+            DelayedState(
+                state: RunOneReactionState(),
+                delay: dt
+            )
+        }
+    }
+
+    private class RunOneReactionState: PrecipitationScreenState {
+        override func apply(on model: PrecipitationScreenViewModel) {
+            model.components.currentComponents.runOneReactionProgressReaction()
         }
     }
 }
 
-private class EndReaction: SetStatement {
+private class RunInitialReaction: RunReaction {
+
+    init() {
+        super.init(
+            statement: { model in
+                let statements = PrecipitationReactionStatements(reaction: model.chosenReaction)
+                let massEquation = model.components.reactingMassOfUnknownReactant
+                let reactionProgress = model.components.currentComponents.endOfReaction
+                let massAdded = massEquation.getY(at: reactionProgress)
+
+                return statements.runInitialReaction(unknownReactantGramsAdded: massAdded)
+            },
+            phase: .runReaction
+        )
+    }
+}
+
+private class EndInitialReaction: SetStatement {
     override func apply(on model: PrecipitationScreenViewModel) {
         super.apply(on: model)
         withAnimation(.easeOut(duration: 0.35)) {
-            model.components.completeInitialReaction()
+            model.components.completeReaction()
         }
         model.input = .weighProduct
     }
@@ -193,14 +256,24 @@ private class AddExtraKnownReactant: SetStatement {
     }
 }
 
-private class RunFinalReaction: SetStatement {
+private class RunFinalReaction: RunReaction {
+
+    init() {
+        super.init(
+            statement: { model in
+                let statements = PrecipitationReactionStatements(reaction: model.chosenReaction)
+                return statements.runFinalReaction
+            },
+            phase: .runFinalReaction
+        )
+    }
+}
+
+private class EndFinalReaction: SetStatement {
     override func apply(on model: PrecipitationScreenViewModel) {
         super.apply(on: model)
-        model.input = nil
-        model.shakeModel.stopAll()
-        model.components.phase = .runFinalReaction
-        withAnimation(.linear(duration: 3)) {
-            model.components.runFinalReaction()
+        withAnimation(.easeOut(duration: 0.35)) {
+            model.components.completeReaction()
         }
     }
 }

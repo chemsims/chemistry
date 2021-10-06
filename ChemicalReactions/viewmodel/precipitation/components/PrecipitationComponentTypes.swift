@@ -27,7 +27,7 @@ extension PrecipitationComponents {
         let minConcentrationOfKnownReactantPostFirstReaction: CGFloat
         let minConcentrationOfUnknownReactantToReact: CGFloat
 
-        let precipitateGrowthMagnitude: Range<CGFloat> = 0.15..<0.25
+        let precipitateGrowthMagnitude: Range<CGFloat> = 0.1..<0.2
     }
 }
 

@@ -44,7 +44,7 @@ extension PrecipitationComponents {
             self.knownReactantToConsume = knownReactantToConsume
             self.underlyingProductCoords = productCoords
             self.underlyingKnownCoords = Array(otherKnownCoords) + Array(knownCoordsIntersectingProduct)
-
+            self.reactionProgressModel = previous.reactionProgressModel.copy()
         }
 
         let startOfReaction: CGFloat = 0
@@ -55,6 +55,8 @@ extension PrecipitationComponents {
         let grid: BeakerGrid
 
         let previouslyReactingUnknownReactantMoles: CGFloat = 0
+
+        let reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
 
         func coords(for molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates {
             switch molecule {
@@ -107,6 +109,37 @@ extension PrecipitationComponents {
         private let knownReactantToConsume: CGFloat
         private let underlyingProductCoords: [GridCoordinate]
         private let underlyingKnownCoords: [GridCoordinate]
+
+        var reactionsToRun: Int {
+            let unknownMoleculeCount = reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
+            let multiples = unknownMoleculeCount / unknownReactantCoeff
+            if unknownMoleculeCount % unknownReactantCoeff == 0 {
+                return multiples
+            }
+            return multiples + 1
+        }
+
+        func runOneReactionProgressReaction() {
+            reactionProgressModel.startReactionFromExisting(
+                consuming: [
+                    (.knownReactant, 1),
+                    (.unknownReactant, unknownReactantCoeff)
+                ],
+                producing: [.product]
+            )
+        }
+
+        func runAllReactionProgressReactions(duration: TimeInterval) {
+            reactionProgressModel.startReactionFromExisting(
+                consuming: [
+                    (.knownReactant, 1),
+                    (.unknownReactant, unknownReactantCoeff)
+                ],
+                producing: [.product],
+                count: reactionsToRun,
+                duration: duration
+            )
+        }
 
         func canAdd(reactant: PrecipitationComponents.Reactant) -> Bool {
             false

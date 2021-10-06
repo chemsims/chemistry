@@ -9,12 +9,14 @@ extension PrecipitationComponents {
     struct RunFinalReaction: PhaseComponents {
 
         init(
+            unknownReactantCoeff: Int,
             startOfReaction: CGFloat,
             endOfReaction: CGFloat,
             previous: PhaseComponents,
             previouslyReactingUnknownReactantMoles: CGFloat,
             grid: BeakerGrid
         ) {
+            self.unknownReactantCoeff = unknownReactantCoeff
             self.startOfReaction = startOfReaction
             self.endOfReaction = endOfReaction
             self.previous = previous
@@ -34,14 +36,17 @@ extension PrecipitationComponents {
             )
             self.underlyingProductCoords = underlyingProductCoords
             self.initialProductCoordFraction = CGFloat(initialProductCoords.count) / CGFloat(desiredCount)
+            self.reactionProgressModel = previous.reactionProgressModel.copy()
         }
 
-
+        let unknownReactantCoeff: Int
         let startOfReaction: CGFloat
         let endOfReaction: CGFloat
         let previous: PhaseComponents
         let previouslyReactingUnknownReactantMoles: CGFloat
         let grid: BeakerGrid
+
+        let reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
 
         func coords(for molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates {
             switch molecule {
@@ -65,7 +70,6 @@ extension PrecipitationComponents {
         private let underlyingProductCoords: [GridCoordinate]
         private let initialProductCoordFraction: CGFloat
 
-
         private func decreasingMoleculesToZero(molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates {
             let prevCoords = previous.coords(for: molecule).coords(at: startOfReaction)
             return FractionedCoordinates(
@@ -79,8 +83,31 @@ extension PrecipitationComponents {
             )
         }
 
+        var reactionsToRun: Int {
+            reactionProgressModel.moleculeCounts(ofType: .knownReactant)
+        }
 
+        func runOneReactionProgressReaction() {
+            reactionProgressModel.startReactionFromExisting(
+                consuming: [
+                    (.knownReactant, 1),
+                    (.unknownReactant, unknownReactantCoeff)
+                ],
+                producing: [.product]
+            )
+        }
 
+        func runAllReactionProgressReactions(duration: TimeInterval) {
+            reactionProgressModel.startReactionFromExisting(
+                consuming: [
+                    (.knownReactant, 1),
+                    (.unknownReactant, unknownReactantCoeff)
+                ],
+                producing: [.product],
+                count: reactionsToRun,
+                duration: duration
+            )
+        }
 
 
         func canAdd(reactant: PrecipitationComponents.Reactant) -> Bool {

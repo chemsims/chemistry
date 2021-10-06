@@ -19,4 +19,12 @@ protocol PhaseComponents {
     var endOfReaction: CGFloat { get }
 
     var previouslyReactingUnknownReactantMoles: CGFloat { get }
+
+    var reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule> { get }
+
+    var reactionsToRun: Int { get }
+
+    func runOneReactionProgressReaction()
+
+    func runAllReactionProgressReactions(duration: TimeInterval)
 }

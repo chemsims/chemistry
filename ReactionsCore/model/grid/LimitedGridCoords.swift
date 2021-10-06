@@ -23,7 +23,7 @@ public struct LimitedGridCoords {
     }
 
     public private(set) var coords: [GridCoordinate]
-    private let grid: BeakerGrid
+    public let grid: BeakerGrid
     private let otherCoords: [GridCoordinate]
     private let minToAdd: Int
     private let maxToAdd: Int

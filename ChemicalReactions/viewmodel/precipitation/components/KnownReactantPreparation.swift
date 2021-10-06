@@ -10,7 +10,8 @@ extension PrecipitationComponents {
         static func components(
             unknownReactantCoeff: Int,
             grid: BeakerGrid,
-            settings: PrecipitationComponents.Settings
+            settings: PrecipitationComponents.Settings,
+            reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
         ) -> ReactantPreparation {
             let minToAdd = Self.minToAdd(
                 unknownReactantCoeff: unknownReactantCoeff,
@@ -27,6 +28,7 @@ extension PrecipitationComponents {
                 reactant: .known,
                 minToAdd: minToAdd,
                 maxToAdd: maxToAdd,
+                reactionProgressModel: reactionProgressModel,
                 previous: nil
             )
         }

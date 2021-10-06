@@ -24,7 +24,8 @@ class PrecipitationComponents: ObservableObject {
         currentComponents = KnownReactantPreparation.components(
             unknownReactantCoeff: reaction.unknownReactant.coeff,
             grid: grid,
-            settings: settings
+            settings: settings,
+            reactionProgressModel: Self.initialReactionProgressModel(reaction: reaction)
         )
     }
 
@@ -48,34 +49,18 @@ class PrecipitationComponents: ObservableObject {
     @Published var precipitate: GrowingPolygon
 
     var reactionProgressModel: ReactionProgressChartViewModel<Molecule> {
-        .init(
-            molecules: .init { molecule in
-                .init(
-                    label: molecule.name(reaction: reaction),
-                    columnIndex: molecule.rawValue,
-                    initialCount: 0,
-                    color: molecule.color(reaction: reaction)
-                )
-            },
-            settings: .init(),
-            timing: .init()
-        )
+        currentComponents.reactionProgressModel
     }
 
-    func runInitialReaction() {
-        reactionProgress = Self.reactionProgressAtEndOfInitialReaction
+    func runReaction() {
+        reactionProgress = currentComponents.endOfReaction
         precipitate = precipitate.grow(by: settings.precipitateGrowthMagnitude)
     }
 
     // increments end of reaction slightly so that we can animate this change
-    func completeInitialReaction() {
-        reactionProgress = 1.0001 * Self.reactionProgressAtEndOfInitialReaction
+    func completeReaction() {
+        reactionProgress = 1.0001 * currentComponents.endOfReaction
         precipitate = precipitate.grow(exactly: 0.0001)
-    }
-
-    func runFinalReaction() {
-        reactionProgress = Self.reactionProgressAtEndOfFinalReaction
-        precipitate = precipitate.grow(by: settings.precipitateGrowthMagnitude)
     }
 
     func coords(for molecule: Molecule) -> FractionedCoordinates {
@@ -155,7 +140,8 @@ class PrecipitationComponents: ObservableObject {
             return KnownReactantPreparation.components(
                 unknownReactantCoeff: reaction.unknownReactant.coeff,
                 grid: grid,
-                settings: settings
+                settings: settings,
+                reactionProgressModel: Self.initialReactionProgressModel(reaction: reaction)
             )
         case .addUnknownReactant:
             return UnknownReactantPreparation.components(
@@ -180,6 +166,7 @@ class PrecipitationComponents: ObservableObject {
             )
         case .runFinalReaction:
             return RunFinalReaction(
+                unknownReactantCoeff: reaction.unknownReactant.coeff,
                 startOfReaction: Self.reactionProgressAtEndOfInitialReaction,
                 endOfReaction: Self.reactionProgressAtEndOfFinalReaction,
                 previous: currentComponents,
@@ -191,5 +178,22 @@ class PrecipitationComponents: ObservableObject {
 
     private var currentComponentsReactingUnknownReactantMoles: CGFloat {
         reactingMolesOfUnknownReactant.getY(at: currentComponents.endOfReaction)
+    }
+
+    static func initialReactionProgressModel(
+        reaction: PrecipitationReaction
+    ) -> ReactionProgressChartViewModel<PrecipitationComponents.Molecule> {
+        .init(
+            molecules: .init { molecule in
+                    .init(
+                        label: molecule.name(reaction: reaction),
+                        columnIndex: molecule.rawValue,
+                        initialCount: 0,
+                        color: molecule.color(reaction: reaction)
+                    )
+            },
+            settings: .init(),
+            timing: .init()
+        )
     }
 }
