@@ -43,7 +43,7 @@ class PrecipitationComponents: ObservableObject {
         }
     }
 
-    @Published private var currentComponents: PhaseComponents
+    @Published private(set) var currentComponents: PhaseComponents
     @Published var reactionProgress: CGFloat = 0
     @Published var precipitate: GrowingPolygon
 
@@ -71,6 +71,11 @@ class PrecipitationComponents: ObservableObject {
     func completeInitialReaction() {
         reactionProgress = 1.0001 * Self.reactionProgressAtEndOfInitialReaction
         precipitate = precipitate.grow(exactly: 0.0001)
+    }
+
+    func runFinalReaction() {
+        reactionProgress = Self.reactionProgressAtEndOfFinalReaction
+        precipitate = precipitate.grow(by: settings.precipitateGrowthMagnitude)
     }
 
     func coords(for molecule: Molecule) -> FractionedCoordinates {
@@ -166,6 +171,25 @@ class PrecipitationComponents: ObservableObject {
                 endOfReaction: Self.reactionProgressAtEndOfInitialReaction,
                 grid: grid
             )
+        case .addExtraUnknownReactant:
+            return AddExtraUnknownReactant.components(
+                previous: currentComponents,
+                previouslyReactingUnknownReactantMoles: currentComponentsReactingUnknownReactantMoles,
+                unknownReactantCoeff: reaction.unknownReactant.coeff,
+                grid: grid
+            )
+        case .runFinalReaction:
+            return RunFinalReaction(
+                startOfReaction: Self.reactionProgressAtEndOfInitialReaction,
+                endOfReaction: Self.reactionProgressAtEndOfFinalReaction,
+                previous: currentComponents,
+                previouslyReactingUnknownReactantMoles: currentComponentsReactingUnknownReactantMoles,
+                grid: grid
+            )
         }
+    }
+
+    private var currentComponentsReactingUnknownReactantMoles: CGFloat {
+        reactingMolesOfUnknownReactant.getY(at: currentComponents.endOfReaction)
     }
 }

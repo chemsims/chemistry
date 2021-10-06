@@ -12,7 +12,8 @@ extension PrecipitationComponents {
             reactant: Reactant,
             minToAdd: Int,
             maxToAdd: Int,
-            previous: PhaseComponents?
+            previous: PhaseComponents?,
+            previouslyReactingUnknownReactantMoles: CGFloat = 0
         ) {
             let otherMolecules = Molecule.allCases.filter { $0 != reactant.molecule}
             let otherCoords = otherMolecules.flatMap { m in
@@ -26,11 +27,12 @@ extension PrecipitationComponents {
                 minToAdd: minToAdd,
                 maxToAdd: maxToAdd
             )
+            self.previouslyReactingUnknownReactantMoles = previouslyReactingUnknownReactantMoles
         }
 
         let startOfReaction: CGFloat = 0
         let endOfReaction: CGFloat = 0
-        let previouslyReactingUnknownReactantMoles: CGFloat = 0
+        let previouslyReactingUnknownReactantMoles: CGFloat
 
         private var underlying: LimitedGridCoords
         private let reactant: Reactant

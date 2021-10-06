@@ -9,7 +9,9 @@ extension PrecipitationComponents {
     enum Phase {
         case addKnownReactant,
              addUnknownReactant,
-             runReaction
+             runReaction,
+             addExtraUnknownReactant,
+             runFinalReaction
     }
 }
 

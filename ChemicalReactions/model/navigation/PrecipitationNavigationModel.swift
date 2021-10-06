@@ -26,7 +26,9 @@ struct PrecipitationNavigationModel {
         RunReaction(),
         EndReaction(\.instructToWeighProduct),
         PostWeighingProduct(),
-        RevealUnknownMetal()
+        RevealUnknownMetal(),
+        AddExtraKnownReactant(\.instructToAddFurtherUnknownReactant),
+        RunFinalReaction(\.runFinalReaction)
     ]
 }
 
@@ -124,8 +126,8 @@ private class InstructToAddUnknownReactant: PrecipitationScreenState {
 private class RunReaction: PrecipitationScreenState {
     override func apply(on model: PrecipitationScreenViewModel) {
         let statements = PrecipitationReactionStatements(reaction: model.chosenReaction)
-        let massEquation = model.equationData.unknownReactantMass
-        let reactionProgress = PrecipitationComponents.reactionProgressAtEndOfFinalReaction
+        let massEquation = model.components.reactingMassOfUnknownReactant
+        let reactionProgress = model.components.currentComponents.endOfReaction
         let massAdded = massEquation.getY(at: reactionProgress)
 
         model.statement = statements.runInitialReaction(unknownReactantGramsAdded: massAdded)
@@ -175,5 +177,30 @@ private class RevealUnknownMetal: PrecipitationScreenState {
 
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.showUnknownMetal = false
+    }
+}
+
+private class AddExtraKnownReactant: SetStatement {
+    override func apply(on model: PrecipitationScreenViewModel) {
+        super.apply(on: model)
+        model.input = .addReactant(type: .unknown)
+        model.components.phase = .addExtraUnknownReactant
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.input = nil
+        model.shakeModel.stopAll()
+    }
+}
+
+private class RunFinalReaction: SetStatement {
+    override func apply(on model: PrecipitationScreenViewModel) {
+        super.apply(on: model)
+        model.input = nil
+        model.shakeModel.stopAll()
+        model.components.phase = .runFinalReaction
+        withAnimation(.linear(duration: 3)) {
+            model.components.runFinalReaction()
+        }
     }
 }

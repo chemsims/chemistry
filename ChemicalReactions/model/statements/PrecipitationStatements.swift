@@ -165,7 +165,7 @@ struct PrecipitationReactionStatements {
         ]
     }
 
-    var instructToToggleMacroscopicView: [TextLine] {
+    var runFinalReaction: [TextLine] {
         [
             """
             Now just watch how the reactant you added produces more \
