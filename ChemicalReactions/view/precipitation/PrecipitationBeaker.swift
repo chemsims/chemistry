@@ -20,11 +20,7 @@ struct PrecipitationBeaker: View {
     @ObservedObject var shakeModel: MultiContainerShakeViewModel<PrecipitationComponents.Reactant>
     let layout: PrecipitationScreenLayout
 
-    @State private var showMicroscopicView = false
-
     @GestureState private var precipitateOffset: CGSize = .zero
-
-    @State private var precipitateIsOnScales = false
 
     var body: some View {
         ZStack(alignment: .top) {
@@ -79,9 +75,9 @@ struct PrecipitationBeaker: View {
     private var scales: some View {
         let mass = components.productMass.getY(at: components.reactionProgress).str(decimals: 2)
         return DigitalScales(
-            label: precipitateIsOnScales ? "\(mass) g" : nil,
+            label: model.precipitatePosition == .scales ? "\(mass) g" : nil,
             layout: layout.scalesLayout,
-            emphasise: !precipitateIsOnScales && precipitateIsOverlappingScales(offset: precipitateOffset)
+            emphasise: model.precipitatePosition != .scales && precipitateIsOverlappingScales(offset: precipitateOffset)
         )
         .position(layout.scalesPosition)
     }
@@ -96,10 +92,10 @@ struct PrecipitationBeaker: View {
     private var beakers: some View {
         ZStack(alignment: .bottom) {
             precipitate
-                .zIndex(!showMicroscopicView ? 1 : 0)
+                .zIndex(model.beakerView == .macroscopic ? 1 : 0)
 
             microscopicBeaker
-            if !showMicroscopicView {
+            if model.beakerView == .macroscopic {
                 macroBeaker
             }
 
@@ -136,21 +132,29 @@ struct PrecipitationBeaker: View {
 
     private var precipitate: some View {
         Polygon(points: components.precipitate.points)
+            .foregroundColor(PrecipitationComponents.Molecule.product.color(reaction: model.chosenReaction))
             .frame(
                 width: layout.common.innerBeakerWidth,
                 height: layout.common.waterHeight(rows: model.rows)
             )
-            .position(precipitateIsOnScales ? layout.scalesPosition : layout.precipitatePositionInBeaker(rows: model.rows))
+            .position(model.precipitatePosition == .scales ? layout.scalesPosition : layout.precipitatePositionInBeaker(rows: model.rows))
             .offset(precipitateOffset)
             .gesture(
                 DragGesture().updating($precipitateOffset) { (gesture, offsetState, _) in
-                offsetState = gesture.translation
-            }.onEnded { gesture in
-                let isOverlapping = precipitateIsOverlappingScales(offset: gesture.translation)
-                precipitateIsOnScales = isOverlapping
-            })
+                    guard model.input == .weighProduct else {
+                        return
+                    }
+                    offsetState = gesture.translation
+                }.onEnded { gesture in
+                    let isOverlapping = precipitateIsOverlappingScales(offset: gesture.translation)
+                    if isOverlapping {
+                        model.precipitatePosition = .scales
+                    } else {
+                        model.precipitatePosition = .beaker
+                    }
+                })
             .animation(.easeOut(duration: 0.25), value: precipitateOffset)
-            .animation(.easeOut(duration: 0.25), value: precipitateIsOnScales)
+            .animation(.easeOut(duration: 0.25), value: model.precipitatePosition)
     }
 
     // A rect surrounding the precipitate, without accounting for drag offset.
@@ -192,7 +196,7 @@ struct PrecipitationBeaker: View {
     }
 
     private var precipitatePosition: CGPoint {
-        precipitateIsOnScales ? layout.scalesPosition : layout.precipitatePositionInBeaker(rows: model.rows)
+        model.precipitatePosition == .scales ? layout.scalesPosition : layout.precipitatePositionInBeaker(rows: model.rows)
     }
 
     private func precipitateIsOverlappingScales(offset: CGSize) -> Bool {
@@ -205,14 +209,14 @@ struct PrecipitationBeaker: View {
             Spacer(minLength: 0)
             SelectionToggleText(
                 text: "Microscopic",
-                isSelected: showMicroscopicView,
-                action: { showMicroscopicView = true }
+                isSelected: model.beakerView == .microscopic,
+                action: { model.beakerView = .microscopic }
             )
             Spacer(minLength: 0)
             SelectionToggleText(
                 text: "Macroscopic",
-                isSelected: !showMicroscopicView,
-                action: { showMicroscopicView = false }
+                isSelected: model.beakerView == .macroscopic,
+                action: { model.beakerView = .macroscopic }
             )
             Spacer(minLength: 0)
         }

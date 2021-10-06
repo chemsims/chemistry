@@ -39,6 +39,8 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var rows: CGFloat
     @Published var chosenReaction: PrecipitationReaction
     @Published var showUnknownMetal = false
+    @Published var beakerView = BeakerView.microscopic
+    @Published var precipitatePosition = PrecipitatePosition.beaker
 
     private(set) var navigation: NavigationModel<PrecipitationScreenState>!
 
@@ -102,7 +104,7 @@ extension PrecipitationScreenViewModel {
     }
 }
 
-// MARK: - Input & equation state
+// MARK: - UI states
 extension PrecipitationScreenViewModel {
     enum Input: Equatable {
         case selectReaction
@@ -123,5 +125,13 @@ extension PrecipitationScreenViewModel {
         ) -> Bool {
             lhs.rawValue < rhs.rawValue
         }
+    }
+
+    enum BeakerView {
+        case microscopic, macroscopic
+    }
+
+    enum PrecipitatePosition {
+        case beaker, scales
     }
 }

@@ -233,6 +233,11 @@ private class EndInitialReaction: SetStatement {
             model.components.completeReaction()
         }
         model.input = .weighProduct
+        model.beakerView = .macroscopic
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.input = nil
     }
 }
 
@@ -246,7 +251,6 @@ private class PostWeighingProduct: PrecipitationScreenState {
             unknownReactantGrams: components.unknownReactantMass,
             unknownReactantMoles: components.unknownReactantMoles
         )
-        model.input = nil
         model.equationState = .showAll
     }
 }
@@ -279,6 +283,7 @@ private class AddExtraKnownReactant: SetStatement {
     private func doApply(on model: PrecipitationScreenViewModel) {
         model.statement = getStatement(model)
         model.input = .addReactant(type: .unknown)
+        model.precipitatePosition = .beaker
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
