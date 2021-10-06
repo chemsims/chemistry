@@ -95,11 +95,14 @@ struct PrecipitationBeaker: View {
 
     private var beakers: some View {
         ZStack(alignment: .bottom) {
-            macroBeaker
             precipitate
-            if showMicroscopicView {
-                microscopicBeaker
+                .zIndex(!showMicroscopicView ? 1 : 0)
+
+            microscopicBeaker
+            if !showMicroscopicView {
+                macroBeaker
             }
+
         }
     }
 
