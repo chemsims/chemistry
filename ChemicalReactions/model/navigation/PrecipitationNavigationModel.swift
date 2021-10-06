@@ -141,10 +141,10 @@ private class RunReaction: PrecipitationScreenState {
     private var reactionsToRun: Int = 0
 
     override func apply(on model: PrecipitationScreenViewModel) {
-        model.statement = statement(model)
         model.shakeModel.stopAll()
         model.input = nil
         model.components.phase = phase
+        model.statement = statement(model)
 
         reactionsToRun = model.components.currentComponents.reactionsToRun
 

@@ -71,13 +71,7 @@ struct PrecipitationBeaker: View {
             topOfWaterY: layout.topOfWaterPosition(rows: model.rows),
             halfXShakeRange: layout.common.containerShakeHalfXRange,
             halfYShakeRange: layout.common.containerShakeHalfYRange,
-            activeToolTipText: { reactant in
-                if reactant == .unknown {
-                    let mass = components.unknownReactantMass.str(decimals: 2)
-                    return "\(mass)g"
-                }
-                return nil
-            }
+            activeToolTipText: { _ in nil }
         )
         .frame(width: layout.common.totalBeakerAreaWidth)
     }

@@ -99,7 +99,7 @@ class PrecipitationComponents: ObservableObject {
     }
 
     var unknownReactantMass: CGFloat {
-        moles(of: .unknownReactant) * CGFloat(reaction.unknownReactant.molarMass)
+        reactingMassOfUnknownReactant.getY(at: currentComponents.endOfReaction)
     }
 
     var unknownReactantMoles: CGFloat {

@@ -146,7 +146,7 @@ struct PrecipitationReactionStatements {
             *Well, if there are \(gramStr) in \(molesStr) moles of \
             \(unknownReactant)*, then how many are in 1 mol? There are \
             \(molarMass) grams of *\(unknownReactant)* in 1 mol. That's \
-            right, \(molarMass) g/mol is the molar mass of it, and \
+            right, \(molarMass) $g/mol$ is the molar mass of it, and \
             the molar mass of *\(unknownReactantWithMetal)* matches \
             it perfectly! So, *$M = \(metal)$.*
             """
