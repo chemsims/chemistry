@@ -82,8 +82,9 @@ struct PrecipitationBeaker: View {
     }
 
     private var scales: some View {
-        DigitalScales(
-            label: precipitateIsOnScales ? "XX g" : nil,
+        let mass = components.productMass.getY(at: components.reactionProgress).str(decimals: 2)
+        return DigitalScales(
+            label: precipitateIsOnScales ? "\(mass) g" : nil,
             layout: layout.scalesLayout,
             emphasise: !precipitateIsOnScales && precipitateIsOverlappingScales(offset: precipitateOffset)
         )

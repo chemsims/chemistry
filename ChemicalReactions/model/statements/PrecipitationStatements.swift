@@ -123,8 +123,8 @@ struct PrecipitationReactionStatements {
         return [
             """
             *\(productGramStr) of \(product)* was produced. By \
-            dividing this by its molar mass, we know that it's \
-            \(productMolesStr), which means that the \
+            dividing this by its molar mass, we know that it is \
+            \(productMolesStr) mol, which means that the \
             \(unknownReactantGramStr) of *\(unknownReactant)* we added \
             are *\(unknownReactantMolesStr) mol. But what does this mean?*
             """

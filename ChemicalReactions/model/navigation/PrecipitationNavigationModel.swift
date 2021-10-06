@@ -23,7 +23,10 @@ struct PrecipitationNavigationModel {
         InstructToSetWaterLevel(statements.instructToSetWaterLevel),
         InstructToAddKnownReactant(\.instructToAddKnownReactant),
         InstructToAddUnknownReactant(),
-        RunReaction()
+        RunReaction(),
+        EndReaction(\.instructToWeighProduct),
+        PostWeighingProduct(),
+        RevealUnknownMetal()
     ]
 }
 
@@ -132,5 +135,45 @@ private class RunReaction: PrecipitationScreenState {
         withAnimation(.linear(duration: 3)) {
             model.components.runInitialReaction()
         }
+    }
+}
+
+private class EndReaction: SetStatement {
+    override func apply(on model: PrecipitationScreenViewModel) {
+        super.apply(on: model)
+        withAnimation(.easeOut(duration: 0.35)) {
+            model.components.completeInitialReaction()
+        }
+        model.input = .weighProduct
+    }
+}
+
+private class PostWeighingProduct: PrecipitationScreenState {
+    override func apply(on model: PrecipitationScreenViewModel) {
+        let statements = PrecipitationReactionStatements(reaction: model.chosenReaction)
+        let components = model.components
+        model.statement = statements.showWeightOfProduct(
+            productGrams: components.productMass.getY(at: components.reactionProgress),
+            productMoles: components.productMoles.getY(at: components.reactionProgress),
+            unknownReactantGrams: components.unknownReactantMass,
+            unknownReactantMoles: components.unknownReactantMoles
+        )
+        model.input = nil
+        model.equationState = .showAll
+    }
+}
+
+private class RevealUnknownMetal: PrecipitationScreenState {
+    override func apply(on model: PrecipitationScreenViewModel) {
+        let statements = PrecipitationReactionStatements(reaction: model.chosenReaction)
+        model.statement = statements.revealKnownMetal(
+            unknownReactantGrams: model.components.unknownReactantMass,
+            unknownReactantMoles: model.components.unknownReactantMoles
+        )
+        model.showUnknownMetal = true
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.showUnknownMetal = false
     }
 }

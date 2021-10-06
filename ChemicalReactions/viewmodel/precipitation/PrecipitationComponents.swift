@@ -67,6 +67,12 @@ class PrecipitationComponents: ObservableObject {
         precipitate = precipitate.grow(by: settings.precipitateGrowthMagnitude)
     }
 
+    // increments end of reaction slightly so that we can animate this change
+    func completeInitialReaction() {
+        reactionProgress = 1.0001 * Self.reactionProgressAtEndOfInitialReaction
+        precipitate = precipitate.grow(exactly: 0.0001)
+    }
+
     func coords(for molecule: Molecule) -> FractionedCoordinates {
         currentComponents.coords(for: molecule)
     }
@@ -99,8 +105,27 @@ class PrecipitationComponents: ObservableObject {
         moles(of: .unknownReactant)
     }
 
+    var productMass: Equation {
+        CGFloat(reaction.product.molarMass) * productMoles
+    }
+
+    var productMoles: Equation {
+        dynamicMoles(of: .product)
+    }
+
     private func moles(of molecule: Molecule) -> CGFloat {
         volume * molarity(of: molecule)
+    }
+
+    private func dynamicMoles(of molecule: Molecule) -> Equation {
+        volume * dynamicMolarity(of: molecule)
+    }
+
+    private func dynamicMolarity(of molecule: Molecule) -> Equation {
+        let fractionedCoords = coords(for: molecule)
+        let fraction = fractionedCoords.fractionToDraw
+        let count = CGFloat(fractionedCoords.coordinates.count) * fraction
+        return count / CGFloat(grid.size)
     }
 
     private func molarity(of molecule: Molecule) -> CGFloat {

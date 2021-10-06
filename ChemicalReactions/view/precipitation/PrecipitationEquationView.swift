@@ -77,19 +77,19 @@ private struct SizedPrecipitationEquationView: View {
                 UnknownReactantMoles(
                     data: data,
                     reactionProgress: reactionProgress,
-                    showData: false
+                    showData: state >= .showAll
                 )
             }
             VStack(alignment: .leading, spacing: equationGroupVSpacing) {
                 ProductMoles(
                     data: data,
                     reactionProgress: reactionProgress,
-                    showData: false
+                    showData: state >= .showAll
                 )
                 UnknownReactantMolarMass(
                     data: data,
                     reactionProgress: reactionProgress,
-                    showData: false
+                    showData: state >= .showAll
                 )
             }
         }

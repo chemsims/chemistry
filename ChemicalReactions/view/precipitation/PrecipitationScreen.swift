@@ -84,7 +84,7 @@ private struct PrecipitationTopStack: View {
     private var reactionDefinition: some View {
         PrecipitationReactionDefinition(
             reaction: model.chosenReaction,
-            showMetal: false,
+            showMetal: model.showUnknownMetal,
             fontSize: layout.common.reactionDefinitionFontSize
         )
         .frame(height: layout.common.reactionDefinitionHeight)

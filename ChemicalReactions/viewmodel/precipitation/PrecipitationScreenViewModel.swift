@@ -38,6 +38,7 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var equationState = EquationState.blank
     @Published var rows: CGFloat
     @Published var chosenReaction: PrecipitationReaction
+    @Published var showUnknownMetal = false
 
     private(set) var navigation: NavigationModel<PrecipitationScreenState>!
 
@@ -87,13 +88,13 @@ extension PrecipitationScreenViewModel {
             beakerVolume: ChemicalReactionsSettings.rowsToVolume.getY(at: rows),
             knownReactant: chosenReaction.knownReactant.name.asString,
             product: chosenReaction.product.name.asString,
-            unknownReactant: chosenReaction.unknownReactant.name(showMetal: false).asString,
+            unknownReactant: chosenReaction.unknownReactant.name(showMetal: showUnknownMetal).asString,
             highlightUnknownReactantFirstTerm: false,
             knownReactantMolarity: components.knownReactantMolarity,
             knownReactantMoles: components.knownReactantMoles,
             productMolarMass: chosenReaction.product.molarMass,
-            productMoles: ConstantEquation(value: 0.23),
-            productMass: ConstantEquation(value: 0.23),
+            productMoles: components.productMoles,
+            productMass: components.productMass,
             unknownReactantMolarMass: chosenReaction.unknownReactant.molarMass,
             unknownReactantMoles: ConstantEquation(value: components.unknownReactantMoles),
             unknownReactantMass: ConstantEquation(value: components.unknownReactantMass)
@@ -107,12 +108,14 @@ extension PrecipitationScreenViewModel {
         case selectReaction
         case setWaterLevel
         case addReactant(type: PrecipitationComponents.Reactant)
+        case weighProduct
     }
 
     enum EquationState: Int, Comparable {
 
         case blank,
-            showKnownReactantMolarity
+            showKnownReactantMolarity,
+             showAll
 
         static func < (
             lhs: PrecipitationScreenViewModel.EquationState,

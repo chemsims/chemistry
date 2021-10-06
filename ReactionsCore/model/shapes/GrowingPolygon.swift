@@ -44,7 +44,7 @@ public struct GrowingPolygon {
         doGrow(magnitude: { CGFloat.random(in: magnitude) })
     }
 
-    func grow(exactly magnitude: CGFloat) -> GrowingPolygon {
+    public func grow(exactly magnitude: CGFloat) -> GrowingPolygon {
         doGrow(magnitude: { magnitude })
     }
 
