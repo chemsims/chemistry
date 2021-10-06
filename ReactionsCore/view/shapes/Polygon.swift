@@ -98,41 +98,22 @@ struct Polygon_Previews: PreviewProvider {
 
     private struct ViewWrapper: View {
 
-        @State var isBig = false
+        @State var polygon = GrowingPolygon(center: .init(x: 0.5, y: 0.5))
 
         var body: some View {
             VStack  {
                 Polygon(
-                    points: isBig ? p1 : p2
+                    points: polygon.points
                 )
                 Spacer()
                 Button(action: {
                     withAnimation(.linear(duration: 2)) {
-                        isBig.toggle()
+                        polygon = polygon.grow(by: 0.1..<0.2)
                     }
                 }) {
-                    Text("Toggle size")
+                    Text("Grow")
                 }
             }
         }
-
-        private var p1: [CGPoint] {
-            [
-                .init(x: 0.5, y: 0),
-                .init(x: 0.1, y: 0.5),
-                .init(x: 0.9, y: 0.5),
-                .init(x: 0.9, y: 0.5)
-            ]
-        }
-
-        private var p2: [CGPoint] {
-            [
-                .init(x: 0.2, y: 0.1),
-                .init(x: 0.3, y: 0.8),
-                .init(x: 0.9, y: 0.3),
-                .init(x: 0.7, y: 0)
-            ]
-        }
-        
     }
 }

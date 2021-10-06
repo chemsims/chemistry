@@ -675,6 +675,8 @@
 		57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBE266537F900023E7C /* TextLineUtilTests.swift */; };
 		57BBC804270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC803270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift */; };
 		57BBC806270DAA4E004B6624 /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC805270DAA4E004B6624 /* Polygon.swift */; };
+		57BBC809270DB235004B6624 /* GrowingPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC808270DB235004B6624 /* GrowingPolygon.swift */; };
+		57BBC80B270DB318004B6624 /* GrowingPolygonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC80A270DB318004B6624 /* GrowingPolygonTests.swift */; };
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BDFF4E26415540001B97CC /* ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4D26415540001B97CC /* ImageType.swift */; };
 		57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4F26415745001B97CC /* ImageTypeView.swift */; };
@@ -1445,6 +1447,8 @@
 		57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousReactionType.swift; sourceTree = "<group>"; };
 		57BBC803270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationComponentsInitialReactionTests.swift; sourceTree = "<group>"; };
 		57BBC805270DAA4E004B6624 /* Polygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polygon.swift; sourceTree = "<group>"; };
+		57BBC808270DB235004B6624 /* GrowingPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingPolygon.swift; sourceTree = "<group>"; };
+		57BBC80A270DB318004B6624 /* GrowingPolygonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingPolygonTests.swift; sourceTree = "<group>"; };
 		57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonLinearEquationSolver.swift; sourceTree = "<group>"; };
 		57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolver.swift; sourceTree = "<group>"; };
 		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
@@ -2045,6 +2049,7 @@
 			isa = PBXGroup;
 			children = (
 				5713D8CB267B7CC2009C65AC /* ArcGeometryTests.swift */,
+				57BBC80A270DB318004B6624 /* GrowingPolygonTests.swift */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
@@ -3253,6 +3258,7 @@
 		5797A45E25E406FC00991BD9 /* model */ = {
 			isa = PBXGroup;
 			children = (
+				57BBC807270DB221004B6624 /* shapes */,
 				57072BE226C9405500DC6F0E /* molecule */,
 				57CAD89326D959A900D75D9B /* prompts */,
 				572B1A7A2675DF8700302B8E /* reaction-progress */,
@@ -3664,6 +3670,14 @@
 				57D15C502624303F00BE1303 /* SolubleReactionType.swift */,
 			);
 			path = "reaction-definitions";
+			sourceTree = "<group>";
+		};
+		57BBC807270DB221004B6624 /* shapes */ = {
+			isa = PBXGroup;
+			children = (
+				57BBC808270DB235004B6624 /* GrowingPolygon.swift */,
+			);
+			path = shapes;
 			sourceTree = "<group>";
 		};
 		57BDFF4726413B43001B97CC /* quiz */ = {
@@ -5393,6 +5407,7 @@
 				57315EB8264017A600A7D0F9 /* QuizPersistence.swift in Sources */,
 				57FF330626E9FF5F007116EB /* SpacingViewModifiers.swift in Sources */,
 				57315EB1263FEFEB00A7D0F9 /* PrimaryNextButton.swift in Sources */,
+				57BBC809270DB235004B6624 /* GrowingPolygon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5430,6 +5445,7 @@
 				57FD402226486F8300E352C1 /* NavigationTestMethods.swift in Sources */,
 				574BF91D27048F520079CA8F /* SpiralBeakerGridTests.swift in Sources */,
 				57FD401B2648506300E352C1 /* NavigationViewModelTests.swift in Sources */,
+				57BBC80B270DB318004B6624 /* GrowingPolygonTests.swift in Sources */,
 				572B1A732675D3EE00302B8E /* ReactionProgressChartViewModelTests.swift in Sources */,
 				57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */,
 				57E902C425ED585800758300 /* EquatableCounterTests.swift in Sources */,
