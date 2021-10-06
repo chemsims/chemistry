@@ -5,6 +5,7 @@
 import SwiftUI
 import ReactionsCore
 
+// TODO - split this up a little. The precipitate could be taken out into its own view
 struct PrecipitationBeaker: View {
 
     init(model: PrecipitationScreenViewModel, layout: PrecipitationScreenLayout) {
