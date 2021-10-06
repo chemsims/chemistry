@@ -674,6 +674,7 @@
 		57B92EBD2665356600023E7C /* TextLineUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBC2665356600023E7C /* TextLineUtil.swift */; };
 		57B92EBF266537F900023E7C /* TextLineUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B92EBE266537F900023E7C /* TextLineUtilTests.swift */; };
 		57BBC804270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC803270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift */; };
+		57BBC806270DAA4E004B6624 /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC805270DAA4E004B6624 /* Polygon.swift */; };
 		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BDFF4E26415540001B97CC /* ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4D26415540001B97CC /* ImageType.swift */; };
 		57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4F26415745001B97CC /* ImageTypeView.swift */; };
@@ -1443,6 +1444,7 @@
 		57BB21E9260BA62600250FB3 /* ReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinition.swift; sourceTree = "<group>"; };
 		57BB21F7260BA66B00250FB3 /* GaseousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaseousReactionType.swift; sourceTree = "<group>"; };
 		57BBC803270DA3E0004B6624 /* PrecipitationComponentsInitialReactionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationComponentsInitialReactionTests.swift; sourceTree = "<group>"; };
+		57BBC805270DAA4E004B6624 /* Polygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polygon.swift; sourceTree = "<group>"; };
 		57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonLinearEquationSolver.swift; sourceTree = "<group>"; };
 		57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolver.swift; sourceTree = "<group>"; };
 		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
@@ -3083,6 +3085,7 @@
 			children = (
 				5786BD13267B51CD001A165C /* TestTubeContainer.swift */,
 				5786BD18267B6AF4001A165C /* ConeExtensions.swift */,
+				57BBC805270DAA4E004B6624 /* Polygon.swift */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
@@ -5206,6 +5209,7 @@
 				5797A4AA25E40A5400991BD9 /* MoleculeGridSettings.swift in Sources */,
 				57D2F31225EA389C00AEE0D8 /* ScaledView.swift in Sources */,
 				5786FAED25E6D66C00AAD8A6 /* ChartAxisShape.swift in Sources */,
+				57BBC806270DAA4E004B6624 /* Polygon.swift in Sources */,
 				575A881D25E4310E00AEE448 /* QuizState.swift in Sources */,
 				5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */,
 				57315EC626401CF500A7D0F9 /* QuizReviewBody.swift in Sources */,
