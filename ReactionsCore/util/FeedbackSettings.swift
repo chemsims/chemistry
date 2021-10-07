@@ -38,7 +38,7 @@ public struct FeedbackSettings {
         )
     }
 
-    public static let defaultAddress = "support@chem-sims.com"
+    public static let defaultAddress = "info@chem-sims.com"
     private static let defaultBody = """
 
     ---------
