@@ -4,8 +4,6 @@
 
 import ReactionsCore
 import SwiftUI
-import ReactionRates
-import AcidsBases
 
 struct PrecipitationEquationView: View {
 
