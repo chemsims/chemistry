@@ -33,7 +33,7 @@ struct PrecipitationNavigationModel {
     ]
 }
 
-private let reactionDuration: TimeInterval = 3
+private let reactionDuration: TimeInterval = 10
 
 class PrecipitationScreenState: ScreenState, SubState {
     typealias Model = PrecipitationScreenViewModel

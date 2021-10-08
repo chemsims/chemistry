@@ -28,7 +28,13 @@ extension PrecipitationComponents {
             /// reactant consumed is the same as product produced
             let productToAdd = knownReactantToConsume.roundedInt()
 
-            let productCoords = GridCoordinateList.spiralGrid(
+//            let productCoords = GridCoordinateList.spiralGrid(
+//                cols: grid.cols,
+//                rows: grid.rows,
+//                count: productToAdd
+//            )
+
+            let productCoords = GridCoordinateList.randomGrowth(
                 cols: grid.cols,
                 rows: grid.rows,
                 count: productToAdd
