@@ -67,13 +67,23 @@ struct PrecipitationBeaker: View {
             topOfWaterY: layout.topOfWaterPosition(rows: model.rows),
             halfXShakeRange: layout.common.containerShakeHalfXRange,
             halfYShakeRange: layout.common.containerShakeHalfYRange,
-            activeToolTipText: { _ in nil }
+            activeToolTipText: containerToolTip
         )
         .frame(width: layout.common.totalBeakerAreaWidth)
     }
 
+    private func containerToolTip(reactant: PrecipitationComponents.Reactant) -> TextLine? {
+        if reactant == .unknown {
+            let mass = components.unknownReactantMassAdded
+            return "\(mass.str(decimals: 2))"
+        }
+        return nil
+    }
+
     private var scales: some View {
-        let mass = components.productMass.getY(at: components.reactionProgress).str(decimals: 2)
+        let massEq = components.productMassProduced
+        let progress = components.reactionProgress
+        let mass = massEq.getY(at: progress).str(decimals: 2)
         return DigitalScales(
             label: model.precipitatePosition == .scales ? "\(mass) g" : nil,
             layout: layout.scalesLayout,

@@ -37,6 +37,7 @@ extension PrecipitationComponents {
             self.underlyingProductCoords = underlyingProductCoords
             self.initialProductCoordFraction = CGFloat(initialProductCoords.count) / CGFloat(desiredCount)
             self.reactionProgressModel = previous.reactionProgressModel.copy()
+            self.precipitate = previous.precipitate
         }
 
         let unknownReactantCoeff: Int
@@ -45,6 +46,8 @@ extension PrecipitationComponents {
         let underlyingPrevious: PhaseComponents
         let previouslyReactingUnknownReactantMoles: CGFloat
         let grid: BeakerGrid
+
+        var precipitate: GrowingPolygon
 
         var previous: PhaseComponents? {
             underlyingPrevious

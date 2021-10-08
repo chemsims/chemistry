@@ -29,4 +29,6 @@ protocol PhaseComponents {
     func runAllReactionProgressReactions(duration: TimeInterval)
 
     var previous: PhaseComponents? { get }
+
+    var precipitate: GrowingPolygon { get }
 }

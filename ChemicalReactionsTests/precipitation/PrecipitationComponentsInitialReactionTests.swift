@@ -64,6 +64,27 @@ class PrecipitationComponentsInitialReactionTests: XCTestCase {
 
 private struct TestPreviousPhaseComponents: PhaseComponents {
 
+    var precipitate: GrowingPolygon = .init(center: .zero)
+
+
+    var reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule> {
+        PrecipitationComponents.initialReactionProgressModel(
+            reaction: PrecipitationReaction.availableReactionsWithRandomMetals().first!
+        )
+    }
+
+    let reactionsToRun: Int = 0
+
+    func runOneReactionProgressReaction() {
+
+    }
+
+    func runAllReactionProgressReactions(duration: TimeInterval) {
+    }
+
+    let previous: PhaseComponents? = nil
+
+
     init(
         knownReactantCoords: [GridCoordinate] = [],
         unknownReactantCoords: [GridCoordinate] = []

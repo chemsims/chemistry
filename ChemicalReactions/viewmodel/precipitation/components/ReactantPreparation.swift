@@ -6,7 +6,7 @@ import ReactionsCore
 import CoreGraphics
 
 extension PrecipitationComponents {
-    struct ReactantPreparation: PhaseComponents {
+    struct ReactantPreparation: PhaseComponents, RP {
         init(
             grid: BeakerGrid,
             reactant: Reactant,
@@ -14,6 +14,7 @@ extension PrecipitationComponents {
             maxToAdd: Int,
             reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>,
             previous: PhaseComponents?,
+            precipitate: GrowingPolygon,
             previouslyReactingUnknownReactantMoles: CGFloat = 0
         ) {
             let otherMolecules = Molecule.allCases.filter { $0 != reactant.molecule}
@@ -30,6 +31,7 @@ extension PrecipitationComponents {
             )
             self.previouslyReactingUnknownReactantMoles = previouslyReactingUnknownReactantMoles
             self.reactionProgressModel = reactionProgressModel
+            self.precipitate = precipitate
         }
 
         let reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
@@ -41,11 +43,14 @@ extension PrecipitationComponents {
         private let reactant: Reactant
         let previous: PhaseComponents?
 
+        var precipitate: GrowingPolygon
+
         mutating func add(reactant: PrecipitationComponents.Reactant, count: Int) {
             guard reactant == self.reactant && underlying.canAdd else {
                 return
             }
             underlying.add(count: count)
+
             let concentration = underlying.grid.concentration(count: underlying.coords.count)
             let desiredRPMolecules = (concentration * 10).roundedInt()
             let currentRPMolecules = reactionProgressModel.moleculeCounts(ofType: reactant.molecule)
@@ -53,6 +58,16 @@ extension PrecipitationComponents {
             if deficit > 0 {
                 reactionProgressModel.addMolecules(reactant.molecule, count: deficit, duration: 0.5)
             }
+        }
+
+        func initialCoords(for molecule: PrecipitationComponents.Molecule) -> [GridCoordinate] {
+            if molecule == reactant.molecule {
+                return underlying.coords
+            }
+            if let previous = previous {
+                return previous.coords(for: molecule).coords(at: previous.endOfReaction)
+            }
+            return []
         }
 
         func coords(for molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates {

@@ -11,7 +11,8 @@ extension PrecipitationComponents {
             unknownReactantCoeff: Int,
             grid: BeakerGrid,
             settings: PrecipitationComponents.Settings,
-            reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
+            reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>,
+            precipitate: GrowingPolygon
         ) -> ReactantPreparation {
             let minToAdd = Self.minToAdd(
                 unknownReactantCoeff: unknownReactantCoeff,
@@ -29,7 +30,8 @@ extension PrecipitationComponents {
                 minToAdd: minToAdd,
                 maxToAdd: maxToAdd,
                 reactionProgressModel: reactionProgressModel,
-                previous: nil
+                previous: nil,
+                precipitate: precipitate
             )
         }
 

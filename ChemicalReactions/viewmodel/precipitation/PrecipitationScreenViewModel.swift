@@ -106,14 +106,14 @@ extension PrecipitationScreenViewModel {
             product: chosenReaction.product.name.asString,
             unknownReactant: chosenReaction.unknownReactant.name(showMetal: showUnknownMetal).asString,
             highlightUnknownReactantFirstTerm: false,
-            knownReactantMolarity: components.knownReactantMolarity,
-            knownReactantMoles: components.knownReactantMoles,
+            knownReactantMolarity: components.knownReactantInitialMolarity,
+            knownReactantMoles: components.knownReactantInitialMoles,
             productMolarMass: chosenReaction.product.molarMass,
-            productMoles: components.productMoles,
-            productMass: components.productMass,
+            productMoles: components.productMolesProduced,
+            productMass: components.productMassProduced,
             unknownReactantMolarMass: chosenReaction.unknownReactant.molarMass,
-            unknownReactantMoles: components.reactingMolesOfUnknownReactant,
-            unknownReactantMass: components.reactingMassOfUnknownReactant
+            unknownReactantMoles: components.reactingUnknownReactantMoles,
+            unknownReactantMass: components.reactingUnknownReactantMass
         )
     }
 }

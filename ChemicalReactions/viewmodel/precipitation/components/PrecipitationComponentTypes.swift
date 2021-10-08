@@ -6,12 +6,16 @@ import ReactionsCore
 import SwiftUI
 
 extension PrecipitationComponents {
-    enum Phase {
+    enum Phase: Int, Comparable, CaseIterable {
         case addKnownReactant,
              addUnknownReactant,
              runReaction,
              addExtraUnknownReactant,
              runFinalReaction
+
+        static func <(_ lhs: Phase, _ rhs: Phase) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
     }
 }
 

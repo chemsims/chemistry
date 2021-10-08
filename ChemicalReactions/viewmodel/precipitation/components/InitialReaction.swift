@@ -19,6 +19,7 @@ extension PrecipitationComponents {
             self.underlyingPrevious = previous
             self.endOfReaction = endOfReaction
             self.grid = grid
+            self.precipitate = previous.precipitate
 
             let unknownReactantCount = previous.coords(for: .unknownReactant).coordinates.count
             let knownReactantToConsume = CGFloat(unknownReactantCount) / CGFloat(unknownReactantCoeff)
@@ -34,18 +35,25 @@ extension PrecipitationComponents {
             )
 
             let knownReactantCoords = previous.coords(for: .knownReactant).coordinates
+
             let productCoordsSet = Set(productCoords)
-            let knownCoordsSet = Set(knownReactantCoords)
 
             // We'd like to first consume any known coords which intersect the product coords
-            let knownCoordsIntersectingProduct = knownCoordsSet.intersection(productCoordsSet)
-            let otherKnownCoords = knownCoordsSet.subtracting(knownCoordsIntersectingProduct)
+            let knownCoordsIntersectingProduct = knownReactantCoords.filter {
+                productCoordsSet.contains($0)
+            }
+            let otherKnownCoords = knownReactantCoords.filter {
+                !productCoordsSet.contains($0)
+            }
+
 
             self.knownReactantToConsume = knownReactantToConsume
             self.underlyingProductCoords = productCoords
-            self.underlyingKnownCoords = Array(otherKnownCoords) + Array(knownCoordsIntersectingProduct)
+            self.underlyingKnownCoords = otherKnownCoords + knownCoordsIntersectingProduct
             self.reactionProgressModel = previous.reactionProgressModel.copy()
         }
+
+        var precipitate: GrowingPolygon
 
         let startOfReaction: CGFloat = 0
         let endOfReaction: CGFloat

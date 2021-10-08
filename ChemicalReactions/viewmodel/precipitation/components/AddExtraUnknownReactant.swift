@@ -23,6 +23,7 @@ extension PrecipitationComponents {
                 maxToAdd: unknownRequiredToConsumeAllOfKnown,
                 reactionProgressModel: previous.reactionProgressModel.copy(),
                 previous: previous,
+                precipitate: previous.precipitate,
                 previouslyReactingUnknownReactantMoles: previouslyReactingUnknownReactantMoles
             )
         }
