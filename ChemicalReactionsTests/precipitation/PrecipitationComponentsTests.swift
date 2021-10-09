@@ -53,12 +53,13 @@ class PrecipitationComponentsTests: XCTestCase {
         XCTAssertEqual(coords.coords(at: 0).count, 0)
     }
 
-    func testKnownReactantCoordsAreResetAfterAddingUnknownReactantAndGoingBack() {
+    func testKnownReactantCoordsAreResetAfterAddingUnknownReactantAndGoingBackAndResetting() {
         let model = PrecipitationComponents()
         model.add(reactant: .known, count: 20)
         model.goNextTo(phase: .addUnknownReactant)
         model.add(reactant: .unknown, count: 5)
         model.goBackTo(phase: .addKnownReactant)
+        model.resetPhase()
 
         let knownCoords = model.coords(for: .knownReactant)
         let unKnownCoords = model.coords(for: .unknownReactant)
@@ -159,29 +160,6 @@ class PrecipitationComponentsTests: XCTestCase {
 
     }
 
-    // When we setup the reaction, we change the order of the molecules.
-    // The first implementation used a Set, which resulted in different
-    // molecules at the end of the reaction each time we run it. This
-    // isn't very important, since we re-run the reaction anyway so
-    // there is no impact to the user. But I think it's best to keep
-    // it deterministic anyway.
-    func testFinalMoleculesAreTheSameWhenGoingBackToInitialReactionPhase() {
-        let model = PrecipitationComponents()
-        model.add(reactant: .known, count: 50)
-        model.goNextTo(phase: .addUnknownReactant)
-        model.add(reactant: .unknown, count: 20)
-        model.goNextTo(phase: .runReaction)
-
-        let firstKnown = model.coords(for: .knownReactant)
-
-        model.goNextTo(phase: .addExtraUnknownReactant)
-        model.goBackTo(phase: .runReaction)
-
-        let secondKnown = model.coords(for: .knownReactant)
-
-        XCTAssertEqual(firstKnown.coordinates, secondKnown.coordinates)
-    }
-
     func testUnknownReactantCoordsIncreaseWhenAddingExtraReactant() {
         let model = PrecipitationComponents()
         model.add(reactant: .known, count: 20)
@@ -202,6 +180,26 @@ class PrecipitationComponentsTests: XCTestCase {
         model.add(reactant: .unknown, count: 8)
 
         XCTAssertEqual(coords.coords(at: t1).count, 8)
+    }
+
+    func testProductCoordsAreUnchangedWhenGoingBackToInitialReaction() {
+        let model = PrecipitationComponents()
+        model.add(reactant: .known, count: 20)
+        model.goNextTo(phase: .addUnknownReactant)
+        model.add(reactant: .unknown, count: 10)
+        model.goNextTo(phase: .runReaction)
+
+        let initialCoords = model.coords(for: .product)
+
+        model.goNextTo(phase: .addExtraUnknownReactant)
+        model.goBackTo(phase: .runReaction)
+
+        let coords = model.coords(for: .product)
+
+        let t2 = model.endOfInitialReaction
+        let initialT2Coords = initialCoords.coords(at: t2)
+        let t2Coords = coords.coords(at: t2)
+        XCTAssertEqual(t2Coords, initialT2Coords)
     }
 
     func testUnknownReactantMassAddedIncreasesAfterAddingExtraUnknownReactant() {
@@ -285,6 +283,31 @@ class PrecipitationComponentsTests: XCTestCase {
         let rect = model.precipitate.boundingRect
         XCTAssertEqual(rect.width, 0)
         XCTAssertEqual(rect.height, 0)
+    }
+
+    func testMoreProductIsProducedDuringSecondReaction() {
+        let model = PrecipitationComponents()
+        model.add(reactant: .known, count: 50)
+        model.goNextTo(phase: .addUnknownReactant)
+        model.add(reactant: .unknown, count: 25)
+        model.goNextTo(phase: .runReaction)
+
+        let initialCoords = model.coords(for: .product)
+
+        model.goNextTo(phase: .addExtraUnknownReactant)
+        model.add(reactant: .unknown, count: 20)
+        model.goNextTo(phase: .runFinalReaction)
+
+        let coords = model.coords(for: .product)
+
+        let t1 = model.endOfInitialReaction
+        let t2 = model.endOfFinalReaction
+
+        XCTAssertEqual(coords.coords(at: t1), initialCoords.coords(at: t1))
+        XCTAssertGreaterThan(
+            coords.coords(at: t2).count,
+            initialCoords.coords(at: t2).count
+        )
     }
 }
 

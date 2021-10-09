@@ -109,23 +109,25 @@ public struct GridCoordinateList {
     /// one direction.
     ///
     /// - Parameters:
-    ///   - count: Total count of coordinates, including the center one.
-    ///   - center: The center coordinate of the growth. If none is
-    ///   provided, the center of the grid is used.
+    ///   - count: Total count of coordinates to add
+    ///   - existing: Existing coordinates. If no coordinates are provided,
+    ///   then the growth starts at the center of the grid.
     public static func randomGrowth(
         cols: Int,
         rows: Int,
         count: Int,
-        center: GridCoordinate? = nil
+        existing: [GridCoordinate] = []
     ) -> [GridCoordinate] {
-        RandomGrowthModel.randomGrowth(
+        guard count > 0 else {
+            return existing
+        }
+        return RandomGrowthModel.randomGrowth(
             cols: cols,
             rows: rows,
             count: count,
-            center: center
+            existing: existing
         )
     }
-
 }
 
 fileprivate struct GridSpiralModel {
@@ -248,24 +250,76 @@ fileprivate struct RandomGrowthModel {
         cols: Int,
         rows: Int,
         count: Int,
-        center centerOpt: GridCoordinate?
+        existing: [GridCoordinate]
     ) -> [GridCoordinate] {
         guard count > 0 else {
-            return []
+            return existing
         }
 
-        let center = centerOpt ?? .init(col: cols / 2, row: rows / 2)
+        var initialCount = count
+
+        let initialResult: [GridCoordinate]
+        if existing.isEmpty {
+            initialCount -= 1
+            initialResult = [GridCoordinate(col: cols / 2, row: rows / 2)]
+        } else {
+            initialResult = existing
+        }
+
+        var minRow = initialResult[0].row
+        var maxRow = minRow
+        var minCol = initialResult[0].col
+        var maxCol = minCol
+        for coord in existing {
+            minRow = min(minRow, coord.row)
+            maxRow = max(maxRow, coord.row)
+            minCol = min(minCol, coord.col)
+            maxCol = max(maxCol, coord.col)
+        }
+
+        let missingGaps = randomlyFillGapsInExisting(
+            existing: initialResult,
+            minRow: minRow,
+            maxRow: maxRow,
+            minCol: minCol,
+            maxCol: maxCol,
+            count: initialCount
+        )
 
         return randomlyGrow(
             cols: cols,
             rows: rows,
-            result: [center],
-            remainingCount: count - 1,
-            minRow: center.row,
-            maxRow: center.row,
-            minCol: center.col,
-            maxCol: center.col
+            result: initialResult + missingGaps,
+            remainingCount: initialCount - missingGaps.count,
+            minRow: minRow,
+            maxRow: maxRow,
+            minCol: minCol,
+            maxCol: maxCol
         )
+    }
+
+    /// Returns any grid coordinates within the given row/col bounds which are not
+    /// already present in `existing`, up to `count`. The coordinates are returned
+    /// in a random order
+    private static func randomlyFillGapsInExisting(
+        existing: [GridCoordinate],
+        minRow: Int,
+        maxRow: Int,
+        minCol: Int,
+        maxCol: Int,
+        count: Int
+    ) -> [GridCoordinate] {
+        let allCoords = (minCol...maxCol).flatMap { col in
+            (minRow...maxRow).map { row in
+                GridCoordinate(col: col, row: row)
+            }
+        }
+        let existingSet = Set(existing)
+        let missingCoords = allCoords.filter {
+            !existingSet.contains($0)
+        }
+
+        return Array(missingCoords.shuffled().prefix(count))
     }
 
     /// The approach here is we expand the min/max row/col outwards,

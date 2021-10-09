@@ -6,54 +6,96 @@ import ReactionsCore
 import Foundation
 
 extension PrecipitationComponents {
-    struct UnknownReactantPreparation {
-        static func components(
+    struct UnknownReactantPreparation: PrecipitationComponentsReactantPreparation {
+
+        init(
             unknownReactantCoeff: Int,
-            previous: PhaseComponents,
+            previous: KnownReactantPreparation,
             grid: BeakerGrid,
             settings: Settings
-        ) -> ReactantPreparation {
-            let minToAdd = Self.minToAdd(
-                grid: grid,
-                settings: settings
-            )
-            let maxToAdd = Self.maxToAdd(
+        ) {
+            let knownReactantCoords = previous.initialCoords(for: .knownReactant)
+            let (min, max) = Self.inputLimits(
                 unknownReactantCoeff: unknownReactantCoeff,
-                knownReactantCount: previous.coords(for: .knownReactant).coordinates.count,
+                knownReactantCount: knownReactantCoords.count,
                 grid: grid,
                 settings: settings
             )
-            return ReactantPreparation(
+            self.previous = previous
+            self.precipitate = previous.precipitate
+            self.underlying = LimitedGridCoords(
                 grid: grid,
-                reactant: .unknown,
-                minToAdd: minToAdd,
-                maxToAdd: maxToAdd,
-                reactionProgressModel: previous.reactionProgressModel.copy(),
-                previous: previous,
-                precipitate: previous.precipitate
+                initialCoords: [],
+                otherCoords: knownReactantCoords,
+                minToAdd: min,
+                maxToAdd: max
             )
         }
 
-        static func minToAdd(
-            grid: BeakerGrid,
-            settings: PrecipitationComponents.Settings
-        ) -> Int {
-            grid.count(
-                concentration: settings.minConcentrationOfUnknownReactantToReact
-            )
+        var precipitate: GrowingPolygon
+        private var underlying: LimitedGridCoords
+        private let previous: KnownReactantPreparation
+
+        func initialCoords(for molecule: PrecipitationComponents.Molecule) -> [GridCoordinate] {
+            if molecule == .unknownReactant {
+                return underlying.coords
+            }
+            return previous.initialCoords(for: molecule)
         }
 
-        static func maxToAdd(
-            unknownReactantCoeff: Int,
-            knownReactantCount: Int,
-            grid: BeakerGrid,
-            settings: PrecipitationComponents.Settings
-        ) -> Int {
-            let minKnownReactant = grid.count(
-                concentration: settings.minConcentrationOfKnownReactantPostFirstReaction
-            )
-            let maxKnownReactantToConsume = knownReactantCount - minKnownReactant
-            return maxKnownReactantToConsume * unknownReactantCoeff
+        mutating func add(reactant: Reactant, count: Int) {
+            guard canAdd(reactant: reactant) else {
+                return
+            }
+            underlying.add(count: count)
         }
+
+        func canAdd(reactant: Reactant) -> Bool {
+            reactant == .unknown && underlying.canAdd
+        }
+
+        func hasAddedEnough(of reactant: Reactant) -> Bool {
+            reactant != .unknown || underlying.hasAddedEnough
+        }
+    }
+}
+
+extension PrecipitationComponents.UnknownReactantPreparation {
+    static func inputLimits(
+        unknownReactantCoeff: Int,
+        knownReactantCount: Int,
+        grid: BeakerGrid,
+        settings: PrecipitationComponents.Settings
+    ) -> (min: Int, max: Int) {
+        let min = minToAdd(grid: grid, settings: settings)
+        let max = maxToAdd(
+            unknownReactantCoeff: unknownReactantCoeff,
+            knownReactantCount: knownReactantCount,
+            grid: grid,
+            settings: settings
+        )
+        return (min: min, max: max)
+    }
+
+    static func minToAdd(
+        grid: BeakerGrid,
+        settings: PrecipitationComponents.Settings
+    ) -> Int {
+        grid.count(
+            concentration: settings.minConcentrationOfUnknownReactantToReact
+        )
+    }
+
+    static func maxToAdd(
+        unknownReactantCoeff: Int,
+        knownReactantCount: Int,
+        grid: BeakerGrid,
+        settings: PrecipitationComponents.Settings
+    ) -> Int {
+        let minKnownReactant = grid.count(
+            concentration: settings.minConcentrationOfKnownReactantPostFirstReaction
+        )
+        let maxKnownReactantToConsume = knownReactantCount - minKnownReactant
+        return maxKnownReactantToConsume * unknownReactantCoeff
     }
 }

@@ -33,7 +33,7 @@ struct PrecipitationNavigationModel {
     ]
 }
 
-private let reactionDuration: TimeInterval = 10
+private let reactionDuration: TimeInterval = 3
 
 class PrecipitationScreenState: ScreenState, SubState {
     typealias Model = PrecipitationScreenViewModel
@@ -288,6 +288,7 @@ private class AddExtraKnownReactant: SetStatement {
     }
 
     override func reapply(on model: PrecipitationScreenViewModel) {
+        model.components.resetPhase()
         doApply(on: model)
     }
 

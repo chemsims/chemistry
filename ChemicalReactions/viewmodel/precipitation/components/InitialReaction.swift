@@ -7,32 +7,22 @@ import CoreGraphics
 
 extension PrecipitationComponents {
 
-    struct InitialReaction: PhaseComponents {
+    struct InitialReaction: PrecipitationComponentsReaction {
 
         init(
             unknownReactantCoeff: Int,
-            previous: PhaseComponents,
-            endOfReaction: CGFloat,
+            previous: UnknownReactantPreparation,
             grid: BeakerGrid
         ) {
-            self.unknownReactantCoeff = unknownReactantCoeff
-            self.underlyingPrevious = previous
-            self.endOfReaction = endOfReaction
-            self.grid = grid
             self.precipitate = previous.precipitate
+            self.previous = previous
 
-            let unknownReactantCount = previous.coords(for: .unknownReactant).coordinates.count
-            let knownReactantToConsume = CGFloat(unknownReactantCount) / CGFloat(unknownReactantCoeff)
+            let unknownReactantCount = previous.initialCoords(for: .unknownReactant).count
+            let knownReactantToConsume = (CGFloat(unknownReactantCount) / CGFloat(unknownReactantCoeff)).roundedInt()
 
             /// The coeff of both product and known reactant is always 1, so the amount of known
             /// reactant consumed is the same as product produced
-            let productToAdd = knownReactantToConsume.roundedInt()
-
-//            let productCoords = GridCoordinateList.spiralGrid(
-//                cols: grid.cols,
-//                rows: grid.rows,
-//                count: productToAdd
-//            )
+            let productToAdd = knownReactantToConsume
 
             let productCoords = GridCoordinateList.randomGrowth(
                 cols: grid.cols,
@@ -40,137 +30,81 @@ extension PrecipitationComponents {
                 count: productToAdd
             )
 
-            let knownReactantCoords = previous.coords(for: .knownReactant).coordinates
+            let prevKnownReactantCoords = previous.initialCoords(for: .knownReactant)
 
             let productCoordsSet = Set(productCoords)
 
             // We'd like to first consume any known coords which intersect the product coords
-            let knownCoordsIntersectingProduct = knownReactantCoords.filter {
+            let knownCoordsIntersectingProduct = prevKnownReactantCoords.filter {
                 productCoordsSet.contains($0)
             }
-            let otherKnownCoords = knownReactantCoords.filter {
+            let otherKnownCoords = prevKnownReactantCoords.filter {
                 !productCoordsSet.contains($0)
             }
 
+            let initialKnownCoords = otherKnownCoords + knownCoordsIntersectingProduct
+            let finalKnownCoords = Array(initialKnownCoords.dropLast(knownReactantToConsume))
 
-            self.knownReactantToConsume = knownReactantToConsume
-            self.underlyingProductCoords = productCoords
-            self.underlyingKnownCoords = otherKnownCoords + knownCoordsIntersectingProduct
-            self.reactionProgressModel = previous.reactionProgressModel.copy()
+            self.initialKnownReactantCoords = initialKnownCoords
+            self.finalKnownReactantCoords = finalKnownCoords
+            self.finalProductCoords = productCoords
         }
 
         var precipitate: GrowingPolygon
-
-        let startOfReaction: CGFloat = 0
-        let endOfReaction: CGFloat
-
-        var previous: PhaseComponents? {
-            underlyingPrevious
+        let previous: UnknownReactantPreparation
+        
+        func initialCoords(for molecule: Molecule) -> [GridCoordinate] {
+            // The known reactant coords are re-ordered to make sure we consume those
+            // overlapping the product first, so don't return coords from previous phase
+            if molecule == .knownReactant {
+                return initialKnownReactantCoords
+            }
+            return previous.initialCoords(for: molecule)
         }
 
-        let unknownReactantCoeff: Int
-        let underlyingPrevious: PhaseComponents
-        let grid: BeakerGrid
-
-        let previouslyReactingUnknownReactantMoles: CGFloat = 0
-
-        let reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
-
-        func coords(for molecule: PrecipitationComponents.Molecule) -> FractionedCoordinates {
+        func finalCoords(for molecule: Molecule) -> [GridCoordinate] {
             switch molecule {
-            case .knownReactant: return knownReactantCoords
-            case .unknownReactant: return unknownReactantCoords
-            case .product: return productCoords
+            case .knownReactant: return finalKnownReactantCoords
+            case .unknownReactant: return []
+            case .product: return finalProductCoords
             }
         }
 
-        private var knownReactantCoords: FractionedCoordinates {
-            let initialCount = underlyingKnownCoords.count
-            let finalCount = CGFloat(initialCount) - knownReactantToConsume
-            let finalFraction = finalCount / CGFloat(initialCount)
+        private let initialKnownReactantCoords: [GridCoordinate]
+        private let finalProductCoords: [GridCoordinate]
+        private let finalKnownReactantCoords: [GridCoordinate]
 
-            return FractionedCoordinates(
-                coordinates: underlyingKnownCoords,
-                fractionToDraw: LinearEquation(
-                    x1: 0,
-                    y1: 1,
-                    x2: endOfReaction,
-                    y2: finalFraction
-                )
-            )
-        }
+//        let reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
 
-        private var unknownReactantCoords: FractionedCoordinates {
-            FractionedCoordinates(
-                coordinates: underlyingPrevious.coords(for: .unknownReactant).coordinates,
-                fractionToDraw: LinearEquation(
-                    x1: 0,
-                    y1: 1,
-                    x2: endOfReaction,
-                    y2: 0
-                )
-            )
-        }
-
-        private var productCoords: FractionedCoordinates {
-            FractionedCoordinates(
-                coordinates: underlyingProductCoords,
-                fractionToDraw: LinearEquation(
-                    x1: 0,
-                    y1: 0,
-                    x2: endOfReaction,
-                    y2: 1
-                )
-            )
-        }
-
-        private let knownReactantToConsume: CGFloat
-        private let underlyingProductCoords: [GridCoordinate]
-        private let underlyingKnownCoords: [GridCoordinate]
-
-        var reactionsToRun: Int {
-            let unknownMoleculeCount = reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
-            let multiples = unknownMoleculeCount / unknownReactantCoeff
-            if unknownMoleculeCount % unknownReactantCoeff == 0 {
-                return multiples
-            }
-            return multiples + 1
-        }
-
-        func runOneReactionProgressReaction() {
-            reactionProgressModel.startReactionFromExisting(
-                consuming: [
-                    (.knownReactant, 1),
-                    (.unknownReactant, unknownReactantCoeff)
-                ],
-                producing: [.product]
-            )
-        }
-
-        func runAllReactionProgressReactions(duration: TimeInterval) {
-            reactionProgressModel.startReactionFromExisting(
-                consuming: [
-                    (.knownReactant, 1),
-                    (.unknownReactant, unknownReactantCoeff)
-                ],
-                producing: [.product],
-                count: reactionsToRun,
-                duration: duration
-            )
-        }
-
-        func canAdd(reactant: PrecipitationComponents.Reactant) -> Bool {
-            false
-        }
-
-        func hasAddedEnough(of reactant: PrecipitationComponents.Reactant) -> Bool {
-            true
-        }
-
-        mutating func add(reactant: PrecipitationComponents.Reactant, count: Int) {
-        }
+//        var reactionsToRun: Int {
+//            let unknownMoleculeCount = reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
+//            let multiples = unknownMoleculeCount / unknownReactantCoeff
+//            if unknownMoleculeCount % unknownReactantCoeff == 0 {
+//                return multiples
+//            }
+//            return multiples + 1
+//        }
+//
+//        func runOneReactionProgressReaction() {
+//            reactionProgressModel.startReactionFromExisting(
+//                consuming: [
+//                    (.knownReactant, 1),
+//                    (.unknownReactant, unknownReactantCoeff)
+//                ],
+//                producing: [.product]
+//            )
+//        }
+//
+//        func runAllReactionProgressReactions(duration: TimeInterval) {
+//            reactionProgressModel.startReactionFromExisting(
+//                consuming: [
+//                    (.knownReactant, 1),
+//                    (.unknownReactant, unknownReactantCoeff)
+//                ],
+//                producing: [.product],
+//                count: reactionsToRun,
+//                duration: duration
+//            )
+//        }
     }
 }
-
-
-

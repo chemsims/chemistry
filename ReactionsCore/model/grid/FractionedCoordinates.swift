@@ -22,6 +22,13 @@ extension FractionedCoordinates {
     /// `startOfReaction`, the `initial` coordinates are returned,
     /// and for inputs larger than `endOfReaction`, the `final` coordinates are
     /// returned.
+    ///
+    /// - Note: This constructor simply takes the larger array of the provided coordinates,
+    /// and uses the size of the other array to determine its fraction to draw. This means
+    /// one of `initial` or `final` should contain the other in the same
+    /// order. For example, if `final` is larger than `initial`, then `final` should
+    /// start with the `initial` coordinates. If `final` is smaller than `initial`,
+    /// then `initial` should end with the same elements as `initial`.
     public init(
         initial: [GridCoordinate],
         final: [GridCoordinate],
@@ -36,7 +43,6 @@ extension FractionedCoordinates {
 
         let initialFraction = fraction(initial)
         let finalFraction = fraction(final)
-
 
         let minFraction = min(initialFraction, finalFraction)
         let maxFraction = max(initialFraction, finalFraction)

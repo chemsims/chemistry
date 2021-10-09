@@ -66,11 +66,11 @@ private struct SizedTable: View {
                 cellView(content: row.cells[cellIndex])
             }
         }
-        .background(rowBackground(row: row))
+        .overlay(rowEmphasis(row: row))
     }
 
     @ViewBuilder
-    private func rowBackground(row: Table.Row) -> some View {
+    private func rowEmphasis(row: Table.Row) -> some View {
         if row.emphasised {
             Rectangle()
                 .stroke()

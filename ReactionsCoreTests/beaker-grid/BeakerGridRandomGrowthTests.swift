@@ -36,8 +36,8 @@ class BeakerGridRandomGrowthTests: XCTestCase {
         let grid = getList(
             cols: 5,
             rows: 5,
-            count: 2,
-            center: center
+            count: 1,
+            existing: [center]
         )
         XCTAssertEqual(grid.count, 2)
         XCTAssertEqual(grid[0], center)
@@ -62,18 +62,32 @@ class BeakerGridRandomGrowthTests: XCTestCase {
         XCTAssertEqual(Set(grid), Set(expected))
     }
 
+    func testGrowingExistingCoordinatesIntoASquare() {
+        let existing = [(2, 1), (1, 2)].map(makeCoord)
+        let grid = getList(
+            cols: 5,
+            rows: 5,
+            count: 2,
+            existing: existing
+        )
+
+        XCTAssertEqual(Array(grid.prefix(2)), existing)
+
+        let expectedLatter = [(1, 1), (2, 2)].map(makeCoord)
+        XCTAssertEqual(Set(grid.dropFirst(2)), Set(expectedLatter))
+    }
 
     private func getList(
         cols: Int,
         rows: Int,
         count: Int,
-        center: GridCoordinate? = nil
+        existing: [GridCoordinate] = []
     ) -> [GridCoordinate] {
         GridCoordinateList.randomGrowth(
             cols: cols,
             rows: rows,
             count: count,
-            center: center
+            existing: existing
         )
     }
 
