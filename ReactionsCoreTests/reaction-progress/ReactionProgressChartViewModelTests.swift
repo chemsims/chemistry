@@ -304,6 +304,24 @@ class ReactionProgressChartViewModelTests: XCTestCase {
         XCTAssertFalse(secondConsume)
     }
 
+    func testConsumingMultipleMoleculesWithEagerConsumption() {
+        let counts = EnumMap<TestMolecule, Int> { _ in 1 }
+        let model = newModel(
+            timing: .init(fadeDuration: 0.1, dropSpeed: 50),
+            definitions: TestMolecule.definitions(withCounts: counts)
+        )
+
+        let delegate = TestReactionProgressChartViewModelDelegate()
+        model.delegate = delegate
+
+        let expectedRemoval = delegate.addWillRemoveBottomMoleculesExpectation(molecules: [.A])
+        let consume = model.consume(.A, count: 2, eagerConsumption: true)
+        XCTAssert(consume)
+
+        wait(for: [expectedRemoval], timeout: 1)
+        XCTAssertEqual(model.getMolecules(ofType: .A).count, 0)
+    }
+
     func testConsumingMultipleMoleculesWhileOneIsInProgress() {
         let counts = EnumMap<TestMolecule, Int> { _ in 5 }
 

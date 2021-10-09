@@ -102,11 +102,17 @@ extension ReactionProgressChartViewModel {
     /// Triggers a reaction which consumes molecules of types `consumedMolecules`, using
     /// the provided counts, and produces molecules of type `producedMolecule`.
     ///
+    /// - Parameters:
+    ///   - eagerReaction: Whether to run the reaction when there are not enough
+    ///   molecules to consume. Note that there must still be at least 1 molecule, or the
+    ///   reaction will not start.
+    ///
     /// - Returns: True if the reaction was started, or false if it could not be started.
     @discardableResult
     public func startReactionFromExisting(
         consuming consumedMolecules: [(MoleculeType, Int)],
-        producing producedMolecules: [MoleculeType]
+        producing producedMolecules: [MoleculeType],
+        eagerReaction: Bool = false
     ) -> Bool {
         precondition(
             consumedMolecules.allSatisfy { $0.1 > 0 },
@@ -116,13 +122,18 @@ extension ReactionProgressChartViewModel {
             consumed: consumedMolecules,
             produced: producedMolecules
         )
-        return triggerSequence(reaction)
+        return triggerSequence(reaction, eagerReaction: eagerReaction)
     }
 
     /// Triggers a repeating reaction which consumes molecules of types `consumedMolecules`, using
     /// the provided counts, and produces molecules of type `producedMolecule`.
     ///
     /// The reaction repeats `count` times over the given `duration`.
+    ///
+    /// - Parameters:
+    ///   - eagerReaction: Whether to run the reaction when there are not enough
+    ///   molecules to consume. Note that there must still be at least 1 molecule for
+    ///   the reaction to start.
     ///
     /// - Note: Reactions are triggered until the first one which fails to triggered. This means
     /// if any reaction fails to trigger, then any previous reactions will still run.
@@ -133,7 +144,8 @@ extension ReactionProgressChartViewModel {
         consuming consumedMolecules: [(MoleculeType, Int)],
         producing producedMolecules: [MoleculeType],
         count: Int,
-        duration: TimeInterval
+        duration: TimeInterval,
+        eagerReaction: Bool = false
     ) -> Bool {
         precondition(
             consumedMolecules.allSatisfy { $0.1 > 0 },
@@ -141,7 +153,8 @@ extension ReactionProgressChartViewModel {
         )
         return triggerRepeatingActions(
             count: count,
-            duration: duration
+            duration: duration,
+            eagerReaction: eagerReaction
         ) {
             ActionSequence.reactionFromExisting(
                 consumed: consumedMolecules,
@@ -153,15 +166,26 @@ extension ReactionProgressChartViewModel {
 
     /// Triggers a reaction which consumes `count` molecules of type `consumedMolecule`.
     ///
+    ///  - Parameters:
+    ///    - consumedMolecule: The molecule type to consume.
+    ///    - count: How many molecules to consume
+    ///    - eagerConsumption: Whether the consumption should occur if the number
+    ///    of available molecules is less than `count`. Note that in this case there must
+    ///    still be at least 1 molecule, or the reaction will not be started.
+    ///
     /// - Returns true if the reaction was started, or false if it could not be started
     @discardableResult
-    public func consume(_ consumedMolecule: MoleculeType, count: Int = 1) -> Bool {
+    public func consume(
+        _ consumedMolecule: MoleculeType,
+        count: Int = 1,
+        eagerConsumption: Bool = false
+    ) -> Bool {
         precondition(count > 0, "Must consume at least 1 molecule")
         let reaction = ActionSequence.consume(
             molecule: consumedMolecule,
             count: count
         )
-        return triggerSequence(reaction)
+        return triggerSequence(reaction, eagerReaction: eagerConsumption)
     }
 
     /// Schedules adding multiple molecules over the given duration.
@@ -232,6 +256,7 @@ extension ReactionProgressChartViewModel {
     private func triggerRepeatingActions(
         count: Int,
         duration: TimeInterval,
+        eagerReaction: Bool = false,
         getAction: () -> ActionSequence
     ) -> Bool {
         guard count > 0 else {
@@ -243,7 +268,7 @@ extension ReactionProgressChartViewModel {
 
         (0..<count).forEach { i in
             let reactionWithDelay = getAction().withDelay(Double(i) * dt)
-            let didTrigger = triggerSequence(reactionWithDelay)
+            let didTrigger = triggerSequence(reactionWithDelay, eagerReaction: eagerReaction)
             if !didTrigger {
                 didTriggerAll = false
             }
@@ -252,8 +277,11 @@ extension ReactionProgressChartViewModel {
     }
 
     /// Triggers the `sequence`, returning true if it could be triggered, or false if it was not triggered
-    private func triggerSequence(_ sequence: ActionSequence) -> Bool {
-        guard canPerform(reaction: sequence) else {
+    private func triggerSequence(
+        _ sequence: ActionSequence,
+        eagerReaction: Bool = false
+    ) -> Bool {
+        guard canPerform(reaction: sequence, performEagerly: eagerReaction) else {
             return false
         }
         runningReactions.append(sequence)
@@ -316,17 +344,31 @@ extension ReactionProgressChartViewModel {
 // MARK: Reaction validation
 extension ReactionProgressChartViewModel {
     private func canPerform(
-        reaction: ActionSequence
+        reaction: ActionSequence,
+        performEagerly: Bool
     ) -> Bool {
-        reaction.added.allSatisfy(canAdd) && reaction.consumed.allSatisfy(canConsume)
+        let canAddAll = reaction.added.allSatisfy(canAdd)
+        let canConsumeAll = reaction.consumed.allSatisfy {
+            canConsume($0.0, count: $0.1, consumeEagerly: performEagerly)
+        }
+        return canAddAll && canConsumeAll
     }
 
     private func canAdd(_ moleculeType: MoleculeType) -> Bool {
         moleculeCounts(ofType: moleculeType) < settings.maxRowIndex + 1
     }
 
-    private func canConsume(_ moleculeType: MoleculeType, count: Int) -> Bool {
-        moleculeCounts(ofType: moleculeType) >= count
+    private func canConsume(
+        _ moleculeType: MoleculeType,
+        count: Int,
+        consumeEagerly: Bool
+    ) -> Bool {
+        let counts = moleculeCounts(ofType: moleculeType)
+        if consumeEagerly {
+            return counts > 0
+        } else {
+            return counts >= count
+        }
     }
 }
 
