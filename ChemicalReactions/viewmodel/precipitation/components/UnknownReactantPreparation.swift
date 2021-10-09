@@ -22,7 +22,9 @@ extension PrecipitationComponents {
                 settings: settings
             )
             self.previous = previous
+            self.reactionProgressModel = previous.reactionProgressModel.copy()
             self.precipitate = previous.precipitate
+            self.settings = settings
             self.underlying = LimitedGridCoords(
                 grid: grid,
                 initialCoords: [],
@@ -32,7 +34,9 @@ extension PrecipitationComponents {
             )
         }
 
+        let reactionProgressModel: ReactionProgressModel
         var precipitate: GrowingPolygon
+        let settings: Settings
         private var underlying: LimitedGridCoords
         private let previous: KnownReactantPreparation
 
@@ -48,6 +52,11 @@ extension PrecipitationComponents {
                 return
             }
             underlying.add(count: count)
+            reactionProgressModel.addMolecules(
+                .unknownReactant,
+                concentration: underlying.concentration,
+                duration: settings.addMoleculeReactionProgressDuration
+            )
         }
 
         func canAdd(reactant: Reactant) -> Bool {

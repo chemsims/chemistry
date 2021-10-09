@@ -75,8 +75,14 @@ private extension PrecipitationComponents.KnownReactantPreparation {
         self.init(
             unknownReactantCoeff: 1,
             grid: BeakerGrid(rows: 10, cols: 10),
-            settings: .init(),
-            precipitate: GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5))
+            reactionProgressModel: PrecipitationComponents.initialReactionProgressModel(
+                reaction: .availableReactionsWithRandomMetals().first!
+            ),
+            precipitate: GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5)),
+            settings: .init(
+                minConcentrationOfKnownReactantPostFirstReaction: 0,
+                minConcentrationOfUnknownReactantToReact: 0
+            )
         )
     }
 }
@@ -87,7 +93,10 @@ private extension PrecipitationComponents.UnknownReactantPreparation {
             unknownReactantCoeff: 1,
             previous: previous,
             grid: BeakerGrid(rows: 10, cols: 10),
-            settings: .init()
+            settings: .init(
+                minConcentrationOfKnownReactantPostFirstReaction: 0,
+                minConcentrationOfUnknownReactantToReact: 0
+            )
         )
     }
 }

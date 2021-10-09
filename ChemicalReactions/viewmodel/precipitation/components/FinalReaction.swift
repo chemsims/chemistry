@@ -34,16 +34,14 @@ extension PrecipitationComponents {
 
             self.initialProductCoords = initialProductCoords
             self.finalProductCoords = finalProductCoords
-
-//            self.reactionProgressModel = previous.reactionProgressModel.copy()
+            self.reactionProgressModel = previous.reactionProgressModel.copy()
             self.precipitate = previous.precipitate
         }
 
         let unknownReactantCoeff: Int
         let previous: PrecipitationComponents.ExtraUnknownReactantPreparation
+        let reactionProgressModel: ReactionProgressModel
         var precipitate: GrowingPolygon
-
-//        let reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
 
         func initialCoords(for molecule: PrecipitationComponents.Molecule) -> [GridCoordinate] {
             if molecule == .product {
@@ -62,30 +60,32 @@ extension PrecipitationComponents {
         private let initialProductCoords: [GridCoordinate]
         private let finalProductCoords: [GridCoordinate]
 
-//        var reactionsToRun: Int {
-//            reactionProgressModel.moleculeCounts(ofType: .knownReactant)
-//        }
-//
-//        func runOneReactionProgressReaction() {
-//            reactionProgressModel.startReactionFromExisting(
-//                consuming: [
-//                    (.knownReactant, 1),
-//                    (.unknownReactant, unknownReactantCoeff)
-//                ],
-//                producing: [.product]
-//            )
-//        }
-//
-//        func runAllReactionProgressReactions(duration: TimeInterval) {
-//            reactionProgressModel.startReactionFromExisting(
-//                consuming: [
-//                    (.knownReactant, 1),
-//                    (.unknownReactant, unknownReactantCoeff)
-//                ],
-//                producing: [.product],
-//                count: reactionsToRun,
-//                duration: duration
-//            )
-//        }
+        var reactionsToRun: Int {
+            reactionProgressModel.moleculeCounts(ofType: .knownReactant)
+        }
+
+        func runOneReactionProgressReaction() {
+            reactionProgressModel.startReactionFromExisting(
+                consuming: [
+                    (.knownReactant, 1),
+                    (.unknownReactant, unknownReactantCoeff)
+                ],
+                producing: [.product],
+                eagerReaction: true
+            )
+        }
+
+        func runAllReactionProgressReactions(duration: TimeInterval) {
+            reactionProgressModel.startReactionFromExisting(
+                consuming: [
+                    (.knownReactant, 1),
+                    (.unknownReactant, unknownReactantCoeff)
+                ],
+                producing: [.product],
+                count: reactionsToRun,
+                duration: duration,
+                eagerReaction: true
+            )
+        }
     }
 }

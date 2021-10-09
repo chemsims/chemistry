@@ -147,6 +147,9 @@ extension ReactionProgressChartViewModel {
         duration: TimeInterval,
         eagerReaction: Bool = false
     ) -> Bool {
+        guard count > 0 else {
+            return false
+        }
         precondition(
             consumedMolecules.allSatisfy { $0.1 > 0 },
             "All consumed molecule counts must be at least 0"
@@ -201,6 +204,22 @@ extension ReactionProgressChartViewModel {
             duration: duration
         ) {
             ActionSequence.addMolecules(added: type)
+        }
+    }
+
+    /// Adds molecules to achieve the desired `concentration`. If the current molecules
+    /// have a higher concentration than this, there is no action.
+    public func addMolecules(
+        _ type: MoleculeType,
+        concentration: CGFloat,
+        duration: TimeInterval
+    ) {
+        let currentCount = moleculeCounts(ofType: type)
+        let desiredCountFloat = concentration * CGFloat(settings.maxMolecules)
+        let desiredCount = desiredCountFloat.roundedInt()
+        let deficit = desiredCount - currentCount
+        if deficit > 0 {
+            addMolecules(type, count: deficit, duration: duration)
         }
     }
 

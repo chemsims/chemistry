@@ -7,6 +7,8 @@ import ReactionsCore
 
 class PrecipitationComponents: ObservableObject {
 
+    typealias ReactionProgressModel = ReactionProgressChartViewModel<Molecule>
+
     init(
         reaction: PrecipitationReaction,
         rows: Int,
@@ -14,9 +16,6 @@ class PrecipitationComponents: ObservableObject {
         volume: CGFloat,
         settings: Settings = .init()
     ) {
-        let rp = PrecipitationComponents.initialReactionProgressModel(
-            reaction: reaction
-        )
         let grid = BeakerGrid(rows: rows, cols: cols)
 
         self.reaction = reaction
@@ -26,10 +25,10 @@ class PrecipitationComponents: ObservableObject {
         self.knownReactantPrep = KnownReactantPreparation(
             unknownReactantCoeff: reaction.unknownReactant.coeff,
             grid: grid,
-            settings: settings,
-            precipitate: GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5))
+            reactionProgressModel: Self.initialReactionProgressModel(reaction: reaction),
+            precipitate: GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5)),
+            settings: settings
         )
-        self.reactionProgressModel = rp
     }
 
     let endOfInitialReaction: CGFloat = 0.5
@@ -39,8 +38,6 @@ class PrecipitationComponents: ObservableObject {
     let volume: CGFloat
     let grid: BeakerGrid
     let settings: Settings
-
-    let reactionProgressModel: ReactionProgressChartViewModel<Molecule>
 
     var precipitate: GrowingPolygon {
         if let currentReactantPrep = currentReactantPrep {
@@ -53,12 +50,12 @@ class PrecipitationComponents: ObservableObject {
 
     @Published private(set) var reactionProgress: CGFloat = 0
     @Published private(set) var phase = PrecipitationComponents.Phase.addKnownReactant
-    
+
     @Published private(set) var knownReactantPrep: KnownReactantPreparation
     @Published private(set) var unknownReactantPrep: UnknownReactantPreparation? = nil
     @Published private(set) var extraUnknownReactantPrep: ExtraUnknownReactantPreparation? = nil
-    @Published private(set) var finalReaction: FinalReaction? = nil
     @Published private(set) var initialReaction: InitialReaction? = nil
+    @Published private(set) var finalReaction: FinalReaction? = nil
 
     func coords(for molecule: Molecule) -> FractionedCoordinates {
         switch phase {
@@ -157,6 +154,20 @@ class PrecipitationComponents: ObservableObject {
             return endOfInitialReaction
         default:
             return endOfFinalReaction
+        }
+    }
+
+    var reactionProgressModel: ReactionProgressChartViewModel<Molecule> {
+        reactionProgressModelOpt ?? Self.initialReactionProgressModel(reaction: reaction)
+    }
+
+    private var reactionProgressModelOpt: ReactionProgressChartViewModel<Molecule>? {
+        switch phase {
+        case .addKnownReactant: return knownReactantPrep.reactionProgressModel
+        case .addUnknownReactant: return unknownReactantPrep?.reactionProgressModel
+        case .runReaction: return initialReaction?.reactionProgressModel
+        case .addExtraUnknownReactant: return extraUnknownReactantPrep?.reactionProgressModel
+        case .runFinalReaction: return finalReaction?.reactionProgressModel
         }
     }
 }
@@ -301,6 +312,7 @@ extension PrecipitationComponents {
         reactionProgress = 1.0001 * endOfReaction
         let grownPrecipitate = precipitate.grow(exactly: 0.001)
         replacePrecipitate(with: grownPrecipitate)
+        runAllReactionProgressReactions()
     }
 
     func resetReaction() {
@@ -324,11 +336,15 @@ extension PrecipitationComponents {
     }
 
     func runOneReactionProgressReaction() {
-        
+        currentReaction?.runOneReactionProgressReaction()
+    }
+
+    private func runAllReactionProgressReactions() {
+        currentReaction?.runAllReactionProgressReactions(duration: 0.5)
     }
 
     var reactionsToRun: Int {
-        0
+        currentReaction?.reactionsToRun ?? 0
     }
 }
 
@@ -337,8 +353,9 @@ extension PrecipitationComponents {
         self.knownReactantPrep = KnownReactantPreparation(
             unknownReactantCoeff: reaction.unknownReactant.coeff,
             grid: grid,
-            settings: settings,
-            precipitate: GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5))
+            reactionProgressModel: Self.initialReactionProgressModel(reaction: reaction),
+            precipitate: GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5)),
+            settings: settings
         )
     }
 
@@ -369,7 +386,8 @@ extension PrecipitationComponents {
         self.extraUnknownReactantPrep = ExtraUnknownReactantPreparation(
             previous: initialReaction,
             unknownReactantCoeff: reaction.unknownReactant.coeff,
-            grid: grid
+            grid: grid,
+            settings: settings
         )
     }
 

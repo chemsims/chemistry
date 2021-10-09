@@ -22,8 +22,8 @@ extension PrecipitationComponents {
 extension PrecipitationComponents {
     struct Settings {
         init(
-            minConcentrationOfKnownReactantPostFirstReaction: CGFloat = 0.1,
-            minConcentrationOfUnknownReactantToReact: CGFloat = 0.1
+            minConcentrationOfKnownReactantPostFirstReaction: CGFloat = 0.15,
+            minConcentrationOfUnknownReactantToReact: CGFloat = 0.15
         ) {
             self.minConcentrationOfKnownReactantPostFirstReaction = minConcentrationOfKnownReactantPostFirstReaction
             self.minConcentrationOfUnknownReactantToReact = minConcentrationOfUnknownReactantToReact
@@ -31,6 +31,7 @@ extension PrecipitationComponents {
         let minConcentrationOfKnownReactantPostFirstReaction: CGFloat
         let minConcentrationOfUnknownReactantToReact: CGFloat
 
+        let addMoleculeReactionProgressDuration: TimeInterval = 0.5
         let precipitateGrowthMagnitude: Range<CGFloat> = 0.1..<0.2
     }
 }

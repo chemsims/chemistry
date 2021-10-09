@@ -14,8 +14,10 @@ extension PrecipitationComponents {
             previous: UnknownReactantPreparation,
             grid: BeakerGrid
         ) {
+            self.reactionProgressModel = previous.reactionProgressModel.copy()
             self.precipitate = previous.precipitate
             self.previous = previous
+            self.unknownReactantCoeff = unknownReactantCoeff
 
             let unknownReactantCount = previous.initialCoords(for: .unknownReactant).count
             let knownReactantToConsume = (CGFloat(unknownReactantCount) / CGFloat(unknownReactantCoeff)).roundedInt()
@@ -50,8 +52,10 @@ extension PrecipitationComponents {
             self.finalProductCoords = productCoords
         }
 
+        let reactionProgressModel: ReactionProgressModel
         var precipitate: GrowingPolygon
         let previous: UnknownReactantPreparation
+        let unknownReactantCoeff: Int
         
         func initialCoords(for molecule: Molecule) -> [GridCoordinate] {
             // The known reactant coords are re-ordered to make sure we consume those
@@ -74,37 +78,39 @@ extension PrecipitationComponents {
         private let finalProductCoords: [GridCoordinate]
         private let finalKnownReactantCoords: [GridCoordinate]
 
-//        let reactionProgressModel: ReactionProgressChartViewModel<PrecipitationComponents.Molecule>
+        var reactionsToRun: Int {
+            let unknownMoleculeCount = reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
+            let multiples = unknownMoleculeCount / unknownReactantCoeff
+            if unknownMoleculeCount % unknownReactantCoeff == 0 {
+                return multiples
+            }
 
-//        var reactionsToRun: Int {
-//            let unknownMoleculeCount = reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
-//            let multiples = unknownMoleculeCount / unknownReactantCoeff
-//            if unknownMoleculeCount % unknownReactantCoeff == 0 {
-//                return multiples
-//            }
-//            return multiples + 1
-//        }
-//
-//        func runOneReactionProgressReaction() {
-//            reactionProgressModel.startReactionFromExisting(
-//                consuming: [
-//                    (.knownReactant, 1),
-//                    (.unknownReactant, unknownReactantCoeff)
-//                ],
-//                producing: [.product]
-//            )
-//        }
-//
-//        func runAllReactionProgressReactions(duration: TimeInterval) {
-//            reactionProgressModel.startReactionFromExisting(
-//                consuming: [
-//                    (.knownReactant, 1),
-//                    (.unknownReactant, unknownReactantCoeff)
-//                ],
-//                producing: [.product],
-//                count: reactionsToRun,
-//                duration: duration
-//            )
-//        }
+            // We need to run an extra reaction if we still have some unknown reactant left over
+            return multiples + 1
+        }
+
+        func runOneReactionProgressReaction() {
+            reactionProgressModel.startReactionFromExisting(
+                consuming: [
+                    (.knownReactant, 1),
+                    (.unknownReactant, unknownReactantCoeff)
+                ],
+                producing: [.product],
+                eagerReaction: true
+            )
+        }
+
+        func runAllReactionProgressReactions(duration: TimeInterval) {
+            reactionProgressModel.startReactionFromExisting(
+                consuming: [
+                    (.knownReactant, 1),
+                    (.unknownReactant, unknownReactantCoeff)
+                ],
+                producing: [.product],
+                count: reactionsToRun,
+                duration: duration,
+                eagerReaction: true
+            )
+        }
     }
 }

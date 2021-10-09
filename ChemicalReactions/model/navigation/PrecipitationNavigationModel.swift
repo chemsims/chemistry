@@ -17,7 +17,7 @@ struct PrecipitationNavigationModel {
     }
 
     private static let states: [PrecipitationScreenState] = [
-        SetStatement(statements.intro),
+        ChooseReaction(statements.intro),
         StopInput(\.explainPrecipitation),
         SetStatement(statements.explainUnknownMetal),
         InstructToSetWaterLevel(statements.instructToSetWaterLevel),
@@ -55,7 +55,7 @@ class PrecipitationScreenState: ScreenState, SubState {
 
     func nextStateAutoDispatchDelay(model: PrecipitationScreenViewModel) -> Double? {
         nil
-}
+    }
 }
 
 private class SetStatement: PrecipitationScreenState {
@@ -74,6 +74,17 @@ private class SetStatement: PrecipitationScreenState {
 
     override func apply(on model: PrecipitationScreenViewModel) {
         model.statement = getStatement(model)
+    }
+}
+
+private class ChooseReaction: SetStatement {
+    override func apply(on model: PrecipitationScreenViewModel) {
+        super.apply(on: model)
+        model.input = .selectReaction
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.input = nil
     }
 }
 

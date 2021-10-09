@@ -23,4 +23,10 @@ protocol PrecipitationComponentsReaction {
     func finalCoords(for molecule: PrecipitationComponents.Molecule) -> [GridCoordinate]
 
     var precipitate: GrowingPolygon { get }
+
+    var reactionsToRun: Int { get }
+
+    func runOneReactionProgressReaction()
+
+    func runAllReactionProgressReactions(duration: TimeInterval)
 }

@@ -309,15 +309,95 @@ class PrecipitationComponentsTests: XCTestCase {
             initialCoords.coords(at: t2).count
         )
     }
+
+    func testRPMoleculesOfUnknownReactantIsSameAsKnownReactantAtStartOfFinalReactionForUnitCoefficient() {
+        let model = PrecipitationComponents()
+        model.add(reactant: .known, count: 34)
+        model.goNextTo(phase: .addUnknownReactant)
+        model.add(reactant: .unknown, count: 15)
+        model.goNextTo(phase: .runReaction)
+        model.completeReaction()
+        model.goNextTo(phase: .addExtraUnknownReactant)
+        while (model.canAdd(reactant: .unknown)) {
+            model.add(reactant: .unknown, count: 1)
+        }
+
+        let knownCount = model.reactionProgressModel.moleculeCounts(ofType: .knownReactant)
+        let unknownCount = model.reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
+
+        XCTAssertEqual(unknownCount, knownCount)
+    }
+
+    func testRPMoleculesOfUnknownReactantIsDoubleKnownReactantAtStartOfFinalReactionForDoubleCoefficient() {
+        let model = PrecipitationComponents(unknownReactantCoeff: 2)
+        model.add(reactant: .known, count: 34)
+        model.goNextTo(phase: .addUnknownReactant)
+        model.add(reactant: .unknown, count: 16)
+        model.goNextTo(phase: .runReaction)
+        model.completeReaction()
+        model.goNextTo(phase: .addExtraUnknownReactant)
+        while (model.canAdd(reactant: .unknown)) {
+            model.add(reactant: .unknown, count: 1)
+        }
+
+        let knownCount = model.reactionProgressModel.moleculeCounts(ofType: .knownReactant)
+        let unknownCount = model.reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
+
+        XCTAssertEqual(unknownCount, 2 * knownCount)
+    }
+
+    func testReactantsHaveNoReactionProgressMoleculesAtStartOfFinalReaction() {
+        let model = PrecipitationComponents()
+        model.add(reactant: .known, count: 39)
+        model.goNextTo(phase: .addUnknownReactant)
+        model.add(reactant: .unknown, count: 21)
+        model.goNextTo(phase: .runReaction)
+        model.completeReaction()
+        model.goNextTo(phase: .addExtraUnknownReactant)
+        while (model.canAdd(reactant: .unknown)) {
+            model.add(reactant: .unknown, count: 1)
+        }
+        model.goNextTo(phase: .runFinalReaction)
+        model.completeReaction()
+
+        let knownCount = model.reactionProgressModel.moleculeCounts(ofType: .knownReactant)
+        let unknownCount = model.reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
+
+        XCTAssertEqual(knownCount, 0)
+        XCTAssertEqual(unknownCount, 0)
+    }
 }
 
 private extension PrecipitationComponents {
-    convenience init() {
+    convenience init(unknownReactantCoeff: Int = 1) {
         self.init(
-            reaction: .availableReactionsWithRandomMetals().first!,
+            reaction: .init(unknownReactantCoeff: unknownReactantCoeff),
             rows: 10,
             cols: 10,
-            volume: 0.5
+            volume: 0.5,
+            settings: .init(
+                minConcentrationOfKnownReactantPostFirstReaction: 0,
+                minConcentrationOfUnknownReactantToReact: 0
+            )
+        )
+    }
+}
+
+private extension PrecipitationReaction {
+    init(unknownReactantCoeff: Int) {
+        let first = Self.availableReactionsWithRandomMetals().first!
+        self.init(
+            knownReactant: first.knownReactant,
+            unknownReactant: .init(
+                latterPart: first.unknownReactant.latterPart,
+                state: first.unknownReactant.state,
+                latterPartMolarMass: first.unknownReactant.latterPartMolarMass,
+                metal: first.unknownReactant.metal,
+                metalAtomCount: first.unknownReactant.metalAtomCount,
+                coeff: unknownReactantCoeff
+            ),
+            product: first.product,
+            secondaryProduct: first.secondaryProduct
         )
     }
 }

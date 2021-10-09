@@ -11,12 +11,14 @@ extension PrecipitationComponents {
         init(
             unknownReactantCoeff: Int,
             grid: BeakerGrid,
-            settings: PrecipitationComponents.Settings,
-            precipitate: GrowingPolygon
+            reactionProgressModel: ReactionProgressModel,
+            precipitate: GrowingPolygon,
+            settings: PrecipitationComponents.Settings
         ) {
             self.unknownReactantCoeff = unknownReactantCoeff
             self.grid = grid
             self.settings = settings
+            self.reactionProgressModel = reactionProgressModel
             self.precipitate = precipitate
 
             let (min, max) = Self.inputLimits(
@@ -35,6 +37,8 @@ extension PrecipitationComponents {
         let unknownReactantCoeff: Int
         let grid: BeakerGrid
         let settings: PrecipitationComponents.Settings
+
+        let reactionProgressModel: ReactionProgressModel
         var precipitate: GrowingPolygon
         private var underlying: LimitedGridCoords
 
@@ -50,6 +54,11 @@ extension PrecipitationComponents {
                 return
             }
             underlying.add(count: count)
+            reactionProgressModel.addMolecules(
+                .knownReactant,
+                concentration: underlying.concentration,
+                duration: settings.addMoleculeReactionProgressDuration
+            )
         }
 
         func canAdd(reactant: PrecipitationComponents.Reactant) -> Bool {
@@ -64,7 +73,7 @@ extension PrecipitationComponents {
 
 extension PrecipitationComponents.KnownReactantPreparation {
 
-    fileprivate static func inputLimits(
+    static func inputLimits(
         unknownReactantCoeff: Int,
         grid: BeakerGrid,
         settings: PrecipitationComponents.Settings

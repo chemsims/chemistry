@@ -11,15 +11,20 @@ extension PrecipitationComponents {
         init(
             previous: InitialReaction,
             unknownReactantCoeff: Int,
-            grid: BeakerGrid
+            grid: BeakerGrid,
+            settings: Settings
         ) {
             self.previous = previous
+            self.reactionProgressModel = previous.reactionProgressModel.copy()
             self.precipitate = previous.precipitate
+            self.settings = settings
 
             let productCoords = previous.finalCoords(for: .product)
             let knownCoords = previous.finalCoords(for: .knownReactant)
 
             let unknownRequiredToConsumeAllOfKnown = unknownReactantCoeff * knownCoords.count
+            let knownRPMolecules = reactionProgressModel.moleculeCounts(ofType: .knownReactant)
+            let unknownRPMoleculesRequired = unknownReactantCoeff * knownRPMolecules
 
             self.underlying = LimitedGridCoords(
                 grid: grid,
@@ -28,9 +33,17 @@ extension PrecipitationComponents {
                 minToAdd: unknownRequiredToConsumeAllOfKnown,
                 maxToAdd: unknownRequiredToConsumeAllOfKnown
             )
+            self.reactionProgressCoordCount = LinearEquation(
+                x1: 0,
+                y1: 0,
+                x2: CGFloat(unknownRequiredToConsumeAllOfKnown),
+                y2: CGFloat(unknownRPMoleculesRequired)
+            )
         }
 
+        let reactionProgressModel: ReactionProgressModel
         var precipitate: GrowingPolygon
+        let settings: Settings
         private let previous: InitialReaction
         private var underlying: LimitedGridCoords
 
@@ -46,6 +59,20 @@ extension PrecipitationComponents {
                 return
             }
             underlying.add(count: count)
+
+            let currentRPCount = reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
+            let desiredRPCount = reactionProgressCoordCount.getY(
+                at: CGFloat(underlying.coords.count)
+            ).roundedInt()
+
+            let deficit = desiredRPCount - currentRPCount
+            if deficit > 0 {
+                reactionProgressModel.addMolecules(
+                    .unknownReactant,
+                    count: deficit,
+                    duration: settings.addMoleculeReactionProgressDuration
+                )
+            }
         }
 
         func canAdd(reactant: Reactant) -> Bool {
@@ -56,5 +83,6 @@ extension PrecipitationComponents {
             reactant != .unknown || underlying.hasAddedEnough
         }
 
+        private let reactionProgressCoordCount: Equation
     }
 }

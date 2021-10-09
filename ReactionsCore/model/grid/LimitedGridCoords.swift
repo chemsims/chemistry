@@ -2,7 +2,7 @@
 // Reactions App
 //
 
-import Foundation
+import CoreGraphics
 
 public struct LimitedGridCoords {
 
@@ -42,6 +42,10 @@ public struct LimitedGridCoords {
             rows: grid.rows,
             avoiding: otherCoords
         )
+    }
+
+    public var concentration: CGFloat {
+        grid.concentration(count: coords.count)
     }
 
     public var hasAddedEnough: Bool {
