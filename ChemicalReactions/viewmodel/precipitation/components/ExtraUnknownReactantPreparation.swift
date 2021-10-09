@@ -80,7 +80,7 @@ extension PrecipitationComponents {
         }
 
         func hasAddedEnough(of reactant: Reactant) -> Bool {
-            reactant != .unknown || underlying.hasAddedEnough
+            reactant != .unknown || underlying.hasAddedEnough || underlying.isOutOfSpace
         }
 
         private let reactionProgressCoordCount: Equation

@@ -76,35 +76,14 @@ extension PrecipitationComponents.UnknownReactantPreparation {
         grid: BeakerGrid,
         settings: PrecipitationComponents.Settings
     ) -> (min: Int, max: Int) {
-        let min = minToAdd(grid: grid, settings: settings)
-        let max = maxToAdd(
+
+        let model = UnknownReactantPrepInputLimits(
             unknownReactantCoeff: unknownReactantCoeff,
             knownReactantCount: knownReactantCount,
             grid: grid,
             settings: settings
         )
-        return (min: min, max: max)
-    }
 
-    static func minToAdd(
-        grid: BeakerGrid,
-        settings: PrecipitationComponents.Settings
-    ) -> Int {
-        grid.count(
-            concentration: settings.minConcentrationOfUnknownReactantToReact
-        )
-    }
-
-    static func maxToAdd(
-        unknownReactantCoeff: Int,
-        knownReactantCount: Int,
-        grid: BeakerGrid,
-        settings: PrecipitationComponents.Settings
-    ) -> Int {
-        let minKnownReactant = grid.count(
-            concentration: settings.minConcentrationOfKnownReactantPostFirstReaction
-        )
-        let maxKnownReactantToConsume = knownReactantCount - minKnownReactant
-        return maxKnownReactantToConsume * unknownReactantCoeff
+        return (min: model.min, max: model.max)
     }
 }

@@ -55,4 +55,9 @@ public struct LimitedGridCoords {
     public var canAdd: Bool {
         coords.count < maxToAdd
     }
+
+    public var isOutOfSpace: Bool {
+        let totalCount = coords.count + otherCoords.count
+        return totalCount >= grid.size
+    }
 }
