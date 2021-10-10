@@ -87,7 +87,7 @@ extension PrecipitationScreenViewModel {
         case let .addReactant(type):
             return !components.hasAddedEnough(of: type)
         case .weighProduct:
-            return true
+            return precipitatePosition == .beaker
         default:
             return false
         }

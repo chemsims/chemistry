@@ -251,6 +251,7 @@ private class EndInitialReaction: SetStatement {
             model.components.completeReaction()
         }
         model.input = .weighProduct
+        model.precipitatePosition = .beaker
         model.beakerView = .macroscopic
     }
 
