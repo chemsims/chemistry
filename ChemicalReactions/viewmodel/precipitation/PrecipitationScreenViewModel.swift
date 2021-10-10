@@ -65,19 +65,29 @@ class PrecipitationScreenViewModel: ObservableObject {
 // MARK: - Navigation
 extension PrecipitationScreenViewModel {
     func next() {
-        if !nextIsDisabled {
-            navigation.next()
-        }
+        doGoNext(force: false)
     }
 
     func back() {
         navigation.back()
     }
 
+    func didWeighProduct() {
+        doGoNext(force: true)
+    }
+
+    private func doGoNext(force: Bool) {
+        if force || !nextIsDisabled {
+            navigation.next()
+        }
+    }
+
     var nextIsDisabled : Bool {
         switch input {
         case let .addReactant(type):
             return !components.hasAddedEnough(of: type)
+        case .weighProduct:
+            return true
         default:
             return false
         }

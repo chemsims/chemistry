@@ -148,6 +148,7 @@ struct PrecipitationBeaker: View {
             let isOverlapping = precipitateGeometry.isOverlappingScales(offset: gesture.translation)
             if isOverlapping {
                 model.precipitatePosition = .scales
+                model.didWeighProduct()
             } else {
                 model.precipitatePosition = .beaker
             }

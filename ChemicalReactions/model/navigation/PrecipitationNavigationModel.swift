@@ -267,6 +267,7 @@ private class PostWeighingProduct: PrecipitationScreenState {
         let productMass = components.productMassProduced.getY(at: components.reactionProgress)
         let productMoles = components.productMolesProduced.getY(at: components.reactionProgress)
 
+        model.input = nil
         model.statement = statements.showWeightOfProduct(
             productGrams: productMass,
             productMoles: productMoles,
