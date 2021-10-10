@@ -23,7 +23,7 @@ struct PrecipitationReactionDefinition: View {
 
     private var unknownReactant: some View {
         TextLinesView(
-            line: reaction.unknownReactant.nameWithState(showMetal: showMetal),
+            line: reaction.unknownReactant.nameWithState(showMetal: showMetal, emphasiseMetal: true),
             fontSize: fontSize
         )
     }
@@ -44,7 +44,7 @@ struct PrecipitationReactionDefinition: View {
 
     private var secondaryProduct: some View {
         TextLinesView(
-            line: reaction.secondaryProduct.nameWithState(showMetal: showMetal),
+            line: reaction.secondaryProduct.nameWithState(showMetal: showMetal, emphasiseMetal: true),
             fontSize: fontSize
         )
     }

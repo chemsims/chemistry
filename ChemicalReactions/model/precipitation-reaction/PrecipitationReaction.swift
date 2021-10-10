@@ -90,19 +90,22 @@ extension PrecipitationElementWithUnknownMetal {
         nameWithState(showMetal: true).asString
     }
 
-    func nameWithState(showMetal: Bool) -> TextLine {
-        name(showMetal: showMetal) + "_\(state.symbol)_"
+    /// - Parameter emphasiseMetal: Whether to emphasise the metal element, when the metal is shown.
+    func nameWithState(showMetal: Bool, emphasiseMetal: Bool = false) -> TextLine {
+        name(showMetal: showMetal, emphasiseMetal: emphasiseMetal) + "_\(state.symbol)_"
     }
 
-    func name(showMetal: Bool) -> TextLine {
+    /// - Parameter emphasiseMetal: Whether to emphasise the metal element, when the metal is shown.
+    func name(showMetal: Bool, emphasiseMetal: Bool = false) -> TextLine {
         let coeffNum = coeff == 1 ? "" : "\(coeff)"
-        let metal = showMetal ? metalStr : "M"
+        let metal = showMetal ? metalStr(emphasise: emphasiseMetal) : "M"
         return "\(coeffNum)\(metal)" + latterPart
     }
 
-    private var metalStr: String {
+    private func metalStr(emphasise: Bool) -> String {
         let countSuffix = metalAtomCount == 1 ? "" : "_\(metalAtomCount)_"
-        return "\(metal.rawValue)\(countSuffix)"
+        let emphasis = emphasise ? "*" : ""
+        return "\(emphasis)\(metal.rawValue)\(emphasis)\(countSuffix)"
     }
 }
 

@@ -45,7 +45,7 @@ class PrecipitationScreenViewModel: ObservableObject {
             setComponents()
         }
     }
-    @Published var showUnknownMetal = false
+    @Published var showUnknownMetal = true
     @Published var beakerView = BeakerView.microscopic
     @Published var precipitatePosition = PrecipitatePosition.beaker
 
@@ -104,8 +104,7 @@ extension PrecipitationScreenViewModel {
             beakerVolume: ChemicalReactionsSettings.rowsToVolume.getY(at: rows),
             knownReactant: chosenReaction.knownReactant.name.asString,
             product: chosenReaction.product.name.asString,
-            unknownReactant: chosenReaction.unknownReactant.name(showMetal: showUnknownMetal).asString,
-            highlightUnknownReactantFirstTerm: false,
+            unknownReactant: chosenReaction.unknownReactant.name(showMetal: showUnknownMetal, emphasiseMetal: true),
             knownReactantMolarity: components.knownReactantInitialMolarity,
             knownReactantMoles: components.knownReactantInitialMoles,
             productMolarMass: chosenReaction.product.molarMass,

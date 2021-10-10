@@ -4,6 +4,7 @@
 
 import ReactionsCore
 import SwiftUI
+import ReactionRates
 
 struct PrecipitationEquationView: View {
 
@@ -39,9 +40,7 @@ extension PrecipitationEquationView {
 
         let knownReactant: String
         let product: String
-        let unknownReactant: String
-
-        let highlightUnknownReactantFirstTerm: Bool
+        let unknownReactant: TextLine
 
         let knownReactantMolarity: CGFloat
         let knownReactantMoles: CGFloat
@@ -215,7 +214,6 @@ private struct UnknownReactantMoles: View {
             TermView(
                 base: "n",
                 subTerm: data.unknownReactant,
-                highlightFirstSubCharacter: data.highlightUnknownReactantFirstTerm,
                 underlineTerm: "react"
             )
         }
@@ -256,22 +254,19 @@ private struct UnknownReactantMolarMass: View {
         HStack(spacing: termHSpacing) {
             TermView(
                 base: "MM",
-                subTerm: data.unknownReactant,
-                highlightFirstSubCharacter: data.highlightUnknownReactantFirstTerm
+                subTerm: data.unknownReactant
             )
             FixedText("=")
             VStack(spacing: fractionVSpacing) {
                 TermView(
                     base: "m",
-                    subTerm: data.unknownReactant,
-                    highlightFirstSubCharacter: data.highlightUnknownReactantFirstTerm
+                    subTerm: data.unknownReactant
                 )
                 Rectangle()
                     .frame(width: 100, height: 2)
                 TermView(
                     base: "n",
                     subTerm: data.unknownReactant,
-                    highlightFirstSubCharacter: data.highlightUnknownReactantFirstTerm,
                     underlineTerm: "react"
                 )
             }
@@ -310,18 +305,25 @@ private struct TermView: View {
     init(
         base: String,
         subTerm: String,
-        highlightFirstSubCharacter: Bool = false,
+        underlineTerm: String? = nil
+    ) {
+        self.base = base
+        self.subTerm = TextLine(subTerm)
+        self.underlineTerm = underlineTerm
+    }
+
+    init(
+        base: String,
+        subTerm: TextLine,
         underlineTerm: String? = nil
     ) {
         self.base = base
         self.subTerm = subTerm
-        self.highlightFirstSubCharacter = highlightFirstSubCharacter
         self.underlineTerm = underlineTerm
     }
 
     let base: String
-    let subTerm: String
-    let highlightFirstSubCharacter: Bool
+    let subTerm: TextLine
     let underlineTerm: String?
 
     var body: some View {
@@ -342,13 +344,16 @@ private struct TermView: View {
         .lineLimit(1)
     }
 
-    @ViewBuilder
     private var subTermText: some View {
-        if let first = subTerm.first {
-            Text(String(first))
-                .foregroundColor(highlightFirstSubCharacter ? .orangeAccent : .black)
-                + Text(subTerm.dropFirst())
-        }
+        subTerm.content.reduce(Text(""), {
+            $0 + text($1)
+        })
+    }
+
+    // We only support text emphasis for the sub text, and ignore everything else
+    private func text(_ segment: TextSegment) -> Text {
+        Text(segment.content)
+            .foregroundColor(segment.emphasised ? .orangeAccent : .black)
     }
 }
 
@@ -360,7 +365,6 @@ struct PrecipitationEquationView_Previews: PreviewProvider {
                 knownReactant: "CaCl2",
                 product: "CaCO3",
                 unknownReactant: "M2CaC3",
-                highlightUnknownReactantFirstTerm: false,
                 knownReactantMolarity: 0.23,
                 knownReactantMoles: 0.03,
                 productMolarMass: 187,
