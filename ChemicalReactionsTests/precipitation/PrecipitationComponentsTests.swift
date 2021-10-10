@@ -24,6 +24,31 @@ class PrecipitationComponentsTests: XCTestCase {
         XCTAssertEqual(model.knownReactantInitialMoles, expectedMoles)
     }
 
+    func testKnownMolarityAndMolesStayTheSameThroughAllReactions() {
+        let model = PrecipitationComponents()
+        model.add(reactant: .known, count: 20)
+
+        let expectedMoles = model.volume * 0.2
+        func checkMolesAndMolarity() {
+            XCTAssertEqual(model.knownReactantInitialMolarity, 0.2)
+            XCTAssertEqual(model.knownReactantInitialMoles, expectedMoles)
+        }
+
+        model.goNextTo(phase: .addUnknownReactant)
+        model.add(reactant: .unknown, count: 10)
+        checkMolesAndMolarity()
+
+        model.goNextTo(phase: .runReaction)
+        checkMolesAndMolarity()
+
+        model.goNextTo(phase: .addExtraUnknownReactant)
+        checkMolesAndMolarity()
+        model.add(reactant: .unknown, count: 10)
+
+        model.goNextTo(phase: .runFinalReaction)
+        checkMolesAndMolarity()
+    }
+
     func testKnownReactantCoordinatesAreResetAfterAddingKnownReactantAndResettingPhase() {
         let model = PrecipitationComponents()
         model.add(reactant: .known, count: 5)

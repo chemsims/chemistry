@@ -212,9 +212,8 @@ extension PrecipitationComponents {
 extension PrecipitationComponents {
 
     var knownReactantInitialMolarity: CGFloat {
-        grid.concentration(
-            count: coords(for: .knownReactant).coordinates.count
-        )
+        let coords = knownReactantPrep.initialCoords(for: .knownReactant)
+        return grid.concentration(count: coords.count)
     }
 
     var knownReactantInitialMoles: CGFloat {
