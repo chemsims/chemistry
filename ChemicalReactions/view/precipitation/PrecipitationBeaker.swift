@@ -139,13 +139,14 @@ struct PrecipitationBeaker: View {
             guard model.input == .weighProduct else {
                 return
             }
-            offsetState = gesture.translation
+            offsetState = precipitateGeometry.limitedOffset(translation: gesture.translation)
         }
         .onEnded { gesture in
             guard model.input == .weighProduct else {
                 return
             }
-            let isOverlapping = precipitateGeometry.isOverlappingScales(offset: gesture.translation)
+            let limitedOffset = precipitateGeometry.limitedOffset(translation: gesture.translation)
+            let isOverlapping = precipitateGeometry.isOverlappingScales(offset: limitedOffset)
             if isOverlapping {
                 model.precipitatePosition = .scales
                 model.didWeighProduct()
@@ -262,6 +263,12 @@ fileprivate struct PrecipitateGeometry {
     func isOverlappingScales(offset: CGSize) -> Bool {
         let offsetRect = precipitateRect.offsetBy(dx: offset.width, dy: offset.height)
         return offsetRect.intersects(layout.scalesRect)
+    }
+
+    func limitedOffset(translation: CGSize) -> CGSize {
+        let maxWidthOffset = layout.precipitateMaxDragX - position.x
+        let limitedWidth = min(translation.width, maxWidthOffset)
+        return CGSize(width: limitedWidth, height: translation.height)
     }
 
     var position: CGPoint {

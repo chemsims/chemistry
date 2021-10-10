@@ -269,6 +269,10 @@ struct PrecipitationScreenLayout {
         )
     }
 
+    var precipitateMaxDragX: CGFloat {
+        common.totalBeakerAreaWidth
+    }
+
     private var bottomOfBeakerY: CGFloat {
         common.beakerAreaHeight - beakerToggleTextHeight
     }
