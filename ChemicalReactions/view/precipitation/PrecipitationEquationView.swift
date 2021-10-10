@@ -31,7 +31,7 @@ struct PrecipitationEquationView: View {
     }
 }
 
-private let NaturalWidth: CGFloat = 300
+private let NaturalWidth: CGFloat = 570
 private let NaturalHeight: CGFloat = 450
 
 extension PrecipitationEquationView {
@@ -91,7 +91,7 @@ private struct SizedPrecipitationEquationView: View {
             }
         }
         .font(.system(size: EquationSizing.fontSize))
-        .minimumScaleFactor(0.5)
+        .minimumScaleFactor(0.25)
     }
 }
 
@@ -101,31 +101,38 @@ private struct KnownReactantMolesToVolume: View {
     let showData: Bool
 
     var body: some View {
-        VStack(alignment: .leading, spacing: relatedEquationVSpacing) {
-            filled
-            blank
+        HStack(spacing: termHSpacing) {
+            lhs
+            VStack(alignment: .leading, spacing: relatedEquationVSpacing) {
+                filled
+                blank
+            }
+        }
+    }
+
+    private var lhs: some View {
+        VStack(spacing: relatedEquationVSpacing) {
+            TermView(base: "n", subTerm: data.knownReactant)
+            PlaceholderTerm(
+                value: showData ? data.knownReactantMoles.str(decimals: 2) : nil,
+                emphasise: true
+            )
         }
     }
 
     private var filled: some View {
         HStack(spacing: termHSpacing) {
-            TermView(base: "n", subTerm: data.knownReactant)
-                .frame(width: EquationSizing.boxWidth)
             FixedText("=")
             FixedText("V")
                 .frame(width: EquationSizing.boxWidth)
             FixedText("x")
             TermView(base: "M", subTerm: data.knownReactant)
-                .frame(width: EquationSizing.boxWidth)
+//                .frame(width: EquationSizing.boxWidth)
         }
     }
 
     private var blank: some View {
         HStack(spacing: termHSpacing) {
-            PlaceholderTerm(
-                value: showData ? data.knownReactantMoles.str(decimals: 2) : nil,
-                emphasise: true
-            )
             FixedText("=")
             FixedText(data.beakerVolume.str(decimals: 2))
                 .foregroundColor(.orangeAccent)
@@ -330,6 +337,7 @@ private struct TermView: View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
                 FixedText(base)
+                    .fixedSize()
                     .font(.system(size: EquationSizing.fontSize))
                 subTermText
                     .fixedSize()
@@ -342,6 +350,7 @@ private struct TermView: View {
             }
         }
         .lineLimit(1)
+        .minimumScaleFactor(0.1)
     }
 
     private var subTermText: some View {
@@ -359,24 +368,36 @@ private struct TermView: View {
 
 struct PrecipitationEquationView_Previews: PreviewProvider {
     static var previews: some View {
+        equationView(reaction: .availableReactionsWithRandomMetals()[0])
+        equationView(reaction: .availableReactionsWithRandomMetals()[1])
+    }
+
+    private static func equationView(reaction: PrecipitationReaction) -> some View {
         SizedPrecipitationEquationView(
-            data: .init(
-                beakerVolume: 0.4,
-                knownReactant: "CaCl2",
-                product: "CaCO3",
-                unknownReactant: "M2CaC3",
-                knownReactantMolarity: 0.23,
-                knownReactantMoles: 0.03,
-                productMolarMass: 187,
-                productMoles: ConstantEquation(value: 0.45),
-                productMass: ConstantEquation(value: 1.23),
-                unknownReactantMolarMass: 100,
-                unknownReactantMoles: ConstantEquation(value: 0.23),
-                unknownReactantMass: ConstantEquation(value: 0.4)
-            ),
+            data: data(reaction: reaction),
             reactionProgress: 0,
             state: .blank
         )
+        .border(Color.red)
+        .frame(width: NaturalWidth, height: NaturalHeight)
+        .border(Color.black)
         .previewLayout(.sizeThatFits)
+    }
+
+    private static func data(reaction: PrecipitationReaction) -> PrecipitationEquationView.EquationData {
+        .init(
+            beakerVolume: 0.4,
+            knownReactant: reaction.knownReactant.name.asString,
+            product: reaction.product.name.asString,
+            unknownReactant: reaction.unknownReactant.name(showMetal: true, emphasiseMetal: true),
+            knownReactantMolarity: 0.23,
+            knownReactantMoles: 0.03,
+            productMolarMass: 187,
+            productMoles: ConstantEquation(value: 0.45),
+            productMass: ConstantEquation(value: 1.23),
+            unknownReactantMolarMass: 100,
+            unknownReactantMoles: ConstantEquation(value: 0.23),
+            unknownReactantMass: ConstantEquation(value: 0.4)
+        )
     }
 }

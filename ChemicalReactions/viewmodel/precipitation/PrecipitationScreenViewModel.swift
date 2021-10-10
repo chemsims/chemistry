@@ -45,7 +45,7 @@ class PrecipitationScreenViewModel: ObservableObject {
             setComponents()
         }
     }
-    @Published var showUnknownMetal = true
+    @Published var showUnknownMetal = false
     @Published var beakerView = BeakerView.microscopic
     @Published var precipitatePosition = PrecipitatePosition.beaker
 

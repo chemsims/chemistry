@@ -63,7 +63,7 @@ private struct SizedTable: View {
     private func rowView(row: Table.Row) -> some View {
         HStack(spacing: 0) {
             ForEach(0..<row.cells.count) { cellIndex in
-                cellView(content: row.cells[cellIndex])
+                cellView(content: row.emphasised ? row.cells[cellIndex].emphasised() : row.cells[cellIndex])
             }
         }
         .overlay(rowEmphasis(row: row))
