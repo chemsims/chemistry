@@ -32,7 +32,7 @@ struct PrecipitationEquationView: View {
 }
 
 private let NaturalWidth: CGFloat = 570
-private let NaturalHeight: CGFloat = 450
+private let NaturalHeight: CGFloat = 440
 
 extension PrecipitationEquationView {
     struct EquationData {
@@ -284,7 +284,7 @@ private struct UnknownReactantMolarMass: View {
         HStack(spacing: termHSpacing) {
             PlaceholderTerm(value: showData ? "\(data.unknownReactantMolarMass)" : nil)
             FixedText("=")
-            VStack(spacing: relatedEquationVSpacing) {
+            VStack(spacing: fractionVSpacing) {
                 AnimatingNumberPlaceholder(
                     showTerm: showData,
                     progress: reactionProgress,
@@ -376,7 +376,7 @@ struct PrecipitationEquationView_Previews: PreviewProvider {
         SizedPrecipitationEquationView(
             data: data(reaction: reaction),
             reactionProgress: 0,
-            state: .blank
+            state: .showAll
         )
         .border(Color.red)
         .frame(width: NaturalWidth, height: NaturalHeight)
