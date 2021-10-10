@@ -130,6 +130,14 @@ public struct DigitalScalesLayout {
     static let idealHeightToWidth: CGFloat = 1
 }
 
+extension DigitalScalesLayout {
+
+    /// Returns the top of the weighing area, as measured from the top of the frame
+    public var topOfWeighingArea: CGFloat {
+        containerSize.height - containerBaseHeight - platformSize.height
+    }
+}
+
 struct DigitalScales_Previews: PreviewProvider {
     static var previews: some View {
         DigitalScales(

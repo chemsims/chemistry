@@ -273,7 +273,7 @@ fileprivate struct PrecipitateGeometry {
 
     var position: CGPoint {
         if model.precipitatePosition == .scales {
-            return layout.scalesPosition
+            return positionOnScales
         }
         return layout.precipitatePositionInBeaker(rows: model.rows)
     }
@@ -289,7 +289,6 @@ fileprivate struct PrecipitateGeometry {
         let baseRect = components.precipitate.boundingRect
 
         let shapeWidth = layout.common.innerBeakerWidth
-        let shapeHeight = layout.common.waterHeight(rows: model.rows)
 
         let scaledSize = CGSize(
             width: shapeWidth * baseRect.size.width,
@@ -316,5 +315,43 @@ fileprivate struct PrecipitateGeometry {
         )
 
         return CGRect(origin: newOrigin, size: scaledSize)
+    }
+
+    /// We want the bottom of the `bounding` rect to be on top of the weighing scales area
+    private var positionOnScales: CGPoint {
+        let topOfWeighingAreaFromTopOfScales = layout.scalesLayout.topOfWeighingArea
+        let topOfWeighingAreaFromCenterOfScales = topOfWeighingAreaFromTopOfScales - (layout.scalesLayout.height / 2)
+        let topOfWeighingAreaPosition = layout.scalesPosition.offset(dx: 0, dy: topOfWeighingAreaFromCenterOfScales)
+
+        let scaledHeight = shapeHeight * components.precipitate.boundingRect.height
+
+        return topOfWeighingAreaPosition.offset(dx: 0, dy: -scaledHeight / 2)
+    }
+
+    private var scaledBaseRect: CGRect {
+        let baseRect = components.precipitate.boundingRect
+
+        let shapeWidth = layout.common.innerBeakerWidth
+        let shapeHeight = layout.common.waterHeight(rows: model.rows)
+
+        let scaledSize = CGSize(
+            width: shapeWidth * baseRect.size.width,
+            height: shapeHeight * baseRect.size.height
+        )
+
+        // Distance of precipitate rect origin from the shape origin (top left of the shape, not the center)
+        let scaledOriginInShape = CGPoint(
+            x: shapeWidth * baseRect.origin.x,
+            y: shapeHeight * baseRect.origin.y
+        )
+
+        return CGRect(
+            origin: scaledOriginInShape,
+            size: scaledSize
+        )
+    }
+
+    private var shapeHeight: CGFloat {
+        layout.common.waterHeight(rows: model.rows)
     }
 }
