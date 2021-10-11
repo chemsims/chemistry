@@ -687,6 +687,8 @@
 		57BDFF5226415E00001B97CC /* dummy-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5126415E00001B97CC /* dummy-quiz.csv */; };
 		57BDFF5826416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 57BDFF5726416CAA001B97CC /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		57C315C22631B58A0092C454 /* MoleculeArc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C315C12631B58A0092C454 /* MoleculeArc.swift */; };
+		57C4BC3527137C6B00411B49 /* PointEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C4BC3427137C6B00411B49 /* PointEquation.swift */; };
+		57C4BC3727137D0300411B49 /* PolygonEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C4BC3627137D0300411B49 /* PolygonEquationView.swift */; };
 		57C9F11E270E182300F8B1A6 /* UnknownReactantPreparation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C9F11D270E182300F8B1A6 /* UnknownReactantPreparation.swift */; };
 		57C9F120270E186800F8B1A6 /* InitialReaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C9F11F270E186800F8B1A6 /* InitialReaction.swift */; };
 		57C9F122270E18A800F8B1A6 /* PrecipitationComponentTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C9F121270E18A800F8B1A6 /* PrecipitationComponentTypes.swift */; };
@@ -1477,6 +1479,8 @@
 		57C315B72631B37D0092C454 /* AnimatingReactionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingReactionDefinition.swift; sourceTree = "<group>"; };
 		57C315C12631B58A0092C454 /* MoleculeArc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeArc.swift; sourceTree = "<group>"; };
 		57C3A8262563248F00EE753E /* FirstOrderReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderReactionScreen.swift; sourceTree = "<group>"; };
+		57C4BC3427137C6B00411B49 /* PointEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointEquation.swift; sourceTree = "<group>"; };
+		57C4BC3627137D0300411B49 /* PolygonEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolygonEquationView.swift; sourceTree = "<group>"; };
 		57C9F11D270E182300F8B1A6 /* UnknownReactantPreparation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnknownReactantPreparation.swift; sourceTree = "<group>"; };
 		57C9F11F270E186800F8B1A6 /* InitialReaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialReaction.swift; sourceTree = "<group>"; };
 		57C9F121270E18A800F8B1A6 /* PrecipitationComponentTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationComponentTypes.swift; sourceTree = "<group>"; };
@@ -3126,6 +3130,7 @@
 				5786BD13267B51CD001A165C /* TestTubeContainer.swift */,
 				5786BD18267B6AF4001A165C /* ConeExtensions.swift */,
 				57BBC805270DAA4E004B6624 /* Polygon.swift */,
+				57C4BC3627137D0300411B49 /* PolygonEquationView.swift */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
@@ -3711,6 +3716,7 @@
 			isa = PBXGroup;
 			children = (
 				57BBC808270DB235004B6624 /* GrowingPolygon.swift */,
+				57C4BC3427137C6B00411B49 /* PointEquation.swift */,
 			);
 			path = shapes;
 			sourceTree = "<group>";
@@ -5265,6 +5271,7 @@
 				578B1700261864CB00D8079F /* CoreMotionPositionViewModel.swift in Sources */,
 				575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */,
 				572B1A802675F42800302B8E /* ReactionProgressChartViewModelDelegate.swift in Sources */,
+				57C4BC3527137C6B00411B49 /* PointEquation.swift in Sources */,
 				573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */,
 				57438A42260A2DC7005E3888 /* ScreenProvider.swift in Sources */,
 				57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */,
@@ -5346,6 +5353,7 @@
 				57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */,
 				578B17412618D1AB00D8079F /* MoleculeGridShape.swift in Sources */,
 				5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */,
+				57C4BC3727137D0300411B49 /* PolygonEquationView.swift in Sources */,
 				575A887D25E4366900AEE448 /* CircleIconButton.swift in Sources */,
 				57072BE426C9406200DC6F0E /* MoleculeConcentration.swift in Sources */,
 				57072BE626C954DA00DC6F0E /* MoleculeScales.swift in Sources */,

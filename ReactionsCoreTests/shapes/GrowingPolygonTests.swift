@@ -8,49 +8,80 @@ import XCTest
 class GrowingPolygonTests: XCTestCase {
 
     func testGrowingADiamond() {
-        let model = GrowingPolygon(
-            directedPoints: [
-                .init(point: CGPoint(x: 0.5, y: 0.5), angle: .zero), // right
-                .init(point: CGPoint(x: 0.5, y: 0.5), angle: .degrees(90)), // bottom
-                .init(point: CGPoint(x: 0.5, y: 0.5), angle: .degrees(180)), // left
-                .init(point: CGPoint(x: 0.5, y: 0.5), angle: .degrees(270)) // top
-            ]
+        let center = CGPoint(x: 0.5, y: 0.5)
+        let model = GrowingPolygon3(
+            center: center,
+            points: 4,
+            pointGrowth: 0.5,
+            firstPointAngle: .zero
         )
 
-        let grown = model.grow(exactly: 0.5).points
+        XCTAssertEqual(model.points.count, 4)
 
-        // right
-        XCTAssertEqualWithTolerance(grown[0].x, 1)
-        XCTAssertEqualWithTolerance(grown[0].y, 0.5)
+        model.points.forEach { point in
+            XCTAssertEqual(point.getPoint(at: 0), center)
+        }
 
-        // bottom
-        XCTAssertEqualWithTolerance(grown[1].x, 0.5)
-        XCTAssertEqualWithTolerance(grown[1].y, 1)
+        func checkMatchingPoint(_ expected: CGPoint) {
+            let found = model.points.filter { point in
+                pointsAreEqual(point.getPoint(at: 1), expected)
+            }
+            XCTAssertEqual(found.count, 1)
+        }
 
-        // left
-        XCTAssertEqualWithTolerance(grown[2].x, 0)
-        XCTAssertEqualWithTolerance(grown[2].y, 0.5)
-
-        // top
-        XCTAssertEqualWithTolerance(grown[3].x, 0.5)
-        XCTAssertEqualWithTolerance(grown[3].y, 0)
+        checkMatchingPoint(CGPoint(x: 0.5, y: 0)) // top
+        checkMatchingPoint(CGPoint(x: 1, y: 0.5)) // right
+        checkMatchingPoint(CGPoint(x: 0.5, y: 1)) // bottom
+        checkMatchingPoint(CGPoint(x: 0, y: 0.5)) // left
     }
 
-    func testGrowingPolygonDoesNotExceedLimits() {
-        let model = GrowingPolygon(
-            directedPoints: [
-                .init(point: CGPoint(x: 0.5, y: 0.5), angle: .degrees(45)), // bottom right
-                .init(point: CGPoint(x: 0.5, y: 0.5), angle: .degrees(135)), // bottom left
-                .init(point: CGPoint(x: 0.5, y: 0.5), angle: .degrees(225)), // top left
-                .init(point: CGPoint(x: 0.5, y: 0.5), angle: .degrees(315)) // top right
-            ]
+    func testGrowingPolygonDoesNotExceedLimits2() {
+        let model = GrowingPolygon3(
+            center: CGPoint(x: 0.5, y: 0.5),
+            points: 4,
+            pointGrowth: 10,
+            firstPointAngle: .degrees(45)
         )
-        let grown = model.grow(exactly: 10).points
 
-        XCTAssertEqual(grown[0], .init(x: 1, y: 1)) // bottom right
-        XCTAssertEqual(grown[1], .init(x: 0, y: 1)) // bottom left
-        XCTAssertEqual(grown[2], .init(x: 0, y: 0)) // top left
-        XCTAssertEqual(grown[3], .init(x: 1, y: 0)) // top right
+        func checkMatchingPoint(_ expected: CGPoint) {
+            let found = model.points.filter { point in
+                pointsAreEqual(point.getPoint(at: 1), expected)
+            }
+            XCTAssertEqual(found.count, 1)
+        }
+
+        checkMatchingPoint(CGPoint(x: 1, y: 1)) // bottom right
+        checkMatchingPoint(CGPoint(x: 0, y: 1)) // bottom left
+        checkMatchingPoint(CGPoint(x: 0, y: 0)) // top left
+        checkMatchingPoint(CGPoint(x: 1, y: 0)) // top right
     }
+
+    func testBoundingRect() {
+        let model = GrowingPolygon3(
+            center: CGPoint(x: 0.5, y: 0.5),
+            points: 4,
+            pointGrowth: 0.5,
+            firstPointAngle: .zero
+        )
+
+        let initialRect = model.boundingRect(at: 0)
+        XCTAssertEqual(initialRect.origin, CGPoint(x: 0.5, y: 0.5))
+        XCTAssertEqual(initialRect.size, .zero)
+
+        let finalRect = model.boundingRect(at: 1)
+        XCTAssertEqual(finalRect.origin, CGPoint(x: 0, y: 0))
+        XCTAssertEqual(finalRect.size, CGSize(width: 1, height: 1))
+    }
+
+    // Rounds the point values before comparing to account for
+    // differences in floating point arithmetic
+    private func pointsAreEqual(_ l: CGPoint, _ r: CGPoint) -> Bool {
+        func areEqual(_ l: CGFloat, _ r: CGFloat) -> Bool {
+            l.rounded(decimals: 5) == r.rounded(decimals: 5)
+        }
+
+        return areEqual(l.x, r.x) && areEqual(l.y, r.y)
+    }
+
 
 }
