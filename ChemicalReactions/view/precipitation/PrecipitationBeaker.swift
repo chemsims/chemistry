@@ -122,10 +122,11 @@ struct PrecipitationBeaker: View {
 
     private var precipitate: some View {
         PolygonEquationShape(
-            points: components.precipitate2.points,
+            points: components.precipitate.points,
             progress: components.reactionProgress
         )
         .foregroundColor(PrecipitationComponents.Molecule.product.color(reaction: model.chosenReaction))
+        .padding(.bottom, model.precipitatePosition == .beaker ? 2 : 0)
         .frame(
             width: layout.common.innerBeakerWidth,
             height: layout.common.waterHeight(rows: model.rows)
@@ -289,10 +290,48 @@ fileprivate struct PrecipitateGeometry {
     /// the frame of reference so we are measuring the origin from the parent view, rather than
     /// the containing shape.
     var precipitateRect: CGRect {
-        let baseRect = components.precipitate2.boundingRect(at: components.reactionProgress)
+        let boundingRect = scaledBoundingRect
 
-        let shapeWidth = layout.common.innerBeakerWidth
+        let shapeCenterFromParentView = position
+        let shapeOriginFromCenter = CGPoint(x: -shapeWidth / 2, y: -shapeHeight / 2)
 
+        // If you draw out these origins out as lines, it is clearer
+        // that we need to sum each 3 components. Imagine we are at
+        // the parent origin, we first move to the center. We then
+        // move to the shape origin, and finally to the precipitate
+        // rect origin.
+        let newOrigin = CGPoint(
+            x: shapeCenterFromParentView.x + shapeOriginFromCenter.x + boundingRect.origin.x,
+            y: shapeCenterFromParentView.y + shapeOriginFromCenter.y + boundingRect.origin.y
+        )
+
+        return CGRect(origin: newOrigin, size: boundingRect.size)
+    }
+
+    /// We want the bottom of the `bounding` rect to be on top of the weighing scales area
+    private var positionOnScales: CGPoint {
+        let topOfWeighingAreaFromTopOfScales = layout.scalesLayout.topOfWeighingArea
+        let topOfWeighingAreaFromCenterOfScales = topOfWeighingAreaFromTopOfScales - (layout.scalesLayout.height / 2)
+
+        // the position in the frame of reference of the containing view
+        // i.e. same FOR as containers & beakers for example
+        let topOfWeighingAreaPosition = layout.scalesPosition.offset(dx: 0, dy: topOfWeighingAreaFromCenterOfScales)
+
+        let boundingRect = scaledBoundingRect
+
+        // returning `topOfWeighingAreaPosition` would place the center of the shape
+        // containing the precipitate, at the top of the weighing area. Since we want the bottom
+        // of the bounding rect, we must offset by the distance between the center of the
+        // shape, and the bottom of the precipitate in the shape.
+        let deltaY = (shapeHeight / 2) - boundingRect.maxY
+
+        return topOfWeighingAreaPosition.offset(dx: 0, dy: deltaY)
+    }
+
+    // A rect surrounding the precipitate, in the frame of reference of the shape containing
+    // the precipitate. The rect is scaled into absolute values, rather than fractional values.
+    private var scaledBoundingRect: CGRect {
+        let baseRect = components.precipitate.boundingRect(at: components.reactionProgress)
         let scaledSize = CGSize(
             width: shapeWidth * baseRect.size.width,
             height: shapeHeight * baseRect.size.height
@@ -304,35 +343,14 @@ fileprivate struct PrecipitateGeometry {
             y: shapeHeight * baseRect.origin.y
         )
 
-        let shapeCenterFromParentView = position
-        let shapeOriginFromCenter = CGPoint(x: -shapeWidth / 2, y: -shapeHeight / 2)
-
-        // If you draw out these origins out as lines, it is clearer
-        // that we need to sum each 3 components. Imagine we are at
-        // the parent origin, we first move to the center. We then
-        // move to the shape origin, and finally to the precipitate
-        // rect origin.
-        let newOrigin = CGPoint(
-            x: shapeCenterFromParentView.x + shapeOriginFromCenter.x + scaledOriginInShape.x,
-            y: shapeCenterFromParentView.y + shapeOriginFromCenter.y + scaledOriginInShape.y
-        )
-
-        return CGRect(origin: newOrigin, size: scaledSize)
-    }
-
-    /// We want the bottom of the `bounding` rect to be on top of the weighing scales area
-    private var positionOnScales: CGPoint {
-        let topOfWeighingAreaFromTopOfScales = layout.scalesLayout.topOfWeighingArea
-        let topOfWeighingAreaFromCenterOfScales = topOfWeighingAreaFromTopOfScales - (layout.scalesLayout.height / 2)
-        let topOfWeighingAreaPosition = layout.scalesPosition.offset(dx: 0, dy: topOfWeighingAreaFromCenterOfScales)
-
-        let boundingRect = components.precipitate2.boundingRect(at: components.reactionProgress)
-        let scaledHeight = shapeHeight * boundingRect.height
-
-        return topOfWeighingAreaPosition.offset(dx: 0, dy: -scaledHeight / 2)
+        return CGRect(origin: scaledOriginInShape, size: scaledSize)
     }
 
     private var shapeHeight: CGFloat {
         layout.common.waterHeight(rows: model.rows)
+    }
+
+    private var shapeWidth: CGFloat {
+        layout.common.innerBeakerWidth
     }
 }

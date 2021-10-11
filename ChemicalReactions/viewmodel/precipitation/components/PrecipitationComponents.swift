@@ -28,11 +28,11 @@ class PrecipitationComponents: ObservableObject {
             reactionProgressModel: Self.initialReactionProgressModel(reaction: reaction),
             settings: settings
         )
-        self.precipitate2 = GrowingPolygon(
-            center: CGPoint(x: 0.5, y: 0.5),
-            steps: 4,
-            points: 7,
-            pointGrowth: 0.23..<0.48
+        self.precipitate = GrowingPolygon(
+            center: settings.precipitateCenter,
+            steps: settings.precipitateGrowthSteps,
+            points: settings.precipitatePoints,
+            pointGrowth: settings.precipitateGrowthMagnitude
         )
     }
 
@@ -44,7 +44,7 @@ class PrecipitationComponents: ObservableObject {
     let grid: BeakerGrid
     let settings: Settings
 
-    let precipitate2: GrowingPolygon
+    let precipitate: GrowingPolygon
 
     @Published private(set) var reactionProgress: CGFloat = 0
     @Published private(set) var phase = PrecipitationComponents.Phase.addKnownReactant
