@@ -78,7 +78,6 @@ private extension PrecipitationComponents.KnownReactantPreparation {
             reactionProgressModel: PrecipitationComponents.initialReactionProgressModel(
                 reaction: .availableReactionsWithRandomMetals().first!
             ),
-            precipitate: GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5)),
             settings: .init(
                 minConcentrationOfKnownReactantPostFirstReaction: 0,
                 minConcentrationOfUnknownReactantToReact: 0

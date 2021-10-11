@@ -16,7 +16,6 @@ extension PrecipitationComponents {
         ) {
             self.previous = previous
             self.reactionProgressModel = previous.reactionProgressModel.copy()
-            self.precipitate = previous.precipitate
             self.settings = settings
 
             let productCoords = previous.finalCoords(for: .product)
@@ -42,7 +41,6 @@ extension PrecipitationComponents {
         }
 
         let reactionProgressModel: ReactionProgressModel
-        var precipitate: GrowingPolygon
         let settings: Settings
         private let previous: InitialReaction
         private var underlying: LimitedGridCoords

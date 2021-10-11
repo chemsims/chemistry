@@ -35,13 +35,11 @@ extension PrecipitationComponents {
             self.initialProductCoords = initialProductCoords
             self.finalProductCoords = finalProductCoords
             self.reactionProgressModel = previous.reactionProgressModel.copy()
-            self.precipitate = previous.precipitate
         }
 
         let unknownReactantCoeff: Int
         let previous: PrecipitationComponents.ExtraUnknownReactantPreparation
         let reactionProgressModel: ReactionProgressModel
-        var precipitate: GrowingPolygon
 
         func initialCoords(for molecule: PrecipitationComponents.Molecule) -> [GridCoordinate] {
             if molecule == .product {

@@ -9,7 +9,7 @@ class GrowingPolygonTests: XCTestCase {
 
     func testGrowingADiamond() {
         let center = CGPoint(x: 0.5, y: 0.5)
-        let model = GrowingPolygon3(
+        let model = GrowingPolygon(
             center: center,
             points: 4,
             pointGrowth: 0.5,
@@ -36,7 +36,7 @@ class GrowingPolygonTests: XCTestCase {
     }
 
     func testGrowingPolygonDoesNotExceedLimits2() {
-        let model = GrowingPolygon3(
+        let model = GrowingPolygon(
             center: CGPoint(x: 0.5, y: 0.5),
             points: 4,
             pointGrowth: 10,
@@ -57,7 +57,7 @@ class GrowingPolygonTests: XCTestCase {
     }
 
     func testBoundingRect() {
-        let model = GrowingPolygon3(
+        let model = GrowingPolygon(
             center: CGPoint(x: 0.5, y: 0.5),
             points: 4,
             pointGrowth: 0.5,

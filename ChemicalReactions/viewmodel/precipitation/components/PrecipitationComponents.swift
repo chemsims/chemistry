@@ -26,8 +26,13 @@ class PrecipitationComponents: ObservableObject {
             unknownReactantCoeff: reaction.unknownReactant.coeff,
             grid: grid,
             reactionProgressModel: Self.initialReactionProgressModel(reaction: reaction),
-            precipitate: GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5)),
             settings: settings
+        )
+        self.precipitate2 = GrowingPolygon(
+            center: CGPoint(x: 0.5, y: 0.5),
+            steps: 4,
+            points: 7,
+            pointGrowth: 0.23..<0.48
         )
     }
 
@@ -39,14 +44,7 @@ class PrecipitationComponents: ObservableObject {
     let grid: BeakerGrid
     let settings: Settings
 
-    var precipitate: GrowingPolygon {
-        if let currentReactantPrep = currentReactantPrep {
-            return currentReactantPrep.precipitate
-        } else if let currentReaction = currentReaction {
-            return currentReaction.precipitate
-        }
-        return GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5))
-    }
+    let precipitate2: GrowingPolygon
 
     @Published private(set) var reactionProgress: CGFloat = 0
     @Published private(set) var phase = PrecipitationComponents.Phase.addKnownReactant
@@ -303,35 +301,16 @@ extension PrecipitationComponents {
 extension PrecipitationComponents {
     func runReaction() {
         reactionProgress = endOfReaction
-        let grownPrecipitate = precipitate.grow(by: settings.precipitateGrowthMagnitude)
-        replacePrecipitate(with: grownPrecipitate)
     }
 
     func completeReaction() {
         reactionProgress = 1.0001 * endOfReaction
-        let grownPrecipitate = precipitate.grow(exactly: 0.001)
-        replacePrecipitate(with: grownPrecipitate)
         runAllReactionProgressReactions()
     }
 
     func resetReaction() {
         reactionProgress = startOfReaction
         resetPhase()
-    }
-
-    private func replacePrecipitate(with newValue: GrowingPolygon) {
-        switch phase {
-        case .addKnownReactant:
-            knownReactantPrep.precipitate = newValue
-        case .addUnknownReactant:
-            unknownReactantPrep?.precipitate = newValue
-        case .runReaction:
-            initialReaction?.precipitate = newValue
-        case .addExtraUnknownReactant:
-            extraUnknownReactantPrep?.precipitate = newValue
-        case .runFinalReaction:
-            finalReaction?.precipitate = newValue
-        }
     }
 
     func runOneReactionProgressReaction() {
@@ -353,7 +332,6 @@ extension PrecipitationComponents {
             unknownReactantCoeff: reaction.unknownReactant.coeff,
             grid: grid,
             reactionProgressModel: Self.initialReactionProgressModel(reaction: reaction),
-            precipitate: GrowingPolygon(center: CGPoint(x: 0.5, y: 0.5)),
             settings: settings
         )
     }

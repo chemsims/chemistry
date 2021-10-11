@@ -15,7 +15,6 @@ extension PrecipitationComponents {
             grid: BeakerGrid
         ) {
             self.reactionProgressModel = previous.reactionProgressModel.copy()
-            self.precipitate = previous.precipitate
             self.previous = previous
             self.unknownReactantCoeff = unknownReactantCoeff
 
@@ -53,7 +52,6 @@ extension PrecipitationComponents {
         }
 
         let reactionProgressModel: ReactionProgressModel
-        var precipitate: GrowingPolygon
         let previous: UnknownReactantPreparation
         let unknownReactantCoeff: Int
         

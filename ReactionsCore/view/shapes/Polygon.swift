@@ -90,30 +90,3 @@ private extension CGPoint {
         CGPoint(x: lhs.x - rhs.x, y: lhs.y - rhs.y)
     }
 }
-
-struct Polygon_Previews: PreviewProvider {
-    static var previews: some View {
-        ViewWrapper()
-    }
-
-    private struct ViewWrapper: View {
-
-        @State var polygon = GrowingPolygon(center: .init(x: 0.5, y: 0.5))
-
-        var body: some View {
-            VStack  {
-                Polygon(
-                    points: polygon.points
-                )
-                Spacer()
-                Button(action: {
-                    withAnimation(.linear(duration: 2)) {
-                        polygon = polygon.grow(by: 0.1..<0.2)
-                    }
-                }) {
-                    Text("Grow")
-                }
-            }
-        }
-    }
-}

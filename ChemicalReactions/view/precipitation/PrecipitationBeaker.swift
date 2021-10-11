@@ -121,17 +121,20 @@ struct PrecipitationBeaker: View {
     }
 
     private var precipitate: some View {
-        Polygon(points: components.precipitate.points)
-            .foregroundColor(PrecipitationComponents.Molecule.product.color(reaction: model.chosenReaction))
-            .frame(
-                width: layout.common.innerBeakerWidth,
-                height: layout.common.waterHeight(rows: model.rows)
-            )
-            .position(precipitateGeometry.position)
-            .offset(precipitateOffset)
-            .gesture(dragGesture)
-            .animation(.easeOut(duration: 0.25), value: precipitateOffset)
-            .animation(.easeOut(duration: 0.25), value: model.precipitatePosition)
+        PolygonEquationShape(
+            points: components.precipitate2.points,
+            progress: components.reactionProgress
+        )
+        .foregroundColor(PrecipitationComponents.Molecule.product.color(reaction: model.chosenReaction))
+        .frame(
+            width: layout.common.innerBeakerWidth,
+            height: layout.common.waterHeight(rows: model.rows)
+        )
+        .position(precipitateGeometry.position)
+        .offset(precipitateOffset)
+        .gesture(dragGesture)
+        .animation(.easeOut(duration: 0.25), value: precipitateOffset)
+        .animation(.easeOut(duration: 0.25), value: model.precipitatePosition)
     }
 
     private var dragGesture: some Gesture {
@@ -286,7 +289,7 @@ fileprivate struct PrecipitateGeometry {
     /// the frame of reference so we are measuring the origin from the parent view, rather than
     /// the containing shape.
     var precipitateRect: CGRect {
-        let baseRect = components.precipitate.boundingRect
+        let baseRect = components.precipitate2.boundingRect(at: components.reactionProgress)
 
         let shapeWidth = layout.common.innerBeakerWidth
 
@@ -323,32 +326,10 @@ fileprivate struct PrecipitateGeometry {
         let topOfWeighingAreaFromCenterOfScales = topOfWeighingAreaFromTopOfScales - (layout.scalesLayout.height / 2)
         let topOfWeighingAreaPosition = layout.scalesPosition.offset(dx: 0, dy: topOfWeighingAreaFromCenterOfScales)
 
-        let scaledHeight = shapeHeight * components.precipitate.boundingRect.height
+        let boundingRect = components.precipitate2.boundingRect(at: components.reactionProgress)
+        let scaledHeight = shapeHeight * boundingRect.height
 
         return topOfWeighingAreaPosition.offset(dx: 0, dy: -scaledHeight / 2)
-    }
-
-    private var scaledBaseRect: CGRect {
-        let baseRect = components.precipitate.boundingRect
-
-        let shapeWidth = layout.common.innerBeakerWidth
-        let shapeHeight = layout.common.waterHeight(rows: model.rows)
-
-        let scaledSize = CGSize(
-            width: shapeWidth * baseRect.size.width,
-            height: shapeHeight * baseRect.size.height
-        )
-
-        // Distance of precipitate rect origin from the shape origin (top left of the shape, not the center)
-        let scaledOriginInShape = CGPoint(
-            x: shapeWidth * baseRect.origin.x,
-            y: shapeHeight * baseRect.origin.y
-        )
-
-        return CGRect(
-            origin: scaledOriginInShape,
-            size: scaledSize
-        )
     }
 
     private var shapeHeight: CGFloat {

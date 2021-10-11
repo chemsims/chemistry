@@ -4,7 +4,7 @@
 
 import CoreGraphics
 
-protocol PointEquation {
+public protocol PointEquation {
     func getPoint(at progress: CGFloat) -> CGPoint
 }
 

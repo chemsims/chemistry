@@ -4,12 +4,17 @@
 
 import SwiftUI
 
-struct PolygonEquationView: Shape {
+public struct PolygonEquationShape: Shape {
+
+    public init(points: [PointEquation], progress: CGFloat) {
+        self.points = points
+        self.progress = progress
+    }
 
     let points: [PointEquation]
     var progress: CGFloat
 
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         var p = Path()
 
         let resolvedPoints = points.map { pointEquation -> CGPoint in
@@ -26,7 +31,7 @@ struct PolygonEquationView: Shape {
         return p
     }
 
-    var animatableData: CGFloat {
+    public var animatableData: CGFloat {
         get { progress }
         set { progress = newValue }
     }
@@ -34,10 +39,10 @@ struct PolygonEquationView: Shape {
 
 struct PolygonEquationView_Previews: PreviewProvider {
     static var previews: some View {
-        ViewAllPoints(
-            points: GrowingPolygon3(
+        ViewWrapper(
+            points: GrowingPolygon(
                 center: CGPoint(x: 0.5, y: 0.5),
-                steps: 10,
+                steps: 5,
                 points: 3,
                 pointGrowth: 0.4..<0.8
             ).points
@@ -51,7 +56,7 @@ struct PolygonEquationView_Previews: PreviewProvider {
         var body: some View {
             ZStack {
                 ForEach(1...steps, id: \.self) { i in
-                    PolygonEquationView(
+                    PolygonEquationShape(
                         points: points,
                         progress: (1 / CGFloat(steps)) * CGFloat(i)
                     )
@@ -68,7 +73,7 @@ struct PolygonEquationView_Previews: PreviewProvider {
 
         var body: some View {
             VStack {
-                PolygonEquationView(
+                PolygonEquationShape(
                     points: points,
                     progress: isComplete ? 1 : 0
                 )
