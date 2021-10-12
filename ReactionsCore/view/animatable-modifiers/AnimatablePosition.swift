@@ -8,7 +8,7 @@ extension View {
 
     /// Sets the position of the view by evaluating the provided position equation at the equation input.
     public func animatablePosition(
-        equation: PositionEquation,
+        equation: PointEquation,
         input: CGFloat
     ) -> some View {
         self.modifier(
@@ -19,7 +19,7 @@ extension View {
 
 public struct AnimatablePositionModifier: AnimatableModifier {
 
-    let equation: PositionEquation
+    let equation: PointEquation
     var equationInput: CGFloat
 
     public var animatableData: CGFloat {
@@ -29,6 +29,6 @@ public struct AnimatablePositionModifier: AnimatableModifier {
 
     public func body(content: Content) -> some View {
         content
-            .position(equation.getPosition(at: equationInput))
+            .position(equation.getPoint(at: equationInput))
     }
 }

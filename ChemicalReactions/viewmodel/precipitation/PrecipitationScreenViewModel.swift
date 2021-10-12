@@ -48,6 +48,7 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var showUnknownMetal = false
     @Published var beakerView = BeakerView.microscopic
     @Published var precipitatePosition = PrecipitatePosition.beaker
+    @Published var showMovingHand = false
 
     private(set) var navigation: NavigationModel<PrecipitationScreenState>!
     private(set) var components: PrecipitationComponents

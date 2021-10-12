@@ -257,14 +257,14 @@ private extension SizedMoleculeScales {
     }
 }
 
-private struct BasketPositionEquation: PositionEquation {
+private struct BasketPositionEquation: PointEquation {
 
     let rotationDegrees: Equation
     let rotationCenter: CGPoint
     let armWidth: CGFloat
 
-    func getPosition(at input: CGFloat) -> CGPoint {
-        let rotation = rotationDegrees.getY(at: input)
+    func getPoint(at progress: CGFloat) -> CGPoint {
+        let rotation = rotationDegrees.getY(at: progress)
         let rads = Angle(degrees: Double(rotation)).radians
 
         let dy = armWidth * CGFloat(sin(rads))

@@ -280,6 +280,10 @@ struct PrecipitationScreenLayout {
     private var scalesWidth: CGFloat {
         0.5 * common.beakerSettings.beakerWidth
     }
+
+    var handWidth: CGFloat {
+        2 * common.containerWidth
+    }
 }
 
 struct PrecipitationScreen_Previews: PreviewProvider {

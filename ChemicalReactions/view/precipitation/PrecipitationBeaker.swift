@@ -43,6 +43,16 @@ struct PrecipitationBeaker: View {
                         Spacer(minLength: 0)
                     }
                 )
+
+            // We must wrap add z-index to the group for transition to work
+            Group {
+                if showMovingHand {
+                    movingHand
+                        .transition(.opacity.animation(.easeOut(duration: 0.25)))
+                }
+            }
+            .zIndex(2)
+
         }
         .frame(width: layout.common.totalBeakerAreaWidth, height: layout.common.beakerAreaHeight)
     }
@@ -188,8 +198,6 @@ struct PrecipitationBeaker: View {
         .frame(width: layout.common.totalBeakerAreaWidth)
     }
 
-
-
     private var selectionToggle: some View {
         HStack(spacing: 0) {
             Spacer(minLength: 0)
@@ -211,6 +219,20 @@ struct PrecipitationBeaker: View {
             width: layout.common.beakerSettings.beakerWidth,
             height: layout.beakerToggleTextHeight
         )
+        .disabled(model.input == .weighProduct)
+    }
+
+    private var movingHand: some View {
+        MovingHand(
+            initialPosition: precipitateGeometry.precipitateRect.center,
+            finalPosition: layout.scalesPosition,
+            handWidth: layout.handWidth
+        )
+    }
+
+    // don't show the hand when user starts dragging precipitate
+    private var showMovingHand: Bool {
+        model.showMovingHand && precipitateOffset == .zero
     }
 
     private func containerPos(reactant: PrecipitationComponents.Reactant, isActive: Bool) -> CGPoint {

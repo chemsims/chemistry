@@ -253,10 +253,12 @@ private class EndInitialReaction: SetStatement {
         model.input = .weighProduct
         model.precipitatePosition = .beaker
         model.beakerView = .macroscopic
+        model.showMovingHand = true
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.input = nil
+        model.showMovingHand = false
     }
 }
 
@@ -276,6 +278,7 @@ private class PostWeighingProduct: PrecipitationScreenState {
             unknownReactantMoles: components.unknownReactantMolesAdded
         )
         model.equationState = .showAll
+        model.showMovingHand = false
     }
 }
 
