@@ -27,7 +27,7 @@ struct CircleChartLabel: View {
 
             TextLinesView(line: label.label, fontSize: layout.fontSize)
                 .frame(height: layout.textHeight)
-                .minimumScaleFactor(0.75)
+                .minimumScaleFactor(0.2)
                 .animation(nil, value: label.label)
         }
         .frame(width: labelWidth)
