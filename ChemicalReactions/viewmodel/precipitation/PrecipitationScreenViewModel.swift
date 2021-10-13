@@ -38,6 +38,9 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var rows: CGFloat {
         didSet {
             setComponents()
+            if !highlights.elements.isEmpty {
+                highlights.clear()
+            }
         }
     }
     @Published var chosenReaction: PrecipitationReaction {
@@ -49,6 +52,7 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var beakerView = BeakerView.microscopic
     @Published var precipitatePosition = PrecipitatePosition.beaker
     @Published var showMovingHand = false
+    @Published var highlights = HighlightedElements<ScreenElement>()
 
     private(set) var navigation: NavigationModel<PrecipitationScreenState>!
     private(set) var components: PrecipitationComponents
@@ -157,5 +161,17 @@ extension PrecipitationScreenViewModel {
 
     enum PrecipitatePosition {
         case beaker, scales
+    }
+
+    enum ScreenElement {
+        case reactionToggle,
+             reactionDefinition,
+             waterSlider,
+             knownReactantContainer,
+             unknownReactantContainer,
+             productMoles,
+             unknownReactantMoles,
+             unknownReactantMolarMass,
+             correctMetalRow
     }
 }

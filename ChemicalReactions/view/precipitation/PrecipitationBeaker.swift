@@ -24,6 +24,7 @@ struct PrecipitationBeaker: View {
     var body: some View {
         ZStack(alignment: .top) {
             scales
+                .colorMultiply(model.highlights.colorMultiply(for: nil))
 
             VStack(spacing: 0) {
                 Spacer(minLength: 0)
@@ -77,9 +78,21 @@ struct PrecipitationBeaker: View {
             topOfWaterY: layout.topOfWaterPosition(rows: model.rows),
             halfXShakeRange: layout.common.containerShakeHalfXRange,
             halfYShakeRange: layout.common.containerShakeHalfYRange,
+            highlightedMolecule: highlightedReactant,
+            dismissHighlight: { model.highlights.clear() },
             activeToolTipText: containerToolTip
         )
         .frame(width: layout.common.totalBeakerAreaWidth)
+    }
+
+    private var highlightedReactant: PrecipitationComponents.Reactant? {
+        let elements = model.highlights.elements
+        if elements.contains(.knownReactantContainer) {
+            return .known
+        } else if elements.contains(.unknownReactantContainer) {
+            return .unknown
+        }
+        return nil
     }
 
     private func containerToolTip(reactant: PrecipitationComponents.Reactant) -> TextLine? {
@@ -125,6 +138,7 @@ struct PrecipitationBeaker: View {
             microscopicBeaker
             if model.beakerView == .macroscopic {
                 macroBeaker
+                    .colorMultiply(model.highlights.colorMultiply(for: nil))
             }
 
         }
@@ -178,8 +192,8 @@ struct PrecipitationBeaker: View {
             currentTime: components.reactionProgress,
             settings: layout.common.beakerSettings,
             canSetLevel: model.input == .setWaterLevel,
-            beakerColorMultiply: .white,
-            sliderColorMultiply: .white,
+            beakerColorMultiply: model.highlights.colorMultiply(for: nil),
+            sliderColorMultiply: model.highlights.colorMultiply(for: .waterSlider),
             beakerModifier: IdentityViewModifier()
         )
     }
@@ -220,6 +234,7 @@ struct PrecipitationBeaker: View {
             height: layout.beakerToggleTextHeight
         )
         .disabled(model.input == .weighProduct)
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var movingHand: some View {

@@ -12,19 +12,26 @@ struct PrecipitationScreen: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
-        GeometryReader { geo in
-            PrecipitationScreenWithLayout(
-                model: model,
-                layout: .init(
-                    common: .init(
-                        geometry: geo,
-                        verticalSizeClass: verticalSizeClass,
-                        horizontalSizeClass: horizontalSizeClass
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color.white)
+                .colorMultiply(model.highlights.colorMultiply(for: nil))
+                .edgesIgnoringSafeArea(.all)
+
+            GeometryReader { geo in
+                PrecipitationScreenWithLayout(
+                    model: model,
+                    layout: .init(
+                        common: .init(
+                            geometry: geo,
+                            verticalSizeClass: verticalSizeClass,
+                            horizontalSizeClass: horizontalSizeClass
+                        )
                     )
                 )
-            )
+            }
+            .padding(ChemicalReactionsScreenLayout.topLevelScreenPadding)
         }
-        .padding(ChemicalReactionsScreenLayout.topLevelScreenPadding)
     }
 }
 
@@ -90,6 +97,8 @@ private struct PrecipitationTopStack: View {
         )
         .frame(height: layout.common.reactionDefinitionHeight)
         .padding(.top, layout.common.reactionDefinitionTopPadding)
+        .background(Color.white.padding(-0.1 * layout.common.reactionDefinitionHeight))
+        .colorMultiply(model.highlights.colorMultiply(for: .reactionDefinition))
     }
 
     private var selectionToggle: some View {
@@ -110,6 +119,7 @@ private struct PrecipitationTopStack: View {
             height: layout.common.reactionSelectionToggleHeight,
             alignment: .top
         )
+        .colorMultiply(model.highlights.colorMultiply(for: .reactionToggle))
     }
 }
 
@@ -130,17 +140,29 @@ private struct PrecipitationMiddleStack: View {
 
     private var table: some View {
         Table(
-            rows: [.init(cells: ["Compound", "Molar Mass (g/mol)"])] + tableRows
+            rows: [headerTableRow] + tableRows
         )
         .frame(size: layout.tableSize)
+    }
+
+    private var headerTableRow: Table.Row {
+        .init(
+            cells: ["Compound", "Molar Mass (g/mol)"],
+            colorMultiply: model.highlights.colorMultiply(for: nil)
+        )
     }
 
     private var tableRows: [Table.Row] {
         PrecipitationReaction.Metal.allCases.map { metal in
             let compound = model.chosenReaction.unknownReactant.replacingMetal(with: metal)
+            let isCorrectMetal = model.chosenReaction.unknownReactant.metal == metal
+
             return .init(
                 cells: [compound.name(showMetal: true), "\(compound.molarMass)"],
-                emphasised: model.showUnknownMetal && metal == model.chosenReaction.unknownReactant.metal
+                emphasised: model.showUnknownMetal && isCorrectMetal,
+                colorMultiply: model.highlights.colorMultiply(
+                    for: isCorrectMetal ? .correctMetalRow : nil
+                )
             )
         }
     }
@@ -152,6 +174,7 @@ private struct PrecipitationMiddleStack: View {
                 PrecipitationComponents.Molecule.self
             )
         )
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 }
 
@@ -168,7 +191,8 @@ private struct PrecipitationRightStack: View {
             PrecipitationEquationView(
                 data: model.equationData,
                 reactionProgress: components.reactionProgress,
-                state: model.equationState
+                state: model.equationState,
+                highlights: model.highlights
             )
             .frame(size: layout.equationSize)
 

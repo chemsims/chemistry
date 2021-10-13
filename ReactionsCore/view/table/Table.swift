@@ -31,16 +31,26 @@ public struct Table: View {
 
 extension Table {
     public struct Row {
+
+        /// Constructs a new row.
+        /// - Parameters:
+        ///   - cells: The text content of each cell
+        ///   - emphasised: Whether the row is emphasised. When true, the table controls how to
+        ///   show the emphasis, for example by placing an extra border inside the row.
+        ///   - colorMultiply: The color multiply of the row.
         public init(
             cells: [TextLine],
-            emphasised: Bool = false
+            emphasised: Bool = false,
+            colorMultiply: Color = .white
         ) {
             self.cells = cells
             self.emphasised = emphasised
+            self.colorMultiply = colorMultiply
         }
 
         public let cells: [TextLine]
         public let emphasised: Bool
+        public let colorMultiply: Color
     }
 }
 
@@ -66,7 +76,9 @@ private struct SizedTable: View {
                 cellView(content: row.emphasised ? row.cells[cellIndex].emphasised() : row.cells[cellIndex])
             }
         }
+        .background(Color.white)
         .overlay(rowEmphasis(row: row))
+        .colorMultiply(row.colorMultiply)
     }
 
     @ViewBuilder

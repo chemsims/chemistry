@@ -17,6 +17,8 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
         topOfWaterY: CGFloat,
         halfXShakeRange: CGFloat,
         halfYShakeRange: CGFloat,
+        highlightedMolecule: Molecule? = nil,
+        dismissHighlight: @escaping () -> Void = { },
         activeToolTipText: @escaping (Molecule) -> TextLine? = { _ in nil }
     ) {
         self.shakeModel = shakeModel
@@ -29,6 +31,8 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
         self.topOfWaterY = topOfWaterY
         self.halfXShakeRange = halfXShakeRange
         self.halfYShakeRange = halfYShakeRange
+        self.highlightedMolecule = highlightedMolecule
+        self.dismissHighlight = dismissHighlight
         self.activeToolTipText = activeToolTipText
     }
 
@@ -42,6 +46,8 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
     let topOfWaterY: CGFloat
     let halfXShakeRange: CGFloat
     let halfYShakeRange: CGFloat
+    let highlightedMolecule: Molecule?
+    let dismissHighlight: () -> Void
     let activeToolTipText: (Molecule) -> TextLine?
 
     public var body: some View {
@@ -70,14 +76,28 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
             containerSettings: containerSettings(molecule),
             moleculeSize: moleculeSize,
             moleculeColor: containerSettings(molecule).labelColor,
-            includeContainerBackground: false,
+            includeContainerBackground: highlightedMolecule == molecule,
             rotation: isActive ? .degrees(135) : .zero,
             toolTipText: toolTipText
         )
         .disabled(isDisabled)
-        .colorMultiply(isDisabled ? Styling.inactiveContainerMultiply : .white)
+        .colorMultiply(colorMultiple(for: molecule))
         .zIndex(isActive ? 1 : 0)
         .minimumScaleFactor(0.4)
+    }
+
+    private func colorMultiple(for molecule: Molecule) -> Color {
+        if shouldDim(molecule: molecule) {
+            return Styling.inactiveContainerMultiply
+        }
+        return .white
+    }
+
+    private func shouldDim(molecule: Molecule) -> Bool {
+        if let highlightedMolecule = highlightedMolecule {
+            return molecule != highlightedMolecule
+        }
+        return disabled(molecule)
     }
 
     private func onTap(molecule: Molecule, location: CGPoint) {
@@ -86,7 +106,7 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
             model.manualAdd(amount: 5, at: location)
             return
         }
-
+        dismissHighlight()
         withAnimation(.easeOut(duration: 0.25)) {
             shakeModel.activeMolecule = molecule
         }

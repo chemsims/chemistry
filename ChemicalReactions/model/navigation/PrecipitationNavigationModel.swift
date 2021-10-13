@@ -17,11 +17,11 @@ struct PrecipitationNavigationModel {
     }
 
     private static let states: [PrecipitationScreenState] = [
-        ChooseReaction(statements.intro),
-        StopInput(\.explainPrecipitation),
-        SetStatement(statements.explainUnknownMetal),
-        InstructToSetWaterLevel(statements.instructToSetWaterLevel),
-        InstructToAddKnownReactant(\.instructToAddKnownReactant),
+        ChooseReaction(statements.intro, highlights: [.reactionToggle]),
+        StopInput(\.explainPrecipitation, highlights: [.reactionDefinition]),
+        SetStatement(statements.explainUnknownMetal, highlights: [.reactionDefinition]),
+        InstructToSetWaterLevel(statements.instructToSetWaterLevel, highlights: [.waterSlider]),
+        InstructToAddKnownReactant(\.instructToAddKnownReactant, highlights: [.knownReactantContainer]),
         InstructToAddUnknownReactant(),
         RunInitialReaction(),
         EndInitialReaction(\.instructToWeighProduct),
@@ -59,21 +59,28 @@ class PrecipitationScreenState: ScreenState, SubState {
 }
 
 private class SetStatement: PrecipitationScreenState {
-    init(_ statement: [TextLine]) {
+    init(_ statement: [TextLine], highlights: [PrecipitationScreenViewModel.ScreenElement] = []) {
         self.getStatement = { _ in statement }
+        self.highlights = highlights
     }
 
-    init(_ statementKeyPath: KeyPath<PrecipitationReactionStatements, [TextLine]>) {
+    init(
+        _ statementKeyPath: KeyPath<PrecipitationReactionStatements, [TextLine]>,
+        highlights: [PrecipitationScreenViewModel.ScreenElement] = []
+    ) {
         self.getStatement = {
             let statements = PrecipitationReactionStatements(reaction: $0.chosenReaction)
             return statements[keyPath: statementKeyPath]
         }
+        self.highlights = highlights
     }
 
     let getStatement: (PrecipitationScreenViewModel) -> [TextLine]
+    let highlights: [PrecipitationScreenViewModel.ScreenElement]
 
     override func apply(on model: PrecipitationScreenViewModel) {
         model.statement = getStatement(model)
+        model.highlights.elements = highlights
     }
 }
 
@@ -144,6 +151,7 @@ private class InstructToAddUnknownReactant: PrecipitationScreenState {
         model.statement = statements.instructToAddUnknownReactant(molesAdded: molesAdded)
         model.input = .addReactant(type: .unknown)
         model.shakeModel.stopAll()
+        model.highlights.elements = [.unknownReactantContainer]
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
@@ -253,12 +261,26 @@ private class EndInitialReaction: SetStatement {
         model.input = .weighProduct
         model.precipitatePosition = .beaker
         model.beakerView = .macroscopic
-        model.showMovingHand = true
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.input = nil
         model.showMovingHand = false
+    }
+
+    override func delayedStates(model: PrecipitationScreenViewModel) -> [DelayedState<PrecipitationScreenState>] {
+        [
+            DelayedState(
+                state: ShowDraggingHandState(),
+                delay: 1
+            )
+        ]
+    }
+
+    private class ShowDraggingHandState: PrecipitationScreenState {
+        override func apply(on model: PrecipitationScreenViewModel) {
+            model.showMovingHand = true
+        }
     }
 }
 
@@ -279,6 +301,7 @@ private class PostWeighingProduct: PrecipitationScreenState {
         )
         model.equationState = .showAll
         model.showMovingHand = false
+        model.highlights.elements = [.productMoles, .unknownReactantMoles]
     }
 }
 
@@ -290,6 +313,7 @@ private class RevealUnknownMetal: PrecipitationScreenState {
             unknownReactantMoles: model.components.unknownReactantMolesAdded
         )
         model.showUnknownMetal = true
+        model.highlights.elements = [.unknownReactantMolarMass, .correctMetalRow]
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
@@ -309,7 +333,7 @@ private class AddExtraKnownReactant: SetStatement {
     }
 
     private func doApply(on model: PrecipitationScreenViewModel) {
-        model.statement = getStatement(model)
+        super.apply(on: model)
         model.input = .addReactant(type: .unknown)
         model.precipitatePosition = .beaker
     }

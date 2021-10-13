@@ -11,6 +11,7 @@ struct PrecipitationEquationView: View {
     let data: PrecipitationEquationView.EquationData
     let reactionProgress: CGFloat
     let state: PrecipitationScreenViewModel.EquationState
+    let highlights: HighlightedElements<PrecipitationScreenViewModel.ScreenElement>
 
     var body: some View {
         GeometryReader { geo in
@@ -23,7 +24,8 @@ struct PrecipitationEquationView: View {
                 SizedPrecipitationEquationView(
                     data: data,
                     reactionProgress: reactionProgress,
-                    state: state
+                    state: state,
+                    highlights: highlights
                 )
             }
             .frame(size: geo.size)
@@ -66,16 +68,24 @@ private struct SizedPrecipitationEquationView: View {
     let data: PrecipitationEquationView.EquationData
     let reactionProgress: CGFloat
     let state: PrecipitationScreenViewModel.EquationState
+    let highlights: HighlightedElements<PrecipitationScreenViewModel.ScreenElement>
 
     var body: some View {
         HStack(spacing: 30) {
             VStack(alignment: .leading, spacing: equationGroupVSpacing) {
-                KnownReactantMolesToVolume(data: data, showData: state >= .showKnownReactantMolarity)
+                KnownReactantMolesToVolume(
+                    data: data,
+                    showData: state >= .showKnownReactantMolarity
+                )
+                .colorMultiply(highlights.colorMultiply(for: nil))
+
                 UnknownReactantMoles(
                     data: data,
                     reactionProgress: reactionProgress,
                     showData: state >= .showAll
                 )
+                .background(Color.white.padding(-5))
+                .colorMultiply(highlights.colorMultiply(for: .unknownReactantMoles))
             }
             VStack(alignment: .leading, spacing: equationGroupVSpacing) {
                 ProductMoles(
@@ -83,11 +93,16 @@ private struct SizedPrecipitationEquationView: View {
                     reactionProgress: reactionProgress,
                     showData: state >= .showAll
                 )
+                .background(Color.white.padding(-5))
+                .colorMultiply(highlights.colorMultiply(for: .productMoles))
+
                 UnknownReactantMolarMass(
                     data: data,
                     reactionProgress: reactionProgress,
                     showData: state >= .showAll
                 )
+                .background(Color.white.padding(-5))
+                .colorMultiply(highlights.colorMultiply(for: .unknownReactantMolarMass))
             }
         }
         .font(.system(size: EquationSizing.fontSize))
@@ -238,7 +253,7 @@ private struct UnknownReactantMoles: View {
         AnimatingNumberPlaceholder(
             showTerm: showData,
             progress: reactionProgress,
-            equation: data.unknownReactantMoles
+            equation: equation
         )
         .frame(size: EquationSizing.boxSize)
     }
@@ -376,12 +391,14 @@ struct PrecipitationEquationView_Previews: PreviewProvider {
         SizedPrecipitationEquationView(
             data: data(reaction: reaction),
             reactionProgress: 0,
-            state: .showAll
+            state: .showAll,
+            highlights: .init(elements: [.productMoles])
         )
         .border(Color.red)
         .frame(width: NaturalWidth, height: NaturalHeight)
         .border(Color.black)
         .previewLayout(.sizeThatFits)
+        .background(Styling.inactiveScreenElement)
     }
 
     private static func data(reaction: PrecipitationReaction) -> PrecipitationEquationView.EquationData {

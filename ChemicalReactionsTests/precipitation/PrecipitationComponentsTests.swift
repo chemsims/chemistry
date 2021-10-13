@@ -419,7 +419,8 @@ private extension PrecipitationReaction {
                 latterPartMolarMass: first.unknownReactant.latterPartMolarMass,
                 metal: first.unknownReactant.metal,
                 metalAtomCount: first.unknownReactant.metalAtomCount,
-                coeff: unknownReactantCoeff
+                coeff: unknownReactantCoeff,
+                color: .red
             ),
             product: first.product,
             secondaryProduct: first.secondaryProduct
