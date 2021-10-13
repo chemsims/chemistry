@@ -25,6 +25,12 @@ struct ReactionBalancer {
         reactantBalancer.isBalanced && productBalancer.isBalanced
     }
 
+    func atomIsBalanced(_ atom: BalancedReaction.Atom) -> Bool {
+        let reactantCount = reactantBalancer.atomCount(of: atom)
+        let productCount = productBalancer.atomCount(of: atom)
+        return reactantCount == productCount && reactantCount > 0
+    }
+
     /// Returns true if the number of molecules added is an exact multiple of the reaction coefficients,
     /// where each multiple is the same, and greater than 1
     var isMultipleOfBalanced: Bool {

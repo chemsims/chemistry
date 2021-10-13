@@ -24,14 +24,29 @@ struct BalancedReactionScales: View {
     }
 
     private func scalesWithLabels(for atom: BalancedReaction.Atom) -> some View {
-        VStack(spacing: 0) {
+        VStack(spacing: 2) {
             scales(for: atom)
             HStack(spacing: 0) {
                 scalesLabel(atom: atom, elementType: .reactant)
-                Spacer(minLength: 0)
+                checkmark(for: atom)
                 scalesLabel(atom: atom, elementType: .product)
             }
             .frame(width: layout.scalesSize.width)
+        }
+    }
+
+    @ViewBuilder
+    private func checkmark(for atom: BalancedReaction.Atom) -> some View {
+        if model.balancer.atomIsBalanced(atom) {
+            Image(systemName: "checkmark.circle")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(size: layout.scalesLabelSize)
+                .foregroundColor(.green)
+                .transition(.scale.animation(.easeOut(duration: 0.25)))
+        } else {
+            Spacer()
+                .frame(size: layout.scalesLabelSize)
         }
     }
 
@@ -44,6 +59,7 @@ struct BalancedReactionScales: View {
             .frame(size: layout.scalesLabelSize)
             .font(.system(size: layout.scalesLabelFontSize))
             .opacity(count > 0 ? 1 : 0)
+            .minimumScaleFactor(0.7)
     }
 
     private func scales(for atom: BalancedReaction.Atom) -> some View {

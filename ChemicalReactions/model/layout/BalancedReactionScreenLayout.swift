@@ -224,11 +224,11 @@ extension BalancedReactionScreenLayout {
     }
 
     var scalesLabelSize: CGSize {
-        CGSize(width: scalesSize.width / 3, height: 0.14 * scalesSize.height)
+        CGSize(width: scalesSize.width / 3, height: 0.16 * scalesSize.height)
     }
 
     var scalesLabelFontSize: CGFloat {
-        0.8 * scalesLabelSize.height
+        0.82 * scalesLabelSize.height
     }
 
     private var scalesHeight: CGFloat {
