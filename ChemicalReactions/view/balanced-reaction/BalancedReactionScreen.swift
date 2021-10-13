@@ -67,6 +67,8 @@ private struct SizedBalancedReactionScreen: View {
             .frame(size: layout.beakerSize)
             .position(layout.firstBeakerPosition)
 
+            reactionArrow
+
             EmptyBeaker(
                 settings: layout.beakerSettings,
                 emphasised: !model.moleculesInFlightOverProduct.isEmpty
@@ -86,7 +88,15 @@ private struct SizedBalancedReactionScreen: View {
         }
     }
 
-    @ViewBuilder
+    private var reactionArrow: some View {
+        Image(systemName: "arrow.right")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .foregroundColor(.orangeAccent)
+            .frame(width: layout.reactionArrowWidth)
+            .position(layout.reactionArrowPosition)
+    }
+
     private var beakerUnderline: some View {
         Rectangle()
             .frame(width: layout.beakerSize.width, height: layout.beakerUnderlingHeight)

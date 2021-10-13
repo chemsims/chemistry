@@ -89,6 +89,22 @@ extension BalancedReactionScreenLayout {
         )
     }
 
+    var reactionArrowPosition: CGPoint {
+        CGPoint(
+            x: (firstBeakerPosition.x + secondBeakerPosition.x) / 2,
+            y: firstBeakerPosition.y
+        )
+    }
+
+    var reactionArrowWidth: CGFloat {
+        0.5 * widthBetweenBeakers
+    }
+
+    private var widthBetweenBeakers: CGFloat {
+        let gapBetweenCenters = secondBeakerPosition.x - firstBeakerPosition.x
+        return gapBetweenCenters - beakerWidth
+    }
+
     var beakerUnderlingHeight: CGFloat {
         2
     }
