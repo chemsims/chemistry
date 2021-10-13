@@ -54,6 +54,10 @@ extension ChemicalReactionsScreenLayout {
         menuHPadding - Self.topLevelScreenPadding
     }
 
+    var reactionDefinitionLeadingPadding: CGFloat {
+        menuSize + menuHPadding
+    }
+
     var reactionDefinitionFontSize: CGFloat {
         0.8 * reactionDefinitionHeight
     }

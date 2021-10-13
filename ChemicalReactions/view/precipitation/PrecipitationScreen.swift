@@ -40,37 +40,90 @@ private struct PrecipitationScreenWithLayout: View {
     @ObservedObject var model: PrecipitationScreenViewModel
     let layout: PrecipitationScreenLayout
 
+
+    // We need to use a ZStack as the beaker should be higher than the
+    // reaction definition (as the container tooltip may overlap it), but
+    // the selection toggle should be above everything
     var body: some View {
-        VStack(spacing: 0) {
-            PrecipitationTopStack(
+        ZStack {
+            reactionDefinition
+            bottomStack
+            selectionToggle
+        }
+        .frame(width: layout.common.width, height: layout.common.height)
+        .border(Color.red)
+    }
+
+    private var reactionDefinition: some View {
+        PrecipitationReactionDefinition(
+            reaction: model.chosenReaction,
+            showMetal: model.showUnknownMetal,
+            emphasiseMetal: model.showUnknownMetal || model.emphasiseUnknownMetalSymbol,
+            fontSize: layout.common.reactionDefinitionFontSize
+        )
+        .frame(height: layout.common.reactionDefinitionHeight)
+        .background(Color.white.padding(-0.1 * layout.common.reactionDefinitionHeight))
+        .padding(.top, layout.common.reactionDefinitionTopPadding)
+        .padding(.leading, layout.common.reactionDefinitionLeadingPadding)
+        .colorMultiply(model.highlights.colorMultiply(for: .reactionDefinition))
+        .spacing(
+            horizontalAlignment: .leading,
+            verticalAlignment: .top
+        )
+    }
+
+    private var selectionToggle: some View {
+        DropDownSelectionView(
+            title: "Choose a reaction",
+            options: model.availableReactions,
+            isToggled: .constant(model.input == .selectReaction),
+            selection: $model.chosenReaction,
+            height: layout.common.reactionSelectionToggleHeight,
+            animation: nil,
+            displayString: { $0.name(showMetal: false) },
+            label: { $0.name(showMetal: false).label },
+            disabledOptions: [],
+            onSelection: model.next
+        )
+        .disabled(model.input != .selectReaction)
+        .frame(
+            height: layout.common.reactionSelectionToggleHeight,
+            alignment: .top
+        )
+        .colorMultiply(model.highlights.colorMultiply(for: .reactionToggle))
+        .spacing(
+            horizontalAlignment: .trailing,
+            verticalAlignment: .top
+        )
+    }
+
+    private var bottomStack: some View  {
+        HStack(alignment: .bottom, spacing: 0) {
+            PrecipitationBeaker(
                 model: model,
                 layout: layout
             )
-            .zIndex(1)
+            .border(Color.green)
 
             Spacer(minLength: 0)
 
-            HStack(spacing: 0) {
-                PrecipitationBeaker(
-                    model: model,
-                    layout: layout
-                )
-                Spacer(minLength: 0)
+            PrecipitationMiddleStack(
+                model: model,
+                components: model.components,
+                layout: layout
+            )
 
-                PrecipitationMiddleStack(
-                    model: model,
-                    components: model.components,
-                    layout: layout
-                )
-
-                Spacer(minLength: 0)
-                PrecipitationRightStack(
-                    model: model,
-                    components: model.components,
-                    layout: layout
-                )
-            }
+            Spacer(minLength: 0)
+            PrecipitationRightStack(
+                model: model,
+                components: model.components,
+                layout: layout
+            )
         }
+        .border(Color.black)
+        .frame(height: layout.common.height)
+        .verticalSpacing(alignment: .bottom)
+        .border(Color.green)
     }
 }
 
@@ -228,8 +281,14 @@ struct PrecipitationScreenLayout {
     func containerAreaMask(rows: CGFloat) -> CGSize {
         CGSize(
             width: common.containerMaskWidth,
-            height: topOfWaterPosition(rows: rows)
+            height: topOfWaterPosition(rows: rows) + containerAreaMaskOffset
         )
+    }
+
+    // We need to move the mask up a little, as the tooltip may go outside
+    // of the container view bounds when the container is near the top
+    var containerAreaMaskOffset: CGFloat {
+        common.reactionDefinitionHeight
     }
 
     func topOfWaterPosition(rows: CGFloat) -> CGFloat {

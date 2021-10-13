@@ -36,11 +36,8 @@ struct PrecipitationBeaker: View {
                 .mask(
                     VStack(spacing: 0) {
                         Rectangle()
-                            .frame(
-                                size: layout.containerAreaMask(
-                                    rows: model.rows
-                                )
-                            )
+                            .frame(size: layout.containerAreaMask(rows: model.rows))
+                            .offset(y: -layout.containerAreaMaskOffset)
                         Spacer(minLength: 0)
                     }
                 )
