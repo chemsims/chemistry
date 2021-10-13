@@ -135,7 +135,7 @@ struct PrecipitationBeaker: View {
             points: components.precipitate.points,
             progress: components.reactionProgress
         )
-        .foregroundColor(PrecipitationComponents.Molecule.product.color(reaction: model.chosenReaction))
+        .foregroundColor(model.chosenReaction.product.color)
         .padding(.bottom, model.precipitatePosition == .beaker ? 2 : 0)
         .frame(
             width: layout.common.innerBeakerWidth,
@@ -246,7 +246,7 @@ struct PrecipitationBeaker: View {
                 molecules: BeakerMolecules(
                     coords: coords.coordinates,
                     color: molecule.color(reaction: model.chosenReaction),
-                    label: "" // TODO
+                    label: molecule.name(reaction: model.chosenReaction).label
                 ),
                 fractionToDraw: coords.fractionToDraw
             )

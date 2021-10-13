@@ -67,12 +67,11 @@ extension PrecipitationComponents {
             }
         }
 
-        // TODO, store color on the reaction definition
         func color(reaction: PrecipitationReaction) -> Color {
             switch self {
-            case .knownReactant: return .red
-            case .unknownReactant: return .blue
-            case .product: return .orange
+            case .knownReactant: return reaction.knownReactant.color
+            case .unknownReactant: return reaction.unknownReactant.color
+            case .product: return reaction.product.color
             }
         }
     }

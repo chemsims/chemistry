@@ -2,9 +2,8 @@
 // Reactions App
 //
 
-import Foundation
+import SwiftUI
 import ReactionsCore
-import AVFoundation
 
 struct PrecipitationReaction: Identifiable, Equatable {
     let knownReactant: KnownReactant
@@ -114,12 +113,14 @@ extension PrecipitationReaction {
     struct KnownReactant: Equatable, PrecipitationElement {
         let name: TextLine
         let state: ElementState
+        let color: Color
     }
 
     struct Product: Equatable, PrecipitationElement {
         let name: TextLine
         let state: ElementState
         let molarMass: Int
+        let color: Color
     }
 
     struct UnknownPrecipitationReactant: Equatable, PrecipitationElementWithUnknownMetal {
@@ -130,6 +131,7 @@ extension PrecipitationReaction {
         let metal: PrecipitationReaction.Metal
         let metalAtomCount: Int
         let coeff: Int
+        let color: Color
 
         var molarMass: Int {
             latterPartMolarMass + (metalAtomCount * metal.atomicWeight)
@@ -142,7 +144,8 @@ extension PrecipitationReaction {
                 latterPartMolarMass: latterPartMolarMass,
                 metal: newMetal,
                 metalAtomCount: metalAtomCount,
-                coeff: coeff
+                coeff: coeff,
+                color: color
             )
         }
     }
