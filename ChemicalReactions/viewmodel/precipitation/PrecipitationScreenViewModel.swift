@@ -124,6 +124,7 @@ extension PrecipitationScreenViewModel {
                 showMetal: showUnknownMetal,
                 emphasiseMetal: showUnknownMetal
             ),
+            unknownReactantCoefficient: chosenReaction.unknownReactant.coeff,
             knownReactantMolarity: components.knownReactantInitialMolarity,
             knownReactantMoles: components.knownReactantInitialMoles,
             productMolarMass: chosenReaction.product.molarMass,

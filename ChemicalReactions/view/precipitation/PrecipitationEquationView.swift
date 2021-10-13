@@ -43,6 +43,7 @@ extension PrecipitationEquationView {
         let knownReactant: String
         let product: String
         let unknownReactant: TextLine
+        let unknownReactantCoefficient: Int
 
         let knownReactantMolarity: CGFloat
         let knownReactantMoles: CGFloat
@@ -233,6 +234,10 @@ private struct UnknownReactantMoles: View {
             TermView(base: "n", subTerm: data.product)
                 .frame(width: EquationSizing.boxWidth)
             FixedText("=")
+            if data.unknownReactantCoefficient > 1 {
+                FixedText("\(data.unknownReactantCoefficient)")
+                FixedText("x")
+            }
             TermView(
                 base: "n",
                 subTerm: data.unknownReactant,
@@ -245,6 +250,10 @@ private struct UnknownReactantMoles: View {
         HStack(spacing: termHSpacing) {
             animatingNumber(equation: data.productMoles)
             FixedText("=")
+            if data.unknownReactantCoefficient > 1 {
+                FixedText("\(data.unknownReactantCoefficient)")
+                FixedText("x")
+            }
             animatingNumber(equation: data.unknownReactantMoles)
         }
     }
@@ -407,6 +416,7 @@ struct PrecipitationEquationView_Previews: PreviewProvider {
             knownReactant: reaction.knownReactant.name.asString,
             product: reaction.product.name.asString,
             unknownReactant: reaction.unknownReactant.name(showMetal: true, emphasiseMetal: true),
+            unknownReactantCoefficient: reaction.unknownReactant.coeff,
             knownReactantMolarity: 0.23,
             knownReactantMoles: 0.03,
             productMolarMass: 187,
