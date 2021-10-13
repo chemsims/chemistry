@@ -192,6 +192,8 @@
 		57346C6726D0F28E00525920 /* TipScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57346C6626D0F28E00525920 /* TipScreen.swift */; };
 		57346C6B26D0F59700525920 /* IntroScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57346C6A26D0F59700525920 /* IntroScreen.swift */; };
 		573A7CB127171DDC00762644 /* PrecipitationScreenNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573A7CB027171DDC00762644 /* PrecipitationScreenNavigationTests.swift */; };
+		573A7CB327176E8800762644 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 573A7CB227176E8800762644 /* Assets.xcassets */; };
+		573A7CB52717709D00762644 /* ChemicalReactionsBundleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573A7CB42717709D00762644 /* ChemicalReactionsBundleExtension.swift */; };
 		573E1B2B263AACE000379A1D /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2A263AACE000379A1D /* StringUtil.swift */; };
 		573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2C263AADBD00379A1D /* StringUtilTests.swift */; };
 		573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2E263AB81D00379A1D /* ViewExtensions.swift */; };
@@ -1076,6 +1078,8 @@
 		5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroNavigationModel.swift; sourceTree = "<group>"; };
 		5739D0B52664B83C0007B09A /* IntroStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroStatements.swift; sourceTree = "<group>"; };
 		573A7CB027171DDC00762644 /* PrecipitationScreenNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationScreenNavigationTests.swift; sourceTree = "<group>"; };
+		573A7CB227176E8800762644 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		573A7CB42717709D00762644 /* ChemicalReactionsBundleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChemicalReactionsBundleExtension.swift; sourceTree = "<group>"; };
 		573E1B2A263AACE000379A1D /* StringUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		573E1B2C263AADBD00379A1D /* StringUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtilTests.swift; sourceTree = "<group>"; };
 		573E1B2E263AB81D00379A1D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -4368,6 +4372,8 @@
 				57FCA1C326CABEA7005EE93F /* view */,
 				57FCA1A326CABDA7005EE93F /* ChemicalReactions.h */,
 				57FCA1A426CABDA7005EE93F /* Info.plist */,
+				573A7CB227176E8800762644 /* Assets.xcassets */,
+				573A7CB42717709D00762644 /* ChemicalReactionsBundleExtension.swift */,
 			);
 			path = ChemicalReactions;
 			sourceTree = "<group>";
@@ -4936,6 +4942,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				573A7CB327176E8800762644 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5741,6 +5748,7 @@
 				575317D52709F7EF003CBA25 /* PrecipitationReactionList.swift in Sources */,
 				57E48A5626CADB1600A9A421 /* Double.swift in Sources */,
 				57C9F120270E186800F8B1A6 /* InitialReaction.swift in Sources */,
+				573A7CB52717709D00762644 /* ChemicalReactionsBundleExtension.swift in Sources */,
 				57E48A4326CACB4800A9A421 /* Atom.swift in Sources */,
 				57C9F122270E18A800F8B1A6 /* PrecipitationComponentTypes.swift in Sources */,
 				575317CE2709D741003CBA25 /* PrecipitationEquationView.swift in Sources */,

@@ -17,13 +17,21 @@ private enum TopLevelScreen: CaseIterable {
         NavigationRow(
             primaryIcon: NavigationIcon(
                 screen: screen,
-                image: .core(.quizIcon),
-                selectedImage: .core(.quizIconSelected),
+                image: .framework(baseIcon, bundle: .chemicalReactions),
+                selectedImage: .framework("\(baseIcon)-pressed", bundle: .chemicalReactions),
                 label: label
             ),
             firstSecondaryIcon: nil,
             secondSecondaryIcon: nil
         )
+    }
+
+    var baseIcon: String {
+        switch self {
+        case .balancedReactions: return "balanced-reaction"
+        case .limitingReagent: return "limiting-reagent"
+        case .precipitation: return "precipitate"
+        }
     }
 
     var screen: ChemicalReactionsScreen {
