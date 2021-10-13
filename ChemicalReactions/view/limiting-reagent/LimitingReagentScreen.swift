@@ -39,7 +39,7 @@ private struct LimitingReagentScreenWithLayout: View {
             LimitingReagentTopStack(model: model, layout: layout)
                 .zIndex(1)
             Spacer(minLength: 0)
-            HStack(spacing: 0) {
+            HStack(alignment: .bottom, spacing: 0) {
                 beaker
                 Spacer(minLength: 0)
                 LimitingReagentRightStack(

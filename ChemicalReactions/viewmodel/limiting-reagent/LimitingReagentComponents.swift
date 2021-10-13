@@ -40,7 +40,11 @@ class LimitingReagentComponents: ObservableObject {
 
     @Published var productCoords = [GridCoordinate]()
     @Published var reactionProgress: CGFloat = 0
-    @Published var rows: CGFloat
+    @Published var rows: CGFloat {
+        didSet {
+            updateEquationData()
+        }
+    }
 
     var reactionProgressModel: ReactionProgressChartViewModel<Element>
 
