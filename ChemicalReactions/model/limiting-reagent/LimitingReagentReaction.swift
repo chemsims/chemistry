@@ -32,6 +32,10 @@ extension LimitingReagentReaction {
         reactionLine(getName: \.nameWithCoeffAndState)
     }
 
+    var reactionDisplayWithEmphasisedElementState: TextLine {
+        reactionLine(getName: \.nameWithCoeffAndEmphasisedState)
+    }
+
     private func reactionLine(
         getName: KeyPath<ElementDisplay, TextLine>
     ) -> TextLine {
@@ -119,6 +123,10 @@ extension ElementDisplay {
 
     var nameWithCoeffAndState: TextLine {
         nameWithCoeff + "_(\(state.symbol))_"
+    }
+
+    var nameWithCoeffAndEmphasisedState: TextLine {
+        nameWithCoeff + "_*(\(state.symbol))*_"
     }
 }
 

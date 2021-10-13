@@ -43,8 +43,14 @@ class LimitingReagentComponents: ObservableObject {
     @Published var rows: CGFloat {
         didSet {
             updateEquationData()
+            didSetRows?()
         }
     }
+
+    // It would be better to have a delegate, or just move rows up
+    // to the limiting reagent screen view model. For now, just
+    // put this here though
+    var didSetRows: (() -> Void)? = nil
 
     var reactionProgressModel: ReactionProgressChartViewModel<Element>
 

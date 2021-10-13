@@ -284,7 +284,7 @@ private class EndInitialReaction: SetStatement {
         [
             DelayedState(
                 state: ShowDraggingHandState(),
-                delay: 1
+                delay: 2
             )
         ]
     }

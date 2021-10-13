@@ -17,6 +17,9 @@ class LimitingReagentScreenViewModel: ObservableObject {
             addMolecules: self.add,
             useBufferWhenAddingMolecules: false // TODO test performance on old device
         )
+        self.components.didSetRows = { [weak self] in
+            self?.highlights.clear()
+        }
     }
 
     @Published var statement = [TextLine]()
@@ -30,6 +33,8 @@ class LimitingReagentScreenViewModel: ObservableObject {
 
     @Published var input: InputState? = nil
     @Published var equationState = EquationState.showVolume
+
+    @Published var highlights = HighlightedElements<ScreenElement>()
 
     private(set) var shakeReactantModel: MultiContainerShakeViewModel<LimitingReagentComponents.Reactant>!
     private(set) var navigation: NavigationModel<LimitingReagentScreenState>!
@@ -104,5 +109,17 @@ extension LimitingReagentScreenViewModel {
         static func < (lhs: EquationState, rhs: EquationState) -> Bool {
             lhs.rawValue < rhs.rawValue
         }
+    }
+
+    enum ScreenElement {
+        case selectReaction,
+             reactionDefinitionStates,
+             beakerSlider,
+             limitingReactantContainer,
+             excessReactantContainer,
+             limitingReactantMolesToVolume,
+             neededExcessReactantMoles,
+             theoreticalProductMass,
+             productYieldPercentage
     }
 }

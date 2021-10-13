@@ -113,7 +113,7 @@ struct LimitingReagentReactionStatements {
             """
             So right now, the molarity of *\(limitingReactant)* in this solution is \
             *\(molarity)M or \(molarity) moles/L*. This means that for each liter of substance, \
-            there is *\(molarity) moles of \(limitingReactant)*. But we already know how many \
+            there are *\(molarity) moles of \(limitingReactant)*. But we already know how many \
             liters there are right?
             """
         ]

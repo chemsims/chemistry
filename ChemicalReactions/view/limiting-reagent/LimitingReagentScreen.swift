@@ -13,19 +13,26 @@ struct LimitingReagentScreen: View {
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
     var body: some View {
-        GeometryReader { geo in
-            LimitingReagentScreenWithLayout(
-                model: model,
-                layout: .init(
-                    common: .init(
-                        geometry: geo,
-                        verticalSizeClass: verticalSizeClass,
-                        horizontalSizeClass: horizontalSizeClass
+        ZStack {
+            Rectangle()
+                .foregroundColor(Color.white)
+                .colorMultiply(model.highlights.colorMultiply(for: nil))
+                .edgesIgnoringSafeArea(.all)
+            
+            GeometryReader { geo in
+                LimitingReagentScreenWithLayout(
+                    model: model,
+                    layout: .init(
+                        common: .init(
+                            geometry: geo,
+                            verticalSizeClass: verticalSizeClass,
+                            horizontalSizeClass: horizontalSizeClass
+                        )
                     )
                 )
-            )
+            }
+            .padding(ChemicalReactionsScreenLayout.topLevelScreenPadding)
         }
-        .padding(ChemicalReactionsScreenLayout.topLevelScreenPadding)
     }
 }
 
@@ -75,10 +82,19 @@ private struct LimitingReagentTopStack: View {
 
     private var reactionDefinition: some View {
         TextLinesView(
-            line: model.reaction.reactionDisplayWithElementState,
+            line: reactionLine,
             fontSize: layout.common.reactionDefinitionFontSize
         )
         .frame(height: layout.common.reactionDefinitionHeight)
+        .background(Color.white.padding(-0.1 * layout.common.reactionDefinitionHeight))
+        .colorMultiply(model.highlights.colorMultiply(for: .reactionDefinitionStates))
+    }
+
+    private var reactionLine: TextLine {
+        if model.highlights.elements.contains(.reactionDefinitionStates) {
+            return model.reaction.reactionDisplayWithEmphasisedElementState
+        }
+        return model.reaction.reactionDisplayWithElementState
     }
 
     private var reactionToggle: some View {
@@ -100,6 +116,7 @@ private struct LimitingReagentTopStack: View {
             height: layout.common.reactionSelectionToggleHeight,
             alignment: .top
         )
+        .colorMultiply(model.highlights.colorMultiply(for: .selectReaction))
     }
 }
 
@@ -112,7 +129,7 @@ private struct LimitingReagentRightStack: View {
     var body: some View {
         VStack(spacing: 0) {
             equation
-            HStack(spacing: 0) {
+            HStack(alignment: .bottom, spacing: 0) {
                 Spacer(minLength: 0)
                 chart
                 Spacer(minLength: 0)
@@ -126,7 +143,8 @@ private struct LimitingReagentRightStack: View {
             data: components.equationData,
             reactionProgress: components.reactionProgress,
             showTheoreticalData: model.equationState >= .showTheoreticalData,
-            showActualData: model.equationState >= .showActualData
+            showActualData: model.equationState >= .showActualData,
+            highlights: model.highlights
         )
     }
 
@@ -135,6 +153,7 @@ private struct LimitingReagentRightStack: View {
             model: components.reactionProgressModel,
             geometry: layout.common.reactionProgressGeometry(LimitingReagentComponents.Element.self)
         )
+        .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 
     private var beaky: some View {

@@ -61,9 +61,21 @@ struct LimitingReagentBeaker: View {
             moleculeSize: layout.common.containerMoleculeSize,
             topOfWaterY: layout.common.topOfWaterPosition(rows: components.rows),
             halfXShakeRange: layout.common.containerShakeHalfYRange,
-            halfYShakeRange: layout.common.containerShakeHalfYRange
+            halfYShakeRange: layout.common.containerShakeHalfYRange,
+            highlightedMolecule: highlightedReactantContainer,
+            dismissHighlight: { model.highlights.clear() }
         )
         .frame(width: layout.common.totalBeakerAreaWidth)
+    }
+
+    private var highlightedReactantContainer: LimitingReagentComponents.Reactant? {
+        let elements = model.highlights.elements
+        if elements.contains(.limitingReactantContainer) {
+            return .limiting
+        } else if elements.contains(.excessReactantContainer) {
+            return .excess
+        }
+        return nil
     }
 
     private var beaker: some View {
@@ -94,8 +106,8 @@ struct LimitingReagentBeaker: View {
             currentTime: components.reactionProgress,
             settings: layout.common.beakerSettings,
             canSetLevel: model.input == .setWaterLevel,
-            beakerColorMultiply: .white,
-            sliderColorMultiply: .white,
+            beakerColorMultiply: model.highlights.colorMultiply(for: nil),
+            sliderColorMultiply: model.highlights.colorMultiply(for: .beakerSlider),
             beakerModifier: IdentityViewModifier()
         )
     }

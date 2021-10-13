@@ -15,26 +15,26 @@ struct LimitingReagentNavigationModel {
     }
 
     private static let states: [LimitingReagentScreenState] = [
-        SelectReaction(statements.intro),
+        SelectReaction(statements.intro, highlights: [.selectReaction]),
         StopInput(statements.explainStoichiometry),
-        SetStatement(statements.introducePhysicalStates),
-        SetStatement(statements.explainStoichiometry),
+        SetStatement(statements.introducePhysicalStates, highlights: [.reactionDefinitionStates]),
+        SetStatement(statements.explainEachPhysicalState),
         SetStatement(statements.explainMoles),
         SetStatement(statements.explainAvogadroNumber),
-        SetWaterLevel(statements.instructToSetVolume),
-        AddLimitingReactant(\.instructToAddLimitingReactant),
+        SetWaterLevel(statements.instructToSetVolume, highlights: [.beakerSlider]),
+        AddLimitingReactant(\.instructToAddLimitingReactant, highlights: [.limitingReactantContainer]),
         StopInput(\.explainMolarity),
         SetStatement(\.showLimitingReactantMolarity),
-        SetStatement(\.showLimitingReactantMoles),
-        SetStatement(\.showNeededReactantMoles),
+        SetStatement(\.showLimitingReactantMoles, highlights: [.limitingReactantMolesToVolume]),
+        SetStatement(\.showNeededReactantMoles, highlights: [.neededExcessReactantMoles]),
         SetStatement(\.showTheoreticalProductMoles),
-        SetStatement(\.showTheoreticalProductMass),
-        AddExcessReactant(\.instructToAddExcessReactant),
+        SetStatement(\.showTheoreticalProductMass, highlights: [.theoreticalProductMass]),
+        AddExcessReactant(\.instructToAddExcessReactant, highlights: [.excessReactantContainer]),
         RunReaction(\.reactionInProgress),
         EndOfReaction(\.endOfReaction),
         SetStatement(statements.explainYieldPercentage),
-        SetStatement(\.showYield),
-        AddNonReactantExcessReactant(\.instructToAddExtraReactant),
+        SetStatement(\.showYield, highlights: [.productYieldPercentage]),
+        AddNonReactantExcessReactant(\.instructToAddExtraReactant, highlights: [.excessReactantContainer]),
         StopInput(\.explainExtraReactantNotReacting),
         SetStatement(\.explainLimitingReagent),
         SetStatement(\.explainExcessReactant)
@@ -68,20 +68,30 @@ class LimitingReagentScreenState: ScreenState, SubState {
 }
 
 private class SetStatement: LimitingReagentScreenState {
-    init(_ statement: [TextLine]) {
+    init(
+        _ statement: [TextLine],
+        highlights: [LimitingReagentScreenViewModel.ScreenElement] = []
+    ) {
         self.getStatement = { _ in statement }
+        self.highlightedElements = highlights
     }
 
-    init(_ keyPath: KeyPath<LimitingReagentReactionStatements, [TextLine]>) {
+    init(
+        _ keyPath: KeyPath<LimitingReagentReactionStatements, [TextLine]>,
+        highlights: [LimitingReagentScreenViewModel.ScreenElement] = []
+    ) {
         self.getStatement = { model in
             LimitingReagentReactionStatements(components: model.components)[keyPath: keyPath]
         }
+        self.highlightedElements = highlights
     }
 
     private let getStatement: (LimitingReagentScreenViewModel) -> [TextLine]
+    private let highlightedElements: [LimitingReagentScreenViewModel.ScreenElement]
 
     override func apply(on model: LimitingReagentScreenViewModel) {
         model.statement = getStatement(model)
+        model.highlights.elements = highlightedElements
     }
 }
 

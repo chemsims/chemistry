@@ -11,6 +11,7 @@ struct LimitingReagentEquationView: View {
     let reactionProgress: CGFloat
     let showTheoreticalData: Bool
     let showActualData: Bool
+    let highlights: HighlightedElements<LimitingReagentScreenViewModel.ScreenElement>
 
     var body: some View {
         GeometryReader { geo in
@@ -24,7 +25,8 @@ struct LimitingReagentEquationView: View {
                     data: data,
                     reactionProgress: reactionProgress,
                     showTheoreticalData: showTheoreticalData,
-                    showActualData: showActualData
+                    showActualData: showActualData,
+                    highlights: highlights
                 )
             }
             .frame(width: geo.size.width, height: geo.size.height)
@@ -62,6 +64,7 @@ private struct SizedLimitingReagentEquationView: View {
     let reactionProgress: CGFloat
     let showTheoreticalData: Bool
     let showActualData: Bool
+    let highlights: HighlightedElements<LimitingReagentScreenViewModel.ScreenElement>
 
     var body: some View {
         VStack(spacing: 20) {
@@ -74,8 +77,16 @@ private struct SizedLimitingReagentEquationView: View {
     private var topRow: some View {
         HStack(alignment: .top, spacing: columnHSpacing) {
             LimitingReactantMoles(data: data, showData: showTheoreticalData)
+                .background(Color.white.padding(-2))
+                .colorMultiply(highlights.colorMultiply(for: .limitingReactantMolesToVolume))
+
             ExcessReactantNeededMoles(data: data, showData: showTheoreticalData)
+                .background(Color.white.padding(-2))
+                .colorMultiply(highlights.colorMultiply(for: .neededExcessReactantMoles))
+
             TheoreticalProductMass(data: data, showData: showTheoreticalData)
+                .background(Color.white.padding(-2))
+                .colorMultiply(highlights.colorMultiply(for: .theoreticalProductMass))
         }
     }
 
@@ -86,17 +97,23 @@ private struct SizedLimitingReagentEquationView: View {
                 showData: showActualData,
                 reactionProgress: reactionProgress
             )
+            .colorMultiply(highlights.colorMultiply(for: .limitingReactantMolesToVolume))
+
             ActualProductMoles(
                 data: data,
                 showData: showActualData,
                 reactionProgress: reactionProgress
             )
+            .colorMultiply(highlights.colorMultiply(for: .limitingReactantMolesToVolume))
+
             ProductYield(
                 data: data,
                 showTheoreticalData: showTheoreticalData,
                 showActualData: showActualData,
                 reactionProgress: reactionProgress
             )
+            .background(Color.white.padding(-2))
+            .colorMultiply(highlights.colorMultiply(for: .productYieldPercentage))
         }
     }
 }
@@ -572,7 +589,8 @@ struct LimitingReagentEquationView_Previews: PreviewProvider {
             data: previewData,
             reactionProgress: 0,
             showTheoreticalData: false,
-            showActualData: false
+            showActualData: false,
+            highlights: .init()
         )
         .border(Color.black)
         .frame(width: NaturalWidth, height: NaturalHeight)
