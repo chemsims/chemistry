@@ -7,6 +7,10 @@ import SwiftUI
 public struct MoleculeScales: View {
 
     /// A rotating with basket of molecules on the left and right, where the rotation fraction is explicitly provided
+    ///
+    /// - Parameters:
+    ///   - rotationFraction: The rotation of the scales, between -1 and 1. A value of 1 corresponds to a maximum
+    ///   clockwise rotation, and -1 corresponds to a maximum anti clockwise rotation.
     public init(
         leftMolecules: MoleculeScales.Molecules,
         rightMolecules: MoleculeScales.Molecules,

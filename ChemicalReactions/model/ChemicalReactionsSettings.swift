@@ -19,4 +19,16 @@ struct ChemicalReactionsSettings {
         x2: CGFloat(maxRows),
         y2: 0.7
     )
+
+    /// Returns rotation of the balanced reaction scales as a fraction between -1 and 1,
+    /// in terms of the surplus of product atoms, which may be negative
+    static let productAtomSurplusToRotation: Equation = {
+        let maxDifference: CGFloat = 3
+        return LinearEquation(
+            x1: -maxDifference,
+            y1: -1,
+            x2: maxDifference,
+            y2: 1
+        ).within(min: -1, max: 1)
+    }()
 }

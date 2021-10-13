@@ -78,6 +78,7 @@ struct BalancedReactionScales: View {
                     label: atom.symbol
                 )
             ),
+            rotationFraction: ConstantEquation(value: model.rotation(of: atom)),
             equationInput: 0,
             badge: .init(
                 label: atom.symbol,
@@ -101,6 +102,13 @@ struct BalancedReactionScalesModel {
     }
 
     let balancer: ReactionBalancer
+
+    func rotation(of atom: BalancedReaction.Atom) -> CGFloat {
+        let reactantCount = balancer.atomCount(of: atom, elementType: .reactant)
+        let productCount = balancer.atomCount(of: atom, elementType: .product)
+        let productSurplus = CGFloat(productCount - reactantCount)
+        return ChemicalReactionsSettings.productAtomSurplusToRotation.getY(at: productSurplus)
+    }
 
     func atomFraction(of atom: BalancedReaction.Atom, elementType: BalancedReaction.ElementType) -> CGFloat {
         let count = balancer.atomCount(of: atom, elementType: elementType)
