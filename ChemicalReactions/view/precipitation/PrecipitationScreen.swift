@@ -93,6 +93,7 @@ private struct PrecipitationTopStack: View {
         PrecipitationReactionDefinition(
             reaction: model.chosenReaction,
             showMetal: model.showUnknownMetal,
+            emphasiseMetal: model.showUnknownMetal || model.emphasiseUnknownMetalSymbol,
             fontSize: layout.common.reactionDefinitionFontSize
         )
         .frame(height: layout.common.reactionDefinitionHeight)

@@ -9,6 +9,7 @@ struct PrecipitationReactionDefinition: View {
 
     let reaction: PrecipitationReaction
     let showMetal: Bool
+    let emphasiseMetal: Bool
     let fontSize: CGFloat
 
     var body: some View {
@@ -23,7 +24,7 @@ struct PrecipitationReactionDefinition: View {
 
     private var unknownReactant: some View {
         TextLinesView(
-            line: reaction.unknownReactant.nameWithState(showMetal: showMetal, emphasiseMetal: true),
+            line: reaction.unknownReactant.nameWithState(showMetal: showMetal, emphasiseMetal: emphasiseMetal),
             fontSize: fontSize
         )
     }
@@ -44,7 +45,7 @@ struct PrecipitationReactionDefinition: View {
 
     private var secondaryProduct: some View {
         TextLinesView(
-            line: reaction.secondaryProduct.nameWithState(showMetal: showMetal, emphasiseMetal: true),
+            line: reaction.secondaryProduct.nameWithState(showMetal: showMetal, emphasiseMetal: emphasiseMetal),
             fontSize: fontSize
         )
     }

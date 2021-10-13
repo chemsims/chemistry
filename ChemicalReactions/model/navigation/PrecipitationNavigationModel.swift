@@ -19,7 +19,7 @@ struct PrecipitationNavigationModel {
     private static let states: [PrecipitationScreenState] = [
         ChooseReaction(statements.intro, highlights: [.reactionToggle]),
         StopInput(\.explainPrecipitation, highlights: [.reactionDefinition]),
-        SetStatement(statements.explainUnknownMetal, highlights: [.reactionDefinition]),
+        ExplainUnknownMetal(statements.explainUnknownMetal, highlights: [.reactionDefinition]),
         InstructToSetWaterLevel(statements.instructToSetWaterLevel, highlights: [.waterSlider]),
         InstructToAddKnownReactant(\.instructToAddKnownReactant, highlights: [.knownReactantContainer]),
         InstructToAddUnknownReactant(),
@@ -102,10 +102,22 @@ private class StopInput: SetStatement {
     }
 }
 
+private class ExplainUnknownMetal: SetStatement {
+    override func apply(on model: PrecipitationScreenViewModel) {
+        super.apply(on: model)
+        model.emphasiseUnknownMetalSymbol = true
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.emphasiseUnknownMetalSymbol = false
+    }
+}
+
 private class InstructToSetWaterLevel: SetStatement {
     override func apply(on model: PrecipitationScreenViewModel) {
         super.apply(on: model)
         model.input = .setWaterLevel
+        model.emphasiseUnknownMetalSymbol = false
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {

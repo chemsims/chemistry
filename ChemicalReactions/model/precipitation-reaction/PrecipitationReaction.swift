@@ -97,21 +97,19 @@ extension PrecipitationElementWithUnknownMetal {
     /// - Parameter emphasiseMetal: Whether to emphasise the metal element, when the metal is shown.
     func name(showMetal: Bool, emphasiseMetal: Bool = false) -> TextLine {
         let coeffNum = coeff == 1 ? "" : "\(coeff)"
-        let metal = showMetal ? metalStr(emphasise: emphasiseMetal) : hiddenMetalStr
+        let metal = metalStr(showMetal: showMetal, emphasise: emphasiseMetal)
         return "\(coeffNum)\(metal)" + latterPart
     }
 
-    private var hiddenMetalStr: String {
-        "M\(metalCountSuffix)"
+    private func metalStr(showMetal: Bool, emphasise: Bool) -> String {
+        let metalValue = showMetal ? metal.rawValue : "M"
+        return metalStr(metalValue: metalValue, emphasise: emphasise)
     }
 
-    private func metalStr(emphasise: Bool) -> String {
+    private func metalStr(metalValue: String, emphasise: Bool) -> String {
+        let countSuffix = metalAtomCount == 1 ? "" : "_\(metalAtomCount)_"
         let emphasis = emphasise ? "*" : ""
-        return "\(emphasis)\(metal.rawValue)\(emphasis)\(metalCountSuffix)"
-    }
-
-    private var metalCountSuffix: String {
-        metalAtomCount == 1 ? "" : "_\(metalAtomCount)_"
+        return "\(emphasis)\(metalValue)\(emphasis)\(countSuffix)"
     }
 }
 
