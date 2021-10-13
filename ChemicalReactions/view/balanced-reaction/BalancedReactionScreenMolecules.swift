@@ -21,18 +21,13 @@ extension BalancedReactionScreen {
                         structure: molecule.moleculeType.structure,
                         atomSize: atomSize(of: molecule),
                         showSymbols: !molecule.isInBeaker,
-                        dragEnabled: !molecule.isInBeaker && model.inputState == .dragMolecules,
+                        dragEnabled: model.inputState == .dragMolecules,
                         onDragEnd: {
                             moleculeDragEnded(molecule: molecule, offset: $0)
                         }
                     )
                     .animation(.easeOut(duration: 0.35))
                     .position(position(of: molecule))
-                    .onTapGesture {
-                        if molecule.isInBeaker && model.inputState == .dragMolecules {
-                            model.remove(molecule: molecule)
-                        }
-                    }
                 }
 
                 if model.showDragTutorial {
@@ -48,11 +43,7 @@ extension BalancedReactionScreen {
         private func moleculeDragEnded(
             molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
             offset: CGSize
-        ) {
-            guard !molecule.isInBeaker else {
-                return
-            }
-
+        ) {            
             let originalPosition = position(of: molecule)
             let currentPosition = originalPosition.offset(offset)
             let boxSize = layout.moleculeBoundingBoxSizeForOverlapDetection
@@ -68,6 +59,8 @@ extension BalancedReactionScreen {
                 model.drop(molecule: molecule, on: .reactant)
             } else if overlappingRightBeaker {
                 model.drop(molecule: molecule, on: .product)
+            } else {
+                model.drop(molecule: molecule, on: nil)
             }
         }
 

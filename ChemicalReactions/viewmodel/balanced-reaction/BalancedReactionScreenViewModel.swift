@@ -101,13 +101,31 @@ extension BalancedReactionScreenViewModel {
 
     func drop(
         molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
+        on elementType: BalancedReaction.ElementType?
+    ) {
+        guard inputState == .dragMolecules else {
+            return
+        }
+        if molecule.isInBeaker {
+            if elementType == nil {
+                remove(molecule: molecule)
+            }
+        } else {
+            if let elementType = elementType {
+                add(molecule: molecule, on: elementType)
+            }
+        }
+    }
+
+    private func add(
+        molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
         on elementType: BalancedReaction.ElementType
     ) {
         guard inputState == .dragMolecules else {
             return
         }
-        let didDrop = moleculePosition.drop(molecule: molecule, on: elementType)
-        if didDrop {
+        let didAdd = moleculePosition.drop(molecule: molecule, on: elementType)
+        if didAdd {
             updateStatementPostMoleculeInteraction(molecule: molecule.moleculeType)
             if showDragTutorial {
                 showDragTutorial = false
@@ -118,7 +136,7 @@ extension BalancedReactionScreenViewModel {
         }
     }
 
-    func remove(molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule) {
+    private func remove(molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule) {
         let didRemove = moleculePosition.remove(molecule: molecule)
         if didRemove {
             updateStatementPostMoleculeInteraction(molecule: molecule.moleculeType)
@@ -140,10 +158,6 @@ extension BalancedReactionScreenViewModel {
     }
 }
 
-
-
 extension Animation {
     static let addMolecule = Animation.easeOut(duration: 0.5)
 }
-
-
