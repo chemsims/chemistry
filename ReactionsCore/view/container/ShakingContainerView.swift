@@ -22,6 +22,8 @@ public struct ShakingContainerView: View {
         containerSettings: ParticleContainerSettings,
         moleculeSize: CGFloat,
         moleculeColor: Color,
+        containerColorMultiply: Color,
+        moleculeColorMultiply: Color,
         includeContainerBackground: Bool,
         rotation: Angle,
         toolTipText: TextLine? = nil
@@ -34,6 +36,8 @@ public struct ShakingContainerView: View {
         self.containerSettings = containerSettings
         self.moleculeSize = moleculeSize
         self.moleculeColor = moleculeColor
+        self.containerColorMultiply = containerColorMultiply
+        self.moleculeColorMultiply = moleculeColorMultiply
         self.includeContainerBackground = includeContainerBackground
         self.rotation = rotation
         self.toolTipText = toolTipText
@@ -48,6 +52,8 @@ public struct ShakingContainerView: View {
     let containerSettings: ParticleContainerSettings
     let moleculeSize: CGFloat
     let moleculeColor: Color
+    let containerColorMultiply: Color
+    let moleculeColorMultiply: Color
     let includeContainerBackground: Bool
     let rotation: Angle
     let toolTipText: TextLine?
@@ -65,8 +71,11 @@ public struct ShakingContainerView: View {
                     )
                     .position(molecule.position)
             }
+            .colorMultiply(moleculeColorMultiply)
 
             container
+                .colorMultiply(containerColorMultiply)
+
             if let toolTipText = toolTipText {
                 toolTip(text: toolTipText)
             }

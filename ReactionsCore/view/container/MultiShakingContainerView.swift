@@ -31,7 +31,7 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
         self.topOfWaterY = topOfWaterY
         self.halfXShakeRange = halfXShakeRange
         self.halfYShakeRange = halfYShakeRange
-        self.highlightedMolecule = highlightedMolecule
+        self.highlightedMoleculeContainer = highlightedMolecule
         self.dismissHighlight = dismissHighlight
         self.activeToolTipText = activeToolTipText
     }
@@ -46,7 +46,7 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
     let topOfWaterY: CGFloat
     let halfXShakeRange: CGFloat
     let halfYShakeRange: CGFloat
-    let highlightedMolecule: Molecule?
+    let highlightedMoleculeContainer: Molecule?
     let dismissHighlight: () -> Void
     let activeToolTipText: (Molecule) -> TextLine?
 
@@ -76,28 +76,44 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
             containerSettings: containerSettings(molecule),
             moleculeSize: moleculeSize,
             moleculeColor: containerSettings(molecule).labelColor,
-            includeContainerBackground: highlightedMolecule == molecule,
+            containerColorMultiply: containerColorMultiply(for: molecule),
+            moleculeColorMultiply: moleculeColorMultiply(for: molecule),
+            includeContainerBackground: highlightedMoleculeContainer == molecule,
             rotation: isActive ? .degrees(135) : .zero,
             toolTipText: toolTipText
         )
         .disabled(isDisabled)
-        .colorMultiply(colorMultiple(for: molecule))
         .zIndex(isActive ? 1 : 0)
         .minimumScaleFactor(0.4)
     }
 
-    private func colorMultiple(for molecule: Molecule) -> Color {
-        if shouldDim(molecule: molecule) {
+    private func containerColorMultiply(for molecule: Molecule) -> Color {
+        if shouldDimContainer(for: molecule) {
             return Styling.inactiveContainerMultiply
         }
         return .white
     }
 
-    private func shouldDim(molecule: Molecule) -> Bool {
-        if let highlightedMolecule = highlightedMolecule {
+    private func moleculeColorMultiply(for molecule: Molecule) -> Color {
+        if shouldDimMolecule(for: molecule) {
+            return Styling.inactiveContainerMultiply
+        }
+        return .white
+    }
+
+    // We only want to dim falling molecules when we're highlighting
+    // another container.
+    private func shouldDimMolecule(for molecule: Molecule) -> Bool {
+        if let highlightedMolecule = highlightedMoleculeContainer {
             return molecule != highlightedMolecule
         }
-        return disabled(molecule)
+        return false
+    }
+
+    // We dim the container when highlighting another molecule, or
+    // if its disabled
+    private func shouldDimContainer(for molecule: Molecule) -> Bool {
+        shouldDimMolecule(for: molecule) || disabled(molecule)
     }
 
     private func onTap(molecule: Molecule, location: CGPoint) {

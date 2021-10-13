@@ -49,6 +49,8 @@ where ContainerType : CaseIterable, ContainerType : Hashable
             ),
             moleculeSize: layout.moleculeSize,
             moleculeColor: color,
+            containerColorMultiply: .white,
+            moleculeColorMultiply: .white,
             includeContainerBackground: includeContainerBackground,
             rotation: isActive ? .degrees(135) : .zero
         )
