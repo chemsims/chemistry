@@ -138,7 +138,7 @@ extension ChemicalReactionsScreenLayout {
 // MARK: - Containers
 extension ChemicalReactionsScreenLayout {
     var containerWidth: CGFloat {
-        0.1 * beakerWidth
+        0.13 * beakerWidth
     }
 
     private var containerHeight: CGFloat {
@@ -158,7 +158,7 @@ extension ChemicalReactionsScreenLayout {
     }
 
     var containerShakeHalfYRange: CGFloat {
-        1.5 * containerHeight
+        containerHeight
     }
 
     func containerMaskSize(rows: CGFloat) -> CGSize {
