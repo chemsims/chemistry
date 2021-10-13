@@ -223,6 +223,14 @@ extension BalancedReactionScreenLayout {
         availableWidthForBeakers
     }
 
+    var scalesLabelSize: CGSize {
+        CGSize(width: scalesSize.width / 3, height: 0.14 * scalesSize.height)
+    }
+
+    var scalesLabelFontSize: CGFloat {
+        0.8 * scalesLabelSize.height
+    }
+
     private var scalesHeight: CGFloat {
         let availableHeight = common.height - beakerHeight - reactionDefinitionSize.height
         let idealHeight = 0.8 * availableHeight
