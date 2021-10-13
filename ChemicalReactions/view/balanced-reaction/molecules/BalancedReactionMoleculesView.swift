@@ -53,6 +53,12 @@ struct BalancedReactionMoleculeView: View {
         mainContent
             .offset(offset)
             .gesture(dragGesture)
+            .onReceive(
+                NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
+            ) { _ in
+                onDragUpdate(.zero)
+                onDragEnd(.zero)
+            }
     }
 
     private var dragGesture: some Gesture {
@@ -66,6 +72,7 @@ struct BalancedReactionMoleculeView: View {
             onDragUpdate(gesture.translation)
         }
         .onEnded { gesture in
+            onDragUpdate(gesture.translation)
             onDragEnd(gesture.translation)
         }
     }
