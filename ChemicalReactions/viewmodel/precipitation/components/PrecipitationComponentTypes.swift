@@ -33,10 +33,10 @@ extension PrecipitationComponents {
 
         let addMoleculeReactionProgressDuration: TimeInterval = 0.5
 
-        let precipitateGrowthSteps = 4
+        let precipitateGrowthSteps = 6
         let precipitatePoints = 7
         let precipitateCenter = CGPoint(x: 0.5, y: 0.75)
-        let precipitateGrowthMagnitude: Range<CGFloat> = 0.23..<0.48
+        let precipitateGrowthMagnitude: Range<CGFloat> = 0.23..<0.55
     }
 }
 

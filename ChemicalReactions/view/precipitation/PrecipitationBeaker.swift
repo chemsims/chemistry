@@ -148,10 +148,7 @@ struct PrecipitationBeaker: View {
         )
         .foregroundColor(model.chosenReaction.product.color)
         .padding(.bottom, model.precipitatePosition == .beaker ? 2 : 0)
-        .frame(
-            width: layout.common.innerBeakerWidth,
-            height: layout.common.waterHeight(rows: model.rows)
-        )
+        .frame(size: layout.precipitateShapeSize(rows: model.rows))
         .position(precipitateGeometry.position)
         .offset(precipitateOffset)
         .gesture(dragGesture)
@@ -380,11 +377,15 @@ fileprivate struct PrecipitateGeometry {
         return CGRect(origin: scaledOriginInShape, size: scaledSize)
     }
 
+    private var shapeSize: CGSize {
+        layout.precipitateShapeSize(rows: model.rows)
+    }
+
     private var shapeHeight: CGFloat {
-        layout.common.waterHeight(rows: model.rows)
+        shapeSize.height
     }
 
     private var shapeWidth: CGFloat {
-        layout.common.innerBeakerWidth
+        shapeSize.width
     }
 }

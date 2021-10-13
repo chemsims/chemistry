@@ -51,7 +51,6 @@ private struct PrecipitationScreenWithLayout: View {
             selectionToggle
         }
         .frame(width: layout.common.width, height: layout.common.height)
-        .border(Color.red)
     }
 
     private var reactionDefinition: some View {
@@ -103,7 +102,6 @@ private struct PrecipitationScreenWithLayout: View {
                 model: model,
                 layout: layout
             )
-            .border(Color.green)
 
             Spacer(minLength: 0)
 
@@ -120,10 +118,8 @@ private struct PrecipitationScreenWithLayout: View {
                 layout: layout
             )
         }
-        .border(Color.black)
         .frame(height: layout.common.height)
         .verticalSpacing(alignment: .bottom)
-        .border(Color.green)
     }
 }
 
@@ -355,6 +351,19 @@ struct PrecipitationScreenLayout {
 
     var precipitateMaxDragX: CGFloat {
         common.totalBeakerAreaWidth
+    }
+
+    func precipitateShapeSize(rows: CGFloat) -> CGSize {
+        let size = min(maxPrecipitateShapeWidth, maxPrecipitateShapeHeight(rows: rows))
+        return CGSize(width: size, height: size)
+    }
+
+    private func maxPrecipitateShapeHeight(rows: CGFloat) -> CGFloat {
+        common.waterHeight(rows: rows)
+    }
+
+    private var maxPrecipitateShapeWidth: CGFloat {
+        common.innerBeakerWidth
     }
 
     private var bottomOfBeakerY: CGFloat {
