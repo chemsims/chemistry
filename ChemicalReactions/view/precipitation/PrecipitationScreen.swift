@@ -82,7 +82,7 @@ private struct PrecipitationScreenWithLayout: View {
             displayString: { $0.name(showMetal: false) },
             label: { $0.name(showMetal: false).label },
             disabledOptions: [],
-            onSelection: model.next
+            onSelection: model.didSelectReaction
         )
         .disabled(model.input != .selectReaction)
         .frame(

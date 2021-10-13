@@ -82,6 +82,10 @@ extension PrecipitationScreenViewModel {
         doGoNext(force: true)
     }
 
+    func didSelectReaction() {
+        doGoNext(force: true)
+    }
+
     private func doGoNext(force: Bool) {
         if force || !nextIsDisabled {
             navigation.next()
@@ -90,6 +94,8 @@ extension PrecipitationScreenViewModel {
 
     var nextIsDisabled : Bool {
         switch input {
+        case .selectReaction:
+            return true
         case let .addReactant(type):
             return !components.hasAddedEnough(of: type)
         case .weighProduct:
@@ -109,6 +115,9 @@ extension PrecipitationScreenViewModel {
     private func add(reactant: PrecipitationComponents.Reactant, count: Int) {
         if canAdd(reactant: reactant) {
             components.add(reactant: reactant, count: count)
+            if !components.canAdd(reactant: reactant) {
+                doGoNext(force: true)
+            }
         }
     }
 }
