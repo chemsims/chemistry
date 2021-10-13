@@ -46,13 +46,7 @@ extension BalancedReactionScreen {
             offset: CGSize
         ) {
             let overlappingBeaker = getOverlappingBeaker(molecule: molecule, offset: offset)
-            if overlappingBeaker == .reactant {
-                model.moleculesInFlightOverReactant.insert(molecule.id)
-            } else if overlappingBeaker == .product {
-                model.moleculesInFlightOverProduct.insert(molecule.id)
-            } else {
-                model.removeInFlightMolecule(id: molecule.id)
-            }
+            model.moleculeWasMoved(id: molecule.id, overlapping: overlappingBeaker)
         }
 
         private func moleculeDragEnded(

@@ -73,7 +73,24 @@ private struct SizedBalancedReactionScreen: View {
             )
             .frame(size: layout.beakerSize)
             .position(layout.secondBeakerPosition)
+
+            if model.elementTypesInFlight.contains(.reactant) {
+                beakerUnderline
+                    .position(layout.firstBeakerUnderlinePosition)
+            }
+
+            if model.elementTypesInFlight.contains(.product) {
+                beakerUnderline
+                    .position(layout.secondBeakerUnderlinePosition)
+            }
         }
+    }
+
+    @ViewBuilder
+    private var beakerUnderline: some View {
+        Rectangle()
+            .frame(width: layout.beakerSize.width, height: layout.beakerUnderlingHeight)
+            .foregroundColor(.orangeAccent)
     }
 
     private var beaky: some View {

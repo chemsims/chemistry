@@ -131,6 +131,9 @@ private class DragMolecules: BalancedReactionScreenState {
         model.statement = statements.instructToDragMoleculesForSubsequentReaction
         model.inputState = .dragMolecules
         model.emphasiseReactionCoefficients = true
+        model.moleculesInFlight.removeAll()
+        model.moleculesInFlightOverProduct.removeAll()
+        model.moleculesInFlightOverReactant.removeAll()
     }
 
     override func unapply(on model: BalancedReactionScreenViewModel) {

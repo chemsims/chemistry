@@ -27,6 +27,18 @@ class BalancedReactionScreenViewModel: ObservableObject {
     @Published var moleculesInFlightOverReactant = Set<UUID>()
     @Published var moleculesInFlightOverProduct = Set<UUID>()
 
+    @Published var moleculesInFlight = Set<UUID>()
+
+    var elementTypesInFlight: Set<BalancedReaction.ElementType> {
+        let elems = moleculesInFlight.compactMap { id -> BalancedReaction.ElementType? in
+            if let molecule = moleculePosition.molecules.first(where: { $0.id == id}) {
+                return molecule.elementType
+            }
+            return nil
+        }
+        return Set(elems)
+    }
+
     var hasSelectedFirstReaction = false
 
     var unavailableReactions: [BalancedReaction] {
@@ -42,7 +54,20 @@ class BalancedReactionScreenViewModel: ObservableObject {
 
     private var moleculePositionHistory = [BalancedReactionMoleculePositionViewModel]()
 
+    func moleculeWasMoved(id: UUID, overlapping: BalancedReaction.ElementType?) {
+        moleculesInFlight.insert(id)
+        if overlapping == .reactant {
+            moleculesInFlightOverReactant.insert(id)
+        } else if overlapping == .product {
+            moleculesInFlightOverProduct.insert(id)
+        } else {
+            moleculesInFlightOverReactant.remove(id)
+            moleculesInFlightOverProduct.remove(id)
+        }
+    }
+
     func removeInFlightMolecule(id: UUID) {
+        moleculesInFlight.remove(id)
         moleculesInFlightOverReactant.remove(id)
         moleculesInFlightOverProduct.remove(id)
     }
