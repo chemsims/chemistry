@@ -90,12 +90,13 @@ struct BalancedReactionScales: View {
         )
         .frame(size: layout.scalesSize)
         .animation(.easeOut(duration: 0.5), value: model.rotation(of: atom))
+        .animation(nil, value: model.showScales(for: atom))
     }
 }
 
 struct BalancedReactionScalesModel {
-    static let cols = 6
-    static let rows = 6
+    static let cols = 5
+    static let rows = 5
     static let maxMoleculeCount = CGFloat(MoleculeScales.gridCoords(cols: cols, rows: rows).count)
 
     init(balancer: ReactionBalancer) {

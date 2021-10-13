@@ -133,7 +133,7 @@ extension BalancedReactionScreenLayout {
     }
 
     var reactionArrowWidth: CGFloat {
-        0.5 * widthBetweenBeakers
+        0.4 * widthBetweenBeakers
     }
 
     private var widthBetweenBeakers: CGFloat {
