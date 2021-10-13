@@ -191,6 +191,7 @@
 		57346C6526D0E3B100525920 /* StudentsBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57346C6426D0E3B100525920 /* StudentsBanner.swift */; };
 		57346C6726D0F28E00525920 /* TipScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57346C6626D0F28E00525920 /* TipScreen.swift */; };
 		57346C6B26D0F59700525920 /* IntroScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57346C6A26D0F59700525920 /* IntroScreen.swift */; };
+		573A7CB127171DDC00762644 /* PrecipitationScreenNavigationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573A7CB027171DDC00762644 /* PrecipitationScreenNavigationTests.swift */; };
 		573E1B2B263AACE000379A1D /* StringUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2A263AACE000379A1D /* StringUtil.swift */; };
 		573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2C263AADBD00379A1D /* StringUtilTests.swift */; };
 		573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573E1B2E263AB81D00379A1D /* ViewExtensions.swift */; };
@@ -1074,6 +1075,7 @@
 		5739D0AE2664B65A0007B09A /* IntroRightStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroRightStack.swift; sourceTree = "<group>"; };
 		5739D0B22664B79B0007B09A /* IntroNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroNavigationModel.swift; sourceTree = "<group>"; };
 		5739D0B52664B83C0007B09A /* IntroStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroStatements.swift; sourceTree = "<group>"; };
+		573A7CB027171DDC00762644 /* PrecipitationScreenNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationScreenNavigationTests.swift; sourceTree = "<group>"; };
 		573E1B2A263AACE000379A1D /* StringUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtil.swift; sourceTree = "<group>"; };
 		573E1B2C263AADBD00379A1D /* StringUtilTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtilTests.swift; sourceTree = "<group>"; };
 		573E1B2E263AB81D00379A1D /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -2398,6 +2400,15 @@
 				577C502A267F3945003DAD17 /* AcidStatementUtil.swift */,
 			);
 			path = statements;
+			sourceTree = "<group>";
+		};
+		573A7CAF27171DA700762644 /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				5790013126FA45490039C753 /* LimitingReagentScreenNavigationTests.swift */,
+				573A7CB027171DDC00762644 /* PrecipitationScreenNavigationTests.swift */,
+			);
+			path = navigation;
 			sourceTree = "<group>";
 		};
 		573F169B2584C028001CE039 /* quiz */ = {
@@ -4364,6 +4375,7 @@
 		57FCA1AD26CABDA7005EE93F /* ChemicalReactionsTests */ = {
 			isa = PBXGroup;
 			children = (
+				573A7CAF27171DA700762644 /* navigation */,
 				574BF91027046C6A0079CA8F /* precipitation */,
 				57FCA1B026CABDA7005EE93F /* Info.plist */,
 				57E48A4B26CAD1C500A9A421 /* ReactionBalancerViewModelTests.swift */,
@@ -4372,7 +4384,6 @@
 				57B4572326EA29A60030D895 /* AvailableBalancedReactionsValidityTests.swift */,
 				573F2E6926EB8C9D00E9AB74 /* BalancedReactionScreenViewModelTests.swift */,
 				5791D24126F0A8110094D711 /* LimitingReagentComponentTests.swift */,
-				5790013126FA45490039C753 /* LimitingReagentScreenNavigationTests.swift */,
 			);
 			path = ChemicalReactionsTests;
 			sourceTree = "<group>";
@@ -5742,6 +5753,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57B4572426EA29A60030D895 /* AvailableBalancedReactionsValidityTests.swift in Sources */,
+				573A7CB127171DDC00762644 /* PrecipitationScreenNavigationTests.swift in Sources */,
 				573F2E6C26EB8CE000E9AB74 /* NavigationTestMethods.swift in Sources */,
 				573F2E6A26EB8C9D00E9AB74 /* BalancedReactionScreenViewModelTests.swift in Sources */,
 				5782FC9C26E68C1800F97177 /* BalancedReactionBeakerMoleculeLayoutTests.swift in Sources */,

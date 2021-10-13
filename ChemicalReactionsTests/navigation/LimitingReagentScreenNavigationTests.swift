@@ -12,6 +12,7 @@ class LimitingReagentScreenNavigationTests: XCTestCase {
         doTest(\.statement)
         doTest(\.input)
         doTest(\.equationState)
+        doTest(\.highlightedElements)
     }
 
     private func doTest<T: Equatable>(_ path: KeyPath<LimitingReagentScreenViewModel, T>) {
@@ -21,5 +22,11 @@ class LimitingReagentScreenNavigationTests: XCTestCase {
             navigation: model.navigation!,
             prevValueKeyPath: path
         )
+    }
+}
+
+private extension LimitingReagentScreenViewModel {
+    var highlightedElements: [ScreenElement] {
+        highlights.elements
     }
 }
