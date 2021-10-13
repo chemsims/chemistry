@@ -40,6 +40,8 @@ private struct SizedBalancedReactionScreen: View {
         ZStack {
             emptyBeakers
 
+            moleculeLabels
+
             BalancedReactionTopStack(
                 model: moleculeModel,
                 emphasiseCoefficients: model.emphasiseReactionCoefficients,
@@ -56,6 +58,27 @@ private struct SizedBalancedReactionScreen: View {
 
             reactionSelection
         }
+    }
+
+    private var moleculeLabels: some View {
+        ZStack {
+            Text("Products")
+                .frame(size: layout.moleculeTableLabelSize)
+                .rotationEffect(.degrees(-90))
+                .position(layout.moleculeTableProductLabelPosition)
+
+            Text("Reactants")
+                .frame(size: layout.moleculeTableLabelSize)
+                .rotationEffect(.degrees(-90))
+                .position(layout.moleculeTableReactantLabelPosition)
+
+            Rectangle()
+                .frame(size: layout.moleculeTableDividerSize)
+                .position(layout.moleculeTableRect.center)
+        }
+        .font(.system(size: layout.moleculeTableLabelFontSize))
+        .foregroundColor(.orangeAccent)
+        .minimumScaleFactor(0.5)
     }
 
     private var emptyBeakers: some View {

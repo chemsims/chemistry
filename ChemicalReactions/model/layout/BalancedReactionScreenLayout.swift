@@ -48,10 +48,46 @@ extension BalancedReactionScreenLayout {
         1.5 * moleculeTableAtomSize
     }
 
+    /// Size of each label on on the molecule table, before it is rotated
+    var moleculeTableLabelSize: CGSize {
+        CGSize(
+            width: moleculeTableSize.height / 2,
+            height: 0.1 * moleculeTableSize.height
+        )
+    }
+
+    var moleculeTableProductLabelPosition: CGPoint {
+        let dy = 0.25 * moleculeTableSize.height
+        return moleculeTableRect.origin.offset(dx: 0, dy: dy)
+    }
+
+    var moleculeTableReactantLabelPosition: CGPoint {
+        let dy = 0.75 * moleculeTableSize.height
+        return moleculeTableRect.origin.offset(dx: 0, dy: dy)
+    }
+
+    var moleculeTableDividerSize: CGSize {
+        CGSize(width: 0.7 * moleculeTableSize.width, height: 1)
+    }
+
+    var moleculeTableLabelFontSize: CGFloat {
+        0.7 * moleculeTableLabelSize.height
+    }
+
     private var moleculeTableSize: CGSize {
         CGSize(
             width: 0.35 * common.width,
             height: 0.45 * common.height
+        )
+    }
+
+    private var moleculeTableSizeWithLabels: CGSize {
+        // note we add the height of the label size because it is rotated
+        // by 90 degrees. Also, only half of the label is outside of the
+        // rect, so we only add half of the height.
+        return CGSize(
+            width: moleculeTableSize.width + (moleculeTableLabelSize.height / 2),
+            height: moleculeTableSize.height
         )
     }
 }

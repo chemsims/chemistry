@@ -56,6 +56,9 @@ struct BalancedReactionMoleculeView: View {
             .onReceive(
                 NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
             ) { _ in
+                guard dragEnabled else {
+                    return
+                }
                 onDragUpdate(.zero)
                 onDragEnd(.zero)
             }
@@ -69,9 +72,15 @@ struct BalancedReactionMoleculeView: View {
             offsetState = gesture.translation
         }
         .onChanged { gesture in
+            guard dragEnabled else {
+                return
+            }
             onDragUpdate(gesture.translation)
         }
         .onEnded { gesture in
+            guard dragEnabled else {
+                return
+            }
             onDragUpdate(gesture.translation)
             onDragEnd(gesture.translation)
         }
