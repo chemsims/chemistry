@@ -8,13 +8,19 @@ public struct BeakerSettings {
 
     public static let heightToWidth: CGFloat = 1.1
 
-    public let width: CGFloat
-    let hasLip: Bool
-
-    public init(width: CGFloat, hasLip: Bool) {
+    public init(
+        width: CGFloat,
+        hasLip: Bool = true,
+        lineWidth: CGFloat = 2
+    ) {
         self.width = width
         self.hasLip = hasLip
+        self.lineWidth = lineWidth
     }
+
+    public let width: CGFloat
+    public let hasLip: Bool
+    public let lineWidth: CGFloat
 
     public var lipRadius: CGFloat {
         hasLip ? width * 0.03 : 0

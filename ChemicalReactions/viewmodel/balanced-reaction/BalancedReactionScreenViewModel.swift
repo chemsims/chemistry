@@ -23,6 +23,10 @@ class BalancedReactionScreenViewModel: ObservableObject {
 
     @Published var emphasiseReactionCoefficients = true
 
+    // tracks in-flight molecules, i.e. those currently being dragged
+    @Published var moleculesInFlightOverReactant = Set<UUID>()
+    @Published var moleculesInFlightOverProduct = Set<UUID>()
+
     var hasSelectedFirstReaction = false
 
     var unavailableReactions: [BalancedReaction] {
@@ -37,6 +41,11 @@ class BalancedReactionScreenViewModel: ObservableObject {
     private(set) var navigation: NavigationModel<BalancedReactionScreenState>!
 
     private var moleculePositionHistory = [BalancedReactionMoleculePositionViewModel]()
+
+    func removeInFlightMolecule(id: UUID) {
+        moleculesInFlightOverReactant.remove(id)
+        moleculesInFlightOverProduct.remove(id)
+    }
 }
 
 extension BalancedReactionScreenViewModel {

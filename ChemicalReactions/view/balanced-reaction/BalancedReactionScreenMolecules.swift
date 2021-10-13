@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
 extension BalancedReactionScreen {
@@ -11,7 +10,6 @@ extension BalancedReactionScreen {
 
         @ObservedObject var model: BalancedReactionScreenViewModel
         @ObservedObject var moleculeModel: BalancedReactionMoleculePositionViewModel
-
         let layout: BalancedReactionScreenLayout
 
         var body: some View {
@@ -22,6 +20,9 @@ extension BalancedReactionScreen {
                         atomSize: atomSize(of: molecule),
                         showSymbols: !molecule.isInBeaker,
                         dragEnabled: model.inputState == .dragMolecules,
+                        onDragUpdate: {
+                            moleculeDragUpdated(molecule: molecule, offset: $0)
+                        },
                         onDragEnd: {
                             moleculeDragEnded(molecule: molecule, offset: $0)
                         }
@@ -40,10 +41,33 @@ extension BalancedReactionScreen {
             }
         }
 
+        private func moleculeDragUpdated(
+            molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
+            offset: CGSize
+        ) {
+            let overlappingBeaker = getOverlappingBeaker(molecule: molecule, offset: offset)
+            if overlappingBeaker == .reactant {
+                model.moleculesInFlightOverReactant.insert(molecule.id)
+            } else if overlappingBeaker == .product {
+                model.moleculesInFlightOverProduct.insert(molecule.id)
+            } else {
+                model.removeInFlightMolecule(id: molecule.id)
+            }
+        }
+
         private func moleculeDragEnded(
             molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
             offset: CGSize
-        ) {            
+        ) {
+            model.removeInFlightMolecule(id: molecule.id)
+            let beaker = getOverlappingBeaker(molecule: molecule, offset: offset)
+            model.drop(molecule: molecule, on: beaker)
+        }
+
+        private func getOverlappingBeaker(
+            molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
+            offset: CGSize
+        ) -> BalancedReaction.ElementType? {
             let originalPosition = position(of: molecule)
             let currentPosition = originalPosition.offset(offset)
             let boxSize = layout.moleculeBoundingBoxSizeForOverlapDetection
@@ -56,12 +80,11 @@ extension BalancedReactionScreen {
             let overlappingRightBeaker = layout.secondBeakerRect.intersects(effectiveRect)
 
             if overlappingLeftBeaker {
-                model.drop(molecule: molecule, on: .reactant)
+                return .reactant
             } else if overlappingRightBeaker {
-                model.drop(molecule: molecule, on: .product)
-            } else {
-                model.drop(molecule: molecule, on: nil)
+                return .product
             }
+            return nil
         }
 
         private func atomSize(of molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule) -> CGFloat {

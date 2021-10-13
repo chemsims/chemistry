@@ -60,13 +60,19 @@ private struct SizedBalancedReactionScreen: View {
 
     private var emptyBeakers: some View {
         Group {
-            EmptyBeaker(settings: layout.beakerSettings)
-                .frame(size: layout.beakerSize)
-                .position(layout.firstBeakerPosition)
+            EmptyBeaker(
+                settings: layout.beakerSettings,
+                emphasised: !model.moleculesInFlightOverReactant.isEmpty
+            )
+            .frame(size: layout.beakerSize)
+            .position(layout.firstBeakerPosition)
 
-            EmptyBeaker(settings: layout.beakerSettings)
-                .frame(size: layout.beakerSize)
-                .position(layout.secondBeakerPosition)
+            EmptyBeaker(
+                settings: layout.beakerSettings,
+                emphasised: !model.moleculesInFlightOverProduct.isEmpty
+            )
+            .frame(size: layout.beakerSize)
+            .position(layout.secondBeakerPosition)
         }
     }
 

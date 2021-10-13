@@ -6,27 +6,34 @@ import SwiftUI
 
 public struct EmptyBeaker: View {
 
-    let settings: BeakerSettings
-    let color: Color
-
     public init(
         settings: BeakerSettings,
-        color: Color = Styling.beakerOutline
+        color: Color = Styling.beakerOutline,
+        emphasised: Bool = false
     ) {
         self.settings = settings
-        self.color = color
+        self.color = emphasised ? .orangeAccent : color
+        self.emphasised = emphasised
     }
+
+    let settings: BeakerSettings
+    let color: Color
+    let emphasised: Bool
 
     public var body: some View {
         ZStack(alignment: .topLeading) {
             largeBeaker(settings)
-                .stroke(lineWidth: 2)
+                .stroke(lineWidth: strokeLineWidth)
                 .fill(color)
 
             outerTone(settings)
 
             innerTone(settings)
         }
+    }
+
+    private var strokeLineWidth: CGFloat {
+        emphasised ? 2 * settings.lineWidth : settings.lineWidth
     }
 
     private func outerTone(_ settings: BeakerSettings) -> some View {

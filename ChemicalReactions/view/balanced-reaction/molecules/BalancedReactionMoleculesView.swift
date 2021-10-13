@@ -17,6 +17,7 @@ struct BalancedReactionMoleculeView: View {
             atomSize: atomSize,
             showSymbols: showSymbols,
             dragEnabled: false,
+            onDragUpdate: { _ in },
             onDragEnd: { _ in }
         )
     }
@@ -27,12 +28,14 @@ struct BalancedReactionMoleculeView: View {
         atomSize: CGFloat,
         showSymbols: Bool,
         dragEnabled: Bool,
+        onDragUpdate: @escaping (CGSize) -> Void,
         onDragEnd: @escaping (CGSize) -> Void
     ) {
         self.structure = structure
         self.atomSize = atomSize
         self.showSymbols = showSymbols
         self.dragEnabled = dragEnabled
+        self.onDragUpdate = onDragUpdate
         self.onDragEnd = onDragEnd
     }
 
@@ -41,6 +44,7 @@ struct BalancedReactionMoleculeView: View {
     let atomSize: CGFloat
     let showSymbols: Bool
     let dragEnabled: Bool
+    let onDragUpdate: (CGSize) -> Void
     let onDragEnd: (CGSize) -> Void
 
     @GestureState private var offset: CGSize = .zero
@@ -48,15 +52,22 @@ struct BalancedReactionMoleculeView: View {
     var body: some View {
         mainContent
             .offset(offset)
-            .gesture(DragGesture().updating($offset) { (gesture, offsetState, _) in
-                guard dragEnabled else {
-                    return
-                }
-                offsetState = gesture.translation
+            .gesture(dragGesture)
+    }
+
+    private var dragGesture: some Gesture {
+        DragGesture().updating($offset) { (gesture, offsetState, _) in
+            guard dragEnabled else {
+                return
             }
-            .onEnded { gesture in
-                onDragEnd(gesture.translation)
-            })
+            offsetState = gesture.translation
+        }
+        .onChanged { gesture in
+            onDragUpdate(gesture.translation)
+        }
+        .onEnded { gesture in
+            onDragEnd(gesture.translation)
+        }
     }
 
     @ViewBuilder
@@ -174,6 +185,7 @@ struct BalancedReactionMoleculesView_Previews: PreviewProvider {
                     atomSize: 100,
                     showSymbols: showSymbol,
                     dragEnabled: true,
+                    onDragUpdate: { _ in },
                     onDragEnd: { _ in }
                 )
                 .animation(.linear(duration: 1))
