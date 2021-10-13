@@ -89,6 +89,7 @@ struct BalancedReactionScales: View {
             rows: BalancedReactionScalesModel.rows
         )
         .frame(size: layout.scalesSize)
+        .animation(.easeOut(duration: 0.5), value: model.rotation(of: atom))
     }
 }
 
