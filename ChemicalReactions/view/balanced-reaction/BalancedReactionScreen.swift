@@ -69,12 +69,12 @@ private struct SizedBalancedReactionScreen: View {
 
     private var moleculeLabels: some View {
         ZStack {
-            Text("Products")
+            Text("Reactants")
                 .frame(size: layout.moleculeTableLabelSize)
                 .rotationEffect(.degrees(-90))
                 .position(layout.moleculeTableProductLabelPosition)
 
-            Text("Reactants")
+            Text("Products")
                 .frame(size: layout.moleculeTableLabelSize)
                 .rotationEffect(.degrees(-90))
                 .position(layout.moleculeTableReactantLabelPosition)
