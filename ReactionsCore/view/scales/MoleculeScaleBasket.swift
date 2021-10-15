@@ -129,7 +129,7 @@ extension SizedMoleculeScaleBasket {
     private func getAccessibilityLabel(atInput input: CGFloat) -> String {
         switch molecules {
         case let .single(concentration):
-            return moleculeLabel(concentration, at: input)
+            return "\(getCount(of: concentration, at: input))"
         case let .double(left, right):
             let leftLabel = moleculeLabel(left, at: input)
             let rightLabel = moleculeLabel(right, at: input)

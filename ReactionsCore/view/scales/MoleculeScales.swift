@@ -11,6 +11,10 @@ public struct MoleculeScales: View {
     /// - Parameters:
     ///   - rotationFraction: The rotation of the scales, between -1 and 1. A value of 1 corresponds to a maximum
     ///   clockwise rotation, and -1 corresponds to a maximum anti clockwise rotation.
+    ///   - scalesAccessibilityLabel: Accessibility label of the scales as a whole. Overriding the label
+    ///   should not be done by calling the `accessibility(label:)`, as the view provides labels for specific
+    ///   parts of the scales - the arm, and each basket. This property is placed on the arm, and it's value is the
+    ///   rotation.
     public init(
         leftMolecules: MoleculeScales.Molecules,
         rightMolecules: MoleculeScales.Molecules,
@@ -18,7 +22,8 @@ public struct MoleculeScales: View {
         equationInput: CGFloat,
         badge: Badge? = nil,
         cols: Int,
-        rows: Int
+        rows: Int,
+        scalesAccessibilityLabel: String = Self.scalesAccessibilityLabel
     ) {
         self.leftMolecules = leftMolecules
         self.rightMolecules = rightMolecules
@@ -27,29 +32,8 @@ public struct MoleculeScales: View {
         self.badge = badge
         self.cols = cols
         self.rows = rows
+        self.scalesAccessibilityLabel = scalesAccessibilityLabel
     }
-
-    /// A rotating with basket of molecules on the left and right, where the rotation fraction is derived from the concentration
-    /// of each basket
-    public init(
-        leftMolecules: MoleculeScales.Molecules,
-        rightMolecules: MoleculeScales.Molecules,
-        equationInput: CGFloat,
-        badge: Badge? = nil,
-        cols: Int,
-        rows: Int
-    ) {
-        self.leftMolecules = leftMolecules
-        self.rightMolecules = rightMolecules
-        self.rotationFraction = Self.rotationEquation(
-            leftMolecules: leftMolecules, rightMolecules: rightMolecules
-        )
-        self.equationInput = equationInput
-        self.badge = badge
-        self.cols = cols
-        self.rows = rows
-    }
-    
 
     let leftMolecules: Molecules
     let rightMolecules: Molecules
@@ -58,6 +42,7 @@ public struct MoleculeScales: View {
     let badge: Badge?
     let cols: Int
     let rows: Int
+    let scalesAccessibilityLabel: String
 
     public var body: some View {
         GeometryReader { geo in
@@ -69,6 +54,7 @@ public struct MoleculeScales: View {
                 badge: badge,
                 cols: cols,
                 rows: rows,
+                scalesAccessibilityLabel: scalesAccessibilityLabel,
                 settings: MoleculeScalesGeometry(
                     width: geo.size.width,
                     height: geo.size.height
@@ -146,6 +132,7 @@ private struct SizedMoleculeScales: View {
     let badge: MoleculeScales.Badge?
     let cols: Int
     let rows: Int
+    let scalesAccessibilityLabel: String
     let settings: MoleculeScalesGeometry
 
     var body: some View {
@@ -198,6 +185,7 @@ private extension SizedMoleculeScales {
         }
         .frame(square: settings.badgeSize)
         .position(settings.rotationCenter)
+        .accessibility(hidden: true)
     }
 }
 
@@ -242,9 +230,7 @@ private extension SizedMoleculeScales {
             input: equationInput
         )
         .accessibility(
-            label: Text(
-                basketLabel(side: isLeft ? "left" : "right", molecules: molecules)
-            )
+            label: Text(basketLabel(side: isLeft ? "left" : "right", molecules: molecules))
         )
     }
 
@@ -259,6 +245,11 @@ private extension SizedMoleculeScales {
             return "\(side) basket showing molecules of \(left.label) and \(right.label)"
         }
     }
+}
+
+extension MoleculeScales {
+    public static let scalesAccessibilityLabel =
+        "Scales with a basket of molecules on the left and right"
 }
 
 private struct BasketPositionEquation: PointEquation {
@@ -296,16 +287,17 @@ private extension SizedMoleculeScales {
             )
             .position(settings.rotationCenter)
             .foregroundColor(Styling.scalesBody)
-            .accessibility(label: Text("Scales with a basket of molecules on the left and right"))
+            .accessibility(label: Text(scalesAccessibilityLabel))
             .updatingAccessibilityValue(x: equationInput, format: getRotationLabel)
     }
 
     private func getRotationLabel(at input: CGFloat) -> String {
         let rotation = rotationDegrees.getY(at: input)
+        let roundedRotation = rotation.rounded(decimals: 2)
         var end: String {
-            if rotation > 0 {
+            if roundedRotation > 0 {
                 return " clockwise"
-            } else if rotation < 0 {
+            } else if roundedRotation < 0 {
                 return " anti-clockwise"
             }
             return ""

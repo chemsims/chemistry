@@ -33,6 +33,7 @@ struct BalancedReactionScales: View {
             }
             .frame(width: layout.scalesSize.width)
         }
+        .accessibilityElement(children: .contain)
     }
 
     @ViewBuilder
@@ -60,6 +61,8 @@ struct BalancedReactionScales: View {
             .font(.system(size: layout.scalesLabelFontSize))
             .opacity(count > 0 ? 1 : 0)
             .minimumScaleFactor(0.7)
+            .accessibilityElement(children: .contain)
+            .accessibility(hidden: true)
     }
 
     private func scales(for atom: BalancedReaction.Atom) -> some View {
@@ -68,14 +71,14 @@ struct BalancedReactionScales: View {
                 concentration: .init(
                     fractionToDraw: ConstantEquation(value: model.atomFraction(of: atom, elementType: .reactant)),
                     color: atom.color,
-                    label: atom.symbol
+                    label: "reactant"
                 )
             ),
             rightMolecules: .single(
                 concentration: .init(
                     fractionToDraw: ConstantEquation(value: model.atomFraction(of: atom, elementType: .product)),
                     color: atom.color,
-                    label: atom.symbol
+                    label: "product"
                 )
             ),
             rotationFraction: ConstantEquation(value: model.rotation(of: atom)),
@@ -86,11 +89,19 @@ struct BalancedReactionScales: View {
                 backgroundColor: atom.color
             ),
             cols: BalancedReactionScalesModel.cols,
-            rows: BalancedReactionScalesModel.rows
+            rows: BalancedReactionScalesModel.rows,
+            scalesAccessibilityLabel: scalesAccessibilityLabel(atom: atom)
         )
         .frame(size: layout.scalesSize)
         .animation(.easeOut(duration: 0.5), value: model.rotation(of: atom))
         .animation(nil, value: model.showScales(for: atom))
+    }
+
+    private func scalesAccessibilityLabel(atom: BalancedReaction.Atom) -> String {
+        """
+        Scales showing \(atom.name) atoms added, with reactants on the left \
+        and products on the right
+        """
     }
 }
 
