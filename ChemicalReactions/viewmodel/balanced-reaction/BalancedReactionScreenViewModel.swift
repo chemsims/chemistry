@@ -202,6 +202,11 @@ extension BalancedReactionScreenViewModel {
 
 // MARK: - Accessibility
 extension BalancedReactionScreenViewModel {
+
+    func accessibilityAddMoleculeAction(molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule) {
+        drop(molecule: molecule, on: molecule.elementType)
+    }
+
     func beakerAccessibilityValue(elementType: BalancedReaction.ElementType) -> String {
         beakerAccessibilityValue(elements: reaction.elements(ofType: elementType))
     }

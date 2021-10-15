@@ -43,6 +43,17 @@ class BalancedReactionMoleculePositionViewModel: ObservableObject {
         molecule: MovingMolecule,
         on elementType: BalancedReaction.ElementType
     ) -> Bool {
+
+        // When adding a molecule using an accessibility action, there is a delay where the exact
+        // same action can be repeated, with the same molecule that was initially provided. This
+        // means the molecule being passed in says that it is not in the beaker, even though
+        // we already added it. So we check that the molecule being passed in exists in the same
+        // state as the array of molecules
+        guard let matchingMolecule = molecules.first(where: { $0.id == molecule.id}),
+              matchingMolecule == molecule else {
+                  return false
+              }
+
         let countInBeaker = reactionBalancer.count(of: molecule.moleculeType)
         guard countInBeaker < BalancedReactionBeakerMoleculeLayout.maxCount else {
             return false
@@ -101,7 +112,7 @@ class BalancedReactionMoleculePositionViewModel: ObservableObject {
 }
 extension BalancedReactionMoleculePositionViewModel {
 
-    struct MovingMolecule: Identifiable {
+    struct MovingMolecule: Identifiable, Equatable {
         let id = UUID()
         let moleculeType: BalancedReaction.Molecule
         let elementType: BalancedReaction.ElementType
@@ -126,7 +137,7 @@ extension BalancedReactionMoleculePositionViewModel {
         }
     }
 
-    enum MoleculePosition {
+    enum MoleculePosition: Equatable {
         case grid
         case beaker(index: Int)
     }

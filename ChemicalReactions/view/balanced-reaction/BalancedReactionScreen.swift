@@ -39,9 +39,11 @@ private struct SizedBalancedReactionScreen: View {
     var body: some View {
         ZStack {
             emptyBeakers
+                .accessibilityElement(children: .contain)
                 .accessibility(sortPriority: 8)
 
             moleculeLabels
+                .accessibility(hidden: true)
 
             BalancedReactionTopStack(
                 model: moleculeModel,
@@ -62,6 +64,7 @@ private struct SizedBalancedReactionScreen: View {
 
             reactionSelection
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var moleculeLabels: some View {

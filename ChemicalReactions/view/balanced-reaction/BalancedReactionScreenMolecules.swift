@@ -30,6 +30,10 @@ extension BalancedReactionScreen {
                     )
                     .animation(.easeOut(duration: 0.35))
                     .position(position(of: molecule))
+                    .modifyIf(
+                        UIAccessibility.isVoiceOverRunning,
+                        modifier: MoleculeAccessibilityModifier(model: model, molecule: molecule)
+                    )
                 }
 
                 if model.showDragTutorial {
@@ -38,8 +42,10 @@ extension BalancedReactionScreen {
                         originalPosition: moleculeGridLayout.firstReactantPosition,
                         layout: layout
                     )
+                    .accessibility(hidden: true)
                 }
             }
+            .accessibilityElement(children: .contain)
         }
 
         private func moleculeDragUpdated(
@@ -133,6 +139,35 @@ extension BalancedReactionScreen {
     }
 }
 
+private struct MoleculeAccessibilityModifier: ViewModifier {
+
+    @ObservedObject var model: BalancedReactionScreenViewModel
+    let molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule
+
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if !molecule.isInBeaker {
+            content
+                .accessibilityElement(children: .ignore)
+                .accessibility(
+                    label: Text("\(molecule.moleculeType.textLine.label) molecule (\(molecule.elementType.label)")
+                )
+                .modifyIf(model.inputState == .dragMolecules) {
+                    $0
+                        .accessibilityAction(
+                            named: Text("Drag to \(molecule.elementType.label) beaker"),
+                            {
+                                model.accessibilityAddMoleculeAction(molecule: molecule)
+                            }
+                        )
+                }
+        } else {
+            content
+                .accessibilityElement(children: .ignore)
+                .accessibility(hidden: true)
+        }
+    }
+}
 
 private struct GhostMolecule: View {
 
