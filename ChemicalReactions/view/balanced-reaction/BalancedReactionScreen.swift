@@ -96,8 +96,7 @@ private struct SizedBalancedReactionScreen: View {
             )
             .frame(size: layout.beakerSize)
             .position(layout.firstBeakerPosition)
-            .accessibility(label: Text(emptyBeakerLabel(element: .reactant)))
-            .accessibility(value: Text(model.beakerAccessibilityValue(elementType: .reactant)))
+            .modifier(EmptyBeakerAccessibilityModifier(model: model, elementType: .reactant))
 
             reactionArrow
                 .accessibilityElement(children: .ignore)
@@ -109,8 +108,7 @@ private struct SizedBalancedReactionScreen: View {
             )
             .frame(size: layout.beakerSize)
             .position(layout.secondBeakerPosition)
-            .accessibility(label: Text(emptyBeakerLabel(element: .product)))
-            .accessibility(value: Text(model.beakerAccessibilityValue(elementType: .product)))
+            .modifier(EmptyBeakerAccessibilityModifier(model: model, elementType: .product))
 
             if model.elementTypesInFlight.contains(.reactant) {
                 beakerUnderline
@@ -122,14 +120,6 @@ private struct SizedBalancedReactionScreen: View {
                     .position(layout.secondBeakerUnderlinePosition)
             }
         }
-    }
-
-    private func emptyBeakerLabel(element: BalancedReaction.ElementType) -> String {
-        "Beaker showing \(element.label) molecules added"
-    }
-
-    private func emptyBeakerValue(element: BalancedReaction.ElementType) -> String {
-        ""
     }
 
     private var reactionArrow: some View {
@@ -205,6 +195,89 @@ private struct BalancedReactionTopStack: View {
             model: .init(balancer: model.reactionBalancer),
             layout: layout
         )
+    }
+}
+
+private struct EmptyBeakerAccessibilityModifier: ViewModifier {
+
+    @ObservedObject var model: BalancedReactionScreenViewModel
+    let elementType: BalancedReaction.ElementType
+
+    // Note the reason we wrap the action in a check that voice over is running, is that the
+    // action uses other conditional view modifiers. Conditionally changing a view like this
+    // can produce some unwanted animations. These aren't big animations - they might be a
+    // little opacity change for example, so they aren't a big concern. But we should still
+    // only do it when necessary, so that's why we check voice over is running before doing it.
+    func body(content: Content) -> some View {
+        content
+        .accessibility(label: Text(emptyBeakerLabel(element: elementType)))
+        .accessibility(value: Text(model.beakerAccessibilityValue(elementType: elementType)))
+        .modifyIf(
+            UIAccessibility.isVoiceOverRunning && model.inputState == .dragMolecules,
+            modifier: EmptyBeakerAccessibilityActionModifier(
+                model: model,
+                elementType: elementType
+            )
+        )
+    }
+
+    private func emptyBeakerLabel(element: BalancedReaction.ElementType) -> String {
+        "Beaker showing \(element.label) molecules added"
+    }
+}
+
+private struct EmptyBeakerAccessibilityActionModifier: ViewModifier {
+
+    let model: BalancedReactionScreenViewModel
+    let elementType: BalancedReaction.ElementType
+
+    func body(content: Content) -> some View {
+        content
+            .modifier(
+                EmptyBeakerMoleculeInteractionModifier(
+                    model: model,
+                    elementType: elementType,
+                    element: elements.first
+                )
+            )
+            .modifyIf(
+                elements.second != nil,
+                modifier: EmptyBeakerMoleculeInteractionModifier(
+                    model: model,
+                    elementType: elementType,
+                    // There is a delay where this modifier will be evaluated, even after
+                    // elements.second is nil, so we must not force unwrap it.
+                    element: elements.second ?? elements.first
+                )
+            )
+    }
+
+    private var elements: BalancedReaction.Elements {
+        model.reaction.elements(ofType: elementType)
+    }
+}
+
+private struct EmptyBeakerMoleculeInteractionModifier: ViewModifier {
+    let model: BalancedReactionScreenViewModel
+    let elementType: BalancedReaction.ElementType
+    let element: BalancedReaction.Element
+
+    func body(content: Content) -> some View {
+        content
+            .accessibilityAction(named: Text("Add 1 \(molecule) molecule"), addMolecule)
+            .accessibilityAction(named: Text("Remove 1 \(molecule) molecule"), removeMolecule)
+    }
+
+    private func addMolecule() {
+        model.accessibilityAddMoleculeAction(molecule: element.molecule, element: elementType)
+    }
+
+    private func removeMolecule() {
+        model.accessibilityRemoveMoleculeAction(molecule: element.molecule)
+    }
+
+    private var molecule: String {
+        element.molecule.textLine.label
     }
 }
 

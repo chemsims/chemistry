@@ -45,6 +45,8 @@ struct BalancedReactionScales: View {
                 .frame(size: layout.scalesLabelSize)
                 .foregroundColor(.green)
                 .transition(.scale.animation(.easeOut(duration: 0.25)))
+                .accessibilityElement(children: .ignore)
+                .accessibility(label: Text("Checkmark indicating scale is balanced"))
         } else {
             Spacer()
                 .frame(size: layout.scalesLabelSize)

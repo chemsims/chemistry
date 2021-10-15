@@ -172,9 +172,7 @@ extension BalancedReactionScreenViewModel {
             if showDragTutorial {
                 showDragTutorial = false
             }
-            if moleculePosition.reactionBalancer.isBalanced {
-                doGoNext()
-            }
+            goNextPostBalancingIfNeeded()
         }
     }
 
@@ -182,9 +180,18 @@ extension BalancedReactionScreenViewModel {
         let didRemove = moleculePosition.remove(molecule: molecule)
         if didRemove {
             updateStatementPostMoleculeInteraction(molecule: molecule.moleculeType)
-            if moleculePosition.reactionBalancer.isBalanced {
-                doGoNext()
+            goNextPostBalancingIfNeeded()
+        }
+    }
+
+    private func goNextPostBalancingIfNeeded() {
+        if moleculePosition.reactionBalancer.isBalanced {
+            doGoNext()
+            let foo = statement.reduce("") { (acc, next) in
+                acc + next.asString
             }
+
+            UIAccessibility.post(notification: .screenChanged, argument: foo)
         }
     }
 
@@ -205,6 +212,29 @@ extension BalancedReactionScreenViewModel {
 
     func accessibilityAddMoleculeAction(molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule) {
         drop(molecule: molecule, on: molecule.elementType)
+    }
+
+    func accessibilityAddMoleculeAction(
+        molecule: BalancedReaction.Molecule,
+        element: BalancedReaction.ElementType
+    ) {
+        let matchingMolecule = moleculePosition.molecules.first {
+            $0.moleculeType == molecule && $0.position == .grid
+        }
+        if let matchingMolecule = matchingMolecule {
+            drop(molecule: matchingMolecule, on: element)
+        }
+    }
+
+    func accessibilityRemoveMoleculeAction(
+        molecule: BalancedReaction.Molecule
+    ) {
+        let matchingMolecule = moleculePosition.molecules.first {
+            $0.moleculeType == molecule && $0.isInBeaker
+        }
+        if let matchingMolecule = matchingMolecule {
+            drop(molecule: matchingMolecule, on: nil)
+        }
     }
 
     func beakerAccessibilityValue(elementType: BalancedReaction.ElementType) -> String {
