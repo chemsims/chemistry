@@ -40,8 +40,12 @@ extension BalancedReaction {
 }
 
 extension BalancedReaction {
-    enum ElementType {
+    enum ElementType: String {
         case reactant, product
+
+        var label : String {
+            rawValue
+        }
     }
 
     enum ElementCount {

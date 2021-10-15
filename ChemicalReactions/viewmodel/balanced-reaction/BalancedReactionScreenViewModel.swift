@@ -200,6 +200,23 @@ extension BalancedReactionScreenViewModel {
     }
 }
 
+// MARK: - Accessibility
+extension BalancedReactionScreenViewModel {
+    func beakerAccessibilityValue(elementType: BalancedReaction.ElementType) -> String {
+        beakerAccessibilityValue(elements: reaction.elements(ofType: elementType))
+    }
+
+    private func beakerAccessibilityValue(elements: BalancedReaction.Elements) -> String {
+        let moleculeCounts = elements.asArray.map { element -> String in
+            let molecule = element.molecule
+            let count = moleculePosition.reactionBalancer.count(of: molecule)
+            return "\(count) of \(molecule.textLine.label)"
+        }
+
+        return StringUtil.combineStrings(moleculeCounts)
+    }
+}
+
 extension Animation {
     static let addMolecule = Animation.easeOut(duration: 0.5)
 }

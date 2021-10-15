@@ -39,7 +39,7 @@ private struct SizedBalancedReactionScreen: View {
     var body: some View {
         ZStack {
             emptyBeakers
-                .accessibility(hidden: true)
+                .accessibility(sortPriority: 8)
 
             moleculeLabels
 
@@ -58,7 +58,7 @@ private struct SizedBalancedReactionScreen: View {
                 moleculeModel: moleculeModel,
                 layout: layout
             )
-                .accessibility(sortPriority: 8)
+            .accessibility(sortPriority: 7)
 
             reactionSelection
         }
@@ -93,8 +93,12 @@ private struct SizedBalancedReactionScreen: View {
             )
             .frame(size: layout.beakerSize)
             .position(layout.firstBeakerPosition)
+            .accessibility(label: Text(emptyBeakerLabel(element: .reactant)))
+            .accessibility(value: Text(model.beakerAccessibilityValue(elementType: .reactant)))
 
             reactionArrow
+                .accessibilityElement(children: .ignore)
+                .accessibility(hidden: true)
 
             EmptyBeaker(
                 settings: layout.beakerSettings,
@@ -102,6 +106,8 @@ private struct SizedBalancedReactionScreen: View {
             )
             .frame(size: layout.beakerSize)
             .position(layout.secondBeakerPosition)
+            .accessibility(label: Text(emptyBeakerLabel(element: .product)))
+            .accessibility(value: Text(model.beakerAccessibilityValue(elementType: .product)))
 
             if model.elementTypesInFlight.contains(.reactant) {
                 beakerUnderline
@@ -113,6 +119,14 @@ private struct SizedBalancedReactionScreen: View {
                     .position(layout.secondBeakerUnderlinePosition)
             }
         }
+    }
+
+    private func emptyBeakerLabel(element: BalancedReaction.ElementType) -> String {
+        "Beaker showing \(element.label) molecules added"
+    }
+
+    private func emptyBeakerValue(element: BalancedReaction.ElementType) -> String {
+        ""
     }
 
     private var reactionArrow: some View {
