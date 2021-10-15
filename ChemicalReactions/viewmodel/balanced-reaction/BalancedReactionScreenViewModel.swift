@@ -66,7 +66,15 @@ class BalancedReactionScreenViewModel: ObservableObject {
         }
     }
 
-    func removeInFlightMolecule(id: UUID) {
+    func moleculeDragEnded(
+        molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
+        overlapping: BalancedReaction.ElementType?
+    ) {
+        removeInFlightMolecule(id: molecule.id)
+        drop(molecule: molecule, on: overlapping)
+    }
+
+    private func removeInFlightMolecule(id: UUID) {
         moleculesInFlight.remove(id)
         moleculesInFlightOverReactant.remove(id)
         moleculesInFlightOverProduct.remove(id)
@@ -133,7 +141,7 @@ extension BalancedReactionScreenViewModel {
         moleculePosition = .init(reaction: reaction)
     }
 
-    func drop(
+    private func drop(
         molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
         on elementType: BalancedReaction.ElementType?
     ) {

@@ -2,6 +2,8 @@
 // Reactions App
 //
 
+import ReactionsCore
+import Combine
 import SwiftUI
 
 struct BalancedReactionMoleculeView: View {
@@ -28,7 +30,7 @@ struct BalancedReactionMoleculeView: View {
         atomSize: CGFloat,
         showSymbols: Bool,
         dragEnabled: Bool,
-        onDragUpdate: @escaping (CGSize) -> Void,
+        onDragUpdate: @escaping (DragState) -> Void,
         onDragEnd: @escaping (CGSize) -> Void
     ) {
         self.structure = structure
@@ -44,44 +46,37 @@ struct BalancedReactionMoleculeView: View {
     let atomSize: CGFloat
     let showSymbols: Bool
     let dragEnabled: Bool
-    let onDragUpdate: (CGSize) -> Void
+    let onDragUpdate: (DragState) -> Void
     let onDragEnd: (CGSize) -> Void
 
-    @GestureState private var offset: CGSize = .zero
+    @GestureState private var dragState = DragState.none
+    @State private var offsetForPreviousOffsetCallback = DragState.none
 
+    // NB if we drop support for iOS 13, we can use onChange(of:perform) instead of
+    // on receive
     var body: some View {
         mainContent
-            .offset(offset)
+            .offset(dragState.offset)
             .gesture(dragGesture)
-            .onReceive(
-                NotificationCenter.default.publisher(for: UIApplication.willResignActiveNotification)
-            ) { _ in
-                guard dragEnabled else {
-                    return
+            .onReceive(Just(dragState)) { dragStateValue in
+                if dragStateValue != offsetForPreviousOffsetCallback {
+                    onDragUpdate(dragStateValue)
+                    self.offsetForPreviousOffsetCallback = dragStateValue
                 }
-                onDragUpdate(.zero)
-                onDragEnd(.zero)
             }
     }
 
     private var dragGesture: some Gesture {
-        DragGesture().updating($offset) { (gesture, offsetState, _) in
+        DragGesture().updating($dragState) { (gesture, dragState, _) in
             guard dragEnabled else {
                 return
             }
-            offsetState = gesture.translation
-        }
-        .onChanged { gesture in
-            guard dragEnabled else {
-                return
-            }
-            onDragUpdate(gesture.translation)
+            dragState = .dragging(offset: gesture.translation)
         }
         .onEnded { gesture in
             guard dragEnabled else {
                 return
             }
-            onDragUpdate(gesture.translation)
             onDragEnd(gesture.translation)
         }
     }

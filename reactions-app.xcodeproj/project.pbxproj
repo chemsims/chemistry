@@ -451,6 +451,7 @@
 		5782FC9C26E68C1800F97177 /* BalancedReactionBeakerMoleculeLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5782FC9B26E68C1800F97177 /* BalancedReactionBeakerMoleculeLayoutTests.swift */; };
 		5784F44B2663F5A100513B2A /* MultiContainerShakeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */; };
 		5784F4502664075400513B2A /* EnumMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5784F44F2664075400513B2A /* EnumMap.swift */; };
+		5786A0822719761A0011572E /* DragState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786A0812719761A0011572E /* DragState.swift */; };
 		5786BD0F267B45BA001A165C /* Dropper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD0E267B45BA001A165C /* Dropper.swift */; };
 		5786BD14267B51CD001A165C /* TestTubeContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD13267B51CD001A165C /* TestTubeContainer.swift */; };
 		5786BD17267B66CA001A165C /* Burette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5786BD16267B66CA001A165C /* Burette.swift */; };
@@ -1336,6 +1337,7 @@
 		5784F44A2663F5A100513B2A /* MultiContainerShakeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiContainerShakeViewModel.swift; sourceTree = "<group>"; };
 		5784F44D2664062200513B2A /* AcidOrBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidOrBaseType.swift; sourceTree = "<group>"; };
 		5784F44F2664075400513B2A /* EnumMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumMap.swift; sourceTree = "<group>"; };
+		5786A0812719761A0011572E /* DragState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragState.swift; sourceTree = "<group>"; };
 		5786BD01267B224A001A165C /* TitrationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationSettings.swift; sourceTree = "<group>"; };
 		5786BD07267B37A7001A165C /* TitrationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationScreen.swift; sourceTree = "<group>"; };
 		5786BD09267B37C4001A165C /* TitrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationViewModel.swift; sourceTree = "<group>"; };
@@ -3369,6 +3371,7 @@
 				571D6A6E255AB25400F4E635 /* Styling.swift */,
 				57E59A5D25F92E260087F760 /* HighlightedElements.swift */,
 				57D15C4426241FCC00BE1303 /* Labelled.swift */,
+				5786A0812719761A0011572E /* DragState.swift */,
 			);
 			path = display;
 			sourceTree = "<group>";
@@ -5317,6 +5320,7 @@
 				57B3B92F260B408500EB9B47 /* NavigationRow.swift in Sources */,
 				57436611266E7EF4007F0410 /* ICETable.swift in Sources */,
 				579EA8FB264694FB008461E8 /* BarChartData.swift in Sources */,
+				5786A0822719761A0011572E /* DragState.swift in Sources */,
 				57CAD88A26D9469700D75D9B /* SharePromptPersistence.swift in Sources */,
 				57B3B928260B39A600EB9B47 /* MailComposerView.swift in Sources */,
 				575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */,

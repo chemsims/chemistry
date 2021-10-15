@@ -2,6 +2,7 @@
 // Reactions App
 //
 
+import ReactionsCore
 import SwiftUI
 
 extension BalancedReactionScreen {
@@ -21,7 +22,7 @@ extension BalancedReactionScreen {
                         showSymbols: !molecule.isInBeaker,
                         dragEnabled: model.inputState == .dragMolecules,
                         onDragUpdate: {
-                            moleculeDragUpdated(molecule: molecule, offset: $0)
+                            moleculeDragUpdated(molecule: molecule, state: $0)
                         },
                         onDragEnd: {
                             moleculeDragEnded(molecule: molecule, offset: $0)
@@ -43,19 +44,23 @@ extension BalancedReactionScreen {
 
         private func moleculeDragUpdated(
             molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
-            offset: CGSize
+            state: DragState
         ) {
-            let overlappingBeaker = getOverlappingBeaker(molecule: molecule, offset: offset)
-            model.moleculeWasMoved(id: molecule.id, overlapping: overlappingBeaker)
+            let offset = state.offset
+            let beaker = getOverlappingBeaker(molecule: molecule, offset: offset)
+            if state == .none {
+                model.moleculeDragEnded(molecule: molecule, overlapping: beaker)
+            } else {
+                model.moleculeWasMoved(id: molecule.id, overlapping: beaker)
+            }
         }
 
         private func moleculeDragEnded(
             molecule: BalancedReactionMoleculePositionViewModel.MovingMolecule,
             offset: CGSize
         ) {
-            model.removeInFlightMolecule(id: molecule.id)
             let beaker = getOverlappingBeaker(molecule: molecule, offset: offset)
-            model.drop(molecule: molecule, on: beaker)
+            model.moleculeDragEnded(molecule: molecule, overlapping: beaker)
         }
 
         private func getOverlappingBeaker(
