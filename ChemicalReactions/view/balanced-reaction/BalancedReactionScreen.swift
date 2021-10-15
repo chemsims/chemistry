@@ -157,7 +157,7 @@ private struct SizedBalancedReactionScreen: View {
             height: layout.common.reactionSelectionToggleHeight,
             animation: nil,
             displayString: { $0.display },
-            label: { $0.display.label },
+            indicatorIsDisabled: true,
             disabledOptions: model.unavailableReactions,
             onSelection: model.didSelectReaction
         )

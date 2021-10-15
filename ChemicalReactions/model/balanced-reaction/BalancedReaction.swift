@@ -116,7 +116,11 @@ extension BalancedReaction.Elements {
 
 extension BalancedReaction {
     var display: TextLine {
-        reactants.display + " ➝ " + products.display
+        let r = reactants.display
+        let p = products.display
+        let markdown = r.asMarkdown + " ➝ " + p.asMarkdown
+        let label = r.asString + " yields " + p.asString
+        return TextLine(markdown, label: label)
     }
 }
 

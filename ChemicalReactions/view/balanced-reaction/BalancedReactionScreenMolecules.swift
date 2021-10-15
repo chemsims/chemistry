@@ -30,6 +30,10 @@ extension BalancedReactionScreen {
                     )
                     .animation(.easeOut(duration: 0.35))
                     .position(position(of: molecule))
+                    .accessibilityElement(children: .ignore)
+                    .accessibility(
+                        label: Text("\(molecule.moleculeType.textLine.label) molecule (\(molecule.elementType.label)")
+                    )
                     .modifyIf(
                         UIAccessibility.isVoiceOverRunning,
                         modifier: MoleculeAccessibilityModifier(model: model, molecule: molecule)
@@ -148,10 +152,6 @@ private struct MoleculeAccessibilityModifier: ViewModifier {
     func body(content: Content) -> some View {
         if !molecule.isInBeaker {
             content
-                .accessibilityElement(children: .ignore)
-                .accessibility(
-                    label: Text("\(molecule.moleculeType.textLine.label) molecule (\(molecule.elementType.label)")
-                )
                 .modifyIf(model.inputState == .dragMolecules) {
                     $0
                         .accessibilityAction(
@@ -163,7 +163,6 @@ private struct MoleculeAccessibilityModifier: ViewModifier {
                 }
         } else {
             content
-                .accessibilityElement(children: .ignore)
                 .accessibility(hidden: true)
         }
     }

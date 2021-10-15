@@ -15,6 +15,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
     let animation: Animation?
     let displayString: (Data) -> TextLine
     let label: (Data) -> String
+    let indicatorIsDisabled: Bool
     let disabledOptions: [Data]
     let onSelection: (() -> Void)?
 
@@ -30,6 +31,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         widthToHeight: CGFloat = 8,
         animation: Animation?,
         displayString: @escaping (Data) -> TextLine,
+        indicatorIsDisabled: Bool = false,
         disabledOptions: [Data],
         onSelection: (() -> Void)?
     ) {
@@ -42,6 +44,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         self.animation = animation
         self.displayString = displayString
         self.label = { displayString($0).label }
+        self.indicatorIsDisabled = indicatorIsDisabled
         self.disabledOptions = disabledOptions
         self.onSelection = onSelection
     }
@@ -57,6 +60,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         animation: Animation?,
         displayString: @escaping (Data) -> TextLine,
         label: @escaping (Data) -> String,
+        indicatorIsDisabled: Bool = false,
         disabledOptions: [Data],
         onSelection: (() -> Void)?
     ) {
@@ -69,6 +73,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
         self.animation = animation
         self.displayString = displayString
         self.label = label
+        self.indicatorIsDisabled = indicatorIsDisabled
         self.disabledOptions = disabledOptions
         self.onSelection = onSelection
     }
@@ -134,8 +139,10 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
                 color: fontColor(option)
             )
             .background(background)
+            .accessibilityElement(children: .ignore)
             .accessibility(addTraits: selected ? .isSelected : [])
             .accessibility(label: Text(label(option)))
+            .accessibilityElement(children: .contain)
         }
         .disabled(disabledOptions.contains(option))
     }
@@ -168,11 +175,13 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
                         .rotationEffect(isToggled ? .degrees(180) : .zero)
                         .animation(reduceMotion ? nil : .spring(response: 0.3))
                 }
-                .accessibilityElement()
-                .accessibility(label: Text(label))
+
             }
             .buttonStyle(NavButtonButtonStyle())
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(label))
+        .disabled(indicatorIsDisabled)
         .frame(
             width: height,
             height: height
