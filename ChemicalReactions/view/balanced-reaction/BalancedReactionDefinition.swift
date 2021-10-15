@@ -15,10 +15,12 @@ struct BalancedReactionDefinition: View {
         VStack(spacing: 0) {
             row(showText: true)
             row(showText: false)
+                .accessibility(hidden: true)
         }
         .frame(width: layout.reactionDefinitionSize.width)
         .font(.system(size: layout.reactionDefinitionFontSize))
         .minimumScaleFactor(0.75)
+        .accessibilityElement(children: .contain)
     }
 
     private func row(showText: Bool) -> some View {
@@ -26,6 +28,7 @@ struct BalancedReactionDefinition: View {
             side(elements: model.reaction.reactants, showText: showText)
             Text("➝")
                 .opacity(showText ? 1 : 0)
+                .accessibility(label: Text("yields"))
             side(elements: model.reaction.products, showText: showText)
         }
     }
@@ -41,37 +44,10 @@ struct BalancedReactionDefinition: View {
         }
     }
 
-    private func side(elements: BalancedReaction.Elements) -> some View {
-        HStack(alignment: .top, spacing: elementSpacing) {
-            term(molecule: elements.first.molecule)
-            if let second = elements.second {
-                Text("+")
-                    .frame(height: layout.reactionDefinitionSize.height)
-                term(molecule: second.molecule)
-            }
-        }
-    }
-
-    private func term(molecule: BalancedReaction.Molecule) -> some View {
-        VStack(spacing: 0) {
-            HStack(alignment: .top, spacing: coeffSpacing) {
-                coefficientBox(model.count(of: molecule))
-
-                TextLinesView(line: molecule.textLine, fontSize: layout.reactionDefinitionFontSize)
-            }
-            .frame(height: layout.reactionDefinitionSize.height)
-
-            BalancedReactionMoleculeView(
-                structure: molecule.structure,
-                atomSize: layout.reactionDefinitionMoleculeAtomSize,
-                showSymbols: false
-            )
-        }
-    }
-
     private func term(molecule: BalancedReaction.Molecule, showText: Bool) -> some View {
         HStack(alignment: .top, spacing: coeffSpacing) {
             coefficientBox(model.count(of: molecule))
+                .accessibility(label: Text("Coefficient for \(molecule.textLine.label)"))
 
             TextLinesView(line: molecule.textLine, fontSize: layout.reactionDefinitionFontSize)
         }
@@ -101,6 +77,7 @@ struct BalancedReactionDefinition: View {
             }
         }
         .frame(size: placeholderSize, alignment: .topTrailing)
+        .accessibility(value: Text("\(coeff)"))
     }
 
     private var placeholderSize: CGSize {
