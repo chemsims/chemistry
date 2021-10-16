@@ -71,7 +71,7 @@ extension PrecipitationElement {
     }
 
     var nameWithState: TextLine {
-        name + "_\(state.symbol)_"
+        name + "_(\(state.symbol))_"
     }
 }
 
@@ -91,7 +91,7 @@ extension PrecipitationElementWithUnknownMetal {
 
     /// - Parameter emphasiseMetal: Whether to emphasise the metal element, when the metal is shown.
     func nameWithState(showMetal: Bool, emphasiseMetal: Bool = false) -> TextLine {
-        name(showMetal: showMetal, emphasiseMetal: emphasiseMetal) + "_\(state.symbol)_"
+        name(showMetal: showMetal, emphasiseMetal: emphasiseMetal) + "_(\(state.symbol))_"
     }
 
     /// - Parameter emphasiseMetal: Whether to emphasise the metal element, when the metal is shown.
