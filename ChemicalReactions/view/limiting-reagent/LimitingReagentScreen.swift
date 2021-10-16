@@ -45,15 +45,22 @@ private struct LimitingReagentScreenWithLayout: View {
         VStack(spacing: 0) {
             LimitingReagentTopStack(model: model, layout: layout)
                 .zIndex(1)
+                .accessibility(sortPriority: 1)
             Spacer(minLength: 0)
             HStack(alignment: .bottom, spacing: 0) {
                 beaker
+                    .accessibilityElement(children: .contain)
+                    .accessibility(sortPriority: 2)
+
                 Spacer(minLength: 0)
+
                 LimitingReagentRightStack(
                     model: model,
                     components: model.components,
                     layout: layout
                 )
+                .accessibilityElement(children: .contain)
+                .accessibility(sortPriority: 3)
             }
         }
     }
@@ -129,11 +136,14 @@ private struct LimitingReagentRightStack: View {
     var body: some View {
         VStack(spacing: 0) {
             equation
+                .accessibility(sortPriority: 1)
             HStack(alignment: .bottom, spacing: 0) {
                 Spacer(minLength: 0)
                 chart
+                    .accessibility(sortPriority: 2)
                 Spacer(minLength: 0)
                 beaky
+                    .accessibility(sortPriority: 3)
             }
         }
     }

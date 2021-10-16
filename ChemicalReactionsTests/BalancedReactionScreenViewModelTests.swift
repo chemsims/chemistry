@@ -21,8 +21,8 @@ class BalancedReactionScreenViewModelTests: XCTestCase {
         let firstReactantMolecule = model.moleculePosition.gridMolecule(of: firstReactantType)
         let firstProductMolecule = model.moleculePosition.gridMolecule(of: firstProductType)
 
-        model.drop(molecule: firstReactantMolecule, on: .reactant)
-        model.drop(molecule: firstProductMolecule, on: .product)
+        model.moleculeDragEnded(molecule: firstReactantMolecule, overlapping: .reactant)
+        model.moleculeDragEnded(molecule: firstProductMolecule, overlapping: .product)
 
         // On select reaction state - molecules should remain the same
         nav.next()

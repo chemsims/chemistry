@@ -129,10 +129,13 @@ private struct LimitingReactantMoles: View {
             VStack(alignment: .leading, spacing: relatedEquationVSpacing) {
                 filled
                     .frame(height: singleRowEquationHeight)
+                    .accessibility(hidden: true)
+
                 blank
                     .frame(height: singleRowEquationHeight)
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var lhs: some View {
@@ -143,13 +146,20 @@ private struct LimitingReactantMoles: View {
                 underlineTerm: nil
             )
             .frame(height: singleRowEquationHeight)
+            .accessibilityElement(children: .ignore)
+            .accessibility(label: Text(filledLabel))
 
             PlaceholderTerm(
                 value: showData ? data.limitingReactantMoles.str(decimals: 2) : nil,
                 emphasise: true
             )
             .frame(height: singleRowEquationHeight)
+            .accessibility(label: Text("moles of \(reactantLabel)"))
         }
+    }
+
+    private var filledLabel: String {
+        "moles of \(reactantLabel) equals volume times molarity of \(reactantLabel)"
     }
 
     private var filled: some View {
@@ -171,12 +181,22 @@ private struct LimitingReactantMoles: View {
             FixedText(data.volume.str(decimals: 2))
                 .foregroundColor(.orangeAccent)
                 .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
+                .accessibility(label: Text("volume"))
+                .accessibility(value: Text(data.volume.str(decimals: 2)))
+
             FixedText("x")
+                .accessibility(label: Text("times"))
+
             PlaceholderTerm(
                 value: showData ? data.limitingReactantMolarity.str(decimals: 2) : nil,
                 emphasise: true
             )
+            .accessibility(label: Text("molarity of \(reactantLabel)"))
         }
+    }
+
+    private var reactantLabel: String {
+        data.reaction.limitingReactant.name.label
     }
 }
 
@@ -190,10 +210,13 @@ private struct ExcessReactantNeededMoles: View {
             VStack(alignment: .leading, spacing: relatedEquationVSpacing) {
                 filled
                     .frame(height: singleRowEquationHeight)
+                    .accessibility(hidden: true)
+
                 blank
                     .frame(height: singleRowEquationHeight)
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var lhs: some View {
@@ -204,18 +227,20 @@ private struct ExcessReactantNeededMoles: View {
                 underlineTerm: "needed"
             )
             .frame(height: singleRowEquationHeight)
+            .accessibilityElement(children: .ignore)
+            .accessibility(label: Text(filledLabel))
 
             PlaceholderTerm(
                 value: showData ? data.neededExcessReactantMoles.str(decimals: 2) : nil,
                 emphasise: true
             )
             .frame(height: singleRowEquationHeight)
+            .accessibility(label: Text("moles (needed) of \(excessReactantLabel)"))
         }
     }
 
     private var filled: some View {
         HStack(alignment: .top, spacing: termHSpacing) {
-
             FixedText("=")
             FixedText("\(data.reaction.excessReactant.coefficient)")
             FixedText("x")
@@ -229,15 +254,32 @@ private struct ExcessReactantNeededMoles: View {
 
     private var blank: some View {
         HStack(spacing: termHSpacing) {
-
             FixedText("=")
-            FixedText("\(data.reaction.excessReactant.coefficient)")
+            FixedText(reactantCoeff)
             FixedText("x")
+                .accessibility(label: Text("times"))
             PlaceholderTerm(
                 value: showData ? data.limitingReactantMoles.str(decimals: 2) : nil,
                 emphasise: true
             )
+            .accessibility(label: Text("moles of \(limitingReactantLabel)"))
         }
+    }
+
+    private var filledLabel: String {
+        "moles (needed) of \(excessReactantLabel) equals \(reactantCoeff) times moles of \(limitingReactantLabel)"
+    }
+
+    private var excessReactantLabel: String {
+        data.reaction.excessReactant.name.label
+    }
+
+    private var limitingReactantLabel: String {
+        data.reaction.limitingReactant.name.label
+    }
+
+    private var reactantCoeff: String {
+        "\(data.reaction.excessReactant.coefficient)"
     }
 }
 private struct TheoreticalProductMass: View {
@@ -250,10 +292,12 @@ private struct TheoreticalProductMass: View {
             VStack(alignment: .leading, spacing: relatedEquationVSpacing) {
                 filled
                     .frame(height: singleRowEquationHeight)
+                    .accessibility(hidden: true)
                 blank
                     .frame(height: singleRowEquationHeight)
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var lhs: some View {
@@ -264,12 +308,15 @@ private struct TheoreticalProductMass: View {
                 underlineTerm: "theoretical"
             )
             .frame(height: singleRowEquationHeight)
+            .accessibilityElement(children: .ignore)
+            .accessibility(label: Text(filledLabel))
 
             PlaceholderTerm(
                 value: showData ? data.theoreticalProductMass.str(decimals: 2) : nil,
                 emphasise: true
             )
             .frame(height: singleRowEquationHeight)
+            .accessibility(label: Text("mass (theoretical) of \(productLabel)"))
         }
     }
 
@@ -297,9 +344,26 @@ private struct TheoreticalProductMass: View {
                 value: showData ? data.theoreticalProductMoles.str(decimals: 2) : nil,
                 emphasise: true
             )
+            .accessibility(label: Text("moles (theoretical) of \(productLabel)"))
+
             FixedText("x")
+                .accessibility(label: Text("times"))
+
             FixedText("\(data.reaction.product.molarMass)")
+                .accessibility(label: Text("molar mass of \(productLabel)"))
+                .accessibility(value: Text("\(data.reaction.product.molarMass)"))
         }
+    }
+
+    private var filledLabel: String {
+        """
+        mass (theoretical) of \(productLabel) equals moles (theoretical) of \(productLabel) \
+        times molar mass of \(productLabel)
+        """
+    }
+
+    private var productLabel: String {
+        data.reaction.product.name.label
     }
 }
 
@@ -315,10 +379,13 @@ private struct ReactingExcessReactingMoles: View {
             VStack(alignment: .leading, spacing: relatedEquationVSpacing) {
                 filled
                     .frame(height: doubleRowEquationHeight)
+                    .accessibility(hidden: true)
+
                 blank
                     .frame(height: doubleRowEquationHeight)
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var lhs: some View {
@@ -329,9 +396,14 @@ private struct ReactingExcessReactingMoles: View {
                 underlineTerm: "reacts"
             )
             .frame(height: doubleRowEquationHeight)
+            .accessibilityElement(children: .ignore)
+            .accessibility(label: Text(filledLabel))
+            .accessibility(sortPriority: 10)
 
             animatingNumber(data.reactingExcessReactantMoles, decimals: 2)
                 .frame(height: doubleRowEquationHeight)
+                .accessibility(label: Text("moles (reacts) of \(reactantLabel)"))
+                .accessibility(sortPriority: 9)
         }
     }
 
@@ -358,12 +430,22 @@ private struct ReactingExcessReactingMoles: View {
     private var blank: some View {
         HStack(spacing: termHSpacing) {
             FixedText("=")
+                .accessibility(sortPriority: 8)
             VStack(spacing: fractionVSpacing) {
                 animatingNumber(data.reactingExcessReactantMass, decimals: 2)
+                    .accessibility(label: Text("moles of \(reactantLabel)"))
+                    .accessibility(sortPriority: 7)
+
                 Rectangle()
                     .frame(width: 50, height: 2)
+                    .accessibility(label: Text("divide by"))
+                    .accessibility(sortPriority: 6)
+
                 FixedText("\(data.reaction.excessReactant.molarMass)")
                     .frame(height: EquationSizing.boxHeight)
+                    .accessibility(label: Text("molar mass of \(reactantLabel)"))
+                    .accessibility(value: Text("\(data.reaction.excessReactant.molarMass)"))
+                    .accessibility(sortPriority: 5)
             }
         }
     }
@@ -376,6 +458,17 @@ private struct ReactingExcessReactingMoles: View {
             formatter: { $0.str(decimals: decimals) }
         )
         .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
+    }
+
+    private var filledLabel: String {
+        """
+        moles (reacts) of \(reactantLabel) equals moles of \(reactantLabel) divide by molar \
+        mass of \(reactantLabel)
+        """
+    }
+
+    private var reactantLabel: String {
+        data.reaction.excessReactant.name.label
     }
 }
 
@@ -393,10 +486,13 @@ private struct ActualProductMoles: View {
             VStack(alignment: .leading, spacing: relatedEquationVSpacing) {
                 filled
                     .frame(height: doubleRowEquationHeight)
+                    .accessibility(hidden: true)
+
                 blank
                     .frame(height: doubleRowEquationHeight)
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var lhs: some View {
@@ -407,9 +503,12 @@ private struct ActualProductMoles: View {
                 underlineTerm: "actual"
             )
             .frame(height: doubleRowEquationHeight)
+            .accessibilityElement(children: .ignore)
+            .accessibility(label: Text(filledLabel))
 
             animatingNumber(data.actualProductMass, decimals: 2)
                 .frame(height: doubleRowEquationHeight)
+                .accessibility(label: Text("mass (actual) of \(productLabel)"))
         }
     }
 
@@ -433,9 +532,16 @@ private struct ActualProductMoles: View {
     private var blank: some View {
         HStack(spacing: termHSpacing) {
             FixedText("=")
+
             animatingNumber(data.actualProductMoles, decimals: 2)
+                .accessibility(label: Text("moles (actual) of \(productLabel)"))
+
             FixedText("x")
+                .accessibility(label: Text("times"))
+
             FixedText("\(data.reaction.product.molarMass)")
+                .accessibility(label: Text("molar mass of \(productLabel)"))
+                .accessibility(value: Text("\(data.reaction.product.molarMass)"))
         }
     }
 
@@ -447,6 +553,17 @@ private struct ActualProductMoles: View {
             formatter: { $0.str(decimals: decimals) }
         )
         .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
+    }
+
+    private var filledLabel: String {
+        """
+        mass (actual) of \(productLabel) equals moles (actual) of \(productLabel) \
+        times molar mass of \(productLabel)
+        """
+    }
+
+    private var productLabel: String {
+        data.reaction.product.name.label
     }
 }
 
@@ -463,22 +580,30 @@ private struct ProductYield: View {
             VStack(alignment: .leading, spacing: relatedEquationVSpacing) {
                 filled
                     .frame(height: doubleRowEquationHeight)
+                    .accessibility(hidden: true)
+
                 blank
                     .frame(height: doubleRowEquationHeight)
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var lhs: some View {
         VStack(alignment: .trailing, spacing: relatedEquationVSpacing) {
             FixedText("y(%)")
                 .frame(height: doubleRowEquationHeight)
+                .accessibilityElement(children: .ignore)
+                .accessibility(label: Text(filledLabel))
+                .accessibility(sortPriority: 10)
 
             animatingNumber(data.yield, show: showActualData, formatter: { yield in
                 let perc = (yield * 100).str(decimals: 0)
                 return "\(perc)%"
             })
             .frame(height: doubleRowEquationHeight)
+            .accessibility(label: Text("yield percentage"))
+            .accessibility(sortPriority: 9)
         }
     }
 
@@ -507,19 +632,35 @@ private struct ProductYield: View {
     private var blank: some View {
         HStack(spacing: termHSpacing) {
             FixedText("=")
+                .accessibility(sortPriority: 8)
             VStack(spacing: fractionVSpacing) {
                 animatingNumber(
                     data.actualProductMass,
                     show: showActualData,
                     formatter: { $0.str(decimals: 2) }
                 )
+                .accessibility(label: Text("mass (actual) of \(productLabel)"))
+                .accessibility(sortPriority: 7)
+
                 Rectangle()
                     .frame(width: 100, height: 2)
+                    .accessibility(label: Text("divide by"))
+                    .accessibility(sortPriority: 6)
+
                 PlaceholderTerm(
                     value: showTheoreticalData ? data.theoreticalProductMass.str(decimals: 2) : nil,
                     emphasise: true
                 )
+                .accessibility(label: Text("mass (theoretical) of \(productLabel)"))
+                .accessibility(sortPriority: 5)
             }
+            
+            FixedText("x")
+                .accessibility(label: Text("times"))
+                .accessibility(sortPriority: 4)
+
+            FixedText("100")
+                .accessibility(sortPriority: 3)
         }
     }
 
@@ -535,6 +676,17 @@ private struct ProductYield: View {
             formatter: formatter
         )
         .frame(width: EquationSizing.boxWidth, height: EquationSizing.boxHeight)
+    }
+
+    private var filledLabel: String {
+        """
+        yield percentage equals mass (actual) of \(productLabel) divide by mass (theoretical) \
+        or \(productLabel), times 100
+        """
+    }
+
+    private var productLabel: String {
+        data.reaction.product.name.label
     }
 }
 

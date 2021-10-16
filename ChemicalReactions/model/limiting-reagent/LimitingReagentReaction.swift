@@ -41,7 +41,10 @@ extension LimitingReagentReaction {
     ) -> TextLine {
         let reactants = reactantLine(getName: getName)
         let products = productsLine(getName: getName)
-        return reactants + " ➝ " + products
+        return TextLine(
+            reactants.asMarkdown + " ➝ " + products.asMarkdown,
+            label: reactants.asString + " yields " + products.asString
+        )
     }
 
     private func reactantLine(
