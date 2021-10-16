@@ -81,6 +81,7 @@ private struct PrecipitationScreenWithLayout: View {
             animation: nil,
             displayString: { $0.name(showMetal: false) },
             label: { $0.name(showMetal: false).label },
+            indicatorIsDisabled: true,
             disabledOptions: [],
             onSelection: model.didSelectReaction
         )
@@ -193,6 +194,7 @@ private struct PrecipitationMiddleStack: View {
             rows: [headerTableRow] + tableRows
         )
         .frame(size: layout.tableSize)
+        .accessibilityElement(children: .contain)
     }
 
     private var headerTableRow: Table.Row {
@@ -245,6 +247,7 @@ private struct PrecipitationRightStack: View {
                 highlights: model.highlights
             )
             .frame(size: layout.equationSize)
+            .accessibilityElement(children: .contain)
 
             Spacer(minLength: 0)
 

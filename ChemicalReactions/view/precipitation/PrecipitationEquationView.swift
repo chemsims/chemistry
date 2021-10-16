@@ -120,18 +120,25 @@ private struct KnownReactantMolesToVolume: View {
             lhs
             VStack(alignment: .leading, spacing: relatedEquationVSpacing) {
                 filled
+                    .accessibility(hidden: true)
+
                 blank
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var lhs: some View {
         VStack(spacing: relatedEquationVSpacing) {
             TermView(base: "n", subTerm: data.knownReactant)
+                .accessibilityElement(children: .ignore)
+                .accessibility(label: Text(filledLabel))
+
             PlaceholderTerm(
                 value: showData ? data.knownReactantMoles.str(decimals: 2) : nil,
                 emphasise: true
             )
+            .accessibility(label: Text("moles of \(reactantLabel)"))
         }
     }
 
@@ -142,7 +149,6 @@ private struct KnownReactantMolesToVolume: View {
                 .frame(width: EquationSizing.boxWidth)
             FixedText("x")
             TermView(base: "M", subTerm: data.knownReactant)
-//                .frame(width: EquationSizing.boxWidth)
         }
     }
 
@@ -152,12 +158,28 @@ private struct KnownReactantMolesToVolume: View {
             FixedText(data.beakerVolume.str(decimals: 2))
                 .foregroundColor(.orangeAccent)
                 .frame(width: EquationSizing.boxWidth)
+                .accessibility(label: Text("volume"))
+                .accessibility(value: Text(data.beakerVolume.str(decimals: 2)))
+
             FixedText("x")
+                .accessibility(label: Text("times"))
+
             PlaceholderTerm(
                 value: showData ? data.knownReactantMolarity.str(decimals: 2) : nil,
                 emphasise: true
             )
+                .accessibility(label: Text("molarity of \(reactantLabel)"))
         }
+    }
+
+    private var filledLabel: String {
+        """
+        moles of \(reactantLabel) equals volume times molarity of \(reactantLabel)
+        """
+    }
+
+    private var reactantLabel: String {
+        data.knownReactant
     }
 }
 
@@ -172,6 +194,7 @@ private struct ProductMoles: View {
             filled
             blank
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var filled: some View {
@@ -187,6 +210,9 @@ private struct ProductMoles: View {
                 TermView(base: "MM", subTerm: data.product)
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(filledLabel))
+        .accessibility(sortPriority: 10)
     }
 
     private var blank: some View {
@@ -197,8 +223,12 @@ private struct ProductMoles: View {
                 equation: data.productMoles
             )
             .frame(size: EquationSizing.boxSize)
+            .accessibility(label: Text("moles of \(data.product)"))
+            .accessibility(sortPriority: 9)
 
             FixedText("=")
+                .accessibility(sortPriority: 8)
+
             VStack(spacing: fractionVSpacing) {
                 AnimatingNumberPlaceholder(
                     showTerm: showData,
@@ -206,12 +236,26 @@ private struct ProductMoles: View {
                     equation: data.productMass
                 )
                 .frame(size: EquationSizing.boxSize)
+                .accessibility(label: Text("mass of \(data.product)"))
+                .accessibility(sortPriority: 7)
 
                 Rectangle()
                     .frame(width: 100, height: 2)
+                    .accessibility(sortPriority: 6)
+                    .accessibility(label: Text("divide by"))
+
                 FixedText("\(data.productMolarMass)")
+                    .accessibility(label: Text("molar mass of \(data.product)"))
+                    .accessibility(value: Text("\(data.productMolarMass)"))
+                    .accessibility(sortPriority: 5)
             }
         }
+    }
+
+    private var filledLabel: String {
+        """
+        moles of \(data.product) equals mass of \(data.product) divide by molar mass of \(data.product)
+        """
     }
 }
 
@@ -226,6 +270,7 @@ private struct UnknownReactantMoles: View {
             filled
             blank
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var filled: some View {
@@ -243,17 +288,24 @@ private struct UnknownReactantMoles: View {
                 underlineTerm: "react"
             )
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(filledLabel))
     }
 
     private var blank: some View {
         HStack(spacing: termHSpacing) {
             animatingNumber(equation: data.productMoles)
+                .accessibility(label: Text("moles of \(data.product)"))
+
             FixedText("=")
+
             if data.unknownReactantCoefficient > 1 {
                 FixedText("\(data.unknownReactantCoefficient)")
                 FixedText("x")
+                    .accessibility(label: Text("times"))
             }
             animatingNumber(equation: data.unknownReactantMoles)
+                .accessibility(label: Text("moles (react) of \(data.unknownReactant.label)"))
         }
     }
 
@@ -264,6 +316,15 @@ private struct UnknownReactantMoles: View {
             equation: equation
         )
         .frame(size: EquationSizing.boxSize)
+    }
+
+    private var filledLabel: String {
+        let productMoles = "moles of \(data.product)"
+        let reactantMoles = "moles (react) of \(data.unknownReactant.label)"
+        if data.unknownReactantCoefficient > 1 {
+            return "\(productMoles) equals \(data.unknownReactantCoefficient) times \(reactantMoles)"
+        }
+        return "\(productMoles) equals \(reactantMoles)"
     }
 }
 
@@ -278,6 +339,7 @@ private struct UnknownReactantMolarMass: View {
             filled
             blank
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var filled: some View {
@@ -301,12 +363,20 @@ private struct UnknownReactantMolarMass: View {
                 )
             }
         }
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(filledLabel))
+        .accessibility(sortPriority: 11)
     }
 
     private var blank: some View {
         HStack(spacing: termHSpacing) {
             PlaceholderTerm(value: showData ? "\(data.unknownReactantMolarMass)" : nil)
+                .accessibility(label: Text("molar mass of \(data.unknownReactant.label)"))
+                .accessibility(sortPriority: 10)
+
             FixedText("=")
+                .accessibility(sortPriority: 9)
+            
             VStack(spacing: fractionVSpacing) {
                 AnimatingNumberPlaceholder(
                     showTerm: showData,
@@ -315,9 +385,13 @@ private struct UnknownReactantMolarMass: View {
                     formatter: { $0.str(decimals: 2) }
                 )
                 .frame(size: EquationSizing.boxSize)
+                .accessibility(label: Text("mass of \(reactantLabel)"))
+                .accessibility(sortPriority: 8)
 
                 Rectangle()
                     .frame(width: 100, height: 2)
+                    .accessibility(label: Text("divide by"))
+                    .accessibility(sortPriority: 7)
 
                 AnimatingNumberPlaceholder(
                     showTerm: showData,
@@ -325,8 +399,21 @@ private struct UnknownReactantMolarMass: View {
                     equation: data.unknownReactantMoles
                 )
                 .frame(size: EquationSizing.boxSize)
+                .accessibility(label: Text("moles (react) of \(reactantLabel)"))
+                .accessibility(sortPriority: 6)
             }
         }
+    }
+
+    private var filledLabel: String {
+        """
+        Molar mass of \(reactantLabel) equals mass of \(reactantLabel) divide by \
+        moles (react) of \(reactantLabel)
+        """
+    }
+
+    private var reactantLabel: String {
+        data.unknownReactant.label
     }
 }
 

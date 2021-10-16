@@ -115,6 +115,7 @@ private struct LimitingReagentTopStack: View {
             animation: nil,
             displayString: { $0.displayString },
             label: { $0.label },
+            indicatorIsDisabled: true,
             disabledOptions: [],
             onSelection: model.didSelectReaction
         )
