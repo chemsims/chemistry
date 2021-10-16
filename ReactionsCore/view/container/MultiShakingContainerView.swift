@@ -56,7 +56,10 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
                 container(molecule: molecule)
             }
         }
+        .accessibilityElement(children: .contain)
     }
+
+    private let manualAddAmount = 5
 
     private func container(molecule: Molecule) -> some View {
         let containerModel = shakeModel.model(for: molecule)
@@ -64,6 +67,9 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
         let location = isActive ? activeContainerPosition(molecule) : containerPosition(molecule)
         let isDisabled = disabled(molecule)
         let toolTipText = isActive ? activeToolTipText(molecule) : nil
+
+        let label = containerSettings(molecule).label.label
+        let accessibilityLabel = "Container of \(label)"
 
         return ShakingContainerView(
             model: containerModel,
@@ -85,6 +91,18 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
         .disabled(isDisabled)
         .zIndex(isActive ? 1 : 0)
         .minimumScaleFactor(0.4)
+        .accessibility(addTraits: .isButton)
+        .accessibility(label: Text(accessibilityLabel))
+        .accessibility(hint: Text(getContainerHint(molecule)))
+        .accessibility(sortPriority: moleculeSortPriority(molecule))
+    }
+
+    private func getContainerHint(_ molecule: Molecule) -> String {
+        if shakeModel.activeMolecule == molecule {
+            let label = containerSettings(molecule).label.label
+            return "Adds \(manualAddAmount) molecules of \(label) to the beaker"
+        }
+        return "Prepares container to add to beaker"
     }
 
     private func containerColorMultiply(for molecule: Molecule) -> Color {
@@ -119,7 +137,7 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
     private func onTap(molecule: Molecule, location: CGPoint) {
         if shakeModel.activeMolecule == molecule {
             let model = shakeModel.model(for: molecule)
-            model.manualAdd(amount: 5, at: location)
+            model.manualAdd(amount: manualAddAmount, at: location)
             return
         }
         dismissHighlight()
@@ -134,5 +152,19 @@ public struct MultiShakingContainerView<Molecule>: View where Molecule: EnumMapp
            halfXRange: halfXShakeRange,
            halfYRange: halfYShakeRange
         )
+    }
+
+    // We give an explicit sort priority to molecules, so their ordering is
+    // not changed when one moves to the active location. The ordering we use
+    // is the same as the allCases order (but in descending numbers as the
+    // highest priority shows up first)
+    private func moleculeSortPriority(_ molecule: Molecule) -> Double {
+        guard let index = Molecule.allCases.firstIndex(of: molecule) else {
+            return 0
+        }
+        let firstIndex = Molecule.allCases.startIndex
+        let countFromFirst = Molecule.allCases.distance(from: firstIndex, to: index)
+        return Double(Molecule.allCases.count - countFromFirst)
+
     }
 }

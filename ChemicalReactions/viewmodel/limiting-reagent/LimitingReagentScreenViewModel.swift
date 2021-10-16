@@ -90,6 +90,7 @@ extension LimitingReagentScreenViewModel {
         }
         if !components.canAdd(reactant: reactant) {
             doGoNext()
+            UIAccessibility.post(notification: .screenChanged, argument: nil)
         }
     }
 }

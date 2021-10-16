@@ -85,12 +85,12 @@ struct LimitingReagentBeaker: View {
                 BeakerMolecules(
                     coords: components.limitingReactantCoords,
                     color: components.reaction.limitingReactant.color,
-                    label: "" // TODO
+                    label: components.reaction.limitingReactant.name.label
                 ),
                 BeakerMolecules(
                     coords: components.excessReactantCoords,
                     color: components.reaction.excessReactant.color,
-                    label: ""
+                    label: components.reaction.excessReactant.name.label
                 )
             ],
             animatingMolecules: [
@@ -98,7 +98,7 @@ struct LimitingReagentBeaker: View {
                     molecules: BeakerMolecules(
                         coords: components.productCoords,
                         color: components.reaction.product.color,
-                        label: ""
+                        label: components.reaction.product.name.label
                     ),
                     fractionToDraw: LinearEquation(x1: 0, y1: 0, x2: 1, y2: 1)
                 )
@@ -108,7 +108,7 @@ struct LimitingReagentBeaker: View {
             canSetLevel: model.input == .setWaterLevel,
             beakerColorMultiply: model.highlights.colorMultiply(for: nil),
             sliderColorMultiply: model.highlights.colorMultiply(for: .beakerSlider),
-            beakerModifier: IdentityViewModifier()
+            beakerModifier: BeakerAddReactantsAction(model: model)
         )
     }
 
@@ -130,6 +130,53 @@ struct LimitingReagentBeaker: View {
 private extension LimitingReagentComponents.Reactant {
     var index: Int {
         Self.allCases.firstIndex(of: self) ?? -1
+    }
+}
+
+private struct BeakerAddReactantsAction: ViewModifier {
+    let model: LimitingReagentScreenViewModel
+
+    func body(content: Content) -> some View {
+        content.modifyIf(UIAccessibility.isVoiceOverRunning) {
+            $0
+            .modifier(
+                BeakerAddOneReactantAction(
+                    model: model,
+                    name: model.reaction.limitingReactant.name.label,
+                    reactant: .limiting
+                )
+            )
+            .modifier(
+                BeakerAddOneReactantAction(
+                    model: model,
+                    name: model.reaction.excessReactant.name.label,
+                    reactant: .excess
+                )
+            )
+        }
+    }
+}
+
+private struct BeakerAddOneReactantAction: ViewModifier {
+
+    @ObservedObject var model: LimitingReagentScreenViewModel
+    let name: String
+    let reactant: LimitingReagentComponents.Reactant
+
+
+    func body(content: Content) -> some View {
+        content
+            .modifyIf(model.input == .addReactant(type: reactant)) {
+                $0
+                .accessibilityAction(
+                    named: Text("Add 5 \(name) molecules to the beaker"),
+                    ({ model.add(reactant: reactant, count: 5)  })
+                )
+                .accessibilityAction(
+                    named: Text("Add 15 \(name) molecules to the beaker"),
+                    ({ model.add(reactant: reactant, count: 15)  })
+                )
+            }
     }
 }
 
