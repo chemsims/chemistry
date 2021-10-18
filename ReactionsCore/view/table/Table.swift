@@ -79,6 +79,7 @@ private struct SizedTable: View {
         .background(Color.white)
         .overlay(rowEmphasis(row: row))
         .colorMultiply(row.colorMultiply)
+        .accessibilityElement(children: .combine)
     }
 
     @ViewBuilder

@@ -196,6 +196,7 @@ private struct PrecipitationMiddleStack: View {
         )
         .frame(size: layout.tableSize)
         .accessibilityElement(children: .contain)
+        .accessibility(label: Text("Table of elements to their molar mass"))
     }
 
     private var headerTableRow: Table.Row {
