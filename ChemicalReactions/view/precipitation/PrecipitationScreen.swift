@@ -201,8 +201,8 @@ private struct PrecipitationMiddleStack: View {
 
     private var headerTableRow: Table.Row {
         .init(
-            cells: ["Compound", "Molar Mass (g/mol)"],
-            colorMultiply: model.highlights.colorMultiply(for: nil)
+            cells: ["Compound", "Molar Mass ($g/mol$)"],
+            colorMultiply: model.highlights.colorMultiply(for: .metalTable)
         )
     }
 
@@ -211,12 +211,15 @@ private struct PrecipitationMiddleStack: View {
             let compound = model.chosenReaction.unknownReactant.replacingMetal(with: metal)
             let isCorrectMetal = model.chosenReaction.unknownReactant.metal == metal
 
+            var screenElements = [PrecipitationScreenViewModel.ScreenElement.metalTable]
+            if isCorrectMetal {
+                screenElements.append(.correctMetalRow)
+            }
+
             return .init(
                 cells: [compound.name(showMetal: true), "\(compound.molarMass)"],
                 emphasised: model.showUnknownMetal && isCorrectMetal,
-                colorMultiply: model.highlights.colorMultiply(
-                    for: isCorrectMetal ? .correctMetalRow : nil
-                )
+                colorMultiply: model.highlights.colorMultiply(anyOf: screenElements)
             )
         }
     }

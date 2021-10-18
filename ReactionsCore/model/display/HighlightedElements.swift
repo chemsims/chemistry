@@ -32,7 +32,11 @@ public struct HighlightedElements<Value: Equatable>: Equatable {
     }
 
     public func colorMultiply(anyOf elements: Value...) -> Color {
-        let anyAreHighlighted = elements.contains { highlight($0) }
+        colorMultiply(anyOf: elements)
+    }
+
+    public func colorMultiply(anyOf matchingElements: [Value]) -> Color {
+        let anyAreHighlighted = matchingElements.contains { highlight($0) }
         if elements.isEmpty || anyAreHighlighted {
             return highlightColor
         }

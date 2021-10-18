@@ -19,7 +19,7 @@ struct PrecipitationNavigationModel {
     private static let states: [PrecipitationScreenState] = [
         ChooseReaction(statements.intro, highlights: [.reactionToggle]),
         StopInput(\.explainPrecipitation, highlights: [.reactionDefinition]),
-        ExplainUnknownMetal(statements.explainUnknownMetal, highlights: [.reactionDefinition]),
+        ExplainUnknownMetal(statements.explainUnknownMetal, highlights: [.reactionDefinition, .metalTable]),
         InstructToSetWaterLevel(statements.instructToSetWaterLevel, highlights: [.waterSlider]),
         InstructToAddKnownReactant(\.instructToAddKnownReactant, highlights: [.knownReactantContainer]),
         InstructToAddUnknownReactant(),
