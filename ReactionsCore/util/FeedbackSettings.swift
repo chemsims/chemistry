@@ -33,12 +33,12 @@ public struct FeedbackSettings {
     public init() {
         self.init(
             toAddress: Self.defaultAddress,
-            subject: "AP Chemistry App Feedback",
+            subject: "ChemSims App Feedback",
             body: Self.defaultBody
         )
     }
 
-    public static let defaultAddress = "support@reactionsrateapp.com"
+    public static let defaultAddress = "info@chem-sims.com"
     private static let defaultBody = """
 
     ---------
