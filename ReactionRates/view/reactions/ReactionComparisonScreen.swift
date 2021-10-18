@@ -165,6 +165,7 @@ private struct ReactionComparisonViewWithSettings: View {
 
         return ZStack {
             labelledChart(
+                position: settings.position(order: .Zero),
                 chartSettings: chartSettings(time: reaction.finalTime0),
                 concentrationA: reaction.zeroOrder,
                 concentrationB: reaction.zeroOrderB,
@@ -175,6 +176,7 @@ private struct ReactionComparisonViewWithSettings: View {
             .position(x: settings.chartX(order: .Zero), y: settings.chartY(order: .Zero))
 
             labelledChart(
+                position: settings.position(order: .First),
                 chartSettings: chartSettings(time: reaction.finalTime1),
                 concentrationA: reaction.firstOrder,
                 concentrationB: reaction.firstOrderB,
@@ -185,6 +187,7 @@ private struct ReactionComparisonViewWithSettings: View {
             .position(x: settings.chartX(order: .First), y: settings.chartY(order: .First))
 
             labelledChart(
+                position: settings.position(order: .Second),
                 chartSettings: chartSettings(time: reaction.finalTime2),
                 concentrationA: reaction.secondOrder,
                 concentrationB: reaction.secondOrderB,
@@ -378,6 +381,7 @@ private struct ReactionComparisonViewWithSettings: View {
     }
 
     private func labelledChart(
+        position: String,
         chartSettings: ReactionRateChartLayoutSettings,
         concentrationA: Equation,
         concentrationB: Equation,
@@ -387,7 +391,7 @@ private struct ReactionComparisonViewWithSettings: View {
     ) -> some View {
         let hasSelected = reaction.correctOrderSelections.contains(order)
         let orderMsg = hasSelected ? " Correctly selected as \(order) order. " : ""
-        let label = "Chart showing time vs concentration.\(orderMsg) \(shape(order))"
+        let label = "\(position) chart showing time vs concentration.\(orderMsg) \(shape(order))"
         return HStack(alignment: .top, spacing: settings.chartHorizontalLabelSpacing) {
             Text("[A]")
                 .font(.system(size: settings.chartFontSize))
@@ -794,6 +798,15 @@ struct ReactionComparisonLayoutSettings {
             return height / 2
         }
         return height - topPosition
+    }
+
+    func position(order: ReactionOrder) -> String {
+        if ordering[0] == order {
+            return "top"
+        } else if ordering[1] == order {
+            return "middle"
+        }
+        return "bottom"
     }
 
     func chartSortPriority(order: ReactionOrder) -> Double {

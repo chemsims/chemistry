@@ -142,8 +142,9 @@ private struct QuizScreenWithSettings<QP: QuizPersistence, Analytics: AppAnalyti
                 }
                 .accessibility(hidden: true)
             }
-
-        }.frame(width: settings.rightNavSize, height: settings.rightNavSize)
+        }
+        .accessibilityElement(children: .contain)
+        .frame(width: settings.rightNavSize, height: settings.rightNavSize)
     }
 
     private func navigate(next: Bool) {
@@ -174,10 +175,9 @@ private struct QuizScreenWithSettings<QP: QuizPersistence, Analytics: AppAnalyti
                     .font(.system(size: 15, weight: .bold))
             }
             .frame(width: settings.leftNavSize, height: settings.navSize)
-            .accessibilityElement()
-            .accessibility(label: Text("Restart quiz"))
         }
         .buttonStyle(NavButtonButtonStyle())
+        .accessibility(label: Text("Restart quiz"))
     }
 
     private var progressBar: some View {

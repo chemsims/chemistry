@@ -107,6 +107,8 @@ struct APChemRootView: View {
                     )
                 }
             }
+            .accessibilityElement(children: .contain)
+            .accessibility(addTraits: .isModal)
         }
     }
 

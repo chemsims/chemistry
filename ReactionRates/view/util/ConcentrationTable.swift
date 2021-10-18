@@ -71,6 +71,7 @@ struct ConcentrationTable: View {
         }
         .lineLimit(1)
         .minimumScaleFactor(0.5)
+        .accessibilityElement(children: .contain)
     }
 
     private var button: some View {
@@ -83,11 +84,13 @@ struct ConcentrationTable: View {
                     .padding(0.2 * buttonSize)
                     .rotationEffect(showTable ? .degrees(135) : .zero)
             }
-            .accessibilityElement()
-            .accessibility(label: Text("\(showTable ? "hide" : "show") concentration table"))
+            .accessibilityElement(children: .ignore)
+//            .accessibility(label: Text("\(showTable ? "hide" : "show") concentration table"))
         }
         .foregroundColor(.black)
         .frame(width: buttonSize, height: buttonSize)
+//        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("\(showTable ? "hide" : "show") concentration table"))
     }
 
     private func cell(value: String?) -> some View {

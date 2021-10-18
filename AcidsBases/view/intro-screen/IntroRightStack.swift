@@ -29,7 +29,10 @@ struct IntroRightStack: View {
                 highlights: model.highlights
             )
             .frame(size: layout.equationSize)
+            .accessibilityElement(children: .contain)
+
             Spacer()
+            
             toggle
         }
     }

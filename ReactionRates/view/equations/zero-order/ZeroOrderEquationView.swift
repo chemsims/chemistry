@@ -84,7 +84,6 @@ private struct UnscaledZeroOrderEquationView: View {
             VStack(alignment: .leading, spacing: 4) {
                 FilledRateConstant()
                     .accessibility(sortPriority: 4)
-                    .accessibility(addTraits: .isHeader)
                 EmptyRateConstant(
                     deltaC: deltaC?.str(decimals: 2),
                     deltaT: deltaT?.str(decimals: 2),

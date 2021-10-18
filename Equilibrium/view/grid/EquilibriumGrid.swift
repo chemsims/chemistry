@@ -22,6 +22,7 @@ struct EquilibriumGrid: View {
             )
         }
         .border(Color.black, width: 1)
+        .accessibilityElement(children: .contain)
     }
 
     private func makeView(settings: EquilibriumGridGeometry) -> some View {

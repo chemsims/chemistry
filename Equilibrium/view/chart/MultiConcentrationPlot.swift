@@ -101,6 +101,7 @@ struct MultiConcentrationPlot: View {
             initialTime: minDragTime ?? 0,
             finalTime: maxDragTime
         )
+        .accessibilityElement(children: .contain)
     }
 
     private var label: String {

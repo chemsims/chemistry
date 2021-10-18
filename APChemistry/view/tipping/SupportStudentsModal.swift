@@ -23,6 +23,7 @@ struct SupportStudentsModal: View {
                 model.storeManager.loadProducts()
             }
         }
+        .accessibilityElement(children: .contain)
     }
 }
 

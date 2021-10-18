@@ -32,6 +32,7 @@ public struct ICETable: View {
                 columns: columns
             )
         }
+        .accessibilityElement(children: .contain)
     }
 }
 
@@ -114,6 +115,8 @@ private struct SizedICETable: View {
                 cell("ICE")
                     .accessibility(label: Text("ICE Table"))
                     .accessibility(addTraits: .isHeader)
+                    .accessibility(sortPriority: sortPriority(col: 0, row: 0))
+
                 cell("Initial")
                     .accessibility(hidden: true)
                 cell("Change")
@@ -144,6 +147,7 @@ private struct SizedICETable: View {
                 .accessibility(hidden: true)
             cell(initial, formatter: columnValue.formatInitial)
                 .accessibility(label: Text("Initial \(columnValue.header)"))
+                .accessibility(sortPriority: sortPriority(col: index, row: 0))
 
             cell(
                 change,
@@ -152,11 +156,16 @@ private struct SizedICETable: View {
                 },
                 emphasise: true
             )
-                .accessibility(label: Text("Change in \(columnValue.header)"))
+            .accessibility(label: Text("Change in \(columnValue.header)"))
+            .accessibility(sortPriority: sortPriority(col: index, row: 1))
 
-            cell(final, formatter: columnValue.formatFinal
-                 ,emphasise: true)
-                .accessibility(label: Text("Final \(columnValue.header)"))
+            cell(
+                final,
+                formatter: columnValue.formatFinal,
+                emphasise: true
+            )
+            .accessibility(label: Text("Final \(columnValue.header)"))
+            .accessibility(sortPriority: sortPriority(col: index, row: 2))
         }
     }
 
@@ -206,6 +215,18 @@ private struct SizedICETable: View {
             let delta = final.getY(at: x) - initial.getY(at: x)
             return abs(delta) < 0.00001 ? 0 : delta
         }
+    }
+
+
+    // The implicit accessibility ordering was found to sometimes be incorrect,
+    // so we pass in an explicit sort ordering
+    private func sortPriority(col: Int, row: Int) -> Double {
+        let maxCols = columns.count
+        let maxRows = 4
+
+        let maxIndex = maxCols * maxRows
+        let prevCells = (0..<row).map { $0 * maxCols }.sum()
+        return Double(maxIndex - (col * row) - prevCells)
     }
 }
 

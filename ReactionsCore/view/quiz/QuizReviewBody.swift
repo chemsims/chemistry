@@ -17,6 +17,7 @@ struct QuizReviewBody<QP: QuizPersistence, Analytics: AppAnalytics>: View where 
 
                     ForEach(0..<model.answeredQuestions.count) { index in
                         reviewCard(index: index)
+                            .accessibilityElement(children: .contain)
                     }
                 }
                 .frame(width: settings.contentWidth)

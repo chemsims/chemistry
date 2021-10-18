@@ -38,9 +38,9 @@ public struct FilledBeaker: View {
                 drawFromTop: true,
                 settings: BeakerSettings(width: geo.size.width, hasLip: true)
             )
-            .accessibilityElement(children: .ignore)
-            .accessibility(label: Text(label))
         }
+        .accessibilityElement(children: .combine)
+        .accessibility(label: Text(label))
     }
 
     private var label: String {

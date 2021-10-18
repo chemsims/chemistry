@@ -79,6 +79,7 @@ private struct SolubilityScreenWithSettings: View {
                 settings: settings
             )
             .frame(width: settings.totalBeakerWidth)
+            .accessibilityElement(children: .contain)
         }
         .padding(.leading, settings.common.menuSize)
     }
