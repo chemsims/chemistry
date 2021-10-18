@@ -32,6 +32,9 @@ public protocol AppAnalytics {
 }
 
 public protocol GeneralAppAnalytics {
+
+    func setEnabled(value: Bool)
+
     func tappedShareFromMenu()
 
     func showedSharePrompt(promptCount: Int)
@@ -145,6 +148,9 @@ public class NoOpAppAnalytics<Screen, QuestionSet>: AppAnalytics {
 public class NoOpGeneralAnalytics: GeneralAppAnalytics {
 
     public init() { }
+
+    public func setEnabled(value: Bool) {
+    }
 
     public func tappedShareFromMenu() {
     }

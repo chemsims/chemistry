@@ -706,6 +706,7 @@
 		57CAD89226D94F2600D75D9B /* AppLaunchPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD89126D94F2600D75D9B /* AppLaunchPersistenceTests.swift */; };
 		57CAD89526D959D100D75D9B /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD89426D959D100D75D9B /* DateProvider.swift */; };
 		57CD325C2672549800C94109 /* AnimatingNumberPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */; };
+		57CEE2A0271DF46900E95B3B /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CEE29E271DED5700E95B3B /* Countries.swift */; };
 		57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C4426241FCC00BE1303 /* Labelled.swift */; };
 		57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C5F2625B12700BE1303 /* ParticleContainer.swift */; };
 		57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2D325EA27DA00AEE0D8 /* Line.swift */; };
@@ -1505,6 +1506,7 @@
 		57CD325926724DBD00C94109 /* BufferEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferEquationView.swift; sourceTree = "<group>"; };
 		57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingNumberPlaceholder.swift; sourceTree = "<group>"; };
 		57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastOpenedScreenTests.swift; sourceTree = "<group>"; };
+		57CEE29E271DED5700E95B3B /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		57CF6FCD26123726007F50A7 /* SecondOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FD026123727007F50A7 /* ZeroOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZeroOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FD126123727007F50A7 /* EnergyProfileQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyProfileQuizQuestions.swift; sourceTree = "<group>"; };
@@ -3991,6 +3993,7 @@
 		57DDAC5725E51AB500B535A7 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				57CEE29E271DED5700E95B3B /* Countries.swift */,
 				5763177D259B8EAF00D7CE2C /* SizeAdjuster.swift */,
 				579B5D742632A2D600502B69 /* Flags.swift */,
 				57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */,
@@ -5405,6 +5408,7 @@
 				5773BCD6267A2EA500E52C81 /* CircleChartLabel.swift in Sources */,
 				57686AB92600E008005BD328 /* FlamesView.swift in Sources */,
 				57315EB2263FEFEB00A7D0F9 /* PillShape.swift in Sources */,
+				57CEE2A0271DF46900E95B3B /* Countries.swift in Sources */,
 				575C90E026628969001DCD17 /* ShakingContainerView.swift in Sources */,
 				574BF91627047F1C0079CA8F /* LimitedGridCoords.swift in Sources */,
 				57952A4725E67F96006AB876 /* NavigationModel.swift in Sources */,

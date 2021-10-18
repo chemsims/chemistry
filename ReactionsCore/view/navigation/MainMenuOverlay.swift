@@ -301,7 +301,11 @@ extension MainMenuOverlayWithSettings {
     private var settingsButtons: some View {
         VStack(spacing: settings.navVStackSpacing) {
             unitSelectionButton
-            mailButton
+
+            if Countries.shouldEnableFeedbackButton() {
+                mailButton
+            }
+
             shareButton
             aboutButton
              if Flags.showAnalyticsOptOutToggle {

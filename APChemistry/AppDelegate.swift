@@ -4,6 +4,7 @@
 
 import UIKit
 import Firebase
+import ReactionsCore
 import Equilibrium
 import AcidsBases
 
@@ -14,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         if !APChemApp.isDebug {
             FirebaseApp.configure()
+            setAnalytics()
         }
 
         EquilibriumQuizQuestions.load()
@@ -23,6 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         APChemApp.injector.appLaunchPersistence.recordAppLaunch()
 
         return true
+    }
+
+    private func setAnalytics() {
+        let enabled = Countries.shouldEnableAnalytics()
+        APChemApp.injector.analytics.setEnabled(value: enabled)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
