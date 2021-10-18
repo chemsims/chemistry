@@ -22,9 +22,9 @@ struct PrecipitationReactionDefinition: View {
             FixedText("+")
             secondaryProduct
         }
+        .minimumScaleFactor(0.5)
         .accessibilityElement(children: .ignore)
         .accessibility(label: Text(label))
-
     }
 
     private var unknownReactant: some View {
