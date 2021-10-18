@@ -9,6 +9,7 @@ public func checkPreviousValueIsReapplied<Model, State, Field: Equatable>(
     model: Model,
     navigation: NavigationModel<State>,
     prevValueKeyPath: KeyPath<Model, Field>,
+    runOnEachStep: () -> Void = {  },
     file: StaticString = #filePath,
     line: UInt = #line
 ) {
@@ -20,8 +21,10 @@ public func checkPreviousValueIsReapplied<Model, State, Field: Equatable>(
     func checkCurrentStatementIsReapplied() {
         let previousValue = model[keyPath: prevValueKeyPath]
         navigation.next()
+        runOnEachStep()
         if !hasEnded {
             navigation.back()
+            runOnEachStep()
             XCTAssertEqual(
                 model[keyPath: prevValueKeyPath],
                 previousValue, "Failed on state \(i)",
@@ -35,5 +38,6 @@ public func checkPreviousValueIsReapplied<Model, State, Field: Equatable>(
     while !hasEnded {
         checkCurrentStatementIsReapplied()
         navigation.next()
+        runOnEachStep()
     }
 }

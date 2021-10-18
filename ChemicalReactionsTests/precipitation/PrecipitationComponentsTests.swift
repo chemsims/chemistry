@@ -284,7 +284,7 @@ class PrecipitationComponentsTests: XCTestCase {
         model.add(reactant: .unknown, count: 10)
         model.goNextTo(phase: .runReaction)
 
-        let initialRect = model.precipitate.boundingRect(at: model.endOfInitialReaction)
+        let initialRect = model.precipitate.boundingRect(at: 0)
         XCTAssertEqual(initialRect.width, 0)
         XCTAssertEqual(initialRect.height, 0)
 

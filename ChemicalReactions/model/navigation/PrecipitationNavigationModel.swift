@@ -205,6 +205,7 @@ private class RunReaction: PrecipitationScreenState {
         model.shakeModel.stopAll()
         model.input = nil
         model.statement = statement(model)
+        model.highlights.clear()
 
         reactionsToRun = model.components.reactionsToRun
 
@@ -318,6 +319,10 @@ private class PostWeighingProduct: PrecipitationScreenState {
         model.equationState = .showAll
         model.showMovingHand = false
         model.highlights.elements = [.productMoles, .unknownReactantMoles]
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.equationState = .showKnownReactantMolarity
     }
 }
 
