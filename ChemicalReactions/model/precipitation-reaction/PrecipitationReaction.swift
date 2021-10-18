@@ -96,7 +96,7 @@ extension PrecipitationElementWithUnknownMetal {
 
     /// - Parameter emphasiseMetal: Whether to emphasise the metal element, when the metal is shown.
     func name(showMetal: Bool, emphasiseMetal: Bool = false) -> TextLine {
-        let coeffNum = coeff == 1 ? "" : "\(coeff)"
+        let coeffNum = coeff == 1 || !showMetal ? "" : "\(coeff)"
         let metal = metalStr(showMetal: showMetal, emphasise: emphasiseMetal)
         return "\(coeffNum)\(metal)" + latterPart
     }
