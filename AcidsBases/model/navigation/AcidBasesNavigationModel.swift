@@ -104,7 +104,7 @@ private struct AcidAppNavigationBehaviour: NavigationBehaviour {
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: AcidBasesScreen) -> Bool {
-        false
+        screen.isQuiz
     }
 
     func showReviewPromptOn(screen: AcidBasesScreen) -> Bool {

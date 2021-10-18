@@ -83,11 +83,11 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: ChemicalReactionsScreen) -> Bool {
-        false
+        screen.isQuiz
     }
 
     func showReviewPromptOn(screen: ChemicalReactionsScreen) -> Bool {
-        false
+        screen == .precipitation
     }
 
     func showMenuOn(screen: ChemicalReactionsScreen) -> Bool {

@@ -337,16 +337,28 @@ struct PrecipitationScreenLayout {
 
     var scalesPosition: CGPoint {
         let x = common.totalBeakerAreaWidth - (scalesWidth / 2)
-        let scalesHeight = scalesLayout.height
-
-        let beakerHeight = common.beakerSettings.beakerHeight
-        let topOfBeaker = bottomOfBeakerY - beakerHeight
-
-        let minY = scalesHeight / 2
-        let maxY = topOfBeaker - (scalesHeight / 2)
-
-        let y = (minY + maxY) / 2
+        let y = min(maxScalesY, scalesY)
         return CGPoint(x: x, y: y)
+    }
+
+    private var scalesY: CGFloat {
+        if idealScalesY >= minScalesY && idealScalesY <= maxScalesY {
+            return idealScalesY
+        }
+        return (minScalesY + maxScalesY) / 2
+    }
+
+    private var idealScalesY: CGFloat {
+        common.initialContainerPosition(index: 0).y
+    }
+
+    private var minScalesY: CGFloat {
+        0.6 * scalesLayout.height
+    }
+
+    private var maxScalesY: CGFloat {
+        let topOfBeaker = bottomOfBeakerY - common.beakerSettings.beakerHeight
+        return topOfBeaker - (0.6 * scalesLayout.height)
     }
 
     func precipitatePositionInBeaker(rows: CGFloat) -> CGPoint {
@@ -375,7 +387,7 @@ struct PrecipitationScreenLayout {
     }
 
     private var bottomOfBeakerY: CGFloat {
-        common.beakerAreaHeight - beakerToggleTextHeight
+        common.beakerAreaHeight - beakerToggleTextHeight - common.beakerBottomPadding
     }
 
     private var scalesWidth: CGFloat {

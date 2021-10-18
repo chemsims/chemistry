@@ -11,6 +11,13 @@ public enum ChemicalReactionsScreen: String, CaseIterable {
          limitingReagentQuiz,
          precipitation,
          precipitationQuiz
+
+    var isQuiz: Bool {
+        switch self {
+        case .balancedReactionsQuiz, .limitingReagentQuiz, .precipitationQuiz: return true
+        default: return false
+        }
+    }
 }
 
 extension ChemicalReactionsScreen: HasAnalyticsLabel {

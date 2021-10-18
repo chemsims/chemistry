@@ -157,6 +157,7 @@ private struct LimitingReagentRightStack: View {
             showActualData: model.equationState >= .showActualData,
             highlights: model.highlights
         )
+        .padding(.vertical, layout.equationVPadding)
     }
 
     private var chart: some View {
@@ -180,6 +181,10 @@ private struct LimitingReagentRightStack: View {
 
 struct LimitingReagentScreenLayout {
     let common: ChemicalReactionsScreenLayout
+
+    var equationVPadding: CGFloat {
+        0.02 * common.height
+    }
 }
 
 struct LimitingReagentScreen_Previews: PreviewProvider {

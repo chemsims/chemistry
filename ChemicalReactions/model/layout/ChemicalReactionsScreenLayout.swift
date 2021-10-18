@@ -78,7 +78,7 @@ extension ChemicalReactionsScreenLayout {
 
     func topOfWaterPosition(rows: CGFloat) -> CGFloat {
         let topFromSlider = beakerSliderAxis.getPosition(at: rows)
-        return beakerAreaHeight - beakerSliderHeight + topFromSlider
+        return beakerAreaHeight - beakerBottomPadding - beakerSliderHeight + topFromSlider
     }
 
     func waterHeight(rows: CGFloat) -> CGFloat {
@@ -91,6 +91,13 @@ extension ChemicalReactionsScreenLayout {
 
     var beakerAreaHeight: CGFloat {
         height - max(reactionDefinitionHeight, reactionSelectionToggleHeight)
+    }
+
+    var beakerBottomPadding: CGFloat {
+        if verticalSizeClass.contains(.regular) {
+            return reactionProgressAxisHeight
+        }
+        return 0
     }
 
     private var beakerWidth: CGFloat {
@@ -202,7 +209,13 @@ extension ChemicalReactionsScreenLayout {
 
     private var initialContainerY: CGFloat {
         let topSpace = max(reactionSelectionToggleHeight, reactionDefinitionHeight)
-        return topSpace + containerHeight
+        let ideal = topSpace + containerHeight
+        let minY = height - beakerBottomPadding - beakerHeight - maxInitialContainerYDistanceFromBeaker - containerHeight
+        return max(minY, ideal)
+    }
+
+    private var maxInitialContainerYDistanceFromBeaker: CGFloat {
+        125
     }
 
     private var activeContainerY: CGFloat {
@@ -227,4 +240,7 @@ extension ChemicalReactionsScreenLayout {
         )
     }
 
+    private var reactionProgressAxisHeight: CGFloat {
+        reactionProgressGeometry(LimitingReagentComponents.Element.self).axisLayout.height
+    }
 }

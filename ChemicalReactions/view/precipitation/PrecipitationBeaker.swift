@@ -130,6 +130,7 @@ struct PrecipitationBeaker: View {
             beakers
             selectionToggle
         }
+        .padding(.bottom, layout.common.beakerBottomPadding)
     }
 
     private var beakers: some View {

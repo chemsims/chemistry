@@ -6,6 +6,8 @@ import CoreGraphics
 
 public struct ReactionProgressChartGeometry<MoleculeType: CaseIterable> {
 
+    // TODO - in hindsight passing in `MoleculeType.Type` was not a good idea
+    // just to get the molecule count.
     public init(
         chartSize: CGFloat,
         moleculeType: MoleculeType.Type,
@@ -54,7 +56,7 @@ public struct ReactionProgressChartGeometry<MoleculeType: CaseIterable> {
 
     let axisLineWidth: CGFloat
     let chartToAxisSpacing: CGFloat
-    let axisLayout: CircleChartLabel.Layout
+    public let axisLayout: CircleChartLabel.Layout
 
     private let columnXEquation: Equation
     private let rowYEquation: Equation

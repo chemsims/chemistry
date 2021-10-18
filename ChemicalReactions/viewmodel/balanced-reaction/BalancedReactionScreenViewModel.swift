@@ -56,10 +56,13 @@ class BalancedReactionScreenViewModel: ObservableObject {
 
     func moleculeWasMoved(id: UUID, overlapping: BalancedReaction.ElementType?) {
         moleculesInFlight.insert(id)
+        
         if overlapping == .reactant {
             moleculesInFlightOverReactant.insert(id)
+            moleculesInFlightOverProduct.remove(id)
         } else if overlapping == .product {
             moleculesInFlightOverProduct.insert(id)
+            moleculesInFlightOverReactant.remove(id)
         } else {
             moleculesInFlightOverReactant.remove(id)
             moleculesInFlightOverProduct.remove(id)

@@ -110,6 +110,7 @@ struct LimitingReagentBeaker: View {
             sliderColorMultiply: model.highlights.colorMultiply(for: .beakerSlider),
             beakerModifier: BeakerAddReactantsAction(model: model)
         )
+        .padding(.bottom, layout.common.beakerBottomPadding)
     }
 
     private func containerColor(_ reactant: LimitingReagentComponents.Reactant) -> Color {

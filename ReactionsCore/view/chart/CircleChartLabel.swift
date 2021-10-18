@@ -2,15 +2,14 @@
 // Reactions App
 //
 
-
 import SwiftUI
 
-struct CircleChartLabel: View {
+public struct CircleChartLabel: View {
 
     let layout: Layout
     let labels: [Label]
 
-    var body: some View {
+    public var body: some View {
         HStack(spacing: 0) {
             ForEach(labels) { label in
                 labelView(label)
@@ -72,12 +71,16 @@ struct CircleChartLabel: View {
         let updatingAccessibilityValue: String?
     }
 
-    struct Layout {
+    public struct Layout {
         let width: CGFloat
         let circleSize: CGFloat
         let textHeight: CGFloat
         let fontSize: CGFloat
         let circleToTextSpacing: CGFloat
+
+        public var height: CGFloat {
+            circleSize + textHeight + circleToTextSpacing
+        }
     }
 }
 
