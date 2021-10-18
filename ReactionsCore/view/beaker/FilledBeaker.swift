@@ -38,9 +38,8 @@ public struct FilledBeaker: View {
                 drawFromTop: true,
                 settings: BeakerSettings(width: geo.size.width, hasLip: true)
             )
-            .accessibility(
-                label: Text(label)
-            )
+            .accessibilityElement(children: .ignore)
+            .accessibility(label: Text(label))
         }
     }
 
@@ -68,11 +67,11 @@ struct GeneralFluidBeaker: View {
 
     public var body: some View {
         mainContent
-        .accessibilityElement(children: .ignore)
-        .updatingAccessibilityValue(
-            x: currentTime,
-            format: valueForTime
-        )
+            .accessibilityElement(children: .ignore)
+            .updatingAccessibilityValue(
+                x: currentTime,
+                format: valueForTime
+            )
     }
 
     private func valueForTime(_ time: CGFloat) -> String {

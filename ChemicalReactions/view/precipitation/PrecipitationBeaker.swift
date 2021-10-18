@@ -47,6 +47,7 @@ struct PrecipitationBeaker: View {
                 if showMovingHand {
                     movingHand
                         .transition(.opacity.animation(.easeOut(duration: 0.25)))
+                        .accessibility(hidden: true)
                 }
             }
             .zIndex(2)
@@ -104,12 +105,16 @@ struct PrecipitationBeaker: View {
         let massEq = components.productMassProduced
         let progress = components.reactionProgress
         let mass = massEq.getY(at: progress).str(decimals: 2)
+        let massString = model.precipitatePosition == .scales ? "\(mass) g" : nil
         return DigitalScales(
-            label: model.precipitatePosition == .scales ? "\(mass) g" : nil,
+            label: massString,
             layout: layout.scalesLayout,
             emphasise: shouldEmphasiseScales
         )
         .position(layout.scalesPosition)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text("Scales showing weight of precipitate"))
+        .accessibility(value: Text(massString ?? "empty scales"))
     }
 
     private var shouldEmphasiseScales: Bool {
@@ -133,12 +138,15 @@ struct PrecipitationBeaker: View {
                 .zIndex(model.beakerView == .macroscopic ? 1 : 0)
 
             microscopicBeaker
+                .accessibility(hidden: model.beakerView == .macroscopic)
+
             if model.beakerView == .macroscopic {
                 macroBeaker
                     .colorMultiply(model.highlights.colorMultiply(for: nil))
             }
-
         }
+        .accessibilityElement(children: .contain)
+        .modifier(BeakerActionAccessibilityModifier(model: model))
     }
 
     private var precipitate: some View {
@@ -194,6 +202,7 @@ struct PrecipitationBeaker: View {
 
     private var macroBeaker: some View {
         let waterHeight = layout.common.waterHeight(rows: model.rows)
+        let percentage = components.reactionProgress.percentage
         return FillableBeaker(
             waterColor: Styling.beakerLiquid,
             waterHeight: waterHeight,
@@ -204,6 +213,8 @@ struct PrecipitationBeaker: View {
         }
         .padding(.leading, layout.common.beakerSettings.sliderSettings.handleWidth)
         .frame(width: layout.common.totalBeakerAreaWidth)
+        .accessibility(label: Text("Beaker of liquid with a solid precipitate"))
+        .accessibility(value: Text("Precipitate is \(percentage) of it's final size"))
     }
 
     private var selectionToggle: some View {
@@ -387,5 +398,54 @@ fileprivate struct PrecipitateGeometry {
 
     private var shapeWidth: CGFloat {
         shapeSize.width
+    }
+}
+
+private struct BeakerActionAccessibilityModifier: ViewModifier {
+
+    @ObservedObject var model: PrecipitationScreenViewModel
+
+    func body(content: Content) -> some View {
+        content
+            .modifyIf(UIAccessibility.isVoiceOverRunning) {
+                $0
+                    .modifier(BeakerAddReactantModifier(model: model, reactant: .known))
+                    .modifier(BeakerAddReactantModifier(model: model, reactant: .unknown))
+                    .modifier(BeakerWeighProductModifier(model: model))
+            }
+    }
+}
+
+private struct BeakerAddReactantModifier: ViewModifier {
+
+    @ObservedObject var model: PrecipitationScreenViewModel
+    let reactant: PrecipitationComponents.Reactant
+
+    func body(content: Content) -> some View {
+        content
+            .modifyIf(model.input == .addReactant(type: reactant)) {
+                $0
+                    .accessibilityAction(named: Text("Add 5 \(name) molecules"), { model.add(reactant: reactant, count: 5) } )
+                    .accessibilityAction(named: Text("Add 15 \(name) molecules"), { model.add(reactant: reactant, count: 15) } )
+            }
+    }
+
+    private var name: String {
+        switch reactant {
+        case .known: return model.chosenReaction.knownReactant.name.label
+        case .unknown: return model.chosenReaction.unknownReactant.name(showMetal: false).label
+        }
+    }
+}
+
+private struct BeakerWeighProductModifier: ViewModifier {
+    @ObservedObject var model: PrecipitationScreenViewModel
+
+    func body(content: Content) -> some View {
+        content
+            .modifyIf(model.input == .weighProduct) {
+                $0.accessibilityAction(named: Text("Weigh precipitate"), model.accessibilityWeighProductAction)
+            }
+
     }
 }

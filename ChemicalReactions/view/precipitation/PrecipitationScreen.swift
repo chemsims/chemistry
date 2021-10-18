@@ -103,6 +103,7 @@ private struct PrecipitationScreenWithLayout: View {
                 model: model,
                 layout: layout
             )
+            .accessibilityElement(children: .contain)
 
             Spacer(minLength: 0)
 

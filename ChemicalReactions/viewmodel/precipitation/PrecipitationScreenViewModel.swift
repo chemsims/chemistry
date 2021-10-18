@@ -4,6 +4,7 @@
 
 import CoreGraphics
 import ReactionsCore
+import UIKit
 
 class PrecipitationScreenViewModel: ObservableObject {
 
@@ -78,12 +79,22 @@ extension PrecipitationScreenViewModel {
         navigation.back()
     }
 
+    func accessibilityWeighProductAction() {
+        guard input == .weighProduct else {
+            return
+        }
+        precipitatePosition = .scales
+        didWeighProduct()
+    }
+
     func didWeighProduct() {
         doGoNext(force: true)
+        UIAccessibility.post(notification: .screenChanged, argument: nil)
     }
 
     func didSelectReaction() {
         doGoNext(force: true)
+        UIAccessibility.post(notification: .screenChanged, argument: nil)
     }
 
     private func doGoNext(force: Bool) {
@@ -112,11 +123,12 @@ extension PrecipitationScreenViewModel {
         input == .addReactant(type: reactant) && components.canAdd(reactant: reactant)
     }
 
-    private func add(reactant: PrecipitationComponents.Reactant, count: Int) {
+    func add(reactant: PrecipitationComponents.Reactant, count: Int) {
         if canAdd(reactant: reactant) {
             components.add(reactant: reactant, count: count)
             if !components.canAdd(reactant: reactant) {
                 doGoNext(force: true)
+                UIAccessibility.post(notification: .screenChanged, argument: nil)
             }
         }
     }
