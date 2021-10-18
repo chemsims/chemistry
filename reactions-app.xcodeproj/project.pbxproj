@@ -710,6 +710,7 @@
 		57CEE2A3271DF6BF00E95B3B /* balanced-reaction-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57CEE2A2271DF6BF00E95B3B /* balanced-reaction-quiz.csv */; };
 		57CEE2A7271DFAD300E95B3B /* limiting-reagent-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57CEE2A5271DFAD200E95B3B /* limiting-reagent-quiz.csv */; };
 		57CEE2A9271DFB3200E95B3B /* precipitation-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57CEE2A8271DFB3200E95B3B /* precipitation-quiz.csv */; };
+		57CEE2AB271E0B7B00E95B3B /* PrecipitationInputPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CEE2AA271E0B7B00E95B3B /* PrecipitationInputPersistence.swift */; };
 		57D15C4526241FCC00BE1303 /* Labelled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C4426241FCC00BE1303 /* Labelled.swift */; };
 		57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C5F2625B12700BE1303 /* ParticleContainer.swift */; };
 		57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2D325EA27DA00AEE0D8 /* Line.swift */; };
@@ -1513,6 +1514,7 @@
 		57CEE2A2271DF6BF00E95B3B /* balanced-reaction-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "balanced-reaction-quiz.csv"; sourceTree = "<group>"; };
 		57CEE2A5271DFAD200E95B3B /* limiting-reagent-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "limiting-reagent-quiz.csv"; sourceTree = "<group>"; };
 		57CEE2A8271DFB3200E95B3B /* precipitation-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "precipitation-quiz.csv"; sourceTree = "<group>"; };
+		57CEE2AA271E0B7B00E95B3B /* PrecipitationInputPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationInputPersistence.swift; sourceTree = "<group>"; };
 		57CF6FCD26123726007F50A7 /* SecondOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FD026123727007F50A7 /* ZeroOrderQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZeroOrderQuizQuestions.swift; sourceTree = "<group>"; };
 		57CF6FD126123727007F50A7 /* EnergyProfileQuizQuestions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyProfileQuizQuestions.swift; sourceTree = "<group>"; };
@@ -2706,6 +2708,7 @@
 			children = (
 				575317D02709F234003CBA25 /* PrecipitationReaction.swift */,
 				575317D42709F7EF003CBA25 /* PrecipitationReactionList.swift */,
+				57CEE2AA271E0B7B00E95B3B /* PrecipitationInputPersistence.swift */,
 			);
 			path = "precipitation-reaction";
 			sourceTree = "<group>";
@@ -5732,6 +5735,7 @@
 				573F484F26F733CA00D9AC3A /* LimitingReagentStatements.swift in Sources */,
 				57E48A4826CACCB400A9A421 /* BalancedReaction.swift in Sources */,
 				579193E227105C5400101F1E /* PrecipitationComponents.swift in Sources */,
+				57CEE2AB271E0B7B00E95B3B /* PrecipitationInputPersistence.swift in Sources */,
 				5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */,
 				57B4572A26EA42610030D895 /* BalancedReactionStatements.swift in Sources */,
 				575317D72709FEC0003CBA25 /* PrecipitationReactionDefinition.swift in Sources */,

@@ -32,6 +32,14 @@ struct PrecipitationStatements {
         "*Use the slider to set the volume.*"
     ]
 
+    static let endOfApp: [TextLine] = [
+        """
+        Now you can explore all parts of this unit, or try a different unit! Just tap the button \
+        at the top left corner to reveal the navigation menu, and then choose your favorite part \
+        to review it once more!
+        """
+    ]
+
 }
 
 struct PrecipitationReactionStatements {

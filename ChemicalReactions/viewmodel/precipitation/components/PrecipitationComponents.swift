@@ -44,7 +44,7 @@ class PrecipitationComponents: ObservableObject {
     let grid: BeakerGrid
     let settings: Settings
 
-    let precipitate: GrowingPolygon
+    private(set) var precipitate: GrowingPolygon
 
     @Published private(set) var reactionProgress: CGFloat = 0
     @Published private(set) var phase = PrecipitationComponents.Phase.addKnownReactant
@@ -323,6 +323,27 @@ extension PrecipitationComponents {
 
     var reactionsToRun: Int {
         currentReaction?.reactionsToRun ?? 0
+    }
+}
+
+extension PrecipitationComponents {
+    func copy() -> PrecipitationComponents {
+        let model = PrecipitationComponents(
+            reaction: reaction,
+            rows: grid.rows,
+            cols: grid.cols,
+            volume: volume,
+            settings: settings
+        )
+        model.knownReactantPrep = self.knownReactantPrep
+        model.unknownReactantPrep = self.unknownReactantPrep
+        model.extraUnknownReactantPrep = self.extraUnknownReactantPrep
+        model.initialReaction = self.initialReaction
+        model.finalReaction = self.finalReaction
+        model.reactionProgress = self.reactionProgress
+        model.precipitate = self.precipitate
+        model.phase = self.phase
+        return model
     }
 }
 

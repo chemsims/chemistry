@@ -16,6 +16,8 @@ protocol ChemicalReactionsInjector {
     var reviewPersistence: ReviewPromptPersistence { get }
 
     var namePersistence: NamePersistence { get }
+
+    var precipitationPersistence: PrecipitationInputPersistence { get }
 }
 
 class ProductionChemicalReactionsInjector: ChemicalReactionsInjector {
@@ -37,6 +39,8 @@ class ProductionChemicalReactionsInjector: ChemicalReactionsInjector {
     let reviewPersistence: ReviewPromptPersistence = UserDefaultsReviewPromptPersistence()
 
     let namePersistence: NamePersistence = UserDefaultsNamePersistence()
+
+    let precipitationPersistence: PrecipitationInputPersistence = PrecipitationInputPersistence()
 }
 
 class InMemoryChemicalReactionsInjector: ChemicalReactionsInjector {
@@ -54,6 +58,8 @@ class InMemoryChemicalReactionsInjector: ChemicalReactionsInjector {
     let reviewPersistence: ReviewPromptPersistence = UserDefaultsReviewPromptPersistence()
 
     let namePersistence: NamePersistence = UserDefaultsNamePersistence()
+
+    let precipitationPersistence: PrecipitationInputPersistence = PrecipitationInputPersistence()
 }
 
 private let userDefaultsPrefix = "chemical-reactions"

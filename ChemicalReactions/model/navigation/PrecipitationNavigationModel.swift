@@ -2,7 +2,6 @@
 // Reactions App
 //
 
-
 import Foundation
 import ReactionsCore
 import SwiftUI
@@ -12,25 +11,30 @@ private let statements = PrecipitationStatements.self
 struct PrecipitationNavigationModel {
     private init() { }
 
-    static func model(using viewModel: PrecipitationScreenViewModel) -> NavigationModel<PrecipitationScreenState> {
-        NavigationModel(model: viewModel, states: states)
+    static func model(
+        using viewModel: PrecipitationScreenViewModel,
+        persistence: PrecipitationInputPersistence
+    ) -> NavigationModel<PrecipitationScreenState> {
+        NavigationModel(model: viewModel, states: states(persistence: persistence))
     }
 
-    private static let states: [PrecipitationScreenState] = [
-        ChooseReaction(statements.intro, highlights: [.reactionToggle]),
-        StopInput(\.explainPrecipitation, highlights: [.reactionDefinition]),
-        ExplainUnknownMetal(statements.explainUnknownMetal, highlights: [.reactionDefinition, .metalTable]),
-        InstructToSetWaterLevel(statements.instructToSetWaterLevel, highlights: [.waterSlider]),
-        InstructToAddKnownReactant(\.instructToAddKnownReactant, highlights: [.knownReactantContainer]),
-        InstructToAddUnknownReactant(),
-        RunInitialReaction(),
-        EndInitialReaction(\.instructToWeighProduct),
-        PostWeighingProduct(),
-        RevealUnknownMetal(),
-        AddExtraKnownReactant(\.instructToAddFurtherUnknownReactant),
-        RunFinalReaction(),
-        EndFinalReaction(\.finalStatement)
-    ]
+    private static func states(persistence: PrecipitationInputPersistence) -> [PrecipitationScreenState] {
+        [
+            ChooseReaction(statements.intro, highlights: [.reactionToggle]),
+            StopInput(\.explainPrecipitation, highlights: [.reactionDefinition]),
+            ExplainUnknownMetal(statements.explainUnknownMetal, highlights: [.reactionDefinition, .metalTable]),
+            InstructToSetWaterLevel(statements.instructToSetWaterLevel, highlights: [.waterSlider]),
+            InstructToAddKnownReactant(\.instructToAddKnownReactant, highlights: [.knownReactantContainer]),
+            InstructToAddUnknownReactant(),
+            RunInitialReaction(),
+            EndInitialReaction(\.instructToWeighProduct),
+            PostWeighingProduct(),
+            RevealUnknownMetal(),
+            AddExtraKnownReactant(\.instructToAddFurtherUnknownReactant),
+            RunFinalReaction(),
+            EndFinalReaction(persistence: persistence)
+        ]
+    }
 }
 
 private let reactionDuration: TimeInterval = 3
@@ -370,11 +374,20 @@ private class RunFinalReaction: RunReaction {
     }
 }
 
-private class EndFinalReaction: SetStatement {
+private class EndFinalReaction: PrecipitationScreenState {
+
+    init(persistence: PrecipitationInputPersistence) {
+        self.persistence = persistence
+    }
+
+    let persistence: PrecipitationInputPersistence
+
     override func apply(on model: PrecipitationScreenViewModel) {
-        super.apply(on: model)
+        model.statement = PrecipitationReactionStatements(reaction: model.chosenReaction).finalStatement
         withAnimation(.easeOut(duration: 0.35)) {
             model.components.completeReaction()
         }
+        persistence.components = model.components.copy()
+        persistence.beakerView = model.beakerView
     }
 }

@@ -398,9 +398,3 @@ struct PrecipitationScreenLayout {
         2 * common.containerWidth
     }
 }
-
-struct PrecipitationScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        PrecipitationScreen(model: .init())
-    }
-}

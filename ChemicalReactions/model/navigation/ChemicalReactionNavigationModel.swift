@@ -91,7 +91,7 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
     }
 
     func showMenuOn(screen: ChemicalReactionsScreen) -> Bool {
-        false
+        screen == .finalAppScreen
     }
 
     func highlightedNavIcon(for screen: ChemicalReactionsScreen) -> ChemicalReactionsScreen? {
@@ -127,7 +127,13 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
             )
         case .precipitation:
             return PrecipitationScreenProvider(
+                persistence: injector.precipitationPersistence,
                 nextScreen: nextScreen,
+                prevScreen: prevScreen
+            )
+        case .finalAppScreen:
+            return FinalScreenProvider(
+                persistence: injector.precipitationPersistence,
                 prevScreen: prevScreen
             )
 
@@ -181,10 +187,11 @@ private class LimitingReagentScreenProvider: ScreenProvider {
 
 private class PrecipitationScreenProvider: ScreenProvider {
     init(
+        persistence: PrecipitationInputPersistence,
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) {
-        let model = PrecipitationScreenViewModel()
+        let model = PrecipitationScreenViewModel(persistence: persistence)
         model.navigation.nextScreen = nextScreen
         model.navigation.prevScreen = prevScreen
         self.model = model
@@ -222,5 +229,74 @@ private class QuizScreenProvider: ScreenProvider {
 
     var screen: AnyView {
         AnyView(QuizScreen(model: model))
+    }
+}
+
+private class FinalScreenProvider: ScreenProvider {
+    init(
+        persistence: PrecipitationInputPersistence,
+        prevScreen: @escaping () -> Void
+    ) {
+        let model = PrecipitationScreenViewModel(persistence: persistence)
+        let states: [PrecipitationScreenState] = [FinalPrecipitationState(persistence: persistence)]
+        let navigation = NavigationModel(model: model, states: states)
+        navigation.prevScreen = prevScreen
+        model.navigation = navigation
+        self.model = model
+    }
+
+    let model: PrecipitationScreenViewModel
+
+    var screen: AnyView {
+        AnyView(PrecipitationScreen(model: model))
+    }
+}
+
+private class FinalPrecipitationState: PrecipitationScreenState {
+
+    init(persistence: PrecipitationInputPersistence) {
+        self.persistence = persistence
+    }
+
+    let persistence: PrecipitationInputPersistence
+
+    override func apply(on model: PrecipitationScreenViewModel) {
+        model.statement = PrecipitationStatements.endOfApp
+        model.input = nil
+        model.highlights.clear()
+        model.showUnknownMetal = true
+        model.equationState = .showAll
+        model.beakerView = persistence.beakerView
+        if let components = persistence.components {
+            model.chosenReaction = components.reaction
+            model.rows = CGFloat(components.grid.rows)
+            model.components = components
+        } else {
+            model.components = createNewComponents(from: model)
+        }
+    }
+
+    private func createNewComponents(from model: PrecipitationScreenViewModel) -> PrecipitationComponents {
+        let components = model.components
+        while(!components.hasAddedEnough(of: .known)) {
+            components.add(reactant: .known, count: 1)
+        }
+        components.goNextTo(phase: .addUnknownReactant)
+        while(!components.hasAddedEnough(of: .unknown)) {
+            components.add(reactant: .unknown, count: 1)
+        }
+
+        components.goNextTo(phase: .runReaction)
+        components.completeReaction()
+
+        components.goNextTo(phase: .addExtraUnknownReactant)
+        while(!components.hasAddedEnough(of: .unknown)) {
+            components.add(reactant: .unknown, count: 1)
+        }
+
+        components.goNextTo(phase: .runFinalReaction)
+        components.completeReaction()
+
+        return components.copy()
     }
 }

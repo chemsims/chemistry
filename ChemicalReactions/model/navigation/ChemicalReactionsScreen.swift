@@ -10,7 +10,8 @@ public enum ChemicalReactionsScreen: String, CaseIterable {
          limitingReagent,
          limitingReagentQuiz,
          precipitation,
-         precipitationQuiz
+         precipitationQuiz,
+         finalAppScreen
 
     var isQuiz: Bool {
         switch self {

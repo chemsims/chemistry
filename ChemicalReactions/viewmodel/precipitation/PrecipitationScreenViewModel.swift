@@ -8,7 +8,7 @@ import UIKit
 
 class PrecipitationScreenViewModel: ObservableObject {
 
-    init() {
+    init(persistence: PrecipitationInputPersistence) {
         let availableReactions = PrecipitationReaction.availableReactionsWithRandomMetals()
         let chosenReaction = availableReactions.first!
         let initialRows = ChemicalReactionsSettings.initialRows
@@ -25,10 +25,11 @@ class PrecipitationScreenViewModel: ObservableObject {
         self.shakeModel = .init(
             canAddMolecule: self.canAdd,
             addMolecules: self.add,
-            useBufferWhenAddingMolecules: false // TODO perf test
+            useBufferWhenAddingMolecules: false
         )
         self.navigation = PrecipitationNavigationModel.model(
-            using: self
+            using: self,
+            persistence: persistence
         )
     }
 
@@ -56,8 +57,8 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var highlights = HighlightedElements<ScreenElement>()
     @Published var emphasiseUnknownMetalSymbol = false
 
-    private(set) var navigation: NavigationModel<PrecipitationScreenState>!
-    private(set) var components: PrecipitationComponents
+    var navigation: NavigationModel<PrecipitationScreenState>!
+    @Published var components: PrecipitationComponents
     private(set) var shakeModel: MultiContainerShakeViewModel<PrecipitationComponents.Reactant>!
 
     private func setComponents() {
