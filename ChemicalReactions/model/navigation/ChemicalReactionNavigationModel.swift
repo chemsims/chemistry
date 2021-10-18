@@ -58,7 +58,7 @@ extension RootNavigationViewModel where Injector == ChemicalReactionsAppNavInjec
     ) -> ChemicalReactionsAppNavInjector {
         AnyNavigationInjector(
             behaviour: AnyNavigationBehavior(
-                ChemicalReactionsAppNavigationBehaviour()
+                ChemicalReactionsAppNavigationBehaviour(injector: appInjector)
             ),
             persistence: appInjector.screenPersistence,
             analytics: appInjector.analytics,
@@ -75,6 +75,8 @@ extension RootNavigationViewModel where Injector == ChemicalReactionsAppNavInjec
 
 private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
     typealias Screen = ChemicalReactionsScreen
+
+    let injector: ChemicalReactionsInjector
 
     func deferCanSelect(of screen: ChemicalReactionsScreen) -> DeferCanSelect<ChemicalReactionsScreen>? {
         return nil
@@ -101,6 +103,17 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) -> ScreenProvider {
+
+        func quiz(_ questions: QuizQuestionsList<ChemicalReactionsQuestionSet>) -> ScreenProvider {
+            QuizScreenProvider(
+                questions: questions,
+                persistence: injector.quizPersistence,
+                analytics: injector.analytics,
+                next: nextScreen,
+                prev: prevScreen
+            )
+        }
+
         switch screen {
         case .balancedReactions:
             return BalancedReactionScreenProvider(
@@ -117,6 +130,15 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
                 nextScreen: nextScreen,
                 prevScreen: prevScreen
             )
+
+        case .balancedReactionsQuiz:
+            return quiz(.balancedReactions)
+
+        case .limitingReagentQuiz:
+            return quiz(.limitingReagent)
+
+        case .precipitationQuiz:
+            return quiz(.precipitation)
         }
     }
 }
@@ -172,5 +194,33 @@ private class PrecipitationScreenProvider: ScreenProvider {
 
     var screen: AnyView {
         AnyView(PrecipitationScreen(model: model))
+    }
+}
+
+private class QuizScreenProvider: ScreenProvider {
+
+    init(
+        questions: QuizQuestionsList<ChemicalReactionsQuestionSet>,
+        persistence: AnyQuizPersistence<ChemicalReactionsQuestionSet>,
+        analytics: AnyAppAnalytics<ChemicalReactionsScreen, ChemicalReactionsQuestionSet>,
+        next: @escaping () -> Void,
+        prev: @escaping () -> Void
+    ) {
+        self.model = QuizViewModel(
+            questions: questions,
+            persistence: persistence,
+            analytics: analytics,
+            bundle: .chemicalReactions
+        )
+        self.model.nextScreen = next
+        self.model.prevScreen = prev
+    }
+
+    let model: QuizViewModel<
+        AnyQuizPersistence<ChemicalReactionsQuestionSet>,
+        AnyAppAnalytics<ChemicalReactionsScreen, ChemicalReactionsQuestionSet>>
+
+    var screen: AnyView {
+        AnyView(QuizScreen(model: model))
     }
 }

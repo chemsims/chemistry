@@ -21,7 +21,12 @@ private enum TopLevelScreen: CaseIterable {
                 selectedImage: .framework("\(baseIcon)-pressed", bundle: .chemicalReactions),
                 label: label
             ),
-            firstSecondaryIcon: nil,
+            firstSecondaryIcon: NavigationIcon(
+                screen: quiz,
+                image: .core(.quizIcon),
+                selectedImage: .core(.quizIconSelected),
+                label: "\(label) quiz"
+            ),
             secondSecondaryIcon: nil
         )
     }
@@ -47,6 +52,14 @@ private enum TopLevelScreen: CaseIterable {
         case .balancedReactions: return "Balanced reactions"
         case .limitingReagent: return "Limiting reagent"
         case .precipitation: return "Precipitation"
+        }
+    }
+
+    var quiz: ChemicalReactionsScreen {
+        switch self {
+        case .balancedReactions: return .balancedReactionsQuiz
+        case .limitingReagent: return .limitingReagentQuiz
+        case .precipitation: return .precipitationQuiz
         }
     }
 }

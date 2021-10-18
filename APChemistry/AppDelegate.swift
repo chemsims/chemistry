@@ -7,6 +7,7 @@ import Firebase
 import ReactionsCore
 import Equilibrium
 import AcidsBases
+import ChemicalReactions
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,8 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             setAnalytics()
         }
 
+        // TODO - make a general version of these load functions and put them on each injector.
+        // Then we can call them on the injector for each unit.
         EquilibriumQuizQuestions.load()
         AcidQuizQuestions.load()
+        ChemicalReactionsQuizQuestions.load()
 
         APChemApp.injector.storeManager.initialiseStore()
         APChemApp.injector.appLaunchPersistence.recordAppLaunch()

@@ -6,8 +6,11 @@ import ReactionsCore
 
 public enum ChemicalReactionsScreen: String, CaseIterable {
     case balancedReactions,
+         balancedReactionsQuiz,
          limitingReagent,
-         precipitation
+         limitingReagentQuiz,
+         precipitation,
+         precipitationQuiz
 }
 
 extension ChemicalReactionsScreen: HasAnalyticsLabel {
