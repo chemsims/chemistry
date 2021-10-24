@@ -38,6 +38,7 @@ class APChemRootNavigationModel: ObservableObject {
         if !injector.onboardingPersistence.hasCompletedOnboarding {
             doShowOnboarding()
         }
+        setAllProviders()
     }
 
     private var injector: APChemInjector
@@ -66,6 +67,14 @@ class APChemRootNavigationModel: ObservableObject {
 
         if tipOverlayModel.shouldShowTipOverlay() {
             tipOverlayModel.show()
+        }
+    }
+
+    private func setAllProviders() {
+        Unit.available.forEach { unit in
+            if providers[unit] == nil {
+                providers[unit] = getScreenProvider(forUnit: unit)
+            }
         }
     }
 
@@ -118,6 +127,92 @@ class APChemRootNavigationModel: ObservableObject {
     }
 }
 
+// MARK: - Branch menu items
+extension APChemRootNavigationModel {
+
+    var categories: [BranchMenu.Category] {
+        [reactionRatesCategory, equilibriumCategory, acidBasesCategory, chemicalReactionsCategory].compactMap(identity)
+    }
+
+    private var reactionRatesCategory: BranchMenu.Category? {
+        guard let provider = providers[.reactionRates] as? ReactionRatesScreenProvider else {
+            return nil
+        }
+        let category = BranchMenu.Category(
+            name: "Reaction rates",
+            items: [
+                provider.model.categoryItem(screen: .zeroOrderReaction, name: "Zero order reaction"),
+                provider.model.categoryItem(screen: .firstOrderReaction, name: "First order reaction"),
+                provider.model.categoryItem(screen: .secondOrderReaction, name: "Second order reaction"),
+                provider.model.categoryItem(screen: .reactionComparison, name: "Reaction comparison"),
+                provider.model.categoryItem(screen: .energyProfile, name: "Energy profile"),
+            ]
+        ).appendingAction({ self.goTo(unit: .reactionRates) })
+
+        if selectedUnit != .reactionRates {
+            return category.deselectAllItems()
+        }
+        return category
+    }
+
+    private var equilibriumCategory: BranchMenu.Category? {
+        guard let provider = providers[.equilibrium] as? EquilibriumScreenProvider else {
+            return nil
+        }
+        let category = BranchMenu.Category(
+            name: "Equilibrium",
+            items: [
+                provider.model.categoryItem(screen: .aqueousReaction, name: "Aqueous reaction"),
+                provider.model.categoryItem(screen: .gaseousReaction, name: "Gaseous reaction"),
+                provider.model.categoryItem(screen: .solubility, name: "Solubility")
+            ]
+        ).appendingAction({ self.goTo(unit: .equilibrium) })
+
+        if selectedUnit != .equilibrium {
+            return category.deselectAllItems()
+        }
+        return category
+    }
+
+    private var acidBasesCategory: BranchMenu.Category? {
+        guard let provider = providers[.acidsBases] as? AcidsBasesScreenProvider else {
+            return nil
+        }
+        let category = BranchMenu.Category(
+            name: "Acids & bases",
+            items: [
+                provider.model.categoryItem(screen: .introduction, name: "Introduction"),
+                provider.model.categoryItem(screen: .buffer, name: "Buffers"),
+                provider.model.categoryItem(screen: .titration, name: "Titration")
+            ]
+        ).appendingAction({ self.goTo(unit: .acidsBases) })
+
+        if selectedUnit != .acidsBases {
+            return category.deselectAllItems()
+        }
+        return category
+    }
+
+    private var chemicalReactionsCategory: BranchMenu.Category? {
+        guard let provider = providers[.chemicalReactions] as? ChemicalReactionsScreenProvider else {
+            return nil
+        }
+        let category = BranchMenu.Category(
+            name: "Chemical reactions",
+            items: [
+                provider.model.categoryItem(screen: .balancedReactions, name: "Balanced reactions"),
+                provider.model.categoryItem(screen: .limitingReagent, name: "Limiting reagent"),
+                provider.model.categoryItem(screen: .precipitation, name: "Precipitation")
+            ]
+        ).appendingAction({ self.goTo(unit: .chemicalReactions) })
+
+        if selectedUnit != .chemicalReactions {
+            return category.deselectAllItems()
+        }
+        return category
+    }
+}
+
 extension APChemRootNavigationModel {
     private func doShowOnboarding() {
         showOnboarding = true
@@ -146,6 +241,13 @@ extension APChemRootNavigationModel {
     }
 }
 
+protocol NavScreenProvider: ScreenProvider {
+
+    associatedtype Injector: NavigationInjector
+
+    var model: RootNavigationViewModel<Injector> { get }
+}
+
 private class ReactionRatesScreenProvider: ScreenProvider {
 
     init(
@@ -158,7 +260,7 @@ private class ReactionRatesScreenProvider: ScreenProvider {
         self.showAboutPage = showAboutPage
     }
 
-    private let model: RootNavigationViewModel<ReactionRatesNavInjector>
+    let model: RootNavigationViewModel<ReactionRatesNavInjector>
     private let showUnitSelection: Binding<Bool>
     private let showAboutPage: Binding<Bool>
 
@@ -184,7 +286,7 @@ private class EquilibriumScreenProvider: ScreenProvider {
         self.showAboutPage = showAboutPage
     }
 
-    private let model: RootNavigationViewModel<EquilibriumNavInjector>
+    let model: RootNavigationViewModel<EquilibriumNavInjector>
     private let showUnitSelection: Binding<Bool>
     private let showAboutPage: Binding<Bool>
 
@@ -210,7 +312,7 @@ private class AcidsBasesScreenProvider: ScreenProvider {
         self.showAboutPage = showAboutPage
     }
 
-    private let model: RootNavigationViewModel<AcidAppNavInjector>
+    let model: RootNavigationViewModel<AcidAppNavInjector>
     private let showUnitSelection: Binding<Bool>
     private let showAboutPage: Binding<Bool>
 
@@ -237,7 +339,7 @@ private class ChemicalReactionsScreenProvider: ScreenProvider {
         self.showAboutPage = showAboutPage
     }
 
-    private let model: RootNavigationViewModel<ChemicalReactionsAppNavInjector>
+    let model: RootNavigationViewModel<ChemicalReactionsAppNavInjector>
     private let showUnitSelection: Binding<Bool>
     private let showAboutPage: Binding<Bool>
 

@@ -4,9 +4,20 @@
 
 import SwiftUI
 
-struct BranchMenu: View {
+extension EnvironmentValues {
+    public var menuCategories: [BranchMenu.Category] {
+        get { self[MenuCategoryKey.self] }
+        set { self[MenuCategoryKey.self] = newValue }
+    }
+}
 
-    init(categories: [Category], layout: Layout) {
+private struct MenuCategoryKey: EnvironmentKey {
+    static let defaultValue = [BranchMenu.Category]()
+}
+
+public struct BranchMenu: View {
+
+    public init(categories: [Category], layout: Layout) {
         self.categories = categories
         self.layout = layout
         self.selectedCategory = categories[0]
@@ -16,7 +27,7 @@ struct BranchMenu: View {
     let layout: Layout
     @State private var selectedCategory: Category?
 
-    var body: some View {
+    public var body: some View {
         ScrollView {
             HStack(alignment: .top, spacing: 0) {
                 VStack(spacing: layout.categorySpacing) {
@@ -136,7 +147,7 @@ private struct HorizontalIndicatorModifier: ViewModifier {
 }
 
 extension BranchMenu {
-    struct Layout {
+    public struct Layout {
 
         let headerToItemsSpacing: CGFloat = 5
         let categorySpacing: CGFloat = 10
@@ -165,26 +176,64 @@ extension BranchMenu {
 }
 
 extension BranchMenu {
-    struct Category: Identifiable, Equatable {
-        let name: String
-        let items: [CategoryItem]
+    public struct Category: Identifiable, Equatable {
 
-        var id: String {
-            name
+        public init(name: String, items: [CategoryItem]) {
+            self.name = name
+            self.items = items
         }
 
-        static func == (lhs: BranchMenu.Category, rhs: BranchMenu.Category) -> Bool {
-            lhs.id == rhs.id
+        public let name: String
+        public let items: [CategoryItem]
+
+        public func deselectAllItems() -> Category {
+            Category(name: name, items: items.map { $0.setSelected(false) })
+        }
+
+        public func appendingAction(_ newAction: @escaping () -> Void) -> Category {
+            Category(name: name, items: items.map { $0.appendingAction(newAction)})
+        }
+
+        public var id: String {
+            name
         }
     }
 
-    struct CategoryItem: Identifiable {
-        let name: String
-        let isSelected: Bool
-        let action: () -> Void
+    public struct CategoryItem: Identifiable, Equatable {
+        public init(
+            name: String,
+            isSelected: Bool,
+            canSelect: Bool,
+            action: @escaping () -> Void
+        ) {
+            self.name = name
+            self.isSelected = isSelected
+            self.canSelect = canSelect
+            self.action = action
+        }
 
-        var id: String {
+        public let name: String
+        public let isSelected: Bool
+        public let canSelect: Bool
+        public let action: () -> Void
+
+        public var id: String {
             name
+        }
+
+        public func setSelected(_ value: Bool) -> CategoryItem {
+            CategoryItem(name: name, isSelected: value, canSelect: canSelect, action: action)
+        }
+
+        public func appendingAction(_ newAction: @escaping () -> Void) -> CategoryItem {
+            CategoryItem(name: name, isSelected: isSelected, canSelect: canSelect, action: {
+                action()
+                newAction()
+            })
+        }
+
+        public static func == (lhs: BranchMenu.CategoryItem, rhs: BranchMenu.CategoryItem) -> Bool {
+            lhs.name == rhs.name && lhs.isSelected == rhs.isSelected && lhs.canSelect == rhs.canSelect
         }
     }
 }
@@ -196,27 +245,27 @@ struct BranchMenu_Previews: PreviewProvider {
                 .init(
                     name: "Reaction rates",
                     items: [
-                        .init(name: "Zero order", isSelected: false, action: {}),
-                        .init(name: "First order", isSelected: true, action: {}),
-                        .init(name: "Second order", isSelected: false, action: {}),
-                        .init(name: "Reaction comparison", isSelected: false, action: {}),
-                        .init(name: "Energy profile", isSelected: false, action: {})
+                        .init(name: "Zero order", isSelected: false, canSelect: true, action: {}),
+                        .init(name: "First order", isSelected: true, canSelect: true, action: {}),
+                        .init(name: "Second order", isSelected: false, canSelect: true, action: {}),
+                        .init(name: "Reaction comparison", isSelected: false, canSelect: true, action: {}),
+                        .init(name: "Energy profile", isSelected: false, canSelect: true, action: {})
                     ]
                 ),
                 .init(
                     name: "Equilibrium",
                     items: [
-                        .init(name: "Aqueous reactions", isSelected: false, action: {}),
-                        .init(name: "Gaseous reactions", isSelected: false, action: {}),
-                        .init(name: "Solid reactions", isSelected: false, action: {})
+                        .init(name: "Aqueous reactions", isSelected: false, canSelect: true, action: {}),
+                        .init(name: "Gaseous reactions", isSelected: false, canSelect: true, action: {}),
+                        .init(name: "Solid reactions", isSelected: false, canSelect: true, action: {})
                     ]
                 ),
                 .init(
                     name: "Acids & Bases",
                     items: [
-                        .init(name: "Introduction", isSelected: false, action: {}),
-                        .init(name: "Buffers", isSelected: false, action: {}),
-                        .init(name: "Titration", isSelected: false, action: {})
+                        .init(name: "Introduction", isSelected: false, canSelect: true, action: {}),
+                        .init(name: "Buffers", isSelected: false, canSelect: true, action: {}),
+                        .init(name: "Titration", isSelected: false, canSelect: true, action: {})
                     ]
                 )
             ],

@@ -27,6 +27,7 @@ struct APChemRootView: View {
         }
         .notification(showNotificationOnMainContent ? notificationModel.notification : nil)
         .ignoresKeyboardSafeArea()
+        .environment(\.menuCategories, navigation.categories)
     }
 
     private var mainContent: some View {

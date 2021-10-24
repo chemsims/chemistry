@@ -77,6 +77,7 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
 
 
     @State private var panelDragOffset: CGFloat = 0
+    @Environment(\.menuCategories) private var categories: [BranchMenu.Category]
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
@@ -160,6 +161,7 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
         HStack(alignment: .top, spacing: 0) {
             Spacer()
                 .frame(width: settings.leadingPanelSpace)
+            BranchMenu(categories: categories, layout: .init())
             settingsButtons
                 .accessibility(sortPriority: 2)
             panelContent

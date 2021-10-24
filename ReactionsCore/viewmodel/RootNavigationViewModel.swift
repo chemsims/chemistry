@@ -173,6 +173,20 @@ extension RootNavigationViewModel {
 }
 
 extension RootNavigationViewModel {
+    public func categoryItem(screen: Screen, name: String) -> BranchMenu.CategoryItem {
+        .init(
+            name: name,
+            isSelected: currentScreen == screen,
+            canSelect: self.canSelect(screen: screen),
+            action: {
+                self.jumpTo(screen: screen)
+                self.showMenu = false
+            }
+        )
+    }
+}
+
+extension RootNavigationViewModel {
     private var reduceMotion: Bool {
         UIAccessibility.isReduceMotionEnabled
     }
