@@ -33,29 +33,46 @@ public struct BranchMenu: View {
     @State private var selectedCategory: Category?
 
     public var body: some View {
-        ScrollView {
-            HStack(alignment: .top, spacing: 0) {
-                VStack(spacing: layout.categorySpacing) {
-                    ForEach(categories) { category in
-                        CategoryMenu(
-                            category: category,
-                            selectedCategory: $selectedCategory,
-                            layout: layout
-                        )
-                    }
+        HStack(alignment: .top, spacing: 0) {
+            VStack(alignment: .trailing, spacing: layout.categorySpacing) {
+                ForEach(categories) { category in
+                    CategoryMenu(
+                        category: category,
+                        selectedCategory: $selectedCategory,
+                        layout: layout
+                    )
                 }
-
-                Rectangle()
-                    .frame(width: layout.indicatorThickness)
-                    .padding(.bottom, verticalLineBottomPadding)
             }
+            .padding(.top, layout.topPadding)
+            .padding(.leading, layout.leadingPadding)
+
+            Rectangle()
+                .frame(width: layout.indicatorThickness, height: verticalLineHeight)
+                .padding(.bottom, verticalLineBottomPadding)
         }
+    }
+
+    private var verticalLineHeight: CGFloat {
+        let headerHeights = CGFloat(categories.count) * layout.headerHeight
+        let halfOfBottomHeight = 0.5 * layout.headerHeight
+        let headerSpacing = CGFloat(categories.count - 1) * layout.categorySpacing
+        let topPadding = layout.topPadding
+
+        var itemSpacing = CGFloat(categories.count - 1) * layout.headerToItemsSpacing
+
+        if let lastCategory = categories.last,
+            let selectedCategory = selectedCategory,
+            selectedCategory != lastCategory {
+            itemSpacing += CGFloat(selectedCategory.items.count) * layout.itemHeight
+        }
+
+        return topPadding + headerHeights + headerSpacing + itemSpacing - halfOfBottomHeight
     }
 
     private var verticalLineBottomPadding: CGFloat {
         var padding = layout.outerVerticalLineBottomPadding
         if let last = categories.last, last == selectedCategory {
-            padding += (CGFloat(last.items.count) * layout.itemSize.height)
+            padding += (CGFloat(last.items.count) * layout.itemHeight)
         }
 
         return padding
@@ -81,7 +98,7 @@ private struct CategoryMenu: View {
         }) {
             HStack(spacing: layout.headerToArrowSpacing) {
                 Text(category.name)
-                    .frame(size: layout.headerSize, alignment: .trailing)
+                    .frame(height: layout.headerHeight, alignment: .trailing)
 
                 Image(systemName: "chevron.right")
                     .frame(square: layout.arrowWidth)
@@ -95,12 +112,13 @@ private struct CategoryMenu: View {
 
     private var items: some View {
         HStack(alignment: .top, spacing: 0) {
-            VStack(spacing: 0) {
+            VStack(alignment: .trailing, spacing: 0) {
                 ForEach(category.items) { item in
                     Button(action: item.action) {
                         Text(item.name)
                     }
-                    .frame(size: layout.itemSize, alignment: .trailing)
+                    .frame(height: layout.itemHeight, alignment: .trailing)
+                    .lineLimit(1)
                     .font(.system(size: layout.itemFontSize))
                     .withHorizontalIndicator(layout: layout)
                     .foregroundColor(item.isSelected ? .orangeAccent : .black)
@@ -110,7 +128,7 @@ private struct CategoryMenu: View {
 
             Rectangle()
                 .frame(width: layout.indicatorThickness)
-                .padding(.bottom, layout.itemSize.height / 2)
+                .padding(.bottom, layout.itemHeight / 2)
         }
         .padding(.trailing, layout.itemTrailingPadding)
         .frame(height: isExpanded ? expandedItemHeight : 0, alignment: .top)
@@ -118,7 +136,7 @@ private struct CategoryMenu: View {
     }
 
     private var expandedItemHeight: CGFloat {
-        CGFloat(category.items.count) * layout.itemSize.height
+        CGFloat(category.items.count) * layout.itemHeight
     }
 
     private var isExpanded: Bool {
@@ -161,18 +179,21 @@ extension BranchMenu {
         let headerToArrowSpacing: CGFloat = 5
         let arrowWidth: CGFloat = 10
 
-        let itemSize: CGSize = CGSize(width: 120, height: 20)
+        let itemHeight: CGFloat = 20
         let itemFontSize: CGFloat = 12
 
-        let headerSize: CGSize = CGSize(width: 120, height: 20)
+        let headerHeight: CGFloat = 20
         let headerFontSize: CGFloat = 12
+
+        let leadingPadding: CGFloat = 5
+        let topPadding: CGFloat = 5
 
         var itemTrailingPadding: CGFloat {
             textToIndicatorSpacing + indicatorWidth + (arrowWidth / 2)
         }
 
         var outerVerticalLineBottomPadding: CGFloat {
-            headerToItemsSpacing + (headerSize.height / 2)
+            headerToItemsSpacing + (headerHeight / 2)
         }
     }
 }

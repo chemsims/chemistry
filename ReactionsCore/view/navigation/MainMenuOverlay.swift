@@ -161,7 +161,10 @@ private struct MainMenuOverlayWithSettings<Injector: NavigationInjector>: View {
         HStack(alignment: .top, spacing: 0) {
             Spacer()
                 .frame(width: settings.leadingPanelSpace)
+
             BranchMenu(categories: categories, layout: .init())
+                .frame(height: settings.panelContentHeight, alignment: .top)
+
             settingsButtons
                 .accessibility(sortPriority: 2)
             panelContent
