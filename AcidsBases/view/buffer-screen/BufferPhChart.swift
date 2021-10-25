@@ -29,6 +29,7 @@ struct BufferPhChart: View {
         .font(.system(size: layout.common.chartLabelFontSize))
         .accessibilityElement(children: .contain)
         .accessibility(label: Text("Chart showing moles added vs pH"))
+        .minimumScaleFactor(0.5)
     }
 
     private var plotArea: some View {
