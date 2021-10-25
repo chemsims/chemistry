@@ -121,8 +121,8 @@ private struct CategoryMenu: View {
                     .lineLimit(1)
                     .font(.system(size: layout.itemFontSize))
                     .withHorizontalIndicator(layout: layout)
-                    .foregroundColor(item.isSelected ? .orangeAccent : .black)
-                    .disabled(!isExpanded)
+                    .foregroundColor(itemColor(item))
+                    .disabled(!isExpanded || !item.canSelect)
                 }
             }
 
@@ -133,6 +133,15 @@ private struct CategoryMenu: View {
         .padding(.trailing, layout.itemTrailingPadding)
         .frame(height: isExpanded ? expandedItemHeight : 0, alignment: .top)
         .clipped()
+    }
+
+    private func itemColor(_ item: BranchMenu.CategoryItem) -> Color {
+        if item.isSelected {
+            return .orangeAccent
+        } else if item.canSelect {
+            return .black
+        }
+        return .gray
     }
 
     private var expandedItemHeight: CGFloat {
