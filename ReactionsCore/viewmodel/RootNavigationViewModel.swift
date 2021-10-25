@@ -55,6 +55,8 @@ public class RootNavigationViewModel<Injector: NavigationInjector>: ObservableOb
 
     private let generalAnalytics: GeneralAppAnalytics
 
+    public weak var delegate: RootNavigationViewModelDelegate? = nil
+
     public var highlightedIcon: Screen? {
         behaviour.highlightedNavIcon(for: currentScreen)
     }
@@ -137,6 +139,7 @@ extension RootNavigationViewModel {
     }
 
     private func goTo(screen: Screen, with provider: ScreenProvider) {
+        delegate?.screenWillChange()
         models[screen] = provider
         navigationDirection = screenIsAfterCurrent(nextScreen: screen) ? .forward : .back
         currentScreen = screen

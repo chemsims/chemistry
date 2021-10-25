@@ -506,6 +506,7 @@
 		57A5F076263EA066002F23DE /* QuizQuestionReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A5F075263EA066002F23DE /* QuizQuestionReader.swift */; };
 		57A5F078263EA0C8002F23DE /* QuizQuestionReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57A5F077263EA0C8002F23DE /* QuizQuestionReaderTests.swift */; };
 		57ABDC2725EBF7C40078A82B /* DropDownSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */; };
+		57AC348D27272F820085A4B8 /* RootNavigationViewModelDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57AC348C27272F810085A4B8 /* RootNavigationViewModelDelegate.swift */; };
 		57ADAA8726A4424C0008E8C2 /* BeakerAccessibilityActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57ADAA8626A4424C0008E8C2 /* BeakerAccessibilityActions.swift */; };
 		57B3B8F4260B27E800EB9B47 /* NavigationBehaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B8F3260B27E800EB9B47 /* NavigationBehaviour.swift */; };
 		57B3B8FB260B281000EB9B47 /* AppAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57B3B8FA260B281000EB9B47 /* AppAnalytics.swift */; };
@@ -1429,6 +1430,7 @@
 		57ABDC3825EBF9300078A82B /* AqueousReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionType.swift; sourceTree = "<group>"; };
 		57ABDC3E25EBFA230078A82B /* ReactionDropDownSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDropDownSelection.swift; sourceTree = "<group>"; };
 		57ABDC4525EC03E10078A82B /* AqueousStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousStatements.swift; sourceTree = "<group>"; };
+		57AC348C27272F810085A4B8 /* RootNavigationViewModelDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationViewModelDelegate.swift; sourceTree = "<group>"; };
 		57AD96BB263024FD0027DD0C /* AnalyticsConsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsConsentView.swift; sourceTree = "<group>"; };
 		57ADAA8626A4424C0008E8C2 /* BeakerAccessibilityActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerAccessibilityActions.swift; sourceTree = "<group>"; };
 		57B168BF25A7C09200F6668E /* ScreenState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenState.swift; sourceTree = "<group>"; };
@@ -2513,6 +2515,7 @@
 				573F16912584ACEC001CE039 /* QuizViewModel.swift */,
 				578B170D2618748200D8079F /* motion */,
 				57438A3C260A26DB005E3888 /* RootNavigationViewModel.swift */,
+				57AC348C27272F810085A4B8 /* RootNavigationViewModelDelegate.swift */,
 			);
 			path = viewmodel;
 			sourceTree = "<group>";
@@ -5325,6 +5328,7 @@
 				573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */,
 				57438A42260A2DC7005E3888 /* ScreenProvider.swift in Sources */,
 				57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */,
+				57AC348D27272F820085A4B8 /* RootNavigationViewModelDelegate.swift in Sources */,
 				57315EB3263FF33000A7D0F9 /* AnalyticsConsentView.swift in Sources */,
 				57B92EBA2665258A00023E7C /* SelectionToggleText.swift in Sources */,
 				5786BD14267B51CD001A165C /* TestTubeContainer.swift in Sources */,

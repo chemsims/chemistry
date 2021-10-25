@@ -84,27 +84,31 @@ class APChemRootNavigationModel: ObservableObject {
             return ReactionRatesScreenProvider(
                 injector: injector,
                 showUnitSelection: showUnitSelectionBinding,
-                showAboutPage: showAboutPageBinding
+                showAboutPage: showAboutPageBinding,
+                delegate: self
             )
 
         case .equilibrium:
             return EquilibriumScreenProvider(
                 injector: injector,
                 showUnitSelection: showUnitSelectionBinding,
-                showAboutPage: showAboutPageBinding
+                showAboutPage: showAboutPageBinding,
+                delegate: self
             )
         case .acidsBases:
             return AcidsBasesScreenProvider(
                 injector: injector,
                 showUnitSelection: showUnitSelectionBinding,
-                showAboutPage: showAboutPageBinding
+                showAboutPage: showAboutPageBinding,
+                delegate: self
             )
 
         case .chemicalReactions:
             return ChemicalReactionsScreenProvider(
                 injector: injector,
                 showUnitSelection: showUnitSelectionBinding,
-                showAboutPage: showAboutPageBinding
+                showAboutPage: showAboutPageBinding,
+                delegate: self
             )
         }
     }
@@ -231,6 +235,14 @@ extension APChemRootNavigationModel {
     }
 }
 
+extension APChemRootNavigationModel: RootNavigationViewModelDelegate {
+    // When a unit screen changes, we need to recompute the branch
+    // menu items, so must call object will change
+    func screenWillChange() {
+        objectWillChange.send()
+    }
+}
+
 extension APChemRootNavigationModel {
     enum ActiveSheet: Int, Identifiable {
         case unitSelection, about, share
@@ -253,11 +265,13 @@ private class ReactionRatesScreenProvider: ScreenProvider {
     init(
         injector: APChemInjector,
         showUnitSelection: Binding<Bool>,
-        showAboutPage: Binding<Bool>
+        showAboutPage: Binding<Bool>,
+        delegate: RootNavigationViewModelDelegate
     ) {
         self.model = injector.reactionRatesInjector
         self.showUnitSelection = showUnitSelection
         self.showAboutPage = showAboutPage
+        self.model.delegate = delegate
     }
 
     let model: RootNavigationViewModel<ReactionRatesNavInjector>
@@ -279,11 +293,13 @@ private class EquilibriumScreenProvider: ScreenProvider {
     init(
         injector: APChemInjector,
         showUnitSelection: Binding<Bool>,
-        showAboutPage: Binding<Bool>
+        showAboutPage: Binding<Bool>,
+        delegate: RootNavigationViewModelDelegate
     ) {
         self.model = injector.equilibriumInjector
         self.showUnitSelection = showUnitSelection
         self.showAboutPage = showAboutPage
+        self.model.delegate = delegate
     }
 
     let model: RootNavigationViewModel<EquilibriumNavInjector>
@@ -305,11 +321,13 @@ private class AcidsBasesScreenProvider: ScreenProvider {
     init(
         injector: APChemInjector,
         showUnitSelection: Binding<Bool>,
-        showAboutPage: Binding<Bool>
+        showAboutPage: Binding<Bool>,
+        delegate: RootNavigationViewModelDelegate
     ) {
         self.model = injector.acidsBasesInjector
         self.showUnitSelection = showUnitSelection
         self.showAboutPage = showAboutPage
+        self.model.delegate = delegate
     }
 
     let model: RootNavigationViewModel<AcidAppNavInjector>
@@ -332,11 +350,13 @@ private class ChemicalReactionsScreenProvider: ScreenProvider {
     init(
         injector: APChemInjector,
         showUnitSelection: Binding<Bool>,
-        showAboutPage: Binding<Bool>
+        showAboutPage: Binding<Bool>,
+        delegate: RootNavigationViewModelDelegate
     ) {
         self.model = injector.chemicalReactionsInjector
         self.showUnitSelection = showUnitSelection
         self.showAboutPage = showAboutPage
+        self.model.delegate = delegate
     }
 
     let model: RootNavigationViewModel<ChemicalReactionsAppNavInjector>
