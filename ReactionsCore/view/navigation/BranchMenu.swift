@@ -17,10 +17,15 @@ private struct MenuCategoryKey: EnvironmentKey {
 
 public struct BranchMenu: View {
 
-    public init(categories: [Category], layout: Layout) {
+    init(categories: [Category], layout: Layout) {
         self.categories = categories
         self.layout = layout
-        self.selectedCategory = categories[0]
+        let initialSelectedCategory = categories.first { category in
+            category.items.contains { item in
+                item.isSelected
+            }
+        }
+        self._selectedCategory = State(initialValue: initialSelectedCategory)
     }
 
     let categories: [Category]
@@ -45,7 +50,6 @@ public struct BranchMenu: View {
                     .padding(.bottom, verticalLineBottomPadding)
             }
         }
-        .animation(.easeOut(duration: 0.35), value: selectedCategory)
     }
 
     private var verticalLineBottomPadding: CGFloat {
@@ -73,18 +77,15 @@ private struct CategoryMenu: View {
 
     private var header: some View {
         Button(action: {
-            if selectedCategory == category {
-                selectedCategory = nil
-            } else {
-                selectedCategory = category
-            }
+            selectedCategory = isExpanded ? nil : category
         }) {
             HStack(spacing: layout.headerToArrowSpacing) {
                 Text(category.name)
                     .frame(size: layout.headerSize, alignment: .trailing)
 
-                Image(systemName: isExpanded ? "chevron.down" : "chevron.up")
-                    .frame(width: layout.arrowWidth)
+                Image(systemName: "chevron.right")
+                    .frame(square: layout.arrowWidth)
+                    .rotationEffect(isExpanded ? .degrees(90) : .zero)
             }
             .withHorizontalIndicator(layout: layout)
         }
@@ -103,6 +104,7 @@ private struct CategoryMenu: View {
                     .font(.system(size: layout.itemFontSize))
                     .withHorizontalIndicator(layout: layout)
                     .foregroundColor(item.isSelected ? .orangeAccent : .black)
+                    .disabled(!isExpanded)
                 }
             }
 
