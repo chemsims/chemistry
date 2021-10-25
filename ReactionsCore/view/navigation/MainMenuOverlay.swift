@@ -434,7 +434,7 @@ private struct MainMenuLayoutSettings {
 
     var navIconHeight: CGFloat {
         let availableHeight = panelContentHeight - (4 * navVStackSpacing)
-        return availableHeight / 5
+        return availableHeight / 5.5
     }
 
     var navIconWidth: CGFloat {
