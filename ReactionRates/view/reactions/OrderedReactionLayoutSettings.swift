@@ -160,6 +160,10 @@ struct OrderedReactionLayoutSettings {
     }
 
     static let chartHPaddingFactor: CGFloat = 0.05
+
+    var branchMenu: BranchMenu.Layout {
+        BranchMenu.Layout(height: menuSize)
+    }
 }
 
 extension OrderedReactionLayoutSettings {

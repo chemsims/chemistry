@@ -24,6 +24,7 @@ struct OrderedReactionScreen<Content: View>: View {
                 .edgesIgnoringSafeArea(.all)
 
             topStack(settings: settings)
+                .zIndex(1)
 
             beaky(settings: settings)
                 .padding(.trailing, settings.beakyRightPadding)
@@ -119,7 +120,11 @@ struct OrderedReactionScreen<Content: View>: View {
 
     private var topRightControls: some View {
         VStack(alignment: .trailing, spacing: 0.5 * settings.tableButtonSize) {
-            reactionToggle.zIndex(1)
+            BranchMenu(layout: settings.branchMenu)
+                .zIndex(2)
+                .offset(x: 1)
+            reactionToggle
+                .zIndex(1)
             concentrationTable
         }
     }

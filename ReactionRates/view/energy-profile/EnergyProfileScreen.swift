@@ -37,6 +37,7 @@ struct EnergyProfileScreen: View {
                 .foregroundColor(model.color(for: nil))
 
             chartsView(settings: settings)
+                .zIndex(1)
             beakyView(settings: settings)
             equationView(settings: settings)
             beakerView(settings: settings)
@@ -58,8 +59,7 @@ struct EnergyProfileScreen: View {
 
     private func chartsView(settings: EnergyProfileLayoutSettings) -> some View {
         VStack {
-            HStack(alignment: .top, spacing: 20) {
-                Spacer()
+            HStack(alignment: .top, spacing: 0) {
                 EnergyProfileRateChart(
                     settings: EnergyRateChartSettings(
                         chartSize: settings.chartsSize
@@ -68,6 +68,8 @@ struct EnergyProfileScreen: View {
                     currentTempInverse: model.temp2.map { 1 / $0 },
                     highlightChart: model.highlight(element: .linearChart)
                 )
+
+                Spacer(minLength: 0)
 
                 EnergyProfileChart(
                     settings: EnergyRateChartSettings(
@@ -84,16 +86,24 @@ struct EnergyProfileScreen: View {
                 )
                 .colorMultiply(model.color(for: [.reactionProfileTop, .reactionProfileBottom]))
 
-                ReactionOrderSelection(
-                    isToggled: model.canSetReaction ? $selectReactionIsToggled : .constant(false),
-                    selection: $model.selectedReaction,
-                    height: settings.selectOrderHeight
-                )
-                .colorMultiply(model.color(for: .reactionToggle))
-                .disabled(!model.canSetReaction)
+                Spacer(minLength: 0)
+
+                VStack(alignment: .trailing, spacing: settings.chartsTopPadding) {
+                    BranchMenu(layout: settings.orderLayoutSettings.branchMenu)
+                        .zIndex(1)
+
+                    ReactionOrderSelection(
+                        isToggled: model.canSetReaction ? $selectReactionIsToggled : .constant(false),
+                        selection: $model.selectedReaction,
+                        height: settings.selectOrderHeight
+                    )
+                    .colorMultiply(model.color(for: .reactionToggle))
+                    .disabled(!model.canSetReaction)
+                }
             }
             .padding(.top, settings.chartsTopPadding)
             .padding(.trailing, settings.chartsTopPadding * 0.5)
+            .padding(.leading, settings.chartsLeadingPadding)
             Spacer()
         }
     }
@@ -169,7 +179,7 @@ private struct EnergyProfileLayoutSettings {
     }
 
     var chartsSize: CGFloat {
-        1.2 * orderLayoutSettings.chartSize
+        1.15 * orderLayoutSettings.chartSize
     }
     var chartsTopPadding: CGFloat {
         orderLayoutSettings.topPadding
@@ -198,6 +208,10 @@ private struct EnergyProfileLayoutSettings {
     }
     var selectOrderHeight: CGFloat {
         0.15 * chartsSize
+    }
+
+    var chartsLeadingPadding: CGFloat {
+        beakerWidth + beakerLeadingPadding + orderLayoutSettings.menuSize
     }
 
     private var availableEquationWidth: CGFloat {

@@ -17,9 +17,26 @@ private struct MenuCategoryKey: EnvironmentKey {
 
 public struct BranchMenu: View {
 
-    let categories: [Category]
+    public init(layout: Layout) {
+        self.layout = layout
+    }
+
     let layout: Layout
-    @State private var selectedCategory: Category? = nil
+    @Environment(\.menuCategories) var categories
+
+    public var body: some View {
+        BranchMenuWithCategories(
+            categories: categories,
+            layout: layout
+        )
+    }
+}
+
+private struct BranchMenuWithCategories: View {
+
+    let categories: [BranchMenu.Category]
+    let layout: BranchMenu.Layout
+    @State private var selectedCategory: BranchMenu.Category? = nil
     @State private var expanded = false
 
     public var body: some View {
@@ -27,6 +44,9 @@ public struct BranchMenu: View {
             header
             dropdown
         }
+        .frame(width: layout.width, height: layout.height, alignment: .topTrailing)
+        .animation(.easeOut(duration: 0.25), value: selectedCategory)
+        .animation(.easeOut(duration: 0.25), value: expanded)
     }
 
     private var header: some View {
@@ -59,10 +79,17 @@ public struct BranchMenu: View {
 
             Rectangle()
                 .frame(width: layout.indicatorThickness, height: verticalLineHeight)
+                .padding(.top, 0.5 * layout.headerHeight)
         }
         .frame(height: expanded ? dropdownHeight : 0, alignment: .top)
         .clipped()
         .padding(.trailing, layout.arrowWidth / 2)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(.white)
+                .shadow(radius: 2)
+        )
+        .allowsHitTesting(expanded)
     }
 
     private var dropdownHeight: CGFloat {
@@ -81,7 +108,7 @@ public struct BranchMenu: View {
     private var verticalLineHeight: CGFloat {
         var height = dropdownHeight
         height -= layout.headerToItemsSpacing
-        height -= (0.5 * layout.headerHeight)
+        height -= layout.headerHeight
 
         if let lastCategory = categories.last,
            let selectedCategory = selectedCategory,
@@ -125,7 +152,7 @@ private struct CategoryMenu: View {
         }) {
             HStack(spacing: layout.headerToArrowSpacing) {
                 Text(category.name)
-                    .frame(height: layout.headerHeight, alignment: .trailing)
+                    .frame(width: layout.headerWidth, height: layout.headerHeight, alignment: .trailing)
 
                 Image(systemName: "chevron.right")
                     .frame(square: layout.arrowWidth)
@@ -144,7 +171,7 @@ private struct CategoryMenu: View {
                     Button(action: item.action) {
                         Text(item.name)
                     }
-                    .frame(height: layout.itemHeight, alignment: .trailing)
+                    .frame(width: layout.itemWidth, height: layout.itemHeight, alignment: .trailing)
                     .lineLimit(1)
                     .font(.system(size: layout.itemFontSize))
                     .withHorizontalIndicator(layout: layout)
@@ -205,24 +232,65 @@ private struct HorizontalIndicatorModifier: ViewModifier {
 extension BranchMenu {
     public struct Layout {
 
-        let headerToItemsSpacing: CGFloat = 5
-        let categorySpacing: CGFloat = 10
+        public init(
+            height: CGFloat = 20
+        ) {
+            self.height = height
+        }
 
-        let indicatorWidth: CGFloat = 15
+        public let height: CGFloat
+        public var width: CGFloat {
+            3 * height
+        }
+
+        var headerToItemsSpacing: CGFloat {
+            height / 4
+        }
+        var categorySpacing: CGFloat {
+            height / 2
+        }
+
+        var indicatorWidth: CGFloat {
+            3 * headerToItemsSpacing
+        }
         let indicatorThickness: CGFloat = 1
 
-        let textToIndicatorSpacing: CGFloat = 5
-        let headerToArrowSpacing: CGFloat = 5
-        let arrowWidth: CGFloat = 10
+        var textToIndicatorSpacing: CGFloat {
+            headerToItemsSpacing
+        }
+        var headerToArrowSpacing: CGFloat {
+            headerToItemsSpacing
+        }
+        var arrowWidth: CGFloat {
+            2 * headerToItemsSpacing
+        }
 
-        let itemHeight: CGFloat = 20
-        let itemFontSize: CGFloat = 12
+        var itemHeight: CGFloat {
+            height
+        }
+        var itemWidth: CGFloat {
+            2.2 * width
+        }
+        var itemFontSize: CGFloat {
+            0.5 * height
+        }
 
-        let headerHeight: CGFloat = 20
-        let headerFontSize: CGFloat = 12
+        var headerWidth: CGFloat {
+            itemWidth
+        }
+        var headerHeight: CGFloat {
+            height
+        }
+        var headerFontSize: CGFloat {
+            itemFontSize
+        }
 
-        let leadingPadding: CGFloat = 5
-        let topPadding: CGFloat = 5
+        var leadingPadding: CGFloat {
+            headerToItemsSpacing
+        }
+        var topPadding: CGFloat {
+            headerToItemsSpacing
+        }
 
         var itemTrailingPadding: CGFloat {
             textToIndicatorSpacing + indicatorWidth + (arrowWidth / 2)
@@ -299,7 +367,7 @@ extension BranchMenu {
 
 struct BranchMenu_Previews: PreviewProvider {
     static var previews: some View {
-        BranchMenu(
+        BranchMenuWithCategories(
             categories: [
                 .init(
                     name: "Reaction rates",

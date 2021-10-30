@@ -60,6 +60,8 @@ private struct ReactionComparisonViewWithSettings: View {
             equations
                 .colorMultiply(overlayFor(element: .equations))
 
+            branchMenu
+
             if reaction.showDragTutorial {
                 dragViewWithHand
             }
@@ -68,6 +70,13 @@ private struct ReactionComparisonViewWithSettings: View {
                 dragView(position: dragLocation)
             }
         }
+    }
+
+    private var branchMenu: some View {
+        BranchMenu(layout: settings.branchMenu)
+            .spacing(horizontalAlignment: .trailing, verticalAlignment: .top)
+            .padding(.top, settings.branchMenuTopPadding)
+            .padding(.trailing, settings.branchMenuTrailingPadding)
     }
 
     private var beakers: some View {
@@ -94,7 +103,8 @@ private struct ReactionComparisonViewWithSettings: View {
                     .accessibilityElement(children: .contain)
                     .accessibility(label: Text("Bottom beaker\(orderMsg(settings.ordering[2]))"))
                     .accessibility(sortPriority: 0.3)
-            }.padding(settings.beakerPadding)
+            }
+            .padding(settings.beakerPadding)
             Spacer()
         }
     }
@@ -200,7 +210,7 @@ private struct ReactionComparisonViewWithSettings: View {
     }
 
     private var equations: some View {
-        HStack {
+        HStack(spacing: 0) {
             Spacer()
             VStack(spacing: settings.ordered.beakyBottomPadding) {
                 equation(
@@ -669,7 +679,7 @@ struct ReactionComparisonLayoutSettings {
     }
 
     var beakerTotalWidth: CGFloat {
-        beakerWidth + (2 * beakerPadding)
+        beakerWidth + (beakerPadding) + ordered.menuTotalWidth
     }
 
     var chartSize: CGFloat {
@@ -683,7 +693,7 @@ struct ReactionComparisonLayoutSettings {
     }
 
     var equationTrailingPadding: CGFloat {
-        5
+        5 + branchMenu.width + branchMenuTrailingPadding
     }
 
     var equationTopPadding: CGFloat {
@@ -780,6 +790,18 @@ struct ReactionComparisonLayoutSettings {
 
     private var chartXLabelHeightFactor: CGFloat {
         0.15
+    }
+
+    var branchMenu: BranchMenu.Layout {
+        ordered.branchMenu
+    }
+
+    var branchMenuTopPadding: CGFloat {
+        ordered.topPadding
+    }
+
+    var branchMenuTrailingPadding: CGFloat {
+        ordered.topPadding
     }
 
     func chartX(order: ReactionOrder) -> CGFloat {
