@@ -47,6 +47,7 @@ private struct BranchMenuWithCategories: View {
         .frame(width: layout.width, height: layout.height, alignment: .topTrailing)
         .animation(.easeOut(duration: 0.25), value: selectedCategory)
         .animation(.easeOut(duration: 0.25), value: expanded)
+        .minimumScaleFactor(0.5)
     }
 
     private var header: some View {

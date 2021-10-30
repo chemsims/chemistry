@@ -106,7 +106,7 @@ private struct LeftStack: View {
         }
         .font(.system(size: AnimatingReactionDefinition.fontSizeToHeight * settings.common.reactionDefinitionHeight))
         .lineLimit(1)
-        .minimumScaleFactor(0.6)
+        .minimumScaleFactor(0.5)
         .background(reactionDefinitionBackground)
         .padding(.leading, settings.common.menuSize)
         .colorMultiply(
@@ -146,6 +146,7 @@ private struct LeftStack: View {
             Text("+")
         }
         .foregroundColor(.orangeAccent)
+        .accessibilityElement(children: .ignore)
     }
 
     private var plusHeat: some View {

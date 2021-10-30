@@ -97,7 +97,10 @@ struct EquilibriumAppLayoutSettings {
     }
 
     var reactionDefinitionHeight: CGFloat {
-        0.15 * height
+        if verticalSizeClass.contains(.regular) {
+            return 0.1 * height
+        }
+        return 0.15 * height
     }
 
     var reactionDefinitionWidth: CGFloat {
@@ -201,5 +204,15 @@ extension EquilibriumAppLayoutSettings {
             beakerWidth: beakerWidth,
             sliderHeight: sliderHeight
         )
+    }
+}
+
+extension EquilibriumAppLayoutSettings {
+    var branchMenu: BranchMenu.Layout {
+        BranchMenu.Layout(height: menuSize)
+    }
+
+    var branchMenuHSpacing: CGFloat {
+        0.2 * menuSize
     }
 }

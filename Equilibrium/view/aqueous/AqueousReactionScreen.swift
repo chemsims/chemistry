@@ -92,7 +92,8 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            reactionToggle
+            toggles
+                .zIndex(1)
 
             Spacer()
             equation
@@ -101,6 +102,18 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             Spacer()
             beaky
         }
+    }
+
+    private var toggles: some View {
+        HStack(spacing: settings.branchMenuHSpacing) {
+            reactionToggle
+            branchMenu
+                .zIndex(1)
+        }
+    }
+
+    private var branchMenu: some View {
+        BranchMenu(layout: settings.branchMenu)
     }
 
     private var reactionToggle: some View {

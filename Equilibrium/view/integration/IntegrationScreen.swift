@@ -63,6 +63,7 @@ private struct IntegrationRightStack: View {
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
             topRow
+                .zIndex(1)
             Spacer()
             BeakyBox(
                 statement: model.statement,
@@ -80,12 +81,21 @@ private struct IntegrationRightStack: View {
                 .accessibility(sortPriority: 1)
             Spacer()
             VStack(alignment:. trailing) {
-                toggle
+                toggleWithBranchMenu
+                    .zIndex(1)
                 Spacer()
                 equation
             }
         }
         .accessibilityElement(children: .contain)
+    }
+
+    private var toggleWithBranchMenu: some View {
+        HStack(spacing: settings.common.branchMenuHSpacing) {
+            toggle
+            BranchMenu(layout: settings.common.branchMenu)
+                .zIndex(1)
+        }
     }
 
     private var toggle: some View {

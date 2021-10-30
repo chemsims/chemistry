@@ -97,6 +97,7 @@ private struct SolubilityRightStack: View {
                 equationRecap
                     .transition(.identity)
             }
+            branchMenu
         }
     }
 
@@ -151,6 +152,12 @@ private struct SolubilityRightStack: View {
             reactionToggleHighlight: model.highlights.colorMultiply(for: .reactionSelectionToggle),
             settings: settings.common
         )
+        .padding(.trailing, settings.common.branchMenu.width + settings.common.branchMenuHSpacing)
+    }
+
+    private var branchMenu: some View {
+        BranchMenu(layout: settings.common.branchMenu)
+            .spacing(horizontalAlignment: .trailing, verticalAlignment: .top)
     }
 
     private var equationRecap: some View {

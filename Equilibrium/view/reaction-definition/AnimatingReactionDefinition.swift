@@ -112,7 +112,7 @@ private struct AnimatingReactionDefinitionWithGeometry: View {
         }
         .font(.system(size: fontSize))
         .frame(height: textHeight)
-        .minimumScaleFactor(0.75)
+        .minimumScaleFactor(0.5)
     }
 
     private func elementSide(_ lhs: AqueousMolecule, _ rhs: AqueousMolecule) -> some View {
