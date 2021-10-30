@@ -48,7 +48,7 @@ private struct PrecipitationScreenWithLayout: View {
         ZStack {
             reactionDefinition
             bottomStack
-            selectionToggle
+            selectionToggleWithBranchMenu
         }
         .frame(width: layout.common.width, height: layout.common.height)
     }
@@ -67,6 +67,17 @@ private struct PrecipitationScreenWithLayout: View {
         .colorMultiply(model.highlights.colorMultiply(for: .reactionDefinition))
         .spacing(
             horizontalAlignment: .leading,
+            verticalAlignment: .top
+        )
+    }
+
+    private var selectionToggleWithBranchMenu: some View {
+        HStack(spacing: layout.common.branchMenuHSpacing) {
+            selectionToggle
+            BranchMenu(layout: layout.common.branchMenu)
+        }
+        .spacing(
+            horizontalAlignment: .trailing,
             verticalAlignment: .top
         )
     }
@@ -91,10 +102,6 @@ private struct PrecipitationScreenWithLayout: View {
             alignment: .top
         )
         .colorMultiply(model.highlights.colorMultiply(for: .reactionToggle))
-        .spacing(
-            horizontalAlignment: .trailing,
-            verticalAlignment: .top
-        )
     }
 
     private var bottomStack: some View  {

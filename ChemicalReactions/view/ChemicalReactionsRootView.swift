@@ -62,3 +62,13 @@ extension ChemicalReactionsScreenLayout {
         0.5 * menuSize
     }
 }
+
+extension ChemicalReactionsScreenLayout {
+    var branchMenu: BranchMenu.Layout {
+        BranchMenu.Layout(height: menuSize)
+    }
+
+    var branchMenuHSpacing: CGFloat {
+        0.2 * menuSize
+    }
+}

@@ -62,7 +62,7 @@ private struct SizedBalancedReactionScreen: View {
             )
             .accessibility(sortPriority: 7)
 
-            reactionSelection
+            reactionSelectionWithBranchMenu
         }
         .accessibilityElement(children: .contain)
     }
@@ -148,6 +148,14 @@ private struct SizedBalancedReactionScreen: View {
         .spacing(horizontalAlignment: .trailing, verticalAlignment: .bottom)
     }
 
+    private var reactionSelectionWithBranchMenu: some View {
+        HStack(alignment: .top, spacing: layout.common.branchMenuHSpacing) {
+            reactionSelection
+            BranchMenu(layout: layout.common.branchMenu)
+        }
+        .spacing(horizontalAlignment: .trailing, verticalAlignment: .top)
+    }
+
     private var reactionSelection: some View {
         DropDownSelectionView(
             title: "Choose a reaction",
@@ -162,7 +170,6 @@ private struct SizedBalancedReactionScreen: View {
             onSelection: model.didSelectReaction
         )
         .disabled(model.inputState != .selectReaction)
-        .spacing(horizontalAlignment: .trailing, verticalAlignment: .top)
     }
 }
 

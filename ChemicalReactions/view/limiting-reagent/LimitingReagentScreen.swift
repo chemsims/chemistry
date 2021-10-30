@@ -82,7 +82,7 @@ private struct LimitingReagentTopStack: View {
         HStack(spacing: 0) {
             reactionDefinition
             Spacer(minLength: 0)
-            reactionToggle
+            reactionToggleWithBranchMenu
         }
         .padding(.leading, layout.common.menuSize + layout.common.menuHPadding)
     }
@@ -102,6 +102,13 @@ private struct LimitingReagentTopStack: View {
             return model.reaction.reactionDisplayWithEmphasisedElementState
         }
         return model.reaction.reactionDisplayWithElementState
+    }
+
+    private var reactionToggleWithBranchMenu: some View {
+        HStack(alignment: .top, spacing: layout.common.branchMenuHSpacing) {
+            reactionToggle
+            BranchMenu(layout: layout.common.branchMenu)
+        }
     }
 
     private var reactionToggle: some View {
