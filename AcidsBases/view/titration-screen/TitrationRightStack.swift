@@ -47,7 +47,7 @@ struct TitrationRightStack: View {
     private var topStack: some View {
         HStack(alignment: .top, spacing: 0) {
             reactionDefinition
-            selectionView
+            toggles
         }
     }
 
@@ -59,6 +59,15 @@ struct TitrationRightStack: View {
         )
         .frame(size: layout.reactionDefinitionSize)
         .colorMultiply(model.highlights.colorMultiply(for: nil))
+    }
+
+    private var toggles: some View {
+        VStack(alignment: .trailing, spacing: layout.branchMenuVSpacing) {
+            BranchMenu(layout: layout.common.branchMenu)
+                .zIndex(1)
+            selectionView
+        }
+        .padding(.trailing, layout.togglesTrailingPadding)
     }
 
     private var selectionView: some View {
@@ -76,6 +85,7 @@ struct TitrationRightStack: View {
         )
         .frame(height: layout.common.toggleHeight, alignment: .top)
         .disabled(model.inputState != .selectSubstance)
+        .colorMultiply(model.highlights.colorMultiply(for: .reactionSelection))
     }
 
     private var equationData: TitrationEquationData {

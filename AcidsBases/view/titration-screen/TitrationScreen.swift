@@ -70,8 +70,9 @@ struct TitrationScreenLayout {
     }
 
     var reactionDefinitionSize: CGSize {
-        CGSize(
-            width: 0.8 * availableRightStackWidth,
+        let availableWidth = availableRightStackWidth - common.branchMenu.width - togglesTrailingPadding
+        return CGSize(
+            width: 0.9 * availableWidth,
             height: 2 * common.toggleHeight
         )
     }
@@ -91,6 +92,16 @@ struct TitrationScreenLayout {
     /// Position of the top of the water from the top of the screen
     func topOfWaterPosition(forRows rows: CGFloat) -> CGFloat {
         common.topOfWaterPosition(rows: rows) - common.toggleHeight
+    }
+}
+
+extension TitrationScreenLayout {
+    var branchMenuVSpacing: CGFloat {
+        1.2 * common.branchMenuHSpacing
+    }
+
+    var togglesTrailingPadding: CGFloat {
+        0.1 * common.menuSize
     }
 }
 

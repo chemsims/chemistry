@@ -13,11 +13,20 @@ struct BufferRightStack: View {
 
     var body: some View {
         VStack(alignment: .trailing, spacing: 0) {
-            selectionToggle
+            toggleWithBranchMenu
+                .zIndex(1)
+
             Spacer(minLength: 0)
             terms
             Spacer(minLength: 0)
             beaker
+        }
+    }
+
+    private var toggleWithBranchMenu: some View {
+        HStack(alignment: .top, spacing: layout.common.branchMenuHSpacing) {
+            selectionToggle
+            BranchMenu(layout: layout.common.branchMenu)
         }
     }
 
@@ -35,8 +44,8 @@ struct BufferRightStack: View {
             onSelection: model.next
         )
         .frame(height: layout.common.toggleHeight, alignment: .top)
-        .zIndex(1)
         .disabled(model.input != .selectSubstance)
+        .colorMultiply(model.highlights.colorMultiply(for: .reactionSelection))
     }
 
     private var terms: some View {

@@ -346,3 +346,14 @@ extension AcidBasesScreenLayout {
         0.75 * reactionDefinitionFontSize
     }
 }
+
+// MARK: Branch menu
+extension AcidBasesScreenLayout {
+    var branchMenu: BranchMenu.Layout {
+        BranchMenu.Layout(height: menuSize)
+    }
+
+    var branchMenuHSpacing: CGFloat {
+        0.2 * menuSize
+    }
+}

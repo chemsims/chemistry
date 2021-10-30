@@ -141,7 +141,8 @@ extension IntroScreenLayout {
 
         let availableHeight = common.height - chartAreaTotalHeight - phAreaTotalHeight
 
-        let availableWidth = common.rightColumnWidth - common.toggleHeight
+        let branchWidth = common.branchMenu.width + common.branchMenuHSpacing
+        let availableWidth = common.rightColumnWidth - common.toggleHeight - branchWidth
 
         return CGSize(
             width: 0.9 * availableWidth,

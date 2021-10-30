@@ -14,6 +14,7 @@ struct IntroRightStack: View {
     var body: some View {
         VStack(spacing: 0) {
             topRow
+                .zIndex(1)
             phScale
             bottomRow
         }
@@ -33,7 +34,14 @@ struct IntroRightStack: View {
 
             Spacer()
             
+            toggleWithBranchMenu
+        }
+    }
+
+    private var toggleWithBranchMenu: some View {
+        HStack(alignment: .top, spacing: layout.common.branchMenuHSpacing) {
             toggle
+            BranchMenu(layout: layout.common.branchMenu)
         }
     }
 
