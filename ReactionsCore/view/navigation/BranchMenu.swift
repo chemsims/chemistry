@@ -17,22 +17,34 @@ private struct MenuCategoryKey: EnvironmentKey {
 
 public struct BranchMenu: View {
 
-    init(categories: [Category], layout: Layout) {
-        self.categories = categories
-        self.layout = layout
-        let initialSelectedCategory = categories.first { category in
-            category.items.contains { item in
-                item.isSelected
-            }
-        }
-        self._selectedCategory = State(initialValue: initialSelectedCategory)
-    }
-
     let categories: [Category]
     let layout: Layout
-    @State private var selectedCategory: Category?
+    @State private var selectedCategory: Category? = nil
+    @State private var expanded = false
 
     public var body: some View {
+        VStack(alignment: .trailing, spacing: layout.headerToItemsSpacing) {
+            header
+            dropdown
+        }
+    }
+
+    private var header: some View {
+        Button(action: toggleExpansion) {
+            HStack(spacing: layout.headerToArrowSpacing) {
+                Text("Chapters")
+                Image(systemName: "chevron.right")
+                    .frame(square: layout.arrowWidth)
+                    .rotationEffect(expanded ? .degrees(90) : .zero)
+                    .foregroundColor(.orangeAccent)
+            }
+        }
+        .foregroundColor(.black)
+        .frame(height: layout.headerHeight)
+        .font(.system(size: layout.headerFontSize))
+    }
+
+    private var dropdown: some View {
         HStack(alignment: .top, spacing: 0) {
             VStack(alignment: .trailing, spacing: layout.categorySpacing) {
                 ForEach(categories) { category in
@@ -43,39 +55,54 @@ public struct BranchMenu: View {
                     )
                 }
             }
-            .padding(.top, layout.topPadding)
             .padding(.leading, layout.leadingPadding)
 
             Rectangle()
                 .frame(width: layout.indicatorThickness, height: verticalLineHeight)
-                .padding(.bottom, verticalLineBottomPadding)
         }
+        .frame(height: expanded ? dropdownHeight : 0, alignment: .top)
+        .clipped()
+        .padding(.trailing, layout.arrowWidth / 2)
     }
 
-    private var verticalLineHeight: CGFloat {
+    private var dropdownHeight: CGFloat {
         let headerHeights = CGFloat(categories.count) * layout.headerHeight
-        let halfOfBottomHeight = 0.5 * layout.headerHeight
         let headerSpacing = CGFloat(categories.count - 1) * layout.categorySpacing
-        let topPadding = layout.topPadding
 
-        var itemSpacing = CGFloat(categories.count - 1) * layout.headerToItemsSpacing
+        var itemSpacing = CGFloat(categories.count) * layout.headerToItemsSpacing
 
-        if let lastCategory = categories.last,
-            let selectedCategory = selectedCategory,
-            selectedCategory != lastCategory {
+        if let selectedCategory = selectedCategory {
             itemSpacing += CGFloat(selectedCategory.items.count) * layout.itemHeight
         }
 
-        return topPadding + headerHeights + headerSpacing + itemSpacing - halfOfBottomHeight
+        return headerHeights + headerSpacing + itemSpacing
     }
 
-    private var verticalLineBottomPadding: CGFloat {
-        var padding = layout.outerVerticalLineBottomPadding
-        if let last = categories.last, last == selectedCategory {
-            padding += (CGFloat(last.items.count) * layout.itemHeight)
+    private var verticalLineHeight: CGFloat {
+        var height = dropdownHeight
+        height -= layout.headerToItemsSpacing
+        height -= (0.5 * layout.headerHeight)
+
+        if let lastCategory = categories.last,
+           let selectedCategory = selectedCategory,
+           selectedCategory == lastCategory {
+            height -= CGFloat(selectedCategory.items.count) * layout.itemHeight
         }
 
-        return padding
+        return height
+    }
+
+    private func toggleExpansion() {
+        expanded.toggle()
+        if expanded {
+            selectedCategory = categories.first { category in
+                category.items.contains { item in
+                    item.isSelected
+                }
+            }
+        } else {
+            selectedCategory = nil
+        }
     }
 }
 
@@ -170,7 +197,7 @@ private struct HorizontalIndicatorModifier: ViewModifier {
             // between the vertical line and horizontal indicator
             Rectangle()
                 .frame(width: layout.indicatorWidth, height: layout.indicatorThickness)
-                .offset(x: layout.indicatorThickness)
+                .offset( x: layout.indicatorThickness)
         }
     }
 }
@@ -303,5 +330,7 @@ struct BranchMenu_Previews: PreviewProvider {
             ],
             layout: .init()
         )
+        .verticalSpacing(alignment: .top)
+        .animation(.easeOut(duration: 0.35))
     }
 }
