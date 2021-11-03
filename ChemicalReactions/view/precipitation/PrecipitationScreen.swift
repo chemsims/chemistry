@@ -224,7 +224,7 @@ private struct PrecipitationMiddleStack: View {
             }
 
             return .init(
-                cells: [compound.name(showMetal: true), "\(compound.molarMass)"],
+                cells: [compound.name(showMetal: true, showCoeff: false), "\(compound.molarMass)"],
                 emphasised: model.showUnknownMetal && isCorrectMetal,
                 colorMultiply: model.highlights.colorMultiply(anyOf: screenElements)
             )
