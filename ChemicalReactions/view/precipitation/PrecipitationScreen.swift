@@ -40,7 +40,6 @@ private struct PrecipitationScreenWithLayout: View {
     @ObservedObject var model: PrecipitationScreenViewModel
     let layout: PrecipitationScreenLayout
 
-
     // We need to use a ZStack as the beaker should be higher than the
     // reaction definition (as the container tooltip may overlap it), but
     // the selection toggle should be above everything
@@ -80,6 +79,7 @@ private struct PrecipitationScreenWithLayout: View {
             horizontalAlignment: .trailing,
             verticalAlignment: .top
         )
+        .accessibilityElement(children: .contain)
     }
 
     private var selectionToggle: some View {

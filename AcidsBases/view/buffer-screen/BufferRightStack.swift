@@ -28,6 +28,7 @@ struct BufferRightStack: View {
             selectionToggle
             BranchMenu(layout: layout.common.branchMenu)
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var selectionToggle: some View {

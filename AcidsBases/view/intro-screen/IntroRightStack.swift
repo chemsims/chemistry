@@ -43,6 +43,7 @@ struct IntroRightStack: View {
             toggle
             BranchMenu(layout: layout.common.branchMenu)
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var toggle: some View {
@@ -59,7 +60,6 @@ struct IntroRightStack: View {
             onSelection: model.next
         )
         .disabled(!model.inputState.isChoosingSubstance)
-        .accessibility(sortPriority: 0)
     }
 
     private var phScale: some View {
@@ -119,6 +119,7 @@ private struct BarChartOrPhChart: View {
                 phChart
             }
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var toggle: some View {

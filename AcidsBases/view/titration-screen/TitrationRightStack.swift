@@ -68,6 +68,7 @@ struct TitrationRightStack: View {
             selectionView
         }
         .padding(.trailing, layout.togglesTrailingPadding)
+        .accessibilityElement(children: .contain)
     }
 
     private var selectionView: some View {

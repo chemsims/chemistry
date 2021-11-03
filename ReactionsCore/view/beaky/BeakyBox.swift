@@ -73,11 +73,13 @@ public struct BeakyBox: View {
                     .frame(width: bubbleWidth, height: bubbleHeight)
                     .accessibility(addTraits: .isHeader)
                     .accessibility(sortPriority: 1)
-                    .accessibility(hint: Text("Goes to the next content"))
+                    .accessibility(hint: Text("Double tap to go next"))
                     .accessibility(addTraits: .isButton)
                     .disabled(nextIsDisabled)
                     .accessibilityAction {
-                        next()
+                        if !nextIsDisabled {
+                            next()
+                        }
                     }
 
                 Beaky()

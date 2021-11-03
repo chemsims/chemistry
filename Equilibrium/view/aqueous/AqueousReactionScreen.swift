@@ -110,6 +110,7 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             branchMenu
                 .zIndex(1)
         }
+        .accessibilityElement(children: .contain)
     }
 
     private var branchMenu: some View {
@@ -126,7 +127,6 @@ struct RightStackView<Reaction: ReactionDefinition>: View {
             reactionToggleHighlight: reactionToggleHighlight,
             settings: settings
         )
-        .accessibility(sortPriority: -1)
     }
 
     private var equation: some View {

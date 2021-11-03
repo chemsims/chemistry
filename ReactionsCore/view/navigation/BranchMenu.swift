@@ -48,6 +48,7 @@ private struct BranchMenuWithCategories: View {
         .animation(.easeOut(duration: 0.25), value: selectedCategory)
         .animation(.easeOut(duration: 0.25), value: expanded)
         .minimumScaleFactor(0.5)
+        .accessibilityElement(children: .contain)
     }
 
     private var header: some View {
@@ -63,6 +64,19 @@ private struct BranchMenuWithCategories: View {
         .foregroundColor(.black)
         .frame(height: layout.headerHeight)
         .font(.system(size: layout.headerFontSize))
+        .accessibilityElement(children: .combine)
+        .accessibility(label: Text(headerLabel))
+        .accessibility(hint: Text(hint))
+    }
+
+    private var headerLabel: String {
+        let expandedStr = expanded ? "expanded" : "collapsed"
+        return "Chapters (\(expandedStr))"
+    }
+
+    private var hint: String {
+        let action = expanded ? "collapse" : "expand"
+        return "Double tap to \(action)"
     }
 
     private var dropdown: some View {
@@ -91,6 +105,8 @@ private struct BranchMenuWithCategories: View {
                 .shadow(radius: 2)
         )
         .allowsHitTesting(expanded)
+        .accessibilityElement(children: .contain)
+        .accessibility(hidden: !expanded)
     }
 
     private var dropdownHeight: CGFloat {
@@ -163,6 +179,19 @@ private struct CategoryMenu: View {
         }
         .foregroundColor(.black)
         .font(.system(size: layout.headerFontSize))
+        .accessibilityElement(children: .combine)
+        .accessibility(label: Text(headerLabel))
+        .accessibility(hint: Text(hint))
+    }
+
+    private var headerLabel: String {
+        let expandedStr = isExpanded ? "expanded" : "collapsed"
+        return "\(category.name) (\(expandedStr))"
+    }
+
+    private var hint: String {
+        let action = isExpanded ? "collapse" : "expand"
+        return "Double tap to \(action)"
     }
 
     private var items: some View {
@@ -178,6 +207,8 @@ private struct CategoryMenu: View {
                     .withHorizontalIndicator(layout: layout)
                     .foregroundColor(itemColor(item))
                     .disabled(!isExpanded || !item.canSelect)
+                    .accessibility(addTraits: item.isSelected ? .isSelected : .init())
+                    .accessibility(hint: Text("Double tap to go to \(item.name) screen"))
                 }
             }
 
@@ -188,6 +219,7 @@ private struct CategoryMenu: View {
         .padding(.trailing, layout.itemTrailingPadding)
         .frame(height: isExpanded ? expandedItemHeight : 0, alignment: .top)
         .clipped()
+        .accessibility(hidden: !isExpanded)
     }
 
     private func itemColor(_ item: BranchMenu.CategoryItem) -> Color {

@@ -104,7 +104,6 @@ private struct SolubilityRightStack: View {
     private var mainContent: some View {
         VStack(spacing: 0) {
             reactionToggle
-                .accessibility(sortPriority: -1)
 
             Spacer()
 

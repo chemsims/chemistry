@@ -40,56 +40,59 @@ private struct SizedBalancedReactionScreen: View {
         ZStack {
             emptyBeakers
                 .accessibilityElement(children: .contain)
-                .accessibility(sortPriority: 8)
+                .accessibility(sortPriority: 0.5)
 
             moleculeLabels
-                .accessibility(hidden: true)
 
             BalancedReactionTopStack(
                 model: moleculeModel,
                 emphasiseCoefficients: model.emphasiseReactionCoefficients,
                 layout: layout
             )
-            .accessibility(sortPriority: 9)
+            .accessibility(sortPriority: 0.6)
 
             beaky
-                .accessibility(sortPriority: 10)
+                .accessibility(sortPriority: 1)
 
             BalancedReactionScreen.BalancedReactionScreenMolecules(
                 model: model,
                 moleculeModel: moleculeModel,
                 layout: layout
             )
-            .accessibility(sortPriority: 7)
+            .accessibility(sortPriority: 0.4)
 
             reactionSelectionWithBranchMenu
         }
-        .accessibilityElement(children: .contain)
     }
 
     private var moleculeLabels: some View {
         ZStack {
             Text("Reactants")
+                .accessibility(hidden: true)
                 .frame(size: layout.moleculeTableLabelSize)
                 .rotationEffect(.degrees(-90))
                 .position(layout.moleculeTableProductLabelPosition)
 
             Text("Products")
+                .accessibility(hidden: true)
                 .frame(size: layout.moleculeTableLabelSize)
                 .rotationEffect(.degrees(-90))
                 .position(layout.moleculeTableReactantLabelPosition)
 
             Rectangle()
+                .accessibility(hidden: true)
                 .frame(size: layout.moleculeTableDividerSize)
                 .position(layout.moleculeTableRect.center)
         }
+        .accessibilityElement(children: .contain)
+        .accessibility(hidden: true)
         .font(.system(size: layout.moleculeTableLabelFontSize))
         .foregroundColor(.orangeAccent)
         .minimumScaleFactor(0.5)
     }
 
     private var emptyBeakers: some View {
-        Group {
+        ZStack {
             EmptyBeaker(
                 settings: layout.beakerSettings,
                 emphasised: !model.moleculesInFlightOverReactant.isEmpty
@@ -154,6 +157,7 @@ private struct SizedBalancedReactionScreen: View {
             BranchMenu(layout: layout.common.branchMenu)
         }
         .spacing(horizontalAlignment: .trailing, verticalAlignment: .top)
+        .accessibilityElement(children: .contain)
     }
 
     private var reactionSelection: some View {
