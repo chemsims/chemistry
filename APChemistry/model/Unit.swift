@@ -44,9 +44,7 @@ extension UnitInfo {
     fileprivate static let equilibrium = UnitInfo(
         image: "equilibrium-icon",
         title: "Equilibrium",
-        description: """
-        Reactions which move towards equilibrium.
-        """
+        description: "Reactions which move towards equilibrium."
     )
 
     fileprivate static let acidsBases = UnitInfo(
@@ -56,8 +54,8 @@ extension UnitInfo {
     )
 
     fileprivate static let chemicalReactions = UnitInfo(
-        image: "reaction-rates-icon",
+        image: "chemicalreactions-icon",
         title: "Chemical Reactions",
-        description: "Chemical reactions."
+        description: "Chemical reactions and stoichiometry."
     )
 }
