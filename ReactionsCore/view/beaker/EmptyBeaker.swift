@@ -12,7 +12,7 @@ public struct EmptyBeaker: View {
         emphasised: Bool = false
     ) {
         self.settings = settings
-        self.color = emphasised ? .orangeAccent : color
+        self.color = color
         self.emphasised = emphasised
     }
 

@@ -93,28 +93,38 @@ private struct SizedBalancedReactionScreen: View {
 
     private var emptyBeakers: some View {
         ZStack {
-            EmptyBeaker(
-                settings: layout.beakerSettings,
-                color: model.elementTypesInFlight.contains(.reactant) ? .orangeAccent : Styling.beakerOutline,
-                emphasised: !model.moleculesInFlightOverReactant.isEmpty
-            )
-            .frame(size: layout.beakerSize)
-            .position(layout.firstBeakerPosition)
-            .modifier(EmptyBeakerAccessibilityModifier(model: model, elementType: .reactant))
+            beaker(.reactant)
+                .position(layout.firstBeakerPosition)
 
             reactionArrow
                 .accessibilityElement(children: .ignore)
                 .accessibility(hidden: true)
 
-            EmptyBeaker(
-                settings: layout.beakerSettings,
-                color: model.elementTypesInFlight.contains(.product) ? .orangeAccent : Styling.beakerOutline,
-                emphasised: !model.moleculesInFlightOverProduct.isEmpty
-            )
-            .frame(size: layout.beakerSize)
-            .position(layout.secondBeakerPosition)
-            .modifier(EmptyBeakerAccessibilityModifier(model: model, elementType: .product))
+            beaker(.product)
+                .position(layout.secondBeakerPosition)
         }
+    }
+
+    private func beaker(_ type: BalancedReaction.ElementType) -> some View {
+        return EmptyBeaker(
+            settings: layout.beakerSettings,
+            color: beakerColor(type),
+            emphasised: !model.elementTypesInFlightOver(beaker: type).isEmpty
+        )
+        .frame(size: layout.beakerSize)
+        .modifier(EmptyBeakerAccessibilityModifier(model: model, elementType: type))
+    }
+
+    private func beakerColor(_ type: BalancedReaction.ElementType) -> Color {
+        let hovering = model.elementTypesInFlightOver(beaker: type)
+        if hovering.contains(type) {
+            return .orangeAccent
+        } else if hovering.contains(type.opposite) {
+            return .gray
+        } else if model.elementTypesInFlight.contains(type) {
+            return .orangeAccent
+        }
+        return Styling.beakerOutline
     }
 
     private var reactionArrow: some View {

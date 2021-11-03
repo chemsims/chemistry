@@ -46,6 +46,13 @@ extension BalancedReaction {
         var label : String {
             rawValue
         }
+
+        var opposite: ElementType {
+            switch self {
+            case .reactant: return .product
+            case .product: return .reactant
+            }
+        }
     }
 
     enum ElementCount {

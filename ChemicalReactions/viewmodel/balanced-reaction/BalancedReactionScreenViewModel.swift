@@ -30,7 +30,18 @@ class BalancedReactionScreenViewModel: ObservableObject {
     @Published var moleculesInFlight = Set<UUID>()
 
     var elementTypesInFlight: Set<BalancedReaction.ElementType> {
-        let elems = moleculesInFlight.compactMap { id -> BalancedReaction.ElementType? in
+        moleculeTypesFromIds(moleculesInFlight)
+    }
+
+    func elementTypesInFlightOver(beaker beakerType: BalancedReaction.ElementType) -> Set<BalancedReaction.ElementType> {
+        switch beakerType {
+        case .product: return moleculeTypesFromIds(moleculesInFlightOverProduct)
+        case .reactant: return moleculeTypesFromIds(moleculesInFlightOverReactant)
+        }
+    }
+
+    private func moleculeTypesFromIds(_ ids: Set<UUID>) -> Set<BalancedReaction.ElementType> {
+        let elems = ids.compactMap { id -> BalancedReaction.ElementType? in
             if let molecule = moleculePosition.molecules.first(where: { $0.id == id}) {
                 return molecule.elementType
             }
