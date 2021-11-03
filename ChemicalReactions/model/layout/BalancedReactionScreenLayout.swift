@@ -141,24 +141,6 @@ extension BalancedReactionScreenLayout {
         return gapBetweenCenters - beakerWidth
     }
 
-    var beakerUnderlingHeight: CGFloat {
-        2
-    }
-
-    var beakerUnderlineSpacing: CGFloat {
-        5
-    }
-
-    var firstBeakerUnderlinePosition: CGPoint {
-        let dy = (beakerSize.height / 2) + beakerUnderlineSpacing
-        return firstBeakerPosition.offset(dx: 0, dy: dy)
-    }
-
-    var secondBeakerUnderlinePosition: CGPoint {
-        let dy = (beakerSize.height / 2) + beakerUnderlineSpacing
-        return secondBeakerPosition.offset(dx: 0, dy: dy)
-    }
-
     private func beakerRect(center: CGPoint) -> CGRect {
         CGRect(
             origin: center.offset(dx: -beakerSize.width / 2, dy: -beakerSize.height / 2),
@@ -172,7 +154,7 @@ extension BalancedReactionScreenLayout {
     }
 
     private var beakerY: CGFloat {
-        common.height - (beakerHeight / 2) - (beakerUnderlingHeight - beakerUnderlineSpacing)
+        common.height - (beakerHeight / 2)
     }
 
     private var beakerWidth: CGFloat {

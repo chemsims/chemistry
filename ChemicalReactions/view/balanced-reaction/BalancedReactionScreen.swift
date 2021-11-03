@@ -95,6 +95,7 @@ private struct SizedBalancedReactionScreen: View {
         ZStack {
             EmptyBeaker(
                 settings: layout.beakerSettings,
+                color: model.elementTypesInFlight.contains(.reactant) ? .orangeAccent : Styling.beakerOutline,
                 emphasised: !model.moleculesInFlightOverReactant.isEmpty
             )
             .frame(size: layout.beakerSize)
@@ -107,21 +108,12 @@ private struct SizedBalancedReactionScreen: View {
 
             EmptyBeaker(
                 settings: layout.beakerSettings,
+                color: model.elementTypesInFlight.contains(.product) ? .orangeAccent : Styling.beakerOutline,
                 emphasised: !model.moleculesInFlightOverProduct.isEmpty
             )
             .frame(size: layout.beakerSize)
             .position(layout.secondBeakerPosition)
             .modifier(EmptyBeakerAccessibilityModifier(model: model, elementType: .product))
-
-            if model.elementTypesInFlight.contains(.reactant) {
-                beakerUnderline
-                    .position(layout.firstBeakerUnderlinePosition)
-            }
-
-            if model.elementTypesInFlight.contains(.product) {
-                beakerUnderline
-                    .position(layout.secondBeakerUnderlinePosition)
-            }
         }
     }
 
@@ -132,12 +124,6 @@ private struct SizedBalancedReactionScreen: View {
             .foregroundColor(.orangeAccent)
             .frame(width: layout.reactionArrowWidth)
             .position(layout.reactionArrowPosition)
-    }
-
-    private var beakerUnderline: some View {
-        Rectangle()
-            .frame(width: layout.beakerSize.width, height: layout.beakerUnderlingHeight)
-            .foregroundColor(.orangeAccent)
     }
 
     private var beaky: some View {
