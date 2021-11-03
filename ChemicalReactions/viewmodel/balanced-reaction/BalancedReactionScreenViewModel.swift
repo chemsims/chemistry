@@ -163,7 +163,7 @@ extension BalancedReactionScreenViewModel {
             return
         }
         if molecule.isInBeaker {
-            if elementType == nil {
+            if elementType != molecule.elementType {
                 remove(molecule: molecule)
             }
         } else {
