@@ -10,7 +10,10 @@ class BalancedReactionMoleculePositionViewModel: ObservableObject {
     @Published var molecules = [MovingMolecule]()
     @Published var reactionBalancer: ReactionBalancer
 
-    init(reaction: BalancedReaction) {
+    /// Create a new model to keep track of molecule positions
+    ///
+    /// - Parameter isBalanced: Whether the reaction should start off in the balanced state
+    init(reaction: BalancedReaction, isBalanced: Bool = false) {
         self.reaction = reaction
         self.reactionBalancer = ReactionBalancer(reaction: reaction)
 
@@ -36,6 +39,10 @@ class BalancedReactionMoleculePositionViewModel: ObservableObject {
 
         addInitialMolecules(.reactant)
         addInitialMolecules(.product)
+
+        if isBalanced {
+            balanceReaction()
+        }
     }
 
     /// Attempts to drop the molecule on the beaker, returning true if the molecule was added
@@ -110,6 +117,50 @@ class BalancedReactionMoleculePositionViewModel: ObservableObject {
         return true
     }
 }
+
+extension BalancedReactionMoleculePositionViewModel {
+
+    /// Adds all required molecules needed to balance the reaction.
+    /// Note, this will not remove molecules if there are too many.
+    private func balanceReaction() {
+        balanceElements(elements: reaction.products, type: .product)
+        balanceElements(elements: reaction.reactants, type: .reactant)
+    }
+
+    private func balanceElements(
+        elements: BalancedReaction.Elements,
+        type: BalancedReaction.ElementType
+    ) {
+        balanceSingleElement(elements.first, type: type, side: .first)
+        if let secondElement = elements.second {
+            balanceSingleElement(secondElement, type: type, side: .second)
+        }
+    }
+
+
+    private func balanceSingleElement(
+        _ element: BalancedReaction.Element,
+        type: BalancedReaction.ElementType,
+        side: BalancedReaction.ElementOrder
+    ) {
+        let count = reactionBalancer.count(of: element.molecule)
+        let desiredCount = element.coefficient
+        let deficit = desiredCount - count
+        if deficit > 0 {
+            (0..<deficit).forEach { index in
+                let molecule = MovingMolecule(
+                    moleculeType: element.molecule,
+                    elementType: type,
+                    side: side,
+                    position: .beaker(index: count + index)
+                )
+                molecules.append(molecule)
+                reactionBalancer.add(element.molecule, to: type)
+            }
+        }
+    }
+}
+
 extension BalancedReactionMoleculePositionViewModel {
 
     struct MovingMolecule: Identifiable, Equatable {

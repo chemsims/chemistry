@@ -15,7 +15,7 @@ class BalancedReactionScreenViewModel: ObservableObject {
     }
 
     @Published var reaction: BalancedReaction
-    private(set) var moleculePosition: BalancedReactionMoleculePositionViewModel
+    var moleculePosition: BalancedReactionMoleculePositionViewModel
 
     @Published var statement = [TextLine]()
     @Published var showDragTutorial = false
@@ -29,8 +29,25 @@ class BalancedReactionScreenViewModel: ObservableObject {
 
     @Published var moleculesInFlight = Set<UUID>()
 
+    // The indicator is always disabled
+    var reactionToggleIndicatorIsDisabled: Bool {
+        true
+    }
+
+    var reactionToggleBinding: Binding<Bool> {
+        .constant(inputState == .selectReaction)
+    }
+
     var elementTypesInFlight: Set<BalancedReaction.ElementType> {
         moleculeTypesFromIds(moleculesInFlight)
+    }
+
+    var canGoNext: Bool {
+        switch inputState {
+        case .dragMolecules: return moleculePosition.reactionBalancer.isBalanced
+        case .selectReaction: return false
+        case nil: return true
+        }
     }
 
     func elementTypesInFlightOver(beaker beakerType: BalancedReaction.ElementType) -> Set<BalancedReaction.ElementType> {
@@ -61,7 +78,7 @@ class BalancedReactionScreenViewModel: ObservableObject {
         return [reaction] + moleculePositionHistory.map(\.reaction)
     }
 
-    private(set) var navigation: NavigationModel<BalancedReactionScreenState>!
+    var navigation: NavigationModel<BalancedReactionScreenState>!
 
     private var moleculePositionHistory = [BalancedReactionMoleculePositionViewModel]()
 
@@ -93,19 +110,30 @@ class BalancedReactionScreenViewModel: ObservableObject {
         moleculesInFlightOverReactant.remove(id)
         moleculesInFlightOverProduct.remove(id)
     }
+
+    // MARK: - Selecting reaction
+    func didSelectReaction() {
+        if hasSelectedFirstReaction {
+            moleculePositionHistory.append(moleculePosition)
+        } else {
+            hasSelectedFirstReaction = true
+        }
+        moleculePosition = .init(reaction: reaction)
+        doGoNext()
+    }
+
+    func restorePreviousMolecules() {
+        if let previousMolecules = moleculePositionHistory.last {
+            reaction = previousMolecules.reaction
+            moleculePosition = previousMolecules
+            moleculePositionHistory.removeLast()
+        }
+    }
 }
 
 extension BalancedReactionScreenViewModel {
     enum InputState {
         case dragMolecules, selectReaction
-    }
-
-    var canGoNext: Bool {
-        switch inputState {
-        case .dragMolecules: return moleculePosition.reactionBalancer.isBalanced
-        case .selectReaction: return false
-        case nil: return true
-        }
     }
 }
 
@@ -123,28 +151,6 @@ extension BalancedReactionScreenViewModel {
 
     func back() {
         navigation.back()
-    }
-}
-
-// MARK: - Selecting reaction
-extension BalancedReactionScreenViewModel {
-
-    func didSelectReaction() {
-        if hasSelectedFirstReaction {
-            moleculePositionHistory.append(moleculePosition)
-        } else {
-            hasSelectedFirstReaction = true
-        }
-        moleculePosition = .init(reaction: reaction)
-        doGoNext()
-    }
-
-    func restorePreviousMolecules() {
-        if let previousMolecules = moleculePositionHistory.last {
-            reaction = previousMolecules.reaction
-            moleculePosition = previousMolecules
-            moleculePositionHistory.removeLast()
-        }
     }
 }
 
@@ -201,11 +207,7 @@ extension BalancedReactionScreenViewModel {
     private func goNextPostBalancingIfNeeded() {
         if moleculePosition.reactionBalancer.isBalanced {
             doGoNext()
-            let foo = statement.reduce("") { (acc, next) in
-                acc + next.asString
-            }
-
-            UIAccessibility.post(notification: .screenChanged, argument: foo)
+            UIAccessibility.post(notification: .screenChanged, argument: nil)
         }
     }
 

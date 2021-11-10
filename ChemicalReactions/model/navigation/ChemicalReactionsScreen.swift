@@ -7,6 +7,7 @@ import ReactionsCore
 public enum ChemicalReactionsScreen: String, CaseIterable {
     case balancedReactions,
          balancedReactionsQuiz,
+         balancedReactionsFilingCabinet,
          limitingReagent,
          limitingReagentQuiz,
          precipitation,

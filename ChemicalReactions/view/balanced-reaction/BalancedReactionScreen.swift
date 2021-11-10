@@ -160,12 +160,12 @@ private struct SizedBalancedReactionScreen: View {
         DropDownSelectionView(
             title: "Choose a reaction",
             options: BalancedReaction.availableReactions,
-            isToggled: .constant(model.inputState == .selectReaction),
+            isToggled: model.reactionToggleBinding,
             selection: $model.reaction,
             height: layout.common.reactionSelectionToggleHeight,
             animation: nil,
             displayString: { $0.display },
-            indicatorIsDisabled: true,
+            indicatorIsDisabled: model.reactionToggleIndicatorIsDisabled,
             disabledOptions: model.unavailableReactions,
             onSelection: model.didSelectReaction
         )

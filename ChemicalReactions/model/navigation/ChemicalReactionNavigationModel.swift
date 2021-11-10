@@ -68,9 +68,18 @@ extension RootNavigationViewModel where Injector == ChemicalReactionsAppNavInjec
             sharePrompter: sharePrompter,
             appLaunchPersistence: appLaunchPersistence,
             allScreens: ChemicalReactionsScreen.allCases,
-            linearScreens: ChemicalReactionsScreen.allCases
+            linearScreens: linearScreens
         )
     }
+
+    private static let linearScreens: [ChemicalReactionsScreen] = [
+        .balancedReactions,
+        .balancedReactionsQuiz,
+        .limitingReagent,
+        .limitingReagentQuiz,
+        .precipitation,
+        .precipitationQuiz
+    ]
 }
 
 private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
@@ -120,6 +129,13 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
                 nextScreen: nextScreen,
                 prevScreen: prevScreen
             )
+
+        case .balancedReactionsFilingCabinet:
+            return BalancedReactionFilingCabinetScreenProvider(
+                nextScreen: nextScreen,
+                prevScreen: prevScreen
+            )
+
         case .limitingReagent:
             return LimitingReagentScreenProvider(
                 nextScreen: nextScreen,
@@ -161,6 +177,24 @@ private class BalancedReactionScreenProvider: ScreenProvider {
     }
 
     private let model: BalancedReactionScreenViewModel
+
+    var screen: AnyView {
+        AnyView(BalancedReactionScreen(model: model))
+    }
+}
+
+private class BalancedReactionFilingCabinetScreenProvider: ScreenProvider {
+    init(
+        nextScreen: @escaping () -> Void,
+        prevScreen: @escaping () -> Void
+    ) {
+        let model = BalancedReactionFilingCabinetScreenViewModel()
+        model.navigation.nextScreen = nextScreen
+        model.navigation.prevScreen = prevScreen
+        self.model = model
+    }
+
+    private let model: BalancedReactionFilingCabinetScreenViewModel
 
     var screen: AnyView {
         AnyView(BalancedReactionScreen(model: model))

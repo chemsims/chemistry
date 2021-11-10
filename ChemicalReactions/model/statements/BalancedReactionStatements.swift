@@ -8,6 +8,12 @@ import ReactionsCore
 struct BalancedReactionStatements {
     private init() { }
 
+    static let filingCabinet: [TextLine] = [
+        """
+        Choose a reaction to check out how you balanced it earlier!
+        """
+    ]
+
     static let intro: [TextLine] = [
         "Chemical reactions are represented as an equation.",
         "*Choose a reaction and then let's find out more about that!*"

@@ -27,7 +27,12 @@ private enum TopLevelScreen: CaseIterable {
                 selectedImage: .core(.quizIconSelected),
                 label: "\(label) quiz"
             ),
-            secondSecondaryIcon: nil
+            secondSecondaryIcon: NavigationIcon(
+                screen: filingCabinet,
+                image: .core(.filingCabinet),
+                selectedImage: .core(.filingCabinetSelected),
+                label: "\(label) saved reactions"
+            )
         )
     }
 
@@ -61,6 +66,10 @@ private enum TopLevelScreen: CaseIterable {
         case .limitingReagent: return .limitingReagentQuiz
         case .precipitation: return .precipitationQuiz
         }
+    }
+
+    var filingCabinet: ChemicalReactionsScreen {
+        return .balancedReactionsFilingCabinet
     }
 }
 
