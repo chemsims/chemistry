@@ -185,7 +185,7 @@ struct LimitingReagentBeaker_Previews: PreviewProvider {
     static var previews: some View {
         GeometryReader { geo in
             LimitingReagentBeaker(
-                model: .init(),
+                model: .init(persistence: InMemoryLimitingReagentPersistence()),
                 layout: .init(
                     common: .init(
                         geometry: geo,

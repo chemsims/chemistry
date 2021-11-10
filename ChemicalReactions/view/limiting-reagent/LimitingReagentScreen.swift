@@ -197,7 +197,7 @@ struct LimitingReagentScreenLayout {
 
 struct LimitingReagentScreen_Previews: PreviewProvider {
     static var previews: some View {
-        LimitingReagentScreen(model: .init())
+        LimitingReagentScreen(model: .init(persistence: InMemoryLimitingReagentPersistence()))
             .previewLayout(.iPhone12ProMaxLandscape)
     }
 }

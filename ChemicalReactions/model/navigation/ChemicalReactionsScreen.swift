@@ -10,6 +10,7 @@ public enum ChemicalReactionsScreen: String, CaseIterable {
          balancedReactionsFilingCabinet,
          limitingReagent,
          limitingReagentQuiz,
+         limitingReagentFilingCabinet,
          precipitation,
          precipitationQuiz,
          finalAppScreen

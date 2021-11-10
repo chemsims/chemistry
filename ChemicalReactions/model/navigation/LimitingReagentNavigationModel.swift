@@ -10,35 +10,40 @@ private let statements = LimitingReagentStatements.self
 struct LimitingReagentNavigationModel {
     private init() { }
 
-    static func model(using viewModel: LimitingReagentScreenViewModel) -> NavigationModel<LimitingReagentScreenState> {
-        NavigationModel(model: viewModel, states: states)
+    static func model(
+        using viewModel: LimitingReagentScreenViewModel,
+        persistence: LimitingReagentPersistence
+    ) -> NavigationModel<LimitingReagentScreenState> {
+        NavigationModel(model: viewModel, states: states(persistence: persistence))
     }
 
-    private static let states: [LimitingReagentScreenState] = [
-        SelectReaction(statements.intro, highlights: [.selectReaction]),
-        StopInput(statements.explainStoichiometry),
-        SetStatement(statements.introducePhysicalStates, highlights: [.reactionDefinitionStates]),
-        SetStatement(statements.explainEachPhysicalState),
-        SetStatement(statements.explainMoles),
-        SetStatement(statements.explainAvogadroNumber),
-        SetWaterLevel(statements.instructToSetVolume, highlights: [.beakerSlider]),
-        AddLimitingReactant(\.instructToAddLimitingReactant, highlights: [.limitingReactantContainer]),
-        StopInput(\.explainMolarity),
-        SetStatement(\.showLimitingReactantMolarity),
-        SetStatement(\.showLimitingReactantMoles, highlights: [.limitingReactantMolesToVolume]),
-        SetStatement(\.showNeededReactantMoles, highlights: [.neededExcessReactantMoles]),
-        SetStatement(\.showTheoreticalProductMoles),
-        SetStatement(\.showTheoreticalProductMass, highlights: [.theoreticalProductMass]),
-        AddExcessReactant(\.instructToAddExcessReactant, highlights: [.excessReactantContainer]),
-        RunReaction(\.reactionInProgress),
-        EndOfReaction(\.endOfReaction),
-        SetStatement(statements.explainYieldPercentage),
-        SetStatement(\.showYield, highlights: [.productYieldPercentage]),
-        AddNonReactantExcessReactant(\.instructToAddExtraReactant, highlights: [.excessReactantContainer]),
-        StopInput(\.explainExtraReactantNotReacting),
-        SetStatement(\.explainLimitingReagent),
-        SetStatement(\.explainExcessReactant)
-    ]
+    private static func states(persistence: LimitingReagentPersistence) -> [LimitingReagentScreenState] {
+        [
+            SelectReaction(statements.intro, highlights: [.selectReaction]),
+            StopInput(statements.explainStoichiometry),
+            SetStatement(statements.introducePhysicalStates, highlights: [.reactionDefinitionStates]),
+            SetStatement(statements.explainEachPhysicalState),
+            SetStatement(statements.explainMoles),
+            SetStatement(statements.explainAvogadroNumber),
+            SetWaterLevel(statements.instructToSetVolume, highlights: [.beakerSlider]),
+            AddLimitingReactant(\.instructToAddLimitingReactant, highlights: [.limitingReactantContainer]),
+            StopInput(\.explainMolarity),
+            SetStatement(\.showLimitingReactantMolarity),
+            SetStatement(\.showLimitingReactantMoles, highlights: [.limitingReactantMolesToVolume]),
+            SetStatement(\.showNeededReactantMoles, highlights: [.neededExcessReactantMoles]),
+            SetStatement(\.showTheoreticalProductMoles),
+            SetStatement(\.showTheoreticalProductMass, highlights: [.theoreticalProductMass]),
+            AddExcessReactant(\.instructToAddExcessReactant, highlights: [.excessReactantContainer]),
+            RunReaction(\.reactionInProgress),
+            EndOfReaction(\.endOfReaction),
+            SetStatement(statements.explainYieldPercentage),
+            SetStatement(\.showYield, highlights: [.productYieldPercentage]),
+            AddNonReactantExcessReactant(\.instructToAddExtraReactant, highlights: [.excessReactantContainer]),
+            StopInput(\.explainExtraReactantNotReacting),
+            SetStatement(\.explainLimitingReagent),
+            FinalState(persistence: persistence)
+        ]
+    }
 }
 
 private let reactionDuration: TimeInterval = 3
@@ -249,5 +254,19 @@ private class AddNonReactantExcessReactant: SetStatement {
         model.components.shouldReactExcessReactant = true
         model.components.resetNonReactingExcessReactantCoords()
         model.shakeReactantModel.stopAll()
+    }
+}
+
+private class FinalState: LimitingReagentScreenState {
+    init(persistence: LimitingReagentPersistence) {
+        self.persistence = persistence
+    }
+
+    let persistence: LimitingReagentPersistence
+
+    override func apply(on model: LimitingReagentScreenViewModel) {
+        let statements = LimitingReagentReactionStatements(components: model.components)
+        model.statement = statements.explainExcessReactant
+        persistence.saveInput(model.components.input)
     }
 }

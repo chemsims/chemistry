@@ -156,6 +156,14 @@ extension LimitingReagentReaction {
         secondReaction
     ]
 
+    static func fromId(_ id: String) -> LimitingReagentReaction? {
+        switch id {
+        case firstReaction.id: return firstReaction
+        case secondReaction.id: return secondReaction
+        default: return nil
+        }
+    }
+
     private static let firstReaction = LimitingReagentReaction(
         yield: 0.98,
         limitingReactant: .init(

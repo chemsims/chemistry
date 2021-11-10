@@ -7,11 +7,11 @@ import SwiftUI
 
 class LimitingReagentScreenViewModel: ObservableObject {
 
-    init() {
+    init(persistence: LimitingReagentPersistence) {
         let reaction = LimitingReagentReaction.availableReactions.first!
         self.reaction = reaction
         self.components = LimitingReagentComponents(reaction: reaction)
-        self.navigation = LimitingReagentNavigationModel.model(using: self)
+        self.navigation = LimitingReagentNavigationModel.model(using: self, persistence: persistence)
         self.shakeReactantModel = .init(
             canAddMolecule: self.canAdd,
             addMolecules: self.add,
@@ -37,7 +37,7 @@ class LimitingReagentScreenViewModel: ObservableObject {
     @Published var highlights = HighlightedElements<ScreenElement>()
 
     private(set) var shakeReactantModel: MultiContainerShakeViewModel<LimitingReagentComponents.Reactant>!
-    private(set) var navigation: NavigationModel<LimitingReagentScreenState>!
+    var navigation: NavigationModel<LimitingReagentScreenState>!
 }
 
 // MARK: - Navigation

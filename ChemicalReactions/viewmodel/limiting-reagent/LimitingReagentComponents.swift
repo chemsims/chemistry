@@ -422,6 +422,76 @@ private extension LimitingReagentComponents {
     }
 }
 
+// MARK: Run automatic reaction
+extension LimitingReagentComponents {
+
+    var input: ReactionInput {
+        let setOfExcess = Set(excessReactantCoords)
+        let setOfProduct = Set(productCoords)
+        let excessWhichHasReacted = setOfExcess.intersection(setOfProduct)
+
+        // We minus one, because at the end of the initial reaction there is 1
+        // molecule left
+        let excessCount = excessReactantCoords.count - excessWhichHasReacted.count - 1
+
+        return ReactionInput(
+            reactionId: reaction.id,
+            rows: roundedRows,
+            limitingReactantAdded: limitingReactantCoords.count,
+            extraExcessReactantAdded: excessCount
+        )
+    }
+
+    func runCompleteReaction() {
+        addMaxLimitingReactant()
+        addMaxExcessReactant()
+        prepareReaction()
+        reactionProgress = 1
+        runAllReactionProgressReactions(duration: 0)
+        shouldReactExcessReactant = false
+        addMaxExcessReactant()
+
+        // Copy the progress so we jump to the end state without animation
+        reactionProgressModel = reactionProgressModel.copy()
+    }
+
+    func runCompleteReaction(using input: ReactionInput) {
+        guard input.limitingReactantAdded > 0, input.extraExcessReactantAdded > 0 else {
+            runCompleteReaction()
+            return
+        }
+        rows = CGFloat(input.rows)
+        addLimitingReactant(count: input.limitingReactantAdded)
+        if !hasAddedEnough(of: .limiting) {
+            addMaxLimitingReactant()
+        }
+
+        addMaxExcessReactant()
+        prepareReaction()
+        reactionProgress = 1
+        runAllReactionProgressReactions(duration: 0)
+        shouldReactExcessReactant = false
+
+        addExcessReactant(count: input.extraExcessReactantAdded)
+        if !hasAddedEnough(of: .excess) {
+            addMaxExcessReactant()
+        }
+
+        // Copy the progress so we jump to the end state without animation
+        reactionProgressModel = reactionProgressModel.copy()
+    }
+
+    private func addMaxLimitingReactant() {
+        let maxToAdd = maxLimitingReactantCount - limitingReactantCoords.count
+        addLimitingReactant(count: maxToAdd)
+    }
+
+    private func addMaxExcessReactant() {
+        let maxToAdd = maxExcessReactantCoords - excessReactantCoords.count
+        addExcessReactant(count: maxToAdd)
+    }
+}
+
 // MARK: - Types
 extension LimitingReagentComponents {
     enum Reactant: Int, CaseIterable, Identifiable {
@@ -474,6 +544,13 @@ extension LimitingReagentComponents {
 
         // Max number of molecules for any column
         let maxReactionProgressMolecules = 10
+    }
+
+    struct ReactionInput: Codable {
+        let reactionId: String
+        let rows: Int
+        let limitingReactantAdded: Int
+        let extraExcessReactantAdded: Int
     }
 }
 

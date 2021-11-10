@@ -18,6 +18,8 @@ protocol ChemicalReactionsInjector {
     var namePersistence: NamePersistence { get }
 
     var precipitationPersistence: PrecipitationInputPersistence { get }
+
+    var limitingReagentPersistence: LimitingReagentPersistence { get }
 }
 
 class ProductionChemicalReactionsInjector: ChemicalReactionsInjector {
@@ -41,6 +43,9 @@ class ProductionChemicalReactionsInjector: ChemicalReactionsInjector {
     let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 
     let precipitationPersistence: PrecipitationInputPersistence = PrecipitationInputPersistence()
+
+    let limitingReagentPersistence: LimitingReagentPersistence =
+        UserDefaultsLimitingReagentPersistence(prefix: userDefaultsPrefix)
 }
 
 class InMemoryChemicalReactionsInjector: ChemicalReactionsInjector {
@@ -60,6 +65,9 @@ class InMemoryChemicalReactionsInjector: ChemicalReactionsInjector {
     let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 
     let precipitationPersistence: PrecipitationInputPersistence = PrecipitationInputPersistence()
+
+    let limitingReagentPersistence: LimitingReagentPersistence =
+        InMemoryLimitingReagentPersistence()
 }
 
 private let userDefaultsPrefix = "chemical-reactions"

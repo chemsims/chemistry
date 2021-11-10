@@ -138,9 +138,18 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
 
         case .limitingReagent:
             return LimitingReagentScreenProvider(
+                persistence: injector.limitingReagentPersistence,
                 nextScreen: nextScreen,
                 prevScreen: prevScreen
             )
+
+        case .limitingReagentFilingCabinet:
+            return LimitingReagentFilingCabinetScreenProvider(
+                persistence: injector.limitingReagentPersistence,
+                nextScreen: nextScreen,
+                prevScreen: prevScreen
+            )
+
         case .precipitation:
             return PrecipitationScreenProvider(
                 persistence: injector.precipitationPersistence,
@@ -203,16 +212,36 @@ private class BalancedReactionFilingCabinetScreenProvider: ScreenProvider {
 
 private class LimitingReagentScreenProvider: ScreenProvider {
     init(
+        persistence: LimitingReagentPersistence,
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) {
-        let model = LimitingReagentScreenViewModel()
+        let model = LimitingReagentScreenViewModel(persistence: persistence)
         model.navigation.nextScreen = nextScreen
         model.navigation.prevScreen = prevScreen
         self.model = model
     }
 
     private let model: LimitingReagentScreenViewModel
+
+    var screen: AnyView {
+        AnyView(LimitingReagentScreen(model: model))
+    }
+}
+
+private class LimitingReagentFilingCabinetScreenProvider: ScreenProvider {
+    init(
+        persistence: LimitingReagentPersistence,
+        nextScreen: @escaping () -> Void,
+        prevScreen: @escaping () -> Void
+    ) {
+        let model = LimitingReagentFilingCabinetScreenViewModel(persistence: persistence)
+        model.navigation.nextScreen = nextScreen
+        model.navigation.prevScreen = prevScreen
+        self.model = model
+    }
+
+    private let model: LimitingReagentFilingCabinetScreenViewModel
 
     var screen: AnyView {
         AnyView(LimitingReagentScreen(model: model))

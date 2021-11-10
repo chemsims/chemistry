@@ -69,7 +69,10 @@ private enum TopLevelScreen: CaseIterable {
     }
 
     var filingCabinet: ChemicalReactionsScreen {
-        return .balancedReactionsFilingCabinet
+        switch self {
+        case .balancedReactions: return .balancedReactionsFilingCabinet
+        default: return .limitingReagentFilingCabinet
+        }
     }
 }
 
