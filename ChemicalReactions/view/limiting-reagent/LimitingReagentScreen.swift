@@ -95,6 +95,7 @@ private struct LimitingReagentTopStack: View {
         .frame(height: layout.common.reactionDefinitionHeight)
         .background(Color.white.padding(-0.1 * layout.common.reactionDefinitionHeight))
         .colorMultiply(model.highlights.colorMultiply(for: .reactionDefinitionStates))
+        .minimumScaleFactor(0.5)
     }
 
     private var reactionLine: TextLine {
