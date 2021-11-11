@@ -89,7 +89,12 @@ private struct ChemicalReactionsAppNavigationBehaviour: NavigationBehaviour {
     let injector: ChemicalReactionsInjector
 
     func deferCanSelect(of screen: ChemicalReactionsScreen) -> DeferCanSelect<ChemicalReactionsScreen>? {
-        return nil
+        switch screen {
+        case .balancedReactionsFilingCabinet: return .canSelect(other: .balancedReactionsQuiz)
+        case .limitingReagentFilingCabinet: return .canSelect(other: .limitingReagentQuiz)
+        case .precipitationFilingCabinet: return .canSelect(other: .precipitationQuiz)
+        default: return nil
+        }
     }
 
     func shouldRestoreStateWhenJumpingTo(screen: ChemicalReactionsScreen) -> Bool {
