@@ -17,7 +17,7 @@ class PrecipitationScreenNavigationTests: XCTestCase {
     }
 
     private func doTest<T: Equatable>(_ path: KeyPath<PrecipitationScreenViewModel, T>) {
-        let model = PrecipitationScreenViewModel(persistence: PrecipitationInputPersistence())
+        let model = PrecipitationScreenViewModel(persistence: InMemoryPrecipitationInputPersistence())
         checkPreviousValueIsReapplied(
             model: model,
             navigation: model.navigation!,

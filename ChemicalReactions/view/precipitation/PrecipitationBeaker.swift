@@ -239,7 +239,7 @@ struct PrecipitationBeaker: View {
             width: layout.common.beakerSettings.beakerWidth,
             height: layout.beakerToggleTextHeight
         )
-        .disabled(model.input == .weighProduct)
+        .disabled(model.beakerToggleIsDisabled)
         .colorMultiply(model.highlights.colorMultiply(for: nil))
     }
 

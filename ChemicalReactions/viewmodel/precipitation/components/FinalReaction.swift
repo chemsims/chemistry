@@ -39,7 +39,7 @@ extension PrecipitationComponents {
 
         let unknownReactantCoeff: Int
         let previous: PrecipitationComponents.ExtraUnknownReactantPreparation
-        let reactionProgressModel: ReactionProgressModel
+        private(set) var reactionProgressModel: ReactionProgressModel
 
         func initialCoords(for molecule: PrecipitationComponents.Molecule) -> [GridCoordinate] {
             if molecule == .product {
@@ -53,6 +53,10 @@ extension PrecipitationComponents {
                 return finalProductCoords
             }
             return []
+        }
+
+        mutating func copyReactionProgress() {
+            reactionProgressModel = reactionProgressModel.copy()
         }
 
         private let initialProductCoords: [GridCoordinate]

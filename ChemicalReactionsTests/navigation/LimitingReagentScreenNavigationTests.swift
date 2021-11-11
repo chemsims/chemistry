@@ -16,7 +16,7 @@ class LimitingReagentScreenNavigationTests: XCTestCase {
     }
 
     private func doTest<T: Equatable>(_ path: KeyPath<LimitingReagentScreenViewModel, T>) {
-        let model = LimitingReagentScreenViewModel()
+        let model = LimitingReagentScreenViewModel(persistence: InMemoryLimitingReagentPersistence())
         checkPreviousValueIsReapplied(
             model: model,
             navigation: model.navigation!,

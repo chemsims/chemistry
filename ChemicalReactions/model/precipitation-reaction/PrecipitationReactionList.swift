@@ -15,6 +15,14 @@ extension PrecipitationReaction {
         ]
     }
 
+    static func fromId(_ id: String, metal: Metal) -> PrecipitationReaction? {
+        switch id {
+        case firstReaction(metal: metal).id: return firstReaction(metal: metal)
+        case secondReaction(metal: metal).id: return secondReaction(metal: metal)
+        default: return nil
+        }
+    }
+
     private static func firstReaction(metal: Metal) -> PrecipitationReaction {
         PrecipitationReaction(
             knownReactant: .init(

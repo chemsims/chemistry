@@ -13,6 +13,7 @@ public enum ChemicalReactionsScreen: String, CaseIterable {
          limitingReagentFilingCabinet,
          precipitation,
          precipitationQuiz,
+         precipitationFilingCabinet,
          finalAppScreen
 
     var isQuiz: Bool {

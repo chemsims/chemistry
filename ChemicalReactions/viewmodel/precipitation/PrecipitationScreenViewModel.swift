@@ -68,6 +68,23 @@ class PrecipitationScreenViewModel: ObservableObject {
             volume: ChemicalReactionsSettings.rowsToVolume.getY(at: rows)
         )
     }
+
+    var beakerToggleIsDisabled: Bool {
+        input == .weighProduct
+    }
+
+    var nextIsDisabled : Bool {
+        switch input {
+        case .selectReaction:
+            return true
+        case let .addReactant(type):
+            return !components.hasAddedEnough(of: type)
+        case .weighProduct:
+            return precipitatePosition == .beaker
+        default:
+            return false
+        }
+    }
 }
 
 // MARK: - Navigation
@@ -101,19 +118,6 @@ extension PrecipitationScreenViewModel {
     private func doGoNext(force: Bool) {
         if force || !nextIsDisabled {
             navigation.next()
-        }
-    }
-
-    var nextIsDisabled : Bool {
-        switch input {
-        case .selectReaction:
-            return true
-        case let .addReactant(type):
-            return !components.hasAddedEnough(of: type)
-        case .weighProduct:
-            return precipitatePosition == .beaker
-        default:
-            return false
         }
     }
 }
@@ -182,7 +186,7 @@ extension PrecipitationScreenViewModel {
         }
     }
 
-    enum BeakerView {
+    enum BeakerView: Codable {
         case microscopic, macroscopic
     }
 

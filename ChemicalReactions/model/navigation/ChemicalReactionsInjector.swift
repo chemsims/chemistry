@@ -42,10 +42,11 @@ class ProductionChemicalReactionsInjector: ChemicalReactionsInjector {
 
     let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 
-    let precipitationPersistence: PrecipitationInputPersistence = PrecipitationInputPersistence()
-
     let limitingReagentPersistence: LimitingReagentPersistence =
         UserDefaultsLimitingReagentPersistence(prefix: userDefaultsPrefix)
+
+    let precipitationPersistence: PrecipitationInputPersistence =
+        UserDefaultsPrecipitationInputPersistence(prefix: userDefaultsPrefix)
 }
 
 class InMemoryChemicalReactionsInjector: ChemicalReactionsInjector {
@@ -64,10 +65,11 @@ class InMemoryChemicalReactionsInjector: ChemicalReactionsInjector {
 
     let namePersistence: NamePersistence = UserDefaultsNamePersistence()
 
-    let precipitationPersistence: PrecipitationInputPersistence = PrecipitationInputPersistence()
-
     let limitingReagentPersistence: LimitingReagentPersistence =
         InMemoryLimitingReagentPersistence()
+
+    let precipitationPersistence: PrecipitationInputPersistence =
+        InMemoryPrecipitationInputPersistence()
 }
 
 private let userDefaultsPrefix = "chemical-reactions"

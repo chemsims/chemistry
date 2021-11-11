@@ -8,6 +8,10 @@ import ReactionsCore
 struct PrecipitationStatements {
     private init() { }
 
+    static let filingCabinet: [TextLine] = [
+        "Check out the reaction you ran earlier!"
+    ]
+
     static let intro: [TextLine] = [
         """
         Stoichiometry has various applications. Let's find out more.

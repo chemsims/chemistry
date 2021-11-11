@@ -73,6 +73,10 @@ extension PrecipitationComponents {
             }
         }
 
+        mutating func addMaxMolecules() {
+            add(reactant: .unknown, count: underlying.maxToAdd)
+        }
+
         func canAdd(reactant: Reactant) -> Bool {
             reactant == .unknown && underlying.canAdd
         }

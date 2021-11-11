@@ -422,3 +422,74 @@ extension PrecipitationComponents {
         )
     }
 }
+
+// MARK: - Run automatic reaction
+extension PrecipitationComponents {
+
+    func runCompleteReaction() {
+        runCompleteReaction(input: nil)
+    }
+
+    func runCompleteReaction(using input: Input) {
+        runCompleteReaction(input: input)
+    }
+
+    private func runCompleteReaction(input: Input?) {
+        goNextTo(phase: .addKnownReactant)
+        if let input = input {
+            knownReactantPrep.add(
+                reactant: .known,
+                count: input.knownReactantAdded
+            )
+        }
+        if input == nil || !knownReactantPrep.hasAddedEnough(of: .known) {
+            knownReactantPrep.addMaxMolecules()
+        }
+
+        goNextTo(phase: .addUnknownReactant)
+        if let input = input {
+            unknownReactantPrep?.add(
+                reactant: .unknown,
+                count: input.initialUnknownReactantAdded
+            )
+        }
+        let didAddEnough = unknownReactantPrep?.hasAddedEnough(of: .unknown)
+        if input == nil || didAddEnough.contains(false) {
+            unknownReactantPrep?.addMaxMolecules()
+        }
+
+        goNextTo(phase: .runReaction)
+        completeReaction()
+
+        goNextTo(phase: .addExtraUnknownReactant)
+        extraUnknownReactantPrep?.addMaxMolecules()
+
+        goNextTo(phase: .runFinalReaction)
+        completeReaction()
+
+        // We copy the reaction progress to stop any running animations
+        finalReaction?.copyReactionProgress()
+    }
+}
+
+extension PrecipitationComponents {
+
+    var input: Input? {
+        if let unknownPrep = unknownReactantPrep {
+            let knownCount = knownReactantPrep.initialCoords(for: .knownReactant).count
+            let unknownCount = unknownPrep.initialCoords(for: .unknownReactant).count
+            return Input(
+                rows: grid.rows,
+                knownReactantAdded: knownCount,
+                initialUnknownReactantAdded: unknownCount
+            )
+        }
+        return nil
+    }
+
+    struct Input: Codable {
+        let rows: Int
+        let knownReactantAdded: Int
+        let initialUnknownReactantAdded: Int
+    }
+}

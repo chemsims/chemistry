@@ -392,7 +392,10 @@ private class EndFinalReaction: PrecipitationScreenState {
         withAnimation(.easeOut(duration: 0.35)) {
             model.components.completeReaction()
         }
-        persistence.components = model.components.copy()
-        persistence.beakerView = model.beakerView
+        if let input = model.components.input {
+            persistence.setComponentInput(input)
+        }
+        persistence.setReaction(model.chosenReaction)
+        persistence.setBeakerView(model.beakerView)
     }
 }
