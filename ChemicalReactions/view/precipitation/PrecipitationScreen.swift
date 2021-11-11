@@ -404,4 +404,25 @@ struct PrecipitationScreenLayout {
     var handWidth: CGFloat {
         2 * common.containerWidth
     }
+
+    // MARK: Run again popup
+    var runAgainButtonSize: CGSize {
+        let width = 0.5 * common.beakerSettings.beakerWidth
+        return CGSize(
+            width: width,
+            height: 0.3 * width
+        )
+    }
+
+    var runAgainFontSize: CGFloat {
+        0.5 * runAgainButtonSize.height
+    }
+
+    var runAgainButtonTopPadding: CGFloat {
+        0.05 * common.beakerSettings.beakerHeight
+    }
+
+    var runAgainButtonCornerRadius: CGFloat {
+        0.1 * runAgainButtonSize.height
+    }
 }

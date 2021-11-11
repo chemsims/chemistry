@@ -145,9 +145,38 @@ struct PrecipitationBeaker: View {
                 macroBeaker
                     .colorMultiply(model.highlights.colorMultiply(for: nil))
             }
+
+            if model.showReRunReactionButton {
+                runAgain
+            }
         }
         .accessibilityElement(children: .contain)
         .modifier(BeakerActionAccessibilityModifier(model: model))
+    }
+
+    private var runAgain: some View {
+        VStack(spacing: 0) {
+            
+            Button(action: model.runReactionAgain) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: layout.runAgainButtonCornerRadius)
+                        .foregroundColor(.gray.opacity(0.1))
+                    Text("Run again?")
+                        .foregroundColor(.orangeAccent)
+                }
+                .frame(size: layout.runAgainButtonSize)
+            }
+            .padding(.top, layout.runAgainButtonTopPadding)
+
+            Spacer()
+        }
+        .frame(
+            width: layout.common.beakerSettings.beakerWidth,
+            height: layout.common.beakerSettings.beakerHeight
+        )
+        .font(.system(size: layout.runAgainFontSize))
+        .minimumScaleFactor(0.5)
+        .horizontalSpacing(alignment: .trailing)
     }
 
     private var precipitate: some View {

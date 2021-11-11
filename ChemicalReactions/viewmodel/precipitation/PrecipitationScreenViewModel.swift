@@ -56,6 +56,7 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var showMovingHand = false
     @Published var highlights = HighlightedElements<ScreenElement>()
     @Published var emphasiseUnknownMetalSymbol = false
+    @Published var showReRunReactionButton = false
 
     var navigation: NavigationModel<PrecipitationScreenState>!
     @Published var components: PrecipitationComponents
@@ -95,6 +96,13 @@ extension PrecipitationScreenViewModel {
 
     func back() {
         navigation.back()
+    }
+
+    func runReactionAgain() {
+        guard showReRunReactionButton else {
+            return
+        }
+        back()
     }
 
     func accessibilityWeighProductAction() {

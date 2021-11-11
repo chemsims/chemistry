@@ -274,6 +274,7 @@ private class EndInitialReaction: SetStatement {
         super.apply(on: model)
         withAnimation(.easeOut(duration: 0.35)) {
             model.components.completeReaction()
+            model.showReRunReactionButton = true
         }
         model.input = .weighProduct
         model.precipitatePosition = .beaker
@@ -283,6 +284,7 @@ private class EndInitialReaction: SetStatement {
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.input = nil
         model.showMovingHand = false
+        model.showReRunReactionButton = false
     }
 
     override func delayedStates(model: PrecipitationScreenViewModel) -> [DelayedState<PrecipitationScreenState>] {
@@ -319,6 +321,7 @@ private class PostWeighingProduct: PrecipitationScreenState {
         model.equationState = .showAll
         model.showMovingHand = false
         model.highlights.elements = [.productMoles, .unknownReactantMoles]
+        model.showReRunReactionButton = false
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
@@ -391,11 +394,16 @@ private class EndFinalReaction: PrecipitationScreenState {
         model.statement = PrecipitationReactionStatements(reaction: model.chosenReaction).finalStatement
         withAnimation(.easeOut(duration: 0.35)) {
             model.components.completeReaction()
+            model.showReRunReactionButton = true
         }
         if let input = model.components.input {
             persistence.setComponentInput(input)
         }
         persistence.setReaction(model.chosenReaction)
         persistence.setBeakerView(model.beakerView)
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.showReRunReactionButton = false
     }
 }

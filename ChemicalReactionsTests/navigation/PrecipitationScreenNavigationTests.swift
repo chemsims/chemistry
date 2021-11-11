@@ -14,6 +14,7 @@ class PrecipitationScreenNavigationTests: XCTestCase {
         doTest(\.equationState)
         doTest(\.highlightedElements)
         doTest(\.showUnknownMetal)
+        doTest(\.showReRunReactionButton)
     }
 
     private func doTest<T: Equatable>(_ path: KeyPath<PrecipitationScreenViewModel, T>) {
