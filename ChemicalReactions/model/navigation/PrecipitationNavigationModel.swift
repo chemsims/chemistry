@@ -19,8 +19,21 @@ struct PrecipitationNavigationModel {
     }
 
     private static func states(persistence: PrecipitationInputPersistence) -> [PrecipitationScreenState] {
+        firstReaction(persistence: persistence) + secondReaction(persistence: persistence)
+    }
+
+    private static func firstReaction(persistence: PrecipitationInputPersistence) -> [PrecipitationScreenState] {
+        let initialReaction = [ChooseReaction(statements.intro, highlights: [.reactionToggle])]
+        return initialReaction + commonExperiment(persistence: persistence)
+    }
+
+    private static func secondReaction(persistence: PrecipitationInputPersistence) -> [PrecipitationScreenState] {
+        let initialReaction = [PrepareNewReaction(statements.chooseNextReaction)]
+        return initialReaction + commonExperiment(persistence: persistence)
+    }
+
+    private static func commonExperiment(persistence: PrecipitationInputPersistence) -> [PrecipitationScreenState] {
         [
-            ChooseReaction(statements.intro, highlights: [.reactionToggle]),
             StopInput(\.explainPrecipitation, highlights: [.reactionDefinition]),
             ExplainUnknownMetal(statements.explainUnknownMetal, highlights: [.reactionDefinition, .metalTable]),
             InstructToSetWaterLevel(statements.instructToSetWaterLevel, highlights: [.waterSlider]),
@@ -405,5 +418,28 @@ private class EndFinalReaction: PrecipitationScreenState {
 
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.showReRunReactionButton = false
+    }
+}
+
+private class PrepareNewReaction: SetStatement {
+
+    override func apply(on model: PrecipitationScreenViewModel) {
+        super.apply(on: model)
+        model.setNextReaction()
+        reapply(on: model)
+    }
+
+    override func reapply(on model: PrecipitationScreenViewModel) {
+        super.apply(on: model)
+        model.showReRunReactionButton = false
+        model.showUnknownMetal = false
+        model.equationState = .blank
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.setPreviousReaction()
+        model.showReRunReactionButton = true
+        model.showUnknownMetal = true
+        model.equationState = .showAll
     }
 }

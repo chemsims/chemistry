@@ -16,7 +16,6 @@ class PrecipitationScreenViewModel: ObservableObject {
 
         self.rows = CGFloat(initialRows)
         self.availableReactions = availableReactions
-        self.chosenReaction = chosenReaction
         self.components = PrecipitationComponents(
             reaction: chosenReaction,
             rows: initialRows,
@@ -39,15 +38,18 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var equationState = EquationState.blank
     @Published var rows: CGFloat {
         didSet {
-            setComponents()
+            setComponents(using: chosenReaction)
             if !highlights.elements.isEmpty {
                 highlights.clear()
             }
         }
     }
-    @Published var chosenReaction: PrecipitationReaction {
-        didSet {
-            setComponents()
+    var chosenReaction: PrecipitationReaction {
+        get {
+            components.reaction
+        }
+        set {
+            setComponents(using: newValue)
         }
     }
     @Published var showUnknownMetal = false
@@ -62,9 +64,9 @@ class PrecipitationScreenViewModel: ObservableObject {
     @Published var components: PrecipitationComponents
     private(set) var shakeModel: MultiContainerShakeViewModel<PrecipitationComponents.Reactant>!
 
-    private func setComponents() {
+    private func setComponents(using reaction: PrecipitationReaction) {
         self.components = PrecipitationComponents(
-            reaction: chosenReaction,
+            reaction: reaction,
             rows: GridCoordinateList.availableRows(for: rows),
             volume: ChemicalReactionsSettings.rowsToVolume.getY(at: rows)
         )
@@ -86,6 +88,15 @@ class PrecipitationScreenViewModel: ObservableObject {
             return false
         }
     }
+
+    func runReactionAgain() {
+        guard showReRunReactionButton else {
+            return
+        }
+        back()
+    }
+
+    private var previousComponents: (rows: CGFloat, components: PrecipitationComponents)?
 }
 
 // MARK: - Navigation
@@ -96,13 +107,6 @@ extension PrecipitationScreenViewModel {
 
     func back() {
         navigation.back()
-    }
-
-    func runReactionAgain() {
-        guard showReRunReactionButton else {
-            return
-        }
-        back()
     }
 
     func accessibilityWeighProductAction() {
@@ -121,6 +125,20 @@ extension PrecipitationScreenViewModel {
     func didSelectReaction() {
         doGoNext(force: true)
         UIAccessibility.post(notification: .screenChanged, argument: nil)
+    }
+
+    func setNextReaction() {
+        previousComponents = (rows: rows, components: components)
+        if let otherReaction = availableReactions.filter({ $0.id != chosenReaction.id }).first {
+            chosenReaction = otherReaction
+        }
+    }
+
+    func setPreviousReaction() {
+        if let previousComponents = previousComponents {
+            rows = previousComponents.rows
+            components = previousComponents.components
+        }
     }
 
     private func doGoNext(force: Bool) {

@@ -9,7 +9,7 @@ struct PrecipitationStatements {
     private init() { }
 
     static let filingCabinet: [TextLine] = [
-        "Check out the reaction you ran earlier!"
+        "Check out the reaction you ran earlier! Tap the run again button to see the last part of the reaction again."
     ]
 
     static let intro: [TextLine] = [
@@ -44,6 +44,9 @@ struct PrecipitationStatements {
         """
     ]
 
+    static let chooseNextReaction: [TextLine] = [
+        "Now, let's repeat the experiment with the other reaction!"
+    ]
 }
 
 struct PrecipitationReactionStatements {
