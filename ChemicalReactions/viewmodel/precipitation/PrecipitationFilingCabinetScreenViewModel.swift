@@ -21,6 +21,15 @@ class PrecipitationFilingCabinetScreenViewModel: PrecipitationScreenViewModel {
     override var nextIsDisabled: Bool {
         true
     }
+
+    override func runReactionAgain() {
+        withAnimation(.linear(duration: 0)) {
+            components.resetReaction()
+        }
+        withAnimation(.linear(duration: 3)) {
+            components.completeReaction()
+        }
+    }
 }
 
 private class NavState: PrecipitationScreenState {
@@ -37,6 +46,7 @@ private class NavState: PrecipitationScreenState {
         model.highlights.clear()
         model.equationState = .showAll
         model.showUnknownMetal = true
+        model.showReRunReactionButton = true
         if let componentInput = persistence.input, let reaction = persistence.reaction {
             model.chosenReaction = reaction
             model.rows = CGFloat(componentInput.rows)
