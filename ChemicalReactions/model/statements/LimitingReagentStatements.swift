@@ -67,6 +67,10 @@ struct LimitingReagentStatements {
         far from theory is the real mass obtained of the product.
         """
     ]
+
+    static let repeatWithOtherReaction: [TextLine] = [
+        "Now, let's repeat the experiment with the other reaction!"
+    ]
 }
 
 struct LimitingReagentReactionStatements {

@@ -115,7 +115,7 @@ private struct LimitingReagentTopStack: View {
     private var reactionToggle: some View {
         DropDownSelectionView(
             title: " Choose a reaction",
-            options: LimitingReagentReaction.availableReactions,
+            options: model.availableReactions,
             isToggled: .constant(model.input == .selectReaction),
             selection: $model.reaction,
             height: layout.common.reactionDefinitionHeight,

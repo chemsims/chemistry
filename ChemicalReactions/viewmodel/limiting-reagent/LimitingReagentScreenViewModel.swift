@@ -36,8 +36,12 @@ class LimitingReagentScreenViewModel: ObservableObject {
 
     @Published var highlights = HighlightedElements<ScreenElement>()
 
+    let availableReactions = LimitingReagentReaction.availableReactions
+
     private(set) var shakeReactantModel: MultiContainerShakeViewModel<LimitingReagentComponents.Reactant>!
     var navigation: NavigationModel<LimitingReagentScreenState>!
+
+    private var previousComponents: LimitingReagentComponents?
 }
 
 // MARK: - Navigation
@@ -55,6 +59,20 @@ extension LimitingReagentScreenViewModel {
 
     func didSelectReaction() {
         doGoNext()
+    }
+
+    func setNextReaction() {
+        if let otherReaction = availableReactions.filter({ $0.id != reaction.id }).first {
+            previousComponents = components
+            reaction = otherReaction
+        }
+    }
+
+    func setPreviousReaction() {
+        if let previous = previousComponents {
+            reaction = previous.reaction
+            components = previous
+        }
     }
 
     private func doGoNext() {

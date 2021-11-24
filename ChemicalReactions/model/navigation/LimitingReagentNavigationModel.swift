@@ -18,13 +18,30 @@ struct LimitingReagentNavigationModel {
     }
 
     private static func states(persistence: LimitingReagentPersistence) -> [LimitingReagentScreenState] {
-        [
+        let firstReaction = firstReactionStates(persistence: persistence)
+        let secondReaction = secondReactionStates(persistence: persistence)
+        return firstReaction + secondReaction
+    }
+
+    private static func firstReactionStates(persistence: LimitingReagentPersistence) -> [LimitingReagentScreenState] {
+        let initial = [
             SelectReaction(statements.intro, highlights: [.selectReaction]),
             StopInput(statements.explainStoichiometry),
             SetStatement(statements.introducePhysicalStates, highlights: [.reactionDefinitionStates]),
             SetStatement(statements.explainEachPhysicalState),
             SetStatement(statements.explainMoles),
-            SetStatement(statements.explainAvogadroNumber),
+            SetStatement(statements.explainAvogadroNumber)
+        ]
+        return initial + commonStates(persistence: persistence)
+    }
+
+    private static func secondReactionStates(persistence: LimitingReagentPersistence) -> [LimitingReagentScreenState] {
+        let initial = [PrepareNewReaction(statements.repeatWithOtherReaction)]
+        return initial + commonStates(persistence: persistence)
+    }
+
+    private static func commonStates(persistence: LimitingReagentPersistence) -> [LimitingReagentScreenState] {
+        [
             SetWaterLevel(statements.instructToSetVolume, highlights: [.beakerSlider]),
             AddLimitingReactant(\.instructToAddLimitingReactant, highlights: [.limitingReactantContainer]),
             StopInput(\.explainMolarity),
@@ -268,5 +285,25 @@ private class FinalState: LimitingReagentScreenState {
         let statements = LimitingReagentReactionStatements(components: model.components)
         model.statement = statements.explainExcessReactant
         persistence.saveInput(model.components.input)
+    }
+}
+
+private class PrepareNewReaction: SetStatement {
+    override func apply(on model: LimitingReagentScreenViewModel) {
+        super.apply(on: model)
+        model.setNextReaction()
+        reapply(on: model)
+    }
+
+    override func reapply(on model: LimitingReagentScreenViewModel) {
+        super.apply(on: model)
+        model.input = nil
+        model.highlights.clear()
+        model.equationState = .showVolume
+    }
+
+    override func unapply(on model: LimitingReagentScreenViewModel) {
+        model.equationState = .showActualData
+        model.setPreviousReaction()
     }
 }
