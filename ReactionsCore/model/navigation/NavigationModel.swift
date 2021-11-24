@@ -61,7 +61,7 @@ public class NavigationModel<State: ScreenState> {
         }
     }
 
-    var hasNext: Bool {
+    public var hasNext: Bool {
         currentNode.next(model: model) != nil
     }
 

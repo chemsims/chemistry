@@ -19,9 +19,13 @@ struct LimitingReagentNavigationModel {
 
     static func filingCabinetModel(
         using viewModel: LimitingReagentScreenViewModel,
-        persistence: LimitingReagentPersistence
+        persistence: LimitingReagentPersistence,
+        reactionIndex: Int
     ) -> NavigationModel<LimitingReagentScreenState> {
-        NavigationModel(model: viewModel, states: filingCabinetStates(persistence: persistence))
+        NavigationModel(
+            model: viewModel,
+            states: filingCabinetStates(persistence: persistence, reactionIndex: reactionIndex)
+        )
     }
 
     private static func states(persistence: LimitingReagentPersistence) -> [LimitingReagentScreenState] {
@@ -69,11 +73,14 @@ struct LimitingReagentNavigationModel {
         ]
     }
 
-    private static func filingCabinetStates(persistence: LimitingReagentPersistence) -> [LimitingReagentScreenState] {
+    private static func filingCabinetStates(
+        persistence: LimitingReagentPersistence,
+        reactionIndex: Int
+    ) -> [LimitingReagentScreenState] {
         [
-            FilingInitialState(persistence: persistence),
+            FilingInitialState(persistence: persistence, reactionIndex: reactionIndex),
             AddNonReactingExcessReactant(statements.filingCabinetInstructToAddExcessReactant),
-            StopInput(statements.filingCabinetFirstReactionPostAddingExcessReactant)
+            StopInput(statements.filingCabinetFirstReactionPostAddingExcessReactant(reactionIndex: reactionIndex))
         ]
     }
 }
@@ -299,7 +306,7 @@ private class FinalState: LimitingReagentScreenState {
     override func apply(on model: LimitingReagentScreenViewModel) {
         let statements = LimitingReagentReactionStatements(components: model.components)
         model.statement = statements.explainExcessReactant
-        persistence.saveInput(model.components.input)
+        persistence.saveInput(reaction: model.reaction, model.components.input)
     }
 }
 
@@ -325,11 +332,13 @@ private class PrepareNewReaction: SetStatement {
 
 private class FilingInitialState: LimitingReagentScreenState {
 
-    init(persistence: LimitingReagentPersistence) {
+    init(persistence: LimitingReagentPersistence, reactionIndex: Int) {
         self.persistence = persistence
+        self.reactionIndex = reactionIndex
     }
 
     let persistence: LimitingReagentPersistence
+    let reactionIndex: Int
 
     override func apply(on model: LimitingReagentScreenViewModel) {
         model.statement = statements.filingCabinet
@@ -337,9 +346,10 @@ private class FilingInitialState: LimitingReagentScreenState {
         model.highlights.clear()
         model.equationState = .showActualData
 
-        if let input = persistence.input,
-           let reaction = LimitingReagentReaction.fromId(input.reactionId) {
-            model.reaction = reaction
+        let reaction = LimitingReagentReaction.availableReactions[safe: reactionIndex] ?? LimitingReagentReaction.availableReactions[0]
+        model.reaction = reaction
+
+        if let input = persistence.getInput(reaction: reaction) {
             model.components.runCompleteReaction(using: input)
         } else {
             model.components.runCompleteReaction()

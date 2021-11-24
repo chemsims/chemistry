@@ -20,6 +20,7 @@ class LimitingReagentScreenViewModel: ObservableObject {
         self.components.didSetRows = { [weak self] in
             self?.highlights.clear()
         }
+        updateCanGoNext()
     }
 
     @Published var statement = [TextLine]()
@@ -31,17 +32,25 @@ class LimitingReagentScreenViewModel: ObservableObject {
         }
     }
 
-    @Published var input: InputState? = nil
+    @Published var input: InputState? = nil {
+        didSet {
+            updateCanGoNext()
+        }
+    }
     @Published var equationState = EquationState.showVolume
 
     @Published var highlights = HighlightedElements<ScreenElement>()
+
+
 
     let availableReactions = LimitingReagentReaction.availableReactions
 
     private(set) var shakeReactantModel: MultiContainerShakeViewModel<LimitingReagentComponents.Reactant>!
     var navigation: NavigationModel<LimitingReagentScreenState>!
 
-    var nextIsDisabled: Bool {
+    // We want this to be a computed property to trigger redraws when it changes
+    @Published var nextIsDisabled = false
+    var nextIsDisabledComputedProperty: Bool {
         switch input {
         case let .addReactant(type):
             return !components.hasAddedEnough(of: type)
@@ -51,21 +60,25 @@ class LimitingReagentScreenViewModel: ObservableObject {
         }
     }
 
+    func next() {
+        updateCanGoNext()
+        guard !nextIsDisabled else {
+            return
+        }
+        doGoNext()
+
+    }
+
+    func back() {
+        navigation.back()
+        updateCanGoNext()
+    }
+
     private var previousComponents: LimitingReagentComponents?
 }
 
 // MARK: - Navigation
 extension LimitingReagentScreenViewModel {
-    func next() {
-        guard !nextIsDisabled else {
-            return
-        }
-        doGoNext()
-    }
-
-    func back() {
-        navigation.back()
-    }
 
     func didSelectReaction() {
         doGoNext()
@@ -87,6 +100,11 @@ extension LimitingReagentScreenViewModel {
 
     private func doGoNext() {
         navigation.next()
+        updateCanGoNext()
+    }
+
+    func updateCanGoNext() {
+        nextIsDisabled = nextIsDisabledComputedProperty
     }
 }
 
@@ -110,6 +128,7 @@ extension LimitingReagentScreenViewModel {
             doGoNext()
             UIAccessibility.post(notification: .screenChanged, argument: nil)
         }
+        updateCanGoNext()
     }
 }
 

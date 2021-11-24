@@ -79,12 +79,16 @@ struct LimitingReagentStatements {
         """
     ]
 
-    static let filingCabinetFirstReactionPostAddingExcessReactant: [TextLine] = [
+    static func filingCabinetFirstReactionPostAddingExcessReactant(reactionIndex: Int) -> [TextLine] {
+        let swipeDir = reactionIndex == 0 ? "left" : "right"
+        let tapDir = reactionIndex == 0 ? "right" : "back"
+        return [
         """
-        The reactant you added did not react! Tap next or swipe left to check out the other \
+        The reactant you added did not react! Tap \(tapDir) or swipe \(swipeDir) to check out the other \
         reaction you prepared earlier.
         """
-    ]
+        ]
+    }
 
 }
 

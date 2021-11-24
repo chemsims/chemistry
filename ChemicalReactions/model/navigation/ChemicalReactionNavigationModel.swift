@@ -249,16 +249,13 @@ private class LimitingReagentFilingCabinetScreenProvider: ScreenProvider {
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) {
-        let model = LimitingReagentFilingCabinetScreenViewModel(persistence: persistence)
-        model.navigation.nextScreen = nextScreen
-        model.navigation.prevScreen = prevScreen
-        self.model = model
+        self.model = LimitingReagentFilingCabinetPagingViewModel(persistence: persistence)
     }
 
-    private let model: LimitingReagentFilingCabinetScreenViewModel
+    private let model: LimitingReagentFilingCabinetPagingViewModel
 
     var screen: AnyView {
-        AnyView(LimitingReagentScreen(model: model))
+        AnyView(LimitingReagentFilingCabinetScreen(pagingModel: model))
     }
 }
 

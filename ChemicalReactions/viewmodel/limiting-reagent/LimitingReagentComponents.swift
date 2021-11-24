@@ -427,7 +427,6 @@ extension LimitingReagentComponents {
 
     var input: ReactionInput {
         ReactionInput(
-            reactionId: reaction.id,
             rows: roundedRows,
             limitingReactantAdded: limitingReactantCoords.count
         )
@@ -532,7 +531,6 @@ extension LimitingReagentComponents {
     }
 
     struct ReactionInput: Codable {
-        let reactionId: String
         let rows: Int
         let limitingReactantAdded: Int
     }
