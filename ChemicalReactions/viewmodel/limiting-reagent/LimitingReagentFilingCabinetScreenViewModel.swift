@@ -10,17 +10,22 @@ struct LimitingReagentFilingCabinetScreen: View {
     @ObservedObject var pagingModel: LimitingReagentFilingCabinetPagingViewModel
 
     var body: some View {
-        PageViewController(
-            pages: [
-                getView(page: 0),
-                getView(page: 1)
-            ],
-            currentPage: $pagingModel.currentPage
-        )
+        GeometryReader { geo in
+            PageViewController(
+                pages: [
+                    getView(page: 0, geo),
+                    getView(page: 1, geo)
+                ],
+                currentPage: $pagingModel.currentPage
+            )
+        }
     }
 
-    private func getView(page: Int) -> some View {
+    // Wee must give this an explicit frame, otherwise there is a large
+    // layout shift when the view appears
+    private func getView(page: Int, _ geo: GeometryProxy) -> some View {
         LimitingReagentScreen(model: pagingModel.model(page: page))
+            .frame(size: geo.size)
     }
 }
 
