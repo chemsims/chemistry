@@ -341,11 +341,6 @@ private class FilingInitialState: LimitingReagentScreenState {
     let reactionIndex: Int
 
     override func apply(on model: LimitingReagentScreenViewModel) {
-        model.statement = statements.filingCabinet
-        model.input = nil
-        model.highlights.clear()
-        model.equationState = .showActualData
-
         let reaction = LimitingReagentReaction.availableReactions[safe: reactionIndex] ?? LimitingReagentReaction.availableReactions[0]
         model.reaction = reaction
 
@@ -354,5 +349,14 @@ private class FilingInitialState: LimitingReagentScreenState {
         } else {
             model.components.runCompleteReaction()
         }
+
+        reapply(on: model)
+    }
+
+    override func reapply(on model: LimitingReagentScreenViewModel) {
+        model.statement = statements.filingCabinet
+        model.input = nil
+        model.highlights.clear()
+        model.equationState = .showActualData
     }
 }
