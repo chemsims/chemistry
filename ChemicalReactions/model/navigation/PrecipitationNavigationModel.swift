@@ -422,7 +422,7 @@ private class EndFinalReaction: PrecipitationScreenState {
             model.components.completeReaction()
             model.showReRunReactionButton = true
         }
-        if let input = model.components.input, let reactionIndex = model.reactionIndex {
+        if let input = model.components.input(rows: model.rows), let reactionIndex = model.reactionIndex {
             persistence.setComponentInput(reactionIndex: reactionIndex, input: input)
             persistence.setLastChosenReactionIndex(reactionIndex)
             persistence.setLastChosenReactionMetal(model.chosenReaction.unknownReactant.metal)

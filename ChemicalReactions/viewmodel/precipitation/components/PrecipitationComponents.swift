@@ -474,12 +474,13 @@ extension PrecipitationComponents {
 
 extension PrecipitationComponents {
 
-    var input: Input? {
+    /// - Parameter rows: The exact number of rows in the beaker
+    func input(rows: CGFloat) -> Input? {
         if let unknownPrep = unknownReactantPrep {
             let knownCount = knownReactantPrep.initialCoords(for: .knownReactant).count
             let unknownCount = unknownPrep.initialCoords(for: .unknownReactant).count
             return Input(
-                rows: grid.rows,
+                rows: rows,
                 knownReactantAdded: knownCount,
                 initialUnknownReactantAdded: unknownCount,
                 reactantMetal: reaction.unknownReactant.metal
@@ -489,7 +490,7 @@ extension PrecipitationComponents {
     }
 
     struct Input: Codable {
-        let rows: Int
+        let rows: CGFloat
         let knownReactantAdded: Int
         let initialUnknownReactantAdded: Int
         let reactantMetal: PrecipitationReaction.Metal

@@ -106,7 +106,7 @@ private class NavState: PrecipitationScreenState {
         }
         if let input = persistence.getComponentInput(reactionIndex: reactionIndex) {
             model.chosenReaction = model.chosenReaction.replacingMetal(with: input.reactantMetal)
-            model.rows = CGFloat(input.rows)
+            model.rows = input.rows
             model.components.runCompleteReaction(using: input)
         } else {
             model.components.runCompleteReaction()

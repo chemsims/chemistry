@@ -360,7 +360,7 @@ private class FinalPrecipitationState: PrecipitationScreenState {
            let lastMetal = persistence.lastChosenReactionMetal,
            let componentInput = persistence.getComponentInput(reactionIndex: lastIndex),
            lastIndex >= 0 && lastIndex < model.availableReactions.count {
-            model.rows = CGFloat(componentInput.rows)
+            model.rows = componentInput.rows
             model.chosenReaction = model.availableReactions[lastIndex]
             model.chosenReaction = model.chosenReaction.replacingMetal(with: lastMetal)
             model.components.runCompleteReaction(using: componentInput)
