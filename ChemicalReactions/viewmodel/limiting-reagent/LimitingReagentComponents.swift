@@ -426,19 +426,10 @@ private extension LimitingReagentComponents {
 extension LimitingReagentComponents {
 
     var input: ReactionInput {
-        let setOfExcess = Set(excessReactantCoords)
-        let setOfProduct = Set(productCoords)
-        let excessWhichHasReacted = setOfExcess.intersection(setOfProduct)
-
-        // We minus one, because at the end of the initial reaction there is 1
-        // molecule left
-        let excessCount = excessReactantCoords.count - excessWhichHasReacted.count - 1
-
-        return ReactionInput(
+        ReactionInput(
             reactionId: reaction.id,
             rows: roundedRows,
-            limitingReactantAdded: limitingReactantCoords.count,
-            extraExcessReactantAdded: excessCount
+            limitingReactantAdded: limitingReactantCoords.count
         )
     }
 
@@ -455,7 +446,7 @@ extension LimitingReagentComponents {
     }
 
     func runCompleteReaction(using input: ReactionInput) {
-        guard input.limitingReactantAdded > 0, input.extraExcessReactantAdded > 0 else {
+        guard input.limitingReactantAdded > 0 else {
             runCompleteReaction()
             return
         }
@@ -544,7 +535,6 @@ extension LimitingReagentComponents {
         let reactionId: String
         let rows: Int
         let limitingReactantAdded: Int
-        let extraExcessReactantAdded: Int
     }
 }
 
