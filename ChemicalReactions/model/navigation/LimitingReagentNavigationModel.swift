@@ -17,6 +17,13 @@ struct LimitingReagentNavigationModel {
         NavigationModel(model: viewModel, states: states(persistence: persistence))
     }
 
+    static func filingCabinetModel(
+        using viewModel: LimitingReagentScreenViewModel,
+        persistence: LimitingReagentPersistence
+    ) -> NavigationModel<LimitingReagentScreenState> {
+        NavigationModel(model: viewModel, states: filingCabinetStates(persistence: persistence))
+    }
+
     private static func states(persistence: LimitingReagentPersistence) -> [LimitingReagentScreenState] {
         let firstReaction = firstReactionStates(persistence: persistence)
         let secondReaction = secondReactionStates(persistence: persistence)
@@ -55,10 +62,18 @@ struct LimitingReagentNavigationModel {
             EndOfReaction(\.endOfReaction),
             SetStatement(statements.explainYieldPercentage),
             SetStatement(\.showYield, highlights: [.productYieldPercentage]),
-            AddNonReactantExcessReactant(\.instructToAddExtraReactant, highlights: [.excessReactantContainer]),
+            AddNonReactingExcessReactant(\.instructToAddExtraReactant, highlights: [.excessReactantContainer]),
             StopInput(\.explainExtraReactantNotReacting),
             SetStatement(\.explainLimitingReagent),
             FinalState(persistence: persistence)
+        ]
+    }
+
+    private static func filingCabinetStates(persistence: LimitingReagentPersistence) -> [LimitingReagentScreenState] {
+        [
+            FilingInitialState(persistence: persistence),
+            AddNonReactingExcessReactant(statements.filingCabinetInstructToAddExcessReactant),
+            StopInput(statements.filingCabinetFirstReactionPostAddingExcessReactant)
         ]
     }
 }
@@ -254,7 +269,7 @@ private class EndOfReaction: SetStatement {
     }
 }
 
-private class AddNonReactantExcessReactant: SetStatement {
+private class AddNonReactingExcessReactant: SetStatement {
     override func apply(on model: LimitingReagentScreenViewModel) {
         super.apply(on: model)
         model.input = .addReactant(type: .excess)
@@ -305,5 +320,29 @@ private class PrepareNewReaction: SetStatement {
     override func unapply(on model: LimitingReagentScreenViewModel) {
         model.equationState = .showActualData
         model.setPreviousReaction()
+    }
+}
+
+private class FilingInitialState: LimitingReagentScreenState {
+
+    init(persistence: LimitingReagentPersistence) {
+        self.persistence = persistence
+    }
+
+    let persistence: LimitingReagentPersistence
+
+    override func apply(on model: LimitingReagentScreenViewModel) {
+        model.statement = statements.filingCabinet
+        model.input = nil
+        model.highlights.clear()
+        model.equationState = .showActualData
+
+        if let input = persistence.input,
+           let reaction = LimitingReagentReaction.fromId(input.reactionId) {
+            model.reaction = reaction
+            model.components.runCompleteReaction(using: input)
+        } else {
+            model.components.runCompleteReaction()
+        }
     }
 }

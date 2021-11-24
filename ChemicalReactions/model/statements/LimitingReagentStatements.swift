@@ -6,8 +6,6 @@ import ReactionsCore
 
 struct LimitingReagentStatements {
 
-    static let filingCabinet: [TextLine] = ["Check out the reaction you ran earlier!"]
-
     static let intro: [TextLine] = [
         """
         Now that we know how reactions have their own equation, we should learn how to use \
@@ -71,6 +69,23 @@ struct LimitingReagentStatements {
     static let repeatWithOtherReaction: [TextLine] = [
         "Now, let's repeat the experiment with the other reaction!"
     ]
+
+    static let filingCabinet: [TextLine] = ["Check out the reaction you ran earlier!"]
+
+    static let filingCabinetInstructToAddExcessReactant: [TextLine] = [
+        """
+        Remember, when we added more reactant it did not react. Why don't you \
+        try adding some reactant again? *Shake the container!*
+        """
+    ]
+
+    static let filingCabinetFirstReactionPostAddingExcessReactant: [TextLine] = [
+        """
+        The reactant you added did not react! Tap next or swipe left to check out the other \
+        reaction you prepared earlier.
+        """
+    ]
+
 }
 
 struct LimitingReagentReactionStatements {

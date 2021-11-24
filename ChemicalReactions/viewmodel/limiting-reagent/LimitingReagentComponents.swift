@@ -449,7 +449,6 @@ extension LimitingReagentComponents {
         reactionProgress = 1
         runAllReactionProgressReactions(duration: 0)
         shouldReactExcessReactant = false
-        addMaxExcessReactant()
 
         // Copy the progress so we jump to the end state without animation
         reactionProgressModel = reactionProgressModel.copy()
@@ -471,11 +470,6 @@ extension LimitingReagentComponents {
         reactionProgress = 1
         runAllReactionProgressReactions(duration: 0)
         shouldReactExcessReactant = false
-
-        addExcessReactant(count: input.extraExcessReactantAdded)
-        if !hasAddedEnough(of: .excess) {
-            addMaxExcessReactant()
-        }
 
         // Copy the progress so we jump to the end state without animation
         reactionProgressModel = reactionProgressModel.copy()

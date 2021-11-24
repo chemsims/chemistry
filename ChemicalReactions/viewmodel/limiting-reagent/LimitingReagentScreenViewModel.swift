@@ -41,6 +41,16 @@ class LimitingReagentScreenViewModel: ObservableObject {
     private(set) var shakeReactantModel: MultiContainerShakeViewModel<LimitingReagentComponents.Reactant>!
     var navigation: NavigationModel<LimitingReagentScreenState>!
 
+    var nextIsDisabled: Bool {
+        switch input {
+        case let .addReactant(type):
+            return !components.hasAddedEnough(of: type)
+        case .selectReaction:
+            return true
+        default: return false
+        }
+    }
+
     private var previousComponents: LimitingReagentComponents?
 }
 
@@ -77,16 +87,6 @@ extension LimitingReagentScreenViewModel {
 
     private func doGoNext() {
         navigation.next()
-    }
-
-    var nextIsDisabled: Bool {
-        switch input {
-        case let .addReactant(type):
-            return !components.hasAddedEnough(of: type)
-        case .selectReaction:
-            return true
-        default: return false
-        }
     }
 }
 
