@@ -427,7 +427,7 @@ extension LimitingReagentComponents {
 
     var input: ReactionInput {
         ReactionInput(
-            rows: roundedRows,
+            rows: rows,
             limitingReactantAdded: limitingReactantCoords.count
         )
     }
@@ -449,7 +449,7 @@ extension LimitingReagentComponents {
             runCompleteReaction()
             return
         }
-        rows = CGFloat(input.rows)
+        rows = input.rows
         addLimitingReactant(count: input.limitingReactantAdded)
         if !hasAddedEnough(of: .limiting) {
             addMaxLimitingReactant()
@@ -531,7 +531,7 @@ extension LimitingReagentComponents {
     }
 
     struct ReactionInput: Codable {
-        let rows: Int
+        let rows: CGFloat
         let limitingReactantAdded: Int
     }
 }
