@@ -40,7 +40,8 @@ struct PrecipitationNavigationModel {
             InstructToAddKnownReactant(\.instructToAddKnownReactant, highlights: [.knownReactantContainer]),
             InstructToAddUnknownReactant(),
             RunInitialReaction(),
-            EndInitialReaction(\.instructToWeighProduct),
+            EndInitialReaction(\.endOfInitialReaction, highlights: [.beaker, .beakerToggle]),
+            InitialWeightProduct(\.instructToWeighProduct),
             PostWeighingProduct(),
             RevealUnknownMetal(),
             AddExtraKnownReactant(\.instructToAddFurtherUnknownReactant),
@@ -289,15 +290,27 @@ private class EndInitialReaction: SetStatement {
             model.components.completeReaction()
             model.showReRunReactionButton = true
         }
+        model.input = nil
+        model.showReRunReactionButton = true
+    }
+
+    override func unapply(on model: PrecipitationScreenViewModel) {
+        model.showReRunReactionButton = false
+    }
+}
+
+private class InitialWeightProduct: SetStatement {
+    override func apply(on model: PrecipitationScreenViewModel) {
+        super.apply(on: model)
         model.input = .weighProduct
         model.precipitatePosition = .beaker
         model.beakerView = .macroscopic
+        model.showReRunReactionButton = false
     }
 
     override func unapply(on model: PrecipitationScreenViewModel) {
         model.input = nil
         model.showMovingHand = false
-        model.showReRunReactionButton = false
     }
 
     override func delayedStates(model: PrecipitationScreenViewModel) -> [DelayedState<PrecipitationScreenState>] {

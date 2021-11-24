@@ -128,6 +128,7 @@ struct PrecipitationBeaker: View {
     private var beaker: some View {
         VStack(alignment: .trailing, spacing: 0) {
             beakers
+                .zIndex(1)
             selectionToggle
         }
         .padding(.bottom, layout.common.beakerBottomPadding)
@@ -143,7 +144,7 @@ struct PrecipitationBeaker: View {
 
             if model.beakerView == .macroscopic {
                 macroBeaker
-                    .colorMultiply(model.highlights.colorMultiply(for: nil))
+                    .colorMultiply(model.highlights.colorMultiply(for: .beaker))
             }
 
             if model.showReRunReactionButton {
@@ -224,7 +225,7 @@ struct PrecipitationBeaker: View {
             currentTime: components.reactionProgress,
             settings: layout.common.beakerSettings,
             canSetLevel: model.input == .setWaterLevel,
-            beakerColorMultiply: model.highlights.colorMultiply(for: nil),
+            beakerColorMultiply: model.highlights.colorMultiply(for: .beaker),
             sliderColorMultiply: model.highlights.colorMultiply(for: .waterSlider),
             beakerModifier: IdentityViewModifier()
         )
@@ -269,7 +270,8 @@ struct PrecipitationBeaker: View {
             height: layout.beakerToggleTextHeight
         )
         .disabled(model.beakerToggleIsDisabled)
-        .colorMultiply(model.highlights.colorMultiply(for: nil))
+        .background(Color.white)
+        .colorMultiply(model.highlights.colorMultiply(for: .beakerToggle))
     }
 
     private var movingHand: some View {

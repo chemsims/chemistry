@@ -234,6 +234,8 @@ extension PrecipitationScreenViewModel {
              unknownReactantMoles,
              unknownReactantMolarMass,
              correctMetalRow,
-             metalTable
+             metalTable,
+             beaker,
+             beakerToggle
     }
 }

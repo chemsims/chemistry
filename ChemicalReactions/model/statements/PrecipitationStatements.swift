@@ -119,6 +119,16 @@ struct PrecipitationReactionStatements {
         ]
     }
 
+    let endOfInitialReaction: [TextLine] = [
+        """
+        The reaction is complete! Why don't you check out the \
+        macroscopic beaker to see the precipitate you produced! *Tap the toggle.*
+        """,
+        """
+        You can also tap back or the run again button to see the reaction again.
+        """
+    ]
+
     var instructToWeighProduct: [TextLine] {
         [
             """
