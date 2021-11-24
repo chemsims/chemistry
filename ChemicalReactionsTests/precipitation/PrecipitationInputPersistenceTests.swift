@@ -13,28 +13,19 @@ class PrecipitationInputPersistenceTests: XCTestCase {
 
     func testSavingInput() {
         let model = UserDefaultsPrecipitationInputPersistence(prefix: "test")
-        XCTAssertNil(model.input)
+        XCTAssertNil(model.getComponentInput(reactionIndex: 0))
 
         let input = PrecipitationComponents.Input(
             rows: 5,
             knownReactantAdded: 4,
-            initialUnknownReactantAdded: 3
+            initialUnknownReactantAdded: 3,
+            reactantMetal: .K
         )
-        model.setComponentInput(input)
-        XCTAssertEqual(model.input?.rows, input.rows)
-        XCTAssertEqual(model.input?.initialUnknownReactantAdded, input.initialUnknownReactantAdded)
-        XCTAssertEqual(model.input?.knownReactantAdded, input.knownReactantAdded)
-    }
-
-    func testSavingReaction() {
-        let model = UserDefaultsPrecipitationInputPersistence(prefix: "test")
-        XCTAssertNil(model.reaction)
-
-        let reaction = PrecipitationReaction.availableReactionsWithRandomMetals().randomElement()!
-        model.setReaction(reaction)
-
-        XCTAssertEqual(model.reaction?.id, reaction.id)
-        XCTAssertEqual(model.reaction?.unknownReactant.metal, reaction.unknownReactant.metal)
+        model.setComponentInput(reactionIndex: 0, input: input)
+        let saved = model.getComponentInput(reactionIndex: 0)
+        XCTAssertEqual(saved?.rows, input.rows)
+        XCTAssertEqual(saved?.initialUnknownReactantAdded, input.initialUnknownReactantAdded)
+        XCTAssertEqual(saved?.knownReactantAdded, input.knownReactantAdded)
     }
 
     func testSavingBeakerView() {
