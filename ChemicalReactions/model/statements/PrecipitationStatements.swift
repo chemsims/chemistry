@@ -8,9 +8,14 @@ import ReactionsCore
 struct PrecipitationStatements {
     private init() { }
 
-    static let filingCabinet: [TextLine] = [
-        "Check out the reaction you ran earlier! Tap the run again button to see the last part of the reaction again."
-    ]
+    static func filingCabinet(index: Int) -> [TextLine] {
+        let swipeDir = index == 0 ? "left" : "right"
+        let navDir = index == 0 ? "next" : "back"
+        return [
+            "Check out the reaction you ran earlier! Tap the run again button to see the last part of the reaction again.",
+            "Swipe \(swipeDir) or tap \(navDir) to see the other reaction."
+        ]
+    }
 
     static let intro: [TextLine] = [
         """

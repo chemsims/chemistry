@@ -97,6 +97,10 @@ class PrecipitationScreenViewModel: ObservableObject {
     }
 
     private var previousComponents: (rows: CGFloat, components: PrecipitationComponents)?
+
+    var reactionIndex: Int? {
+        availableReactions.firstIndex { $0.id == chosenReaction.id }
+    }
 }
 
 // MARK: - Navigation

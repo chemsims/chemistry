@@ -29,6 +29,15 @@ struct PrecipitationReaction: Identifiable, Equatable {
         )
     }
 
+    func replacingMetal(with newMetal: Metal) -> PrecipitationReaction {
+        PrecipitationReaction(
+            knownReactant: knownReactant,
+            unknownReactant: unknownReactant.replacingMetal(with: newMetal),
+            product: product,
+            secondaryProduct: secondaryProduct.replacingMetal(with: newMetal)
+        )
+    }
+
     private func getName(
         elementName: KeyPath<PrecipitationElement, TextLine>,
         elementWithMetalName: (PrecipitationElementWithUnknownMetal) -> TextLine
@@ -44,7 +53,7 @@ struct PrecipitationReaction: Identifiable, Equatable {
 }
 
 extension PrecipitationReaction {
-    enum Metal: String, CaseIterable {
+    enum Metal: String, Codable, CaseIterable {
         case Na
         case Li
         case K
@@ -178,5 +187,15 @@ extension PrecipitationReaction {
         let metal: Metal
         let metalAtomCount: Int
         let state: ElementState
+
+        func replacingMetal(with newMetal: PrecipitationReaction.Metal) -> SecondaryProduct {
+            SecondaryProduct(
+                latterPart: latterPart,
+                coeff: coeff,
+                metal: newMetal,
+                metalAtomCount: metalAtomCount,
+                state: state
+            )
+        }
     }
 }

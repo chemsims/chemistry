@@ -287,16 +287,13 @@ private class PrecipitationFilingCabinetScreenProvider: ScreenProvider {
         nextScreen: @escaping () -> Void,
         prevScreen: @escaping () -> Void
     ) {
-        let model = PrecipitationFilingCabinetScreenViewModel(persistence: persistence)
-        model.navigation.nextScreen = nextScreen
-        model.navigation.prevScreen = prevScreen
-        self.model = model
+        self.model = PrecipitationFilingCabinetPagingViewModel(persistence: persistence)
     }
 
-    private let model: PrecipitationFilingCabinetScreenViewModel
+    private let model: PrecipitationFilingCabinetPagingViewModel
 
     var screen: AnyView {
-        AnyView(PrecipitationScreen(model: model))
+        AnyView(PrecipitationFilingCabinetScreen(pagingModel: model))
     }
 }
 
@@ -360,15 +357,18 @@ private class FinalPrecipitationState: PrecipitationScreenState {
         model.statement = PrecipitationStatements.endOfApp
         model.input = nil
         model.highlights.clear()
-        model.showUnknownMetal = true
-        model.equationState = .showAll
         model.beakerView = persistence.beakerView ?? .microscopic
-        if let componentInput = persistence.input, let reaction = persistence.reaction {
-            model.chosenReaction = reaction
+
+        if let lastIndex = persistence.lastChosenReactionIndex,
+           let lastMetal = persistence.lastChosenReactionMetal,
+           let componentInput = persistence.getComponentInput(reactionIndex: lastIndex),
+           lastIndex >= 0 && lastIndex < model.availableReactions.count {
             model.rows = CGFloat(componentInput.rows)
+            model.chosenReaction = model.availableReactions[lastIndex]
+            model.chosenReaction = model.chosenReaction.replacingMetal(with: lastMetal)
             model.components.runCompleteReaction(using: componentInput)
-        } else {
-            model.components.runCompleteReaction()
+            model.showUnknownMetal = true
+            model.equationState = .showAll
         }
     }
 }

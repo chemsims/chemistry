@@ -481,7 +481,8 @@ extension PrecipitationComponents {
             return Input(
                 rows: grid.rows,
                 knownReactantAdded: knownCount,
-                initialUnknownReactantAdded: unknownCount
+                initialUnknownReactantAdded: unknownCount,
+                reactantMetal: reaction.unknownReactant.metal
             )
         }
         return nil
@@ -491,5 +492,6 @@ extension PrecipitationComponents {
         let rows: Int
         let knownReactantAdded: Int
         let initialUnknownReactantAdded: Int
+        let reactantMetal: PrecipitationReaction.Metal
     }
 }

@@ -5,31 +5,45 @@
 import Foundation
 
 protocol PrecipitationInputPersistence {
-    var input: PrecipitationComponents.Input? { get }
     var beakerView: PrecipitationScreenViewModel.BeakerView? { get }
-    var reaction: PrecipitationReaction? { get }
-
-    func setComponentInput(_ value: PrecipitationComponents.Input) -> Void
     func setBeakerView(_ value: PrecipitationScreenViewModel.BeakerView) -> Void
-    func setReaction(_ value: PrecipitationReaction) -> Void
+
+    func setComponentInput(reactionIndex index: Int, input: PrecipitationComponents.Input) -> Void
+    func getComponentInput(reactionIndex index: Int) -> PrecipitationComponents.Input?
+
+    var lastChosenReactionIndex: Int? { get }
+    var lastChosenReactionMetal: PrecipitationReaction.Metal? { get }
+
+    func setLastChosenReactionIndex(_ value: Int) -> Void
+    func setLastChosenReactionMetal(_ value: PrecipitationReaction.Metal) -> Void
 }
 
 class InMemoryPrecipitationInputPersistence: PrecipitationInputPersistence {
 
-    var input: PrecipitationComponents.Input? = nil
     var beakerView: PrecipitationScreenViewModel.BeakerView? = nil
-    var reaction: PrecipitationReaction? = nil
 
-    func setComponentInput(_ value: PrecipitationComponents.Input) {
-        input = value
+    private var inputMap = [Int : PrecipitationComponents.Input]()
+    private(set) var lastChosenReactionIndex: Int?
+    var lastChosenReactionMetal: PrecipitationReaction.Metal?
+
+    func setComponentInput(reactionIndex index: Int, input: PrecipitationComponents.Input) {
+        inputMap[index] = input
+    }
+
+    func getComponentInput(reactionIndex index: Int) -> PrecipitationComponents.Input? {
+        inputMap[index]
     }
 
     func setBeakerView(_ value: PrecipitationScreenViewModel.BeakerView) {
         beakerView = value
     }
 
-    func setReaction(_ value: PrecipitationReaction) {
-        reaction = value
+    func setLastChosenReactionIndex(_ value: Int) {
+        lastChosenReactionIndex = value
+    }
+
+    func setLastChosenReactionMetal(_ value: PrecipitationReaction.Metal) {
+        lastChosenReactionMetal = value
     }
 }
 
@@ -42,14 +56,6 @@ class UserDefaultsPrecipitationInputPersistence: PrecipitationInputPersistence {
     let prefix: String
     private let userDefaults = UserDefaults.standard
 
-    var input: PrecipitationComponents.Input? {
-        if let data = userDefaults.data(forKey: inputKey) {
-            let decoder = JSONDecoder()
-            return try? decoder.decode(PrecipitationComponents.Input.self, from: data)
-        }
-        return nil
-    }
-
     var beakerView: PrecipitationScreenViewModel.BeakerView? {
         if let data = userDefaults.data(forKey: beakerKey) {
             let decoder = JSONDecoder()
@@ -58,20 +64,35 @@ class UserDefaultsPrecipitationInputPersistence: PrecipitationInputPersistence {
         return nil
     }
 
-    var reaction: PrecipitationReaction? {
+    var lastChosenReactionIndex: Int? {
+        if userDefaults.object(forKey: lastReactionIndexKey) == nil {
+            return nil
+        }
+        return userDefaults.integer(forKey: lastReactionIndexKey)
+    }
+
+    var lastChosenReactionMetal: PrecipitationReaction.Metal? {
         let decoder = JSONDecoder()
-        if let data = userDefaults.data(forKey: reactionKey),
-           let model = try? decoder.decode(SavedReaction.self, from: data),
-           let metal = PrecipitationReaction.Metal(rawValue: model.metal) {
-            return PrecipitationReaction.fromId(model.id, metal: metal)
+        if let data = userDefaults.data(forKey: lastMetalKey) {
+            return try? decoder.decode(PrecipitationReaction.Metal.self, from: data)
         }
         return nil
     }
 
-    func setComponentInput(_ value: PrecipitationComponents.Input) {
+    func getComponentInput(reactionIndex index: Int) -> PrecipitationComponents.Input? {
+        let key = reactionKey(index: index)
+        let decoder = JSONDecoder()
+        if let data = userDefaults.data(forKey: key) {
+            return try? decoder.decode(PrecipitationComponents.Input.self, from: data)
+        }
+        return nil
+    }
+
+    func setComponentInput(reactionIndex index: Int, input: PrecipitationComponents.Input) {
+        let key = reactionKey(index: index)
         let encoder = JSONEncoder()
-        if let data = try? encoder.encode(value) {
-            userDefaults.set(data, forKey: inputKey)
+        if let data = try? encoder.encode(input) {
+            userDefaults.set(data, forKey: key)
         }
     }
 
@@ -82,25 +103,31 @@ class UserDefaultsPrecipitationInputPersistence: PrecipitationInputPersistence {
         }
     }
 
-    func setReaction(_ value: PrecipitationReaction) {
-        let model = SavedReaction(reaction: value)
-        let encoder = JSONEncoder()
-        if let data = try? encoder.encode(model) {
-            userDefaults.set(data, forKey: reactionKey)
-        }
+    func setLastChosenReactionIndex(_ value: Int) {
+        userDefaults.set(value, forKey: lastReactionIndexKey)
     }
 
-
-    private var inputKey: String {
-        "\(prefix).precipitation.input"
+    func setLastChosenReactionMetal(_ value: PrecipitationReaction.Metal) {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(value) {
+            userDefaults.set(data, forKey: lastMetalKey)
+        }
     }
 
     private var beakerKey: String {
         "\(prefix).precipitation.beakerView"
     }
 
-    private var reactionKey: String {
-        "\(prefix).precipitation.reaction"
+    private func reactionKey(index: Int) -> String {
+        "\(prefix).precipitation.reaction.\(index)"
+    }
+
+    private var lastReactionIndexKey: String {
+        "\(prefix).precipitation.lastReaction.index"
+    }
+
+    private var lastMetalKey: String {
+        "\(prefix).precipitation.lastReaction.metal"
     }
 }
 
