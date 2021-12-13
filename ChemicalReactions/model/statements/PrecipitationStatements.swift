@@ -71,7 +71,7 @@ struct PrecipitationReactionStatements {
     }
 
     private var unknownReactantWithMetal: String {
-        reaction.unknownReactant.name(showMetal: true).asMarkdown
+        reaction.unknownReactant.name(showMetal: true, showCoeff: false).asMarkdown
     }
 
     var explainPrecipitation: [TextLine] {
@@ -186,7 +186,7 @@ struct PrecipitationReactionStatements {
     var instructToAddFurtherUnknownReactant: [TextLine] {
         [
             """
-            We already discovered the mystery. At this point, the \
+            We already discovered the mystery. At this point, \
             *\(unknownReactantWithMetal)* is the limiting reagent, \
             so just keep shaking *\(unknownReactantWithMetal)* to \
             neutralize the *\(knownReactant)* in its entirety.
