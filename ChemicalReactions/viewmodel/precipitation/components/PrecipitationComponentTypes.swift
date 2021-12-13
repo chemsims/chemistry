@@ -62,7 +62,7 @@ extension PrecipitationComponents {
         func name(reaction: PrecipitationReaction) -> TextLine {
             switch self {
             case .knownReactant: return reaction.knownReactant.name
-            case .unknownReactant: return reaction.unknownReactant.name(showMetal: false)
+            case .unknownReactant: return reaction.unknownReactant.name(showMetal: false, showCoeff: false)
             case .product: return reaction.product.name
             }
         }

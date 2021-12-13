@@ -67,7 +67,7 @@ struct PrecipitationReactionStatements {
     }
 
     private var unknownReactant: String {
-        reaction.unknownReactant.name(showMetal: false).asMarkdown
+        reaction.unknownReactant.name(showMetal: false, showCoeff: false).asMarkdown
     }
 
     private var unknownReactantWithMetal: String {

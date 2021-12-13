@@ -112,16 +112,13 @@ extension PrecipitationElementWithUnknownMetal {
         emphasiseMetal: Bool = false,
         showCoeff: Bool = true
     ) -> TextLine {
-        let coeffStr = getCoeffString(showMetal: showMetal, showCoeff: showCoeff)
+        let coeffStr = getCoeffString(showCoeff: showCoeff)
         let metal = metalStr(showMetal: showMetal, emphasise: emphasiseMetal)
         return "\(coeffStr)\(metal)" + latterPart
     }
 
-    private func getCoeffString(
-        showMetal: Bool,
-        showCoeff: Bool
-    ) -> String {
-        if coeff == 1 || !showMetal || !showCoeff {
+    private func getCoeffString(showCoeff: Bool) -> String {
+        if coeff == 1 || !showCoeff {
             return ""
         }
         return "\(coeff)"
