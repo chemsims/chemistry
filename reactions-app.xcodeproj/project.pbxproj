@@ -744,6 +744,7 @@
 		57DDAD4325E57DEB00B535A7 /* TimeChartDataLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD4225E57DEB00B535A7 /* TimeChartDataLine.swift */; };
 		57DDAD4E25E57E2A00B535A7 /* TimeChartDataLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD4D25E57E2A00B535A7 /* TimeChartDataLineView.swift */; };
 		57DDAD5B25E57E9300B535A7 /* ChartLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F10980255E88CE00834783 /* ChartLine.swift */; };
+		57DE44ED27730B15000AEDE4 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 57DE44EC27730B15000AEDE4 /* Documentation.docc */; };
 		57E12BD92705CDB20081C52A /* PrecipitationBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E12BD82705CDB20081C52A /* PrecipitationBeaker.swift */; };
 		57E12BDB2705D8140081C52A /* IndirectPropertyWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E12BDA2705D8140081C52A /* IndirectPropertyWrapper.swift */; };
 		57E48A4326CACB4800A9A421 /* Atom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E48A4226CACB4800A9A421 /* Atom.swift */; };
@@ -1613,6 +1614,7 @@
 		57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartLayoutSettings.swift; sourceTree = "<group>"; };
 		57DDAD4225E57DEB00B535A7 /* TimeChartDataLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartDataLine.swift; sourceTree = "<group>"; };
 		57DDAD4D25E57E2A00B535A7 /* TimeChartDataLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartDataLineView.swift; sourceTree = "<group>"; };
+		57DE44EC27730B15000AEDE4 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
 		57DE4DA025A502BF00644790 /* QuizIntroBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizIntroBody.swift; sourceTree = "<group>"; };
 		57DE4DA425A502EE00644790 /* QuizQuestionBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionBody.swift; sourceTree = "<group>"; };
 		57DE4DA825A5031800644790 /* QuizReviewBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizReviewBody.swift; sourceTree = "<group>"; };
@@ -1843,6 +1845,7 @@
 				5700C11326A99C8800677777 /* Info.plist */,
 				57062DC62607A84C00007BAA /* ReactionEquilibriumRootView.swift */,
 				5700C1AF26A9A00800677777 /* EquilibriumBundleExtension.swift */,
+				57DE44EC27730B15000AEDE4 /* Documentation.docc */,
 			);
 			path = Equilibrium;
 			sourceTree = "<group>";
@@ -5106,6 +5109,7 @@
 				5700C16426A99E0200677777 /* AqueousReactionInputState.swift in Sources */,
 				5700C17126A99E2400677777 /* SKSoluteNode.swift in Sources */,
 				5700C18826A99E5100677777 /* MultiConcentrationPlot.swift in Sources */,
+				57DE44ED27730B15000AEDE4 /* Documentation.docc in Sources */,
 				5700C14D26A99DD200677777 /* IntegrationStatements.swift in Sources */,
 				5700C14C26A99DCE00677777 /* GridMolecules.swift in Sources */,
 				5700C13326A99CDA00677777 /* SoluteType.swift in Sources */,
