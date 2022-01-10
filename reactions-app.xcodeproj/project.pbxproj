@@ -398,7 +398,6 @@
 		575A881D25E4310E00AEE448 /* QuizState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B66E258A7C20002CEF5E /* QuizState.swift */; };
 		575A882425E4311100AEE448 /* QuizTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57631763259B66CF00D7CE2C /* QuizTable.swift */; };
 		575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A69255AADDB00F4E635 /* SpeechBubble.swift */; };
-		575A882D25E4319E00AEE448 /* TextLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57778B7E259368B800254262 /* TextLineView.swift */; };
 		575A883A25E431E500AEE448 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF692582307A00A30582 /* Strings.swift */; };
 		575A884125E431FF00AEE448 /* LabelledImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797567E25C1C5CB005C484E /* LabelledImage.swift */; };
 		575A885F25E435F600AEE448 /* BeakyGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A885E25E435F600AEE448 /* BeakyGeometrySettings.swift */; };
@@ -1291,7 +1290,6 @@
 		5773BCDF267A7EBF00E52C81 /* AcidBasesQuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesQuestionSet.swift; sourceTree = "<group>"; };
 		5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppRootView.swift; sourceTree = "<group>"; };
 		5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppNavigationRows.swift; sourceTree = "<group>"; };
-		57778B7E259368B800254262 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		57778B8925937D8C00254262 /* QuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTests.swift; sourceTree = "<group>"; };
 		57783C5C2682112800ACABE6 /* PLogKValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLogKValue.swift; sourceTree = "<group>"; };
 		57783C5F2682159200ACABE6 /* TitrationStrongSubstancePreparationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongSubstancePreparationModel.swift; sourceTree = "<group>"; };
@@ -1331,6 +1329,7 @@
 		577C506726812409003DAD17 /* MolesToConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MolesToConcentration.swift; sourceTree = "<group>"; };
 		577C506926812577003DAD17 /* ConcentrationToMolesDifferenceOverVolume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationToMolesDifferenceOverVolume.swift; sourceTree = "<group>"; };
 		577C506B26812712003DAD17 /* PLogComplementConcentration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLogComplementConcentration.swift; sourceTree = "<group>"; };
+		577DABD4278C7B760096358A /* CogSciKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CogSciKit; path = ../CogSciKit; sourceTree = "<group>"; };
 		577DC1F226B1534F005C22D8 /* USConfig.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = USConfig.storekit; sourceTree = "<group>"; };
 		577EDE8026A026B60067F3C1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		577FD5D826E0299600EA3DEB /* ShareStemBadgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareStemBadgeView.swift; sourceTree = "<group>"; };
@@ -2145,6 +2144,7 @@
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
+				577DABD4278C7B760096358A /* CogSciKit */,
 				5769751B26D6548E00D30ECE /* storekit-config */,
 				57FD4033264878C100E352C1 /* TestPlan.xctestplan */,
 				5748659E26A96E55007FA314 /* APChemistry */,
@@ -2766,7 +2766,6 @@
 				57686AAD2600D22C005BD328 /* SelectionToggleText.swift */,
 				57E7FF692582307A00A30582 /* Strings.swift */,
 				571D6A69255AADDB00F4E635 /* SpeechBubble.swift */,
-				57778B7E259368B800254262 /* TextLineView.swift */,
 			);
 			path = text;
 			sourceTree = "<group>";
@@ -5468,7 +5467,6 @@
 				57CAD88826D9464A00D75D9B /* PromptPersistence.swift in Sources */,
 				57E6D8DA26ADA2E800603796 /* AnalyticsScreen.swift in Sources */,
 				57315ECE26402D1900A7D0F9 /* CsvParser.swift in Sources */,
-				575A882D25E4319E00AEE448 /* TextLineView.swift in Sources */,
 				57D3261D26A2D22E0093CD16 /* EdgeInsetsExtension.swift in Sources */,
 				57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */,
 				57315ECA2640284D00A7D0F9 /* GoogleAnalytics.swift in Sources */,

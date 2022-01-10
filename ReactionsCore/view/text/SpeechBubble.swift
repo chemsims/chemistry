@@ -50,7 +50,8 @@ private struct SpeechBubbleWithSettings: View {
                 superscriptOffset: settings.superscriptOffset,
                 subscriptOffset: settings.subscriptOffset,
                 weight: .regular,
-                color: .black
+                color: .black,
+                emphasisColor: .orangeAccent
             )
             .padding(settings.bubbleTextPadding)
             .frame(
