@@ -393,8 +393,6 @@
 		57587F1D26D680A500F52D8C /* TipOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57587F1C26D680A500F52D8C /* TipOverlayViewModel.swift */; };
 		57587F2326D695D200F52D8C /* AboutScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57587F2226D695D200F52D8C /* AboutScreen.swift */; };
 		57587F2526D69DC200F52D8C /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57587F2426D69DC200F52D8C /* Strings.swift */; };
-		575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A75255AC27400F4E635 /* TextLine.swift */; };
-		575A880125E430C200AEE448 /* Labels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CBEAB25C0657A00CE6007 /* Labels.swift */; };
 		575A880F25E4310700AEE448 /* QuizOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F16972584B277001CE039 /* QuizOption.swift */; };
 		575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F169C2584C035001CE039 /* QuizQuestion.swift */; };
 		575A881D25E4310E00AEE448 /* QuizState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B66E258A7C20002CEF5E /* QuizState.swift */; };
@@ -440,7 +438,6 @@
 		5772DA6526CD268400A00EAA /* BalancedReactionScreenLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA6426CD268400A00EAA /* BalancedReactionScreenLayout.swift */; };
 		5772DA6826CD273C00A00EAA /* BalancedReactionScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA6726CD273C00A00EAA /* BalancedReactionScreenViewModel.swift */; };
 		5773BCD6267A2EA500E52C81 /* CircleChartLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */; };
-		5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773BCD8267A5F4500E52C81 /* TextLineTests.swift */; };
 		5778517D26F37DC8002F2000 /* LimitingReagentEquationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5778517C26F37DC8002F2000 /* LimitingReagentEquationView.swift */; };
 		577A2609262822FF0060EC54 /* ValueWithPrevious.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577A2608262822FF0060EC54 /* ValueWithPrevious.swift */; };
 		577A261D262862C00060EC54 /* ReactionEnergyTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 577A261C262862C00060EC54 /* ReactionEnergyTransfer.swift */; };
@@ -792,11 +789,9 @@
 		57FD400726484DCF00E352C1 /* FeedbackSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FD400626484DCF00E352C1 /* FeedbackSettings.swift */; };
 		57FD400926484F2E00E352C1 /* FeedbackSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */; };
 		57FD400B26484F4400E352C1 /* sliderCalculationsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */; };
-		57FD400C26484F4800E352C1 /* speechBubbleLineGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */; };
 		57FD400D26484F4B00E352C1 /* CGFloatRoundingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */; };
 		57FD400E26484F4F00E352C1 /* SizeAdjusterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57631771259B814100D7CE2C /* SizeAdjusterTests.swift */; };
 		57FD400F26484F5100E352C1 /* ScreenStateTreeNodeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */; };
-		57FD401026484F5800E352C1 /* LabellingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 572CBEAF25C0AECD00CE6007 /* LabellingTests.swift */; };
 		57FD401226484F9400E352C1 /* QuizPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5780320625B0888300A0F610 /* QuizPersistenceTests.swift */; };
 		57FD401326484F9A00E352C1 /* ReviewPromptPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5743D9C525C45D9D000C0397 /* ReviewPromptPersistenceTests.swift */; };
 		57FD401426484F9F00E352C1 /* LastOpenedScreenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */; };
@@ -1032,7 +1027,6 @@
 		571D6A45255A780900F4E635 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		571D6A69255AADDB00F4E635 /* SpeechBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBubble.swift; sourceTree = "<group>"; };
 		571D6A6E255AB25400F4E635 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
-		571D6A75255AC27400F4E635 /* TextLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLine.swift; sourceTree = "<group>"; };
 		571D6A7B255AC75C00F4E635 /* BeakerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerShape.swift; sourceTree = "<group>"; };
 		571D6A80255AD40900F4E635 /* EmptyBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBeaker.swift; sourceTree = "<group>"; };
 		571F6E862560486400A1C45E /* BarChartAxis.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChartAxis.swift; sourceTree = "<group>"; };
@@ -1053,8 +1047,6 @@
 		572BCF202603614000CE3FE0 /* ReactionComponentsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComponentsWrapper.swift; sourceTree = "<group>"; };
 		572BCF2626036E7700CE3FE0 /* ArrayExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtensionTests.swift; sourceTree = "<group>"; };
 		572CB93D255C36DD0071C600 /* ConcentrationBarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationBarChart.swift; sourceTree = "<group>"; };
-		572CBEAB25C0657A00CE6007 /* Labels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Labels.swift; sourceTree = "<group>"; };
-		572CBEAF25C0AECD00CE6007 /* LabellingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabellingTests.swift; sourceTree = "<group>"; };
 		572CF3A325AA6E2100B49E34 /* ReactionInputTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputTests.swift; sourceTree = "<group>"; };
 		57303FE6261DB2FA00045193 /* SolubleComponentsWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleComponentsWrapper.swift; sourceTree = "<group>"; };
 		57303FF0261E2DE800045193 /* SKIonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKIonNode.swift; sourceTree = "<group>"; };
@@ -1294,12 +1286,12 @@
 		5773B5EB25B84A9100889A2E /* MailComposerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailComposerView.swift; sourceTree = "<group>"; };
 		5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackSettingsTests.swift; sourceTree = "<group>"; };
 		5773BCD5267A2EA500E52C81 /* CircleChartLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleChartLabel.swift; sourceTree = "<group>"; };
-		5773BCD8267A5F4500E52C81 /* TextLineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineTests.swift; sourceTree = "<group>"; };
 		5773BCDA267A7E6B00E52C81 /* AcidBasesNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesNavigationModel.swift; sourceTree = "<group>"; };
 		5773BCDD267A7E9D00E52C81 /* AcidBasesScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesScreen.swift; sourceTree = "<group>"; };
 		5773BCDF267A7EBF00E52C81 /* AcidBasesQuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidBasesQuestionSet.swift; sourceTree = "<group>"; };
 		5773BCE1267A811C00E52C81 /* AcidAppRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppRootView.swift; sourceTree = "<group>"; };
 		5773BCE3267A81BD00E52C81 /* AcidAppNavigationRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidAppNavigationRows.swift; sourceTree = "<group>"; };
+		5773C78F278C76E4002B1413 /* CogSciKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CogSciKit; path = ../CogSciKit; sourceTree = "<group>"; };
 		57778B7E259368B800254262 /* TextLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextLineView.swift; sourceTree = "<group>"; };
 		57778B8925937D8C00254262 /* QuizQuestionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizQuestionTests.swift; sourceTree = "<group>"; };
 		57783C5C2682112800ACABE6 /* PLogKValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLogKValue.swift; sourceTree = "<group>"; };
@@ -1725,7 +1717,6 @@
 		57FDA138255D6C5000CB8804 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		57FDA13C255D6FC800CB8804 /* DualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DualValueSlider.swift; sourceTree = "<group>"; };
 		57FDA140255D81A200CB8804 /* ReactionRateChartLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionRateChartLayoutSettings.swift; sourceTree = "<group>"; };
-		57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = speechBubbleLineGeneratorTests.swift; sourceTree = "<group>"; };
 		57FDA5032695B24D001F24CA /* TitrationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationViewModelTests.swift; sourceTree = "<group>"; };
 		57FF330526E9FF5F007116EB /* SpacingViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpacingViewModifiers.swift; sourceTree = "<group>"; };
 		57FF9EDD25FF6EA800C1C27F /* GridElementBalancer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridElementBalancer.swift; sourceTree = "<group>"; };
@@ -2155,6 +2146,7 @@
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
+				5773C78F278C76E4002B1413 /* CogSciKit */,
 				5769751B26D6548E00D30ECE /* storekit-config */,
 				57FD4033264878C100E352C1 /* TestPlan.xctestplan */,
 				5748659E26A96E55007FA314 /* APChemistry */,
@@ -2751,8 +2743,6 @@
 		575A87F325E4308000AEE448 /* text */ = {
 			isa = PBXGroup;
 			children = (
-				572CBEAB25C0657A00CE6007 /* Labels.swift */,
-				571D6A75255AC27400F4E635 /* TextLine.swift */,
 				57FA3AB82660F27B0073A29B /* ColoredText.swift */,
 			);
 			path = text;
@@ -3001,7 +2991,6 @@
 			isa = PBXGroup;
 			children = (
 				57B92EBE266537F900023E7C /* TextLineUtilTests.swift */,
-				5773BCD8267A5F4500E52C81 /* TextLineTests.swift */,
 			);
 			path = "text-line";
 			sourceTree = "<group>";
@@ -3335,11 +3324,9 @@
 				5727485E25A5F489000CFA1E /* NavigationViewModelTests.swift */,
 				5773B5FB25B8645F00889A2E /* FeedbackSettingsTests.swift */,
 				57035EE4255BFE5200DB3A19 /* sliderCalculationsTest.swift */,
-				57FDA14E255D924D00CB8804 /* speechBubbleLineGeneratorTests.swift */,
 				57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */,
 				57631771259B814100D7CE2C /* SizeAdjusterTests.swift */,
 				5727486625A60445000CFA1E /* ScreenStateTreeNodeTests.swift */,
-				572CBEAF25C0AECD00CE6007 /* LabellingTests.swift */,
 				5797A45025E4069F00991BD9 /* Info.plist */,
 				57E902C325ED585800758300 /* EquatableCounterTests.swift */,
 				573E1B2C263AADBD00379A1D /* StringUtilTests.swift */,
@@ -5359,7 +5346,6 @@
 				5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */,
 				57315EC626401CF500A7D0F9 /* QuizReviewBody.swift in Sources */,
 				578B1700261864CB00D8079F /* CoreMotionPositionViewModel.swift in Sources */,
-				575A87FA25E4309A00AEE448 /* TextLine.swift in Sources */,
 				572B1A802675F42800302B8E /* ReactionProgressChartViewModelDelegate.swift in Sources */,
 				57C4BC3527137C6B00411B49 /* PointEquation.swift in Sources */,
 				573E1B2F263AB81D00379A1D /* ViewExtensions.swift in Sources */,
@@ -5408,7 +5394,6 @@
 				57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */,
 				57FF9EDE25FF6EA800C1C27F /* GridElementBalancer.swift in Sources */,
 				57B3B8F4260B27E800EB9B47 /* NavigationBehaviour.swift in Sources */,
-				575A880125E430C200AEE448 /* Labels.swift in Sources */,
 				5769751E26D66A7300D30ECE /* ActivityIndicator.swift in Sources */,
 				57315EC126401CF500A7D0F9 /* QuizTableView.swift in Sources */,
 				575A883A25E431E500AEE448 /* Strings.swift in Sources */,
@@ -5571,7 +5556,6 @@
 				57FD400F26484F5100E352C1 /* ScreenStateTreeNodeTests.swift in Sources */,
 				5772DA5E26CD1D8000A00EAA /* TableCellPositionTests.swift in Sources */,
 				57D9C3E726D964870023ED91 /* FixedDateProvider.swift in Sources */,
-				5773BCD9267A5F4500E52C81 /* TextLineTests.swift in Sources */,
 				573E1B2D263AADBD00379A1D /* StringUtilTests.swift in Sources */,
 				57FD400D26484F4B00E352C1 /* CGFloatRoundingTests.swift in Sources */,
 				57B8947126A0542200D71998 /* NamePersistenceTests.swift in Sources */,
@@ -5579,8 +5563,6 @@
 				57FD400926484F2E00E352C1 /* FeedbackSettingsTests.swift in Sources */,
 				57072BED26C96AE900DC6F0E /* MoleculeScalesGeometryTests.swift in Sources */,
 				57FF9EE425FF6EC100C1C27F /* GridElementBalancerTests.swift in Sources */,
-				57FD401026484F5800E352C1 /* LabellingTests.swift in Sources */,
-				57FD400C26484F4800E352C1 /* speechBubbleLineGeneratorTests.swift in Sources */,
 				57FD401526484FA600E352C1 /* QuizViewModelTests.swift in Sources */,
 				57FD402226486F8300E352C1 /* NavigationTestMethods.swift in Sources */,
 				574BF91D27048F520079CA8F /* SpiralBeakerGridTests.swift in Sources */,
