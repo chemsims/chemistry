@@ -4,6 +4,7 @@
 
 import SwiftUI
 import SpriteKit
+import CogSciKit
 
 public struct RGB {
     public let r: Double
@@ -148,7 +149,7 @@ extension UIColor {
 
 extension Color {
     public static let darkGray = Color(red: 0.25, green: 0.25, blue: 0.25)
-    public static let orangeAccent = Color(red: 220 / 255, green: 84 / 255, blue: 59 / 255)
+    public static let orangeAccent = CorePalette.orangeAccent
 
     public static let primaryDarkBlue = RGB.primaryDarkBlue.color
     public static let primaryLightBlue = RGB.primaryLightBlue.color

@@ -397,7 +397,6 @@
 		575A881625E4310B00AEE448 /* QuizQuestion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 573F169C2584C035001CE039 /* QuizQuestion.swift */; };
 		575A881D25E4310E00AEE448 /* QuizState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5736B66E258A7C20002CEF5E /* QuizState.swift */; };
 		575A882425E4311100AEE448 /* QuizTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57631763259B66CF00D7CE2C /* QuizTable.swift */; };
-		575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A69255AADDB00F4E635 /* SpeechBubble.swift */; };
 		575A883A25E431E500AEE448 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E7FF692582307A00A30582 /* Strings.swift */; };
 		575A884125E431FF00AEE448 /* LabelledImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797567E25C1C5CB005C484E /* LabelledImage.swift */; };
 		575A885F25E435F600AEE448 /* BeakyGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575A885E25E435F600AEE448 /* BeakyGeometrySettings.swift */; };
@@ -1024,7 +1023,6 @@
 		571B3CB425658BA70075358B /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		571B3CBA25658D300075358B /* ReactionRateNavigationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionRateNavigationModel.swift; sourceTree = "<group>"; };
 		571D6A45255A780900F4E635 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		571D6A69255AADDB00F4E635 /* SpeechBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeechBubble.swift; sourceTree = "<group>"; };
 		571D6A6E255AB25400F4E635 /* Styling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Styling.swift; sourceTree = "<group>"; };
 		571D6A7B255AC75C00F4E635 /* BeakerShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerShape.swift; sourceTree = "<group>"; };
 		571D6A80255AD40900F4E635 /* EmptyBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyBeaker.swift; sourceTree = "<group>"; };
@@ -2765,7 +2763,6 @@
 			children = (
 				57686AAD2600D22C005BD328 /* SelectionToggleText.swift */,
 				57E7FF692582307A00A30582 /* Strings.swift */,
-				571D6A69255AADDB00F4E635 /* SpeechBubble.swift */,
 			);
 			path = text;
 			sourceTree = "<group>";
@@ -5479,7 +5476,6 @@
 				57315EC026401CF500A7D0F9 /* QuizLayoutSettings.swift in Sources */,
 				57ADAA8726A4424C0008E8C2 /* BeakerAccessibilityActions.swift in Sources */,
 				576F922E26F227230035D3F4 /* Devices.swift in Sources */,
-				575A882C25E4319E00AEE448 /* SpeechBubble.swift in Sources */,
 				575A886725E435FB00AEE448 /* BeakyOverlay.swift in Sources */,
 				57F6808826F3456F007DDD5F /* IdentityModifier.swift in Sources */,
 				574103DF2642966300E6EDCB /* Tooltip.swift in Sources */,
