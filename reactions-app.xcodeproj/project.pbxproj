@@ -484,7 +484,6 @@
 		5797A4A325E40A5100991BD9 /* MoleculeGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EC2255BD33A00DB3A19 /* MoleculeGrid.swift */; };
 		5797A4AA25E40A5400991BD9 /* MoleculeGridSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ECB255BDD7C00DB3A19 /* MoleculeGridSettings.swift */; };
 		5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */; };
-		5797A4BF25E40A6400991BD9 /* Equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571215552580DCD000E92A99 /* Equation.swift */; };
 		5797A4C625E40A6900991BD9 /* GridCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */; };
 		5797A4D325E40A8E00991BD9 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A6E255AB25400F4E635 /* Styling.swift */; };
 		5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */; };
@@ -688,7 +687,6 @@
 		57BBC806270DAA4E004B6624 /* Polygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC805270DAA4E004B6624 /* Polygon.swift */; };
 		57BBC809270DB235004B6624 /* GrowingPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC808270DB235004B6624 /* GrowingPolygon.swift */; };
 		57BBC80B270DB318004B6624 /* GrowingPolygonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BBC80A270DB318004B6624 /* GrowingPolygonTests.swift */; };
-		57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */; };
 		57BDFF4E26415540001B97CC /* ImageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4D26415540001B97CC /* ImageType.swift */; };
 		57BDFF5026415745001B97CC /* ImageTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57BDFF4F26415745001B97CC /* ImageTypeView.swift */; };
 		57BDFF5226415E00001B97CC /* dummy-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57BDFF5126415E00001B97CC /* dummy-quiz.csv */; };
@@ -736,7 +734,6 @@
 		57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */; };
 		57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */; };
 		57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD0825E5608700B535A7 /* BeakerMolecules.swift */; };
-		57DDAD1D25E5700400B535A7 /* QuadraticEquation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD0F25E567C300B535A7 /* QuadraticEquation.swift */; };
 		57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */; };
 		57DDAD4325E57DEB00B535A7 /* TimeChartDataLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD4225E57DEB00B535A7 /* TimeChartDataLine.swift */; };
 		57DDAD4E25E57E2A00B535A7 /* TimeChartDataLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD4D25E57E2A00B535A7 /* TimeChartDataLineView.swift */; };
@@ -997,7 +994,6 @@
 		5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistenceTests.swift; sourceTree = "<group>"; };
 		5711DFCA25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionQuizQuestionsTests.swift; sourceTree = "<group>"; };
 		5711E00225C4840D00B28E45 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		571215552580DCD000E92A99 /* Equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Equation.swift; sourceTree = "<group>"; };
 		5712155D258103A600E92A99 /* Rates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rates.swift; sourceTree = "<group>"; };
 		571293C8265EA35100C24C88 /* AcidSubstanceBeakerCoords.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidSubstanceBeakerCoords.swift; sourceTree = "<group>"; };
 		571293CA265EA72800C24C88 /* AcidSubstanceBeakerCoordsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcidSubstanceBeakerCoordsTests.swift; sourceTree = "<group>"; };
@@ -1483,7 +1479,6 @@
 		57BBC805270DAA4E004B6624 /* Polygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Polygon.swift; sourceTree = "<group>"; };
 		57BBC808270DB235004B6624 /* GrowingPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingPolygon.swift; sourceTree = "<group>"; };
 		57BBC80A270DB318004B6624 /* GrowingPolygonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingPolygonTests.swift; sourceTree = "<group>"; };
-		57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NonLinearEquationSolver.swift; sourceTree = "<group>"; };
 		57BCB4BD25F371B200E50923 /* ReactionConvergenceSolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolver.swift; sourceTree = "<group>"; };
 		57BCB4C325F3752800E50923 /* ReactionConvergenceSolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionConvergenceSolverTests.swift; sourceTree = "<group>"; };
 		57BDFF4526413A7A001B97CC /* EquilibriumQuestionSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumQuestionSet.swift; sourceTree = "<group>"; };
@@ -1599,7 +1594,6 @@
 		57DDACF325E554AD00B535A7 /* ReactionEquilibriumStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionEquilibriumStyling.swift; sourceTree = "<group>"; };
 		57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridCoordinateListTests.swift; sourceTree = "<group>"; };
 		57DDAD0825E5608700B535A7 /* BeakerMolecules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerMolecules.swift; sourceTree = "<group>"; };
-		57DDAD0F25E567C300B535A7 /* QuadraticEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadraticEquation.swift; sourceTree = "<group>"; };
 		57DDAD2325E5706A00B535A7 /* MultiConcentrationPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiConcentrationPlot.swift; sourceTree = "<group>"; };
 		57DDAD2D25E576C000B535A7 /* TimeChartDatalineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartDatalineView.swift; sourceTree = "<group>"; };
 		57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChartLayoutSettings.swift; sourceTree = "<group>"; };
@@ -3377,10 +3371,7 @@
 		5797A46625E407D400991BD9 /* equation */ = {
 			isa = PBXGroup;
 			children = (
-				57DDAD0F25E567C300B535A7 /* QuadraticEquation.swift */,
-				571215552580DCD000E92A99 /* Equation.swift */,
 				57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */,
-				57BCB4B725F3696C00E50923 /* NonLinearEquationSolver.swift */,
 				57C4BC3427137C6B00411B49 /* PointEquation.swift */,
 			);
 			path = equation;
@@ -5381,8 +5372,6 @@
 				575C90E72662DAA1001DCD17 /* BlurView.swift in Sources */,
 				57686AD12600E6B1005BD328 /* AdjustableBeakerBurner.swift in Sources */,
 				5786BD17267B66CA001A165C /* Burette.swift in Sources */,
-				5797A4BF25E40A6400991BD9 /* Equation.swift in Sources */,
-				57BCB4B825F3696C00E50923 /* NonLinearEquationSolver.swift in Sources */,
 				57414B2C270DD06000CF7CCE /* DigitalScales.swift in Sources */,
 				578B170F2618749800D8079F /* CoreMotionShakingViewModel.swift in Sources */,
 				57E902BA25ED561200758300 /* EquatableCounter.swift in Sources */,
@@ -5508,7 +5497,6 @@
 				579EA8F7264689CD008461E8 /* BarShape.swift in Sources */,
 				575317D32709F6D6003CBA25 /* ElementType.swift in Sources */,
 				57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */,
-				57DDAD1D25E5700400B535A7 /* QuadraticEquation.swift in Sources */,
 				57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */,
 				57B5781F2639953B008DFAB5 /* UniqueGridCoordinates.swift in Sources */,
 				5786BD0F267B45BA001A165C /* Dropper.swift in Sources */,
