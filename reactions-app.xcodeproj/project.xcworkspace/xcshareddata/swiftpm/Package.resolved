@@ -20,21 +20,12 @@
         }
       },
       {
-        "package": "CogSciKit",
-        "repositoryURL": "https://github.com/chemsims/CogSciKit",
-        "state": {
-          "branch": "main",
-          "revision": "20647b20ae28c5c4c820154a5b1ee35144fde410",
-          "version": null
-        }
-      },
-      {
         "package": "Firebase",
         "repositoryURL": "https://github.com/firebase/firebase-ios-sdk.git",
         "state": {
           "branch": null,
-          "revision": "2f972249c520cbf87ac8856f176ebc994cb1c9a6",
-          "version": "8.7.0"
+          "revision": "08686f04881483d2bc098b2696e674c0ba135e47",
+          "version": "8.10.0"
         }
       },
       {
@@ -42,8 +33,8 @@
         "repositoryURL": "https://github.com/google/GoogleAppMeasurement.git",
         "state": {
           "branch": null,
-          "revision": "4901bde146b0269da35470d261f741f0e910d8df",
-          "version": "8.7.0"
+          "revision": "9b2f6aca5b4685c45f9f5481f19bee8e7982c538",
+          "version": "8.9.1"
         }
       },
       {
@@ -60,8 +51,8 @@
         "repositoryURL": "https://github.com/google/GoogleUtilities.git",
         "state": {
           "branch": null,
-          "revision": "797005ad8a1f0614063933e2fa010a5d13cb09d0",
-          "version": "7.6.0"
+          "revision": "b3bb0c5551fb3f80ca939829639ab5b093edd14f",
+          "version": "7.7.0"
         }
       },
       {

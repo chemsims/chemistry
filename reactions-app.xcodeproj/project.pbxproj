@@ -6727,8 +6727,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
 			requirement = {
-				kind = exactVersion;
-				version = 8.7.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.10.0;
 			};
 		};
 		571D522B2789A70600991C2B /* XCRemoteSwiftPackageReference "CogSciKit" */ = {
