@@ -108,7 +108,7 @@ private struct OnboardingViewWithGeometry: View {
             .frame(size: actionSize)
             .font(.system(size: beakySettings.bubbleFontSize))
         }
-        .buttonStyle(NavButtonButtonStyle(scaleDelta: 0.02))
+        .buttonStyle(SquashButtonStyle(scaleDelta: 0.02))
     }
 
     private let actionColor = Color.gray

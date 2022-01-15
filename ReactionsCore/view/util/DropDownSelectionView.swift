@@ -177,7 +177,7 @@ public struct DropDownSelectionView<Data: Identifiable & Equatable>: View {
                 }
 
             }
-            .buttonStyle(NavButtonButtonStyle())
+            .buttonStyle(SquashButtonStyle())
         }
         .accessibilityElement(children: .ignore)
         .accessibility(label: Text(label))

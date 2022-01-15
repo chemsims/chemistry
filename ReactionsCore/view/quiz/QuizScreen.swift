@@ -176,7 +176,7 @@ private struct QuizScreenWithSettings<QP: QuizPersistence, Analytics: AppAnalyti
             }
             .frame(width: settings.leftNavSize, height: settings.navSize)
         }
-        .buttonStyle(NavButtonButtonStyle())
+        .buttonStyle(SquashButtonStyle())
         .accessibility(label: Text("Restart quiz"))
     }
 
