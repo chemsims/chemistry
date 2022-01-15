@@ -45,13 +45,6 @@ extension BinaryFloatingPoint {
     }
 }
 
-extension Comparable {
-    public func within(min: Self, max: Self) -> Self {
-        precondition(max >= min, "Cannot check bounds when max is smaller than min")
-        return Swift.min(max, Swift.max(min, self))
-    }
-}
-
 extension Array {
     public subscript (safe index: Index) -> Element? {
         return indices.contains(index) ? self[index] : nil
