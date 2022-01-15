@@ -30,7 +30,7 @@ struct ReactionsRateBeaker: View {
     private var bMolecules: [AnimatingBeakerMolecules]? {
         concentrationB.flatMap { conB in
             finalTime.map { t2 in
-                let numB = Int(conB.getY(at: t2) * CGFloat(gridSize))
+                let numB = Int(conB.getValue(at: t2) * CGFloat(gridSize))
                 return [
                     AnimatingBeakerMolecules(
                         molecules: BeakerMolecules(

@@ -104,7 +104,7 @@ struct PrecipitationBeaker: View {
     private var scales: some View {
         let massEq = components.productMassProduced
         let progress = components.reactionProgress
-        let mass = massEq.getY(at: progress).str(decimals: 2)
+        let mass = massEq.getValue(at: progress).str(decimals: 2)
         let massString = model.precipitatePosition == .scales ? "\(mass) g" : nil
         return DigitalScales(
             label: massString,

@@ -76,7 +76,7 @@ extension TitrationWeakSubstancePostEPModel {
     private func updateReactionProgress() {
         let ion: ExtendedSubstancePart = substance.primary == .hydrogen ? .hydroxide : .hydrogen
         let currentCount = reactionProgress.moleculeCounts(ofType: ion)
-        let desiredCount = reactionProgressComplementIonCount.getY(
+        let desiredCount = reactionProgressComplementIonCount.getValue(
             at: CGFloat(titrantAdded)
         ).roundedInt()
         let toAdd = desiredCount - currentCount
@@ -188,7 +188,7 @@ private class Calculations {
     }()
 
     private func initialConcentration(of part: TitrationEquationTerm.Concentration) -> CGFloat {
-        previous.concentration.value(for: part).getY(at: CGFloat(previous.maxTitrant))
+        previous.concentration.value(for: part).getValue(at: CGFloat(previous.maxTitrant))
     }
 
     // MARK: - P Values
@@ -237,7 +237,7 @@ private class Calculations {
         initialVolume(of: .titrant) + initialVolume(of: .initialSubstance)
 
     private func initialVolume(of term: TitrationEquationTerm.Volume) -> CGFloat {
-        previous.volume.value(for: term).getY(at: CGFloat(previous.maxTitrant))
+        previous.volume.value(for: term).getValue(at: CGFloat(previous.maxTitrant))
     }
 
     // MARK: Moles
@@ -258,7 +258,7 @@ private class Calculations {
         .init {
             switch $0 {
             case .hydrogen: return 0
-            case .substance: return previous.equationData.molarity.value(for: .substance).getY(at: CGFloat(previous.titrantAdded))
+            case .substance: return previous.equationData.molarity.value(for: .substance).getValue(at: CGFloat(previous.titrantAdded))
             case .titrant: return previous.molarity.value(for: .titrant)
             }
         }
@@ -302,7 +302,7 @@ private class Calculations {
     private func barChartEquation(forPart part: ExtendedSubstancePart) -> Equation {
         // complement ion should end up as the same height as primary complement
         if part == substance.primary.complement.extendedSubstancePart {
-            let finalHeight = concentration.value(for: .secondary).getY(at: CGFloat(maxTitrant))
+            let finalHeight = concentration.value(for: .secondary).getValue(at: CGFloat(maxTitrant))
 
             return LinearEquation(
                 x1: 0,
@@ -325,7 +325,7 @@ private class Calculations {
     }
 
     private func initialBarHeight(forPart part: ExtendedSubstancePart) -> CGFloat {
-        previous.barChartDataMap.value(for: part).equation.getY(at: CGFloat(previous.maxTitrant))
+        previous.barChartDataMap.value(for: part).equation.getValue(at: CGFloat(previous.maxTitrant))
     }
 }
 

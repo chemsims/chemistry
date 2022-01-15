@@ -62,6 +62,6 @@ extension EnergyProfileChartInput {
             x2: maxTemp,
             y2: shape.maxTempEnergy
         )
-        return equation.getY(at: temp)
+        return equation.getValue(at: temp)
     }
 }

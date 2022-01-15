@@ -68,8 +68,8 @@ struct ConcentrationPlotView: View {
             if includeAxis {
                 verticalIndicator(at: initialTime)
                 verticalIndicator(at: finalTime)
-                horizontalIndicator(at: concentrationA.getY(at: initialTime))
-                horizontalIndicator(at: concentrationA.getY(at: finalTime))
+                horizontalIndicator(at: concentrationA.getValue(at: initialTime))
+                horizontalIndicator(at: concentrationA.getValue(at: finalTime))
             }
 
             if includeAxis {
@@ -135,9 +135,9 @@ struct ConcentrationPlotView: View {
         AccessibleValueModifier(
             x: currentTime
         ) { t in
-            let a = concentrationA.getY(at: t).str(decimals: 2)
+            let a = concentrationA.getValue(at: t).str(decimals: 2)
 
-            let conB = concentrationB?.getY(at: t)
+            let conB = concentrationB?.getValue(at: t)
             let product = display.product.name
             let b = conB.map { ", \(product) \($0.str(decimals: 2))" } ?? ""
 
@@ -191,8 +191,8 @@ struct ConcentrationPlotView: View {
         let width = x2 - x1
         let midX = (x2 + x1) / 2
 
-        let c1 = equation.getY(at: t1)
-        let c2 = equation.getY(at: t2)
+        let c1 = equation.getValue(at: t1)
+        let c2 = equation.getValue(at: t2)
         let y1 = settings.yAxis.getPosition(at: c1)
         let y2 = settings.yAxis.getPosition(at: c2)
 

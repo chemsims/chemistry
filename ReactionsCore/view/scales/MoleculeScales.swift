@@ -259,7 +259,7 @@ private struct BasketPositionEquation: PointEquation {
     let armWidth: CGFloat
 
     func getPoint(at progress: CGFloat) -> CGPoint {
-        let rotation = rotationDegrees.getY(at: progress)
+        let rotation = rotationDegrees.getValue(at: progress)
         let rads = Angle(degrees: Double(rotation)).radians
 
         let dy = armWidth * CGFloat(sin(rads))
@@ -292,7 +292,7 @@ private extension SizedMoleculeScales {
     }
 
     private func getRotationLabel(at input: CGFloat) -> String {
-        let rotation = rotationDegrees.getY(at: input)
+        let rotation = rotationDegrees.getValue(at: input)
         let roundedRotation = rotation.rounded(decimals: 2)
         var end: String {
             if roundedRotation > 0 {

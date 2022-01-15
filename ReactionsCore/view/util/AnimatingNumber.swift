@@ -68,7 +68,7 @@ public struct AnimatingTextLine: View {
                     fontSize: fontSize,
                     alignment: alignment,
                     format: { x in
-                        formatter(equation.getY(at: x))
+                        formatter(equation.getValue(at: x))
                     }
                 )
             )
@@ -94,7 +94,7 @@ public struct AnimatingNumberModifier: AnimatableModifier {
                     x: x,
                     alignment: alignment,
                     format: { x in
-                        formatter(equation.getY(at: x))
+                        formatter(equation.getValue(at: x))
                     }
                 )
             )

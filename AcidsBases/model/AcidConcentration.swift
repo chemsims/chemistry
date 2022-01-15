@@ -42,7 +42,7 @@ extension PrimaryIonConcentration {
             y1: initialConcentration,
             x2: 1,
             y2: finalConcentration
-        ).getY(at: fractionSubstanceAdded)
+        ).getValue(at: fractionSubstanceAdded)
 
         return PrimaryIonConcentration(concentration: concentration)
     }

@@ -152,12 +152,12 @@ class PrecipitationComponentsTests: XCTestCase {
         let molarMass = model.reaction.unknownReactant.molarMass
         let expectedFinalMoles = massAdded / CGFloat(molarMass)
 
-        XCTAssertEqual(moles.getY(at: 0), 0)
-        XCTAssertEqual(moles.getY(at: t2), expectedFinalMoles)
+        XCTAssertEqual(moles.getValue(at: 0), 0)
+        XCTAssertEqual(moles.getValue(at: t2), expectedFinalMoles)
 
         let mass = model.reactingUnknownReactantMass
-        XCTAssertEqual(mass.getY(at: 0), 0)
-        XCTAssertEqual(mass.getY(at: t2), massAdded)
+        XCTAssertEqual(mass.getValue(at: 0), 0)
+        XCTAssertEqual(mass.getValue(at: t2), massAdded)
     }
 
     func testProductMolesAndMassIncreaseDuringReactionPhase() {
@@ -175,13 +175,13 @@ class PrecipitationComponentsTests: XCTestCase {
         // unknown reactant coeff is 1, so we expect the number
         // of product moles to equal the unknown reactant moles
         let expectedFinalMoles = model.unknownReactantMolesAdded
-        XCTAssertEqual(moles.getY(at: 0), 0)
-        XCTAssertEqual(moles.getY(at: t2), expectedFinalMoles)
+        XCTAssertEqual(moles.getValue(at: 0), 0)
+        XCTAssertEqual(moles.getValue(at: t2), expectedFinalMoles)
 
         let molarMass = CGFloat(model.reaction.product.molarMass)
         let expectedFinalMass = expectedFinalMoles * molarMass
-        XCTAssertEqual(mass.getY(at: 0), 0)
-        XCTAssertEqual(mass.getY(at: t2), expectedFinalMass)
+        XCTAssertEqual(mass.getValue(at: 0), 0)
+        XCTAssertEqual(mass.getValue(at: t2), expectedFinalMass)
 
     }
 
@@ -265,16 +265,16 @@ class PrecipitationComponentsTests: XCTestCase {
         let t1 = model.endOfInitialReaction
         let t2 = model.endOfFinalReaction
 
-        XCTAssertEqual(mass.getY(at: 0), 0)
-        XCTAssertEqual(mass.getY(at: t1), initialMass)
-        XCTAssertEqual(mass.getY(at: t2), 2 * initialMass)
+        XCTAssertEqual(mass.getValue(at: 0), 0)
+        XCTAssertEqual(mass.getValue(at: t1), initialMass)
+        XCTAssertEqual(mass.getValue(at: t2), 2 * initialMass)
 
         let molarMass = model.reaction.unknownReactant.molarMass
         let expectedMoles = mass / CGFloat(molarMass)
         let moles = model.reactingUnknownReactantMoles
-        XCTAssertEqual(moles.getY(at: 0), 0)
-        XCTAssertEqual(moles.getY(at: t1), expectedMoles.getY(at: t1))
-        XCTAssertEqual(moles.getY(at: t2), expectedMoles.getY(at: t2))
+        XCTAssertEqual(moles.getValue(at: 0), 0)
+        XCTAssertEqual(moles.getValue(at: t1), expectedMoles.getValue(at: t1))
+        XCTAssertEqual(moles.getValue(at: t2), expectedMoles.getValue(at: t2))
     }
 
     func testPrecipitateGrowsAfterFirstReaction() {

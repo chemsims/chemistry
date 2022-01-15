@@ -64,7 +64,7 @@ extension FractionedCoordinates {
 
 extension FractionedCoordinates {
     public func coords(at x: CGFloat) -> [GridCoordinate] {
-        let fraction = fractionToDraw.getY(at: x).within(min: 0, max: 1)
+        let fraction = fractionToDraw.getValue(at: x).within(min: 0, max: 1)
         let num = (fraction * CGFloat(coordinates.count)).roundedInt()
         return Array(coordinates.prefix(num))
     }

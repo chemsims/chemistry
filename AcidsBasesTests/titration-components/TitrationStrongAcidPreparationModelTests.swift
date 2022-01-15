@@ -133,8 +133,8 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
             model.barChartDataMap.value(for: complementIon)
         }
 
-        XCTAssertEqual(primaryIonBar.equation.getY(at: 0), 0.3)
-        XCTAssertEqual(complementIonBar.equation.getY(at: 0), 0.3)
+        XCTAssertEqual(primaryIonBar.equation.getValue(at: 0), 0.3)
+        XCTAssertEqual(complementIonBar.equation.getValue(at: 0), 0.3)
 
         model.incrementSubstance(count: 20)
         let expectedPrimaryIonConcentration = expectedConcentrationOfIncreasingMolecule(afterIncrementing: 20)
@@ -144,15 +144,15 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
             y1: 0.3,
             x2: 1,
             y2: 1
-        ).getY(at: expectedPrimaryIonConcentration)
+        ).getValue(at: expectedPrimaryIonConcentration)
         XCTAssertEqualWithTolerance(
-            primaryIonBar.equation.getY(at: 20),
+            primaryIonBar.equation.getValue(at: 20),
             expectedFinalPrimaryIonHeight
         )
 
         let expectedMidPrimaryIonHeight = (0.3 + expectedFinalPrimaryIonHeight) / 2
         XCTAssertEqualWithTolerance(
-            primaryIonBar.equation.getY(at: 10),
+            primaryIonBar.equation.getValue(at: 10),
             expectedMidPrimaryIonHeight
         )
 
@@ -161,15 +161,15 @@ class TitrationStrongAcidPreparationModelTests: XCTestCase {
             y1: 0.3,
             x2: CGFloat(model.maxSubstance),
             y2: 0
-        ).getY(at: 20)
+        ).getValue(at: 20)
         XCTAssertEqualWithTolerance(
-            complementIonBar.equation.getY(at: 20),
+            complementIonBar.equation.getValue(at: 20),
             expectedFinalComplementIonHeight
         )
 
         let expectedMidComplementIonHeight = (0.3 + expectedFinalComplementIonHeight) / 2
         XCTAssertEqual(
-            complementIonBar.equation.getY(at: 10),
+            complementIonBar.equation.getValue(at: 10),
             expectedMidComplementIonHeight
         )
     }

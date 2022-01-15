@@ -125,7 +125,7 @@ extension TitrationStrongSubstancePreparationModel {
 // MARK: - Reaction progress
 extension TitrationStrongSubstancePreparationModel {
     private func updateReactionProgress() {
-        let desiredCount = primaryMoleculesFromSubstance.getY(at: CGFloat(substanceAdded)).roundedInt()
+        let desiredCount = primaryMoleculesFromSubstance.getValue(at: CGFloat(substanceAdded)).roundedInt()
         let currentCount = reactionProgress.moleculeCounts(ofType: substance.primary)
         let delta = desiredCount - currentCount
 
@@ -173,15 +173,15 @@ extension TitrationStrongSubstancePreparationModel {
     }
 
     var currentConcentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
-        calculations.concentration.map { $0.getY(at: CGFloat(substanceAdded)) }
+        calculations.concentration.map { $0.getValue(at: CGFloat(substanceAdded)) }
     }
 
     var currentMoles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
-        calculations.moles.map { $0.getY(at: CGFloat(substanceAdded)) }
+        calculations.moles.map { $0.getValue(at: CGFloat(substanceAdded)) }
     }
 
     var currentMolarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
-        calculations.molarity.map { $0.getY(at: CGFloat(substanceAdded)) }
+        calculations.molarity.map { $0.getValue(at: CGFloat(substanceAdded)) }
     }
 
     var currentVolume: CGFloat {
@@ -327,8 +327,8 @@ private class Calculations {
             x2: CGFloat(maxSubstance),
             y2: settings
                 .barChartHeightFromConcentration
-                .getY(
-                    at: substanceConcentration.getY(at: CGFloat(maxSubstance))
+                .getValue(
+                    at: substanceConcentration.getValue(at: CGFloat(maxSubstance))
                 )
         )
     }
@@ -387,7 +387,7 @@ private class Calculations {
         }
 
     var currentVolume: CGFloat {
-        settings.beakerVolumeFromRows.getY(at: exactRows)
+        settings.beakerVolumeFromRows.getValue(at: exactRows)
     }
  
     /// Maximum substance count to ensure the `maxInitialStrongConcentration` is not exceeded.

@@ -58,11 +58,11 @@ class ReactionComponentTests: XCTestCase {
 
         let concentration = model.components.equation.concentration
         XCTAssertEqual(
-            concentration.reactantA.getY(at: 0),
+            concentration.reactantA.getValue(at: 0),
             maxConcentration, accuracy: 0.0001
         )
         XCTAssertEqual(
-            concentration.reactantB.getY(at: 0),
+            concentration.reactantB.getValue(at: 0),
             maxConcentration, accuracy: 0.0001
         )
     }
@@ -112,11 +112,11 @@ class ReactionComponentTests: XCTestCase {
             fractionToDraw: Equation,
             convergence: CGFloat
         ) {
-            XCTAssertEqual(fractionToDraw.getY(at: 0), 0)
-            XCTAssertEqual(fractionToDraw.getY(at: t), 1)
-            let midConcentration = concentration.getY(at: t / 2)
+            XCTAssertEqual(fractionToDraw.getValue(at: 0), 0)
+            XCTAssertEqual(fractionToDraw.getValue(at: t), 1)
+            let midConcentration = concentration.getValue(at: t / 2)
             let midAsRatio = midConcentration / convergence
-            XCTAssertEqual(fractionToDraw.getY(at: t / 2), midAsRatio, accuracy: 0.0001)
+            XCTAssertEqual(fractionToDraw.getValue(at: t / 2), midAsRatio, accuracy: 0.0001)
         }
 
         func testProducts() {
@@ -177,12 +177,12 @@ class ReactionComponentTests: XCTestCase {
 
         let tAddProd = AqueousReactionSettings.timeToAddProduct
 
-        XCTAssertEqual(model2.concentrations.productC.getY(at: 0), 0)
-        XCTAssertEqual(model2.concentrations.productC.getY(at: tAddProd), expectedConcentration, accuracy: 0.00001)
+        XCTAssertEqual(model2.concentrations.productC.getValue(at: 0), 0)
+        XCTAssertEqual(model2.concentrations.productC.getValue(at: tAddProd), expectedConcentration, accuracy: 0.00001)
 
         model2.increment(molecule: .D, count: 1)
-        XCTAssertEqual(model2.concentrations.productD.getY(at: 0), 0)
-        XCTAssertEqual(model2.concentrations.productD.getY(at: tAddProd), expectedConcentration, accuracy: 0.00001)
+        XCTAssertEqual(model2.concentrations.productD.getValue(at: 0), 0)
+        XCTAssertEqual(model2.concentrations.productD.getValue(at: tAddProd), expectedConcentration, accuracy: 0.00001)
     }
 
     func testConsolidatingMoleculesWithNoOverlap() {
@@ -239,7 +239,7 @@ class ReactionComponentTests: XCTestCase {
             rowsHaveChangeFromPrevious: nil
         )
         XCTAssertEqual(
-            model.beakerMolecules[1].animatingMolecules.fractionToDraw.getY(at: 0), 1
+            model.beakerMolecules[1].animatingMolecules.fractionToDraw.getValue(at: 0), 1
         )
     }
 
@@ -268,7 +268,7 @@ class ReactionComponentTests: XCTestCase {
         let fwdC = forward.beakerMolecules[2]
         XCTAssertEqual(fwdC.molecule, .C)
         XCTAssertEqual(fwdC.animatingMolecules.molecules.coords.count, 3)
-        XCTAssertEqual(fwdC.animatingMolecules.fractionToDraw.getY(at: 10), 1)
+        XCTAssertEqual(fwdC.animatingMolecules.fractionToDraw.getValue(at: 10), 1)
 
         let initReverse = ReactionComponentsWrapper.consolidate(
             molecules: forward.beakerMolecules,
@@ -290,8 +290,8 @@ class ReactionComponentTests: XCTestCase {
             rowsHaveChangeFromPrevious: nil
         )
 
-        XCTAssertEqual(reverse.equation.concentration.productC.getY(at: 11), 0.25, accuracy: 0.001)
-        XCTAssertEqual(reverse.equation.concentration.productD.getY(at: 11), 0.25, accuracy: 0.001)
+        XCTAssertEqual(reverse.equation.concentration.productC.getValue(at: 11), 0.25, accuracy: 0.001)
+        XCTAssertEqual(reverse.equation.concentration.productD.getValue(at: 11), 0.25, accuracy: 0.001)
     }
 
     func testReducingBeakerVolume() {

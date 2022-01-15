@@ -107,7 +107,7 @@ struct SolublePhCurve {
     init(curve: SolubilityChartEquation, startingPh: CGFloat) {
         self.curve = curve
         self.startingPh = startingPh
-        self.saturatedSolubility = curve.getY(at: startingPh)
+        self.saturatedSolubility = curve.getValue(at: startingPh)
 
         let superSaturatedSolubility = 1.25 * saturatedSolubility
         self.superSaturatedSolubility = superSaturatedSolubility

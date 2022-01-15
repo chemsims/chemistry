@@ -44,7 +44,7 @@ public struct AnimatingMoleculeGridShape: Shape {
     }
 
     public func path(in rect: CGRect) -> Path {
-        let fraction = fractionOfCoordsToDraw.getY(at: currentTime)
+        let fraction = fractionOfCoordsToDraw.getValue(at: currentTime)
         var coordsToDraw = (fraction * CGFloat(coords.count)).roundedInt()
         if coordsToDraw < 0 {
             coordsToDraw = 0

@@ -36,7 +36,7 @@ extension MoleculeScaleBasket {
         rows: Int
     ) -> Int {
         let gridSize = MoleculeScales.gridCoords(cols: cols, rows: rows).count
-        let currentFraction = fractionToDraw.getY(at: equationInput)
+        let currentFraction = fractionToDraw.getValue(at: equationInput)
         let numAsFloat = currentFraction * CGFloat(gridSize)
 
         // NB: SwiftUI may pass in a negative value for currentTime

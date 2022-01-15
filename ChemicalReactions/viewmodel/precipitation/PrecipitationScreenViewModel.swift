@@ -12,7 +12,7 @@ class PrecipitationScreenViewModel: ObservableObject {
         let availableReactions = PrecipitationReaction.availableReactionsWithRandomMetals()
         let chosenReaction = availableReactions.first!
         let initialRows = ChemicalReactionsSettings.initialRows
-        let initialVolume = ChemicalReactionsSettings.rowsToVolume.getY(at: CGFloat(initialRows))
+        let initialVolume = ChemicalReactionsSettings.rowsToVolume.getValue(at: CGFloat(initialRows))
 
         self.rows = CGFloat(initialRows)
         self.availableReactions = availableReactions
@@ -68,7 +68,7 @@ class PrecipitationScreenViewModel: ObservableObject {
         self.components = PrecipitationComponents(
             reaction: reaction,
             rows: GridCoordinateList.availableRows(for: rows),
-            volume: ChemicalReactionsSettings.rowsToVolume.getY(at: rows)
+            volume: ChemicalReactionsSettings.rowsToVolume.getValue(at: rows)
         )
     }
 
@@ -173,7 +173,7 @@ extension PrecipitationScreenViewModel {
 extension PrecipitationScreenViewModel {
     var equationData: PrecipitationEquationView.EquationData {
         .init(
-            beakerVolume: ChemicalReactionsSettings.rowsToVolume.getY(at: rows),
+            beakerVolume: ChemicalReactionsSettings.rowsToVolume.getValue(at: rows),
             knownReactant: chosenReaction.knownReactant.name.asString,
             product: chosenReaction.product.name.asString,
             unknownReactant: chosenReaction.unknownReactant.name(

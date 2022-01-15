@@ -129,8 +129,8 @@ public struct ShakingContainerView: View {
             let w = gesture.translation.width
             let h = gesture.translation.height
 
-            let newY = LinearEquation(x1: -halfYRange, y1: -1, x2: halfYRange, y2: 1).getY(at: h).within(min: -1, max: 1)
-            let newX = LinearEquation(x1: -halfXRange, y1: -1, x2: halfXRange, y2: 1).getY(at: w).within(min: -1, max: 1)
+            let newY = LinearEquation(x1: -halfYRange, y1: -1, x2: halfYRange, y2: 1).getValue(at: h).within(min: -1, max: 1)
+            let newX = LinearEquation(x1: -halfXRange, y1: -1, x2: halfXRange, y2: 1).getValue(at: w).within(min: -1, max: 1)
 
             offset.0 = newX
             offset.1 = newY

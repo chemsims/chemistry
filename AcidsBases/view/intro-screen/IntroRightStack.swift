@@ -179,8 +179,8 @@ private struct BarChartOrPhChart: View {
 
     private var phChartAccessibilityValue: String {
         if components.fractionSubstanceAdded > 0 {
-            let startPh = desiredPHLine.getY(at: 0)
-            let endPh = desiredPHLine.getY(at: 1)
+            let startPh = desiredPHLine.getValue(at: 0)
+            let endPh = desiredPHLine.getValue(at: 1)
             let direction = startPh < endPh ? "increases" : "decreases"
             return "The line \(direction) linearly as moles are added"
         }
@@ -201,7 +201,7 @@ private struct BarChartOrPhChart: View {
             ],
             initialTime: 0,
             currentTime: .constant(
-                chartInput.getY(
+                chartInput.getValue(
                     at: components.fractionSubstanceAdded
                 )
             ),
@@ -229,8 +229,8 @@ private struct BarChartOrPhChart: View {
 
     private var desiredPHLine: LinearEquation
     {
-        let startY = components.phLine.getY(at: 0)
-        let endY = components.phLine.getY(at: 1)
+        let startY = components.phLine.getValue(at: 0)
+        let endY = components.phLine.getValue(at: 1)
 
         return LinearEquation(
             x1: 0,
@@ -261,8 +261,8 @@ private struct PhXAxisEquation: Equation {
     // The linear line to be plotted as a function of substance added
     let desiredLine: LinearEquation
 
-    func getY(at x: CGFloat) -> CGFloat {
-        let pH = pHEquation.getY(at: x)
+    func getValue(at x: CGFloat) -> CGFloat {
+        let pH = pHEquation.getValue(at: x)
         return desiredLine.getX(at: pH)
     }
 }

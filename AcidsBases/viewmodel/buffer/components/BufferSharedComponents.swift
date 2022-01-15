@@ -47,7 +47,7 @@ struct BufferSharedComponents {
     struct SubstanceFractionFromPh: Equation {
         let substance: AcidOrBase
 
-        func getY(at x: CGFloat) -> CGFloat {
+        func getValue(at x: CGFloat) -> CGFloat {
             // This is derived from the equation p = pK + log(secondary/substance).
             // It can be rearranged to give an expression in terms of fraction of substance.
             func fractionInTermsOfP(p: CGFloat, pK: CGFloat) -> CGFloat {
@@ -65,7 +65,7 @@ struct BufferSharedComponents {
     struct SecondaryIonFractionFromPh: Equation {
         let substance: AcidOrBase
 
-        func getY(at x: CGFloat) -> CGFloat {
+        func getValue(at x: CGFloat) -> CGFloat {
             // This is derived from the equation p = pK + log(secondary/substance).
             // It can be rearranged to give an expression in terms of fraction of substance.
             func fractionInTermsOfP(p: CGFloat, pK: CGFloat) -> CGFloat {

@@ -292,7 +292,7 @@ private struct TipSliderGeometry {
     }
 
     private func handleX(atIndex index: Int) -> CGFloat {
-        handleX.getY(at: CGFloat(index))
+        handleX.getValue(at: CGFloat(index))
     }
 
     private var handleX: LinearEquation {

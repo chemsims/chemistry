@@ -35,8 +35,8 @@ class BeakerMoleculeSetterTests: XCTestCase {
         XCTAssertEqual(model.moleculesC.coords(at: 10).count, 15)
         XCTAssertEqual(model.moleculesD.coords(at: 10).count, 15)
 
-        XCTAssertEqual(model.moleculesC.coords(at: 7).count, (15 * concentration.productC.getY(at: 7) / 0.15).roundedInt())
-        XCTAssertEqual(model.moleculesD.coords(at: 7).count, (15 * concentration.productD.getY(at: 7) / 0.15).roundedInt())
+        XCTAssertEqual(model.moleculesC.coords(at: 7).count, (15 * concentration.productC.getValue(at: 7) / 0.15).roundedInt())
+        XCTAssertEqual(model.moleculesD.coords(at: 7).count, (15 * concentration.productD.getValue(at: 7) / 0.15).roundedInt())
 
         XCTAssertEqual(model.getEffectiveReactants(at: 0).a.count, 30)
         XCTAssertEqual(model.getEffectiveReactants(at: 0).b.count, 30)

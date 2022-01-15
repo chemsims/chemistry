@@ -100,12 +100,12 @@ class IntroScreenComponentsTests: XCTestCase {
     ) {
         let model = newModel(substance: substance)
         model.barChart.all.forEach { data in
-            XCTAssertEqual(data.equation.getY(at: 0), 0)
+            XCTAssertEqual(data.equation.getValue(at: 0), 0)
         }
 
-        XCTAssertEqual(model.barChart.substance.equation.getY(at: 1), finalSubstanceAmount)
-        XCTAssertEqual(model.barChart.primaryIon.equation.getY(at: 1), finalIonAmount)
-        XCTAssertEqual(model.barChart.secondaryIon.equation.getY(at: 1), finalIonAmount)
+        XCTAssertEqual(model.barChart.substance.equation.getValue(at: 1), finalSubstanceAmount)
+        XCTAssertEqual(model.barChart.primaryIon.equation.getValue(at: 1), finalIonAmount)
+        XCTAssertEqual(model.barChart.secondaryIon.equation.getValue(at: 1), finalIonAmount)
     }
 
     private func doTestAcidPrimaryIonConcentration(

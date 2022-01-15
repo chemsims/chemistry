@@ -122,7 +122,7 @@ struct BalancedReactionScalesModel {
         let reactantCount = balancer.atomCount(of: atom, elementType: .reactant)
         let productCount = balancer.atomCount(of: atom, elementType: .product)
         let productSurplus = CGFloat(productCount - reactantCount)
-        return ChemicalReactionsSettings.productAtomSurplusToRotation.getY(at: productSurplus)
+        return ChemicalReactionsSettings.productAtomSurplusToRotation.getValue(at: productSurplus)
     }
 
     func atomFraction(of atom: BalancedReaction.Atom, elementType: BalancedReaction.ElementType) -> CGFloat {

@@ -19,18 +19,18 @@ class BufferWeakComponentsTests: XCTestCase {
 
         // Test before any substance has been added
         model.barChartData.forEach { bar in
-            XCTAssertEqual(bar.equation.getY(at: 0), 0)
-            XCTAssertEqual(bar.equation.getY(at: 1), 0)
+            XCTAssertEqual(bar.equation.getValue(at: 0), 0)
+            XCTAssertEqual(bar.equation.getValue(at: 1), 0)
         }
 
         model.incrementSubstance(count: 50)
-        XCTAssertEqual(model.barChart(.substance).equation.getY(at: 0), 0.5)
-        XCTAssertEqual(model.barChart(.primaryIon).equation.getY(at: 0), 0)
-        XCTAssertEqual(model.barChart(.secondaryIon).equation.getY(at: 0), 0)
+        XCTAssertEqual(model.barChart(.substance).equation.getValue(at: 0), 0.5)
+        XCTAssertEqual(model.barChart(.primaryIon).equation.getValue(at: 0), 0)
+        XCTAssertEqual(model.barChart(.secondaryIon).equation.getValue(at: 0), 0)
 
-        XCTAssertEqual(model.barChart(.substance).equation.getY(at: 1), 0.45)
-        XCTAssertEqual(model.barChart(.primaryIon).equation.getY(at: 1), 0.05)
-        XCTAssertEqual(model.barChart(.secondaryIon).equation.getY(at: 1), 0.05)
+        XCTAssertEqual(model.barChart(.substance).equation.getValue(at: 1), 0.45)
+        XCTAssertEqual(model.barChart(.primaryIon).equation.getValue(at: 1), 0.05)
+        XCTAssertEqual(model.barChart(.secondaryIon).equation.getValue(at: 1), 0.05)
     }
 
     func testBeakerCoords() {
@@ -148,8 +148,8 @@ class BufferWeakComponentsTests: XCTestCase {
         let model = newModel(.weakAcids.first!, settings: .standard)
         model.incrementSubstance(count: 10)
 
-        let initial = model.pH.getY(at: 0)
-        let final = model.pH.getY(at: 1)
+        let initial = model.pH.getValue(at: 0)
+        let final = model.pH.getValue(at: 1)
         XCTAssertLessThan(final, initial)
     }
 
@@ -157,8 +157,8 @@ class BufferWeakComponentsTests: XCTestCase {
         let model = newModel(.weakBases.first!, settings: .standard)
         model.incrementSubstance(count: 10)
 
-        let initial = model.pH.getY(at: 0)
-        let final = model.pH.getY(at: 1)
+        let initial = model.pH.getValue(at: 0)
+        let final = model.pH.getValue(at: 1)
         XCTAssertGreaterThan(final, initial)
     }
 
@@ -172,19 +172,19 @@ class BufferWeakComponentsTests: XCTestCase {
         let primary = model.concentration.primaryIon
         let secondary = model.concentration.secondaryIon
 
-        let changeInConcentration = primary.getY(at: 1)
+        let changeInConcentration = primary.getValue(at: 1)
 
         let kA = pow(changeInConcentration, 2) / (0.2 - changeInConcentration)
         XCTAssertEqual(kA, acid.kA, accuracy: 1e-10)
 
-        XCTAssertEqual(substance.getY(at: 0), 0.2)
-        XCTAssertEqual(substance.getY(at: 1), 0.2 - changeInConcentration)
+        XCTAssertEqual(substance.getValue(at: 0), 0.2)
+        XCTAssertEqual(substance.getValue(at: 1), 0.2 - changeInConcentration)
 
-        XCTAssertEqual(primary.getY(at: 0), 0)
-        XCTAssertEqual(primary.getY(at: 1), changeInConcentration)
+        XCTAssertEqual(primary.getValue(at: 0), 0)
+        XCTAssertEqual(primary.getValue(at: 1), changeInConcentration)
 
-        XCTAssertEqual(secondary.getY(at: 0), 0)
-        XCTAssertEqual(secondary.getY(at: 1), changeInConcentration)
+        XCTAssertEqual(secondary.getValue(at: 0), 0)
+        XCTAssertEqual(secondary.getValue(at: 1), changeInConcentration)
     }
 
     private func newModel(

@@ -70,7 +70,7 @@ class ReactionConvergenceSolverTests: XCTestCase {
             previous: nil
         )
         let quotient = ReactionQuotientEquation(equations: equation)
-        XCTAssertEqual(quotient.getY(at: 10), 0.1, accuracy: ReactionConvergenceSolver.tolerance)
+        XCTAssertEqual(quotient.getValue(at: 10), 0.1, accuracy: ReactionConvergenceSolver.tolerance)
     }
 
     func testInputRangeForReactionA() {
@@ -115,16 +115,16 @@ class ReactionConvergenceSolverTests: XCTestCase {
                 )
                 let quotient = ReactionQuotientEquation(equations: equation)
                 XCTAssertEqual(
-                    quotient.getY(at: tEnd),
+                    quotient.getValue(at: tEnd),
                     reaction.equilibriumConstant,
                     accuracy: 0.001,
                     debug
                 )
 
-                XCTAssertGreaterThan(equation.concentration.reactantA.getY(at: tEnd), 0, debug)
-                XCTAssertGreaterThan(equation.concentration.reactantB.getY(at: tEnd), 0, debug)
-                XCTAssertGreaterThan(equation.concentration.productC.getY(at: tEnd), 0, debug)
-                XCTAssertGreaterThan(equation.concentration.productD.getY(at: tEnd), 0, debug)
+                XCTAssertGreaterThan(equation.concentration.reactantA.getValue(at: tEnd), 0, debug)
+                XCTAssertGreaterThan(equation.concentration.reactantB.getValue(at: tEnd), 0, debug)
+                XCTAssertGreaterThan(equation.concentration.productC.getValue(at: tEnd), 0, debug)
+                XCTAssertGreaterThan(equation.concentration.productD.getValue(at: tEnd), 0, debug)
 
                 // reverse
                 let minProduct: CGFloat = 0
@@ -145,12 +145,12 @@ class ReactionConvergenceSolverTests: XCTestCase {
                             equilibriumTime: tFinal,
                             previous: equation
                         )
-                        XCTAssertGreaterThan(reverseEquation.concentration.reactantA.getY(at: tFinal), 0)
-                        XCTAssertGreaterThan(reverseEquation.concentration.reactantB.getY(at: tFinal), 0)
-                        XCTAssertGreaterThan(reverseEquation.concentration.productC.getY(at: tFinal), 0)
-                        XCTAssertGreaterThan(reverseEquation.concentration.productD.getY(at: tFinal), 0)
+                        XCTAssertGreaterThan(reverseEquation.concentration.reactantA.getValue(at: tFinal), 0)
+                        XCTAssertGreaterThan(reverseEquation.concentration.reactantB.getValue(at: tFinal), 0)
+                        XCTAssertGreaterThan(reverseEquation.concentration.productC.getValue(at: tFinal), 0)
+                        XCTAssertGreaterThan(reverseEquation.concentration.productD.getValue(at: tFinal), 0)
                         let reverseQuotient = ReactionQuotientEquation(equations: reverseEquation)
-                        XCTAssertEqual(reverseQuotient.getY(at: tEnd), reaction.equilibriumConstant, accuracy: 0.001)
+                        XCTAssertEqual(reverseQuotient.getValue(at: tEnd), reaction.equilibriumConstant, accuracy: 0.001)
                     }
                 }
             }

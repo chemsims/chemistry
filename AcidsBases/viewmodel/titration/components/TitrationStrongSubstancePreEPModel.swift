@@ -155,7 +155,7 @@ extension TitrationStrongSubstancePreEPModel {
 
     func updateReactionProgress() {
         let currentCount = reactionProgress.moleculeCounts(ofType: substance.primary)
-        let desiredCount = reactionProgressMoleculeCount.getY(at: CGFloat(titrantAdded)).roundedInt()
+        let desiredCount = reactionProgressMoleculeCount.getValue(at: CGFloat(titrantAdded)).roundedInt()
 
         let toRemove = currentCount - desiredCount
         assert(toRemove >= 0, "Expected positive molecule count to remove")
@@ -267,7 +267,7 @@ private class TitrationStrongSubstancePreEPModelCalculations {
     private func barChartEquation(forIon primaryIon: PrimaryIon) -> Equation {
         LinearEquation(
             x1: 0,
-            y1: previous.barChartHeightEquation.value(for: primaryIon).getY(at: CGFloat(previous.substanceAdded)),
+            y1: previous.barChartHeightEquation.value(for: primaryIon).getValue(at: CGFloat(previous.substanceAdded)),
             x2: CGFloat(maxTitrant),
             y2: settings.neutralSubstanceBarChartHeight
         )
@@ -290,7 +290,7 @@ private class TitrationStrongSubstancePreEPModelCalculations {
 
 
     lazy var currentMoles: EnumMap<TitrationEquationTerm.Moles, CGFloat> =
-        moles.map { $0.getY(at: CGFloat(titrantAdded)) }
+        moles.map { $0.getValue(at: CGFloat(titrantAdded)) }
 
 
     private lazy var initialSubstanceMoles: CGFloat =
@@ -311,7 +311,7 @@ private class TitrationStrongSubstancePreEPModelCalculations {
         }
 
     lazy var currentVolume: EnumMap<TitrationEquationTerm.Volume, CGFloat> =
-        volume.map { $0.getY(at: CGFloat(titrantAdded)) }
+        volume.map { $0.getValue(at: CGFloat(titrantAdded)) }
 
     /// Titrant volume equation in terms of titrant molecules added
     private lazy var titrantVolume: Equation =

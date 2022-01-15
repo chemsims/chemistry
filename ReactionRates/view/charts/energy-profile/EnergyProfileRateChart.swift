@@ -38,7 +38,7 @@ struct EnergyProfileRateChart: View {
 
     private var value: String {
         if let invT = currentTempInverse, let equation = equation {
-            let lnK = equation.getY(at: invT)
+            let lnK = equation.getValue(at: invT)
             let regularT = (1 / invT).str(decimals: 0)
             return "Inverse T 1 divide by \(regularT), ln K \(lnK.str(decimals: 2))"
         }
@@ -80,7 +80,7 @@ struct EnergyProfileRateChart: View {
                 }
                 .position(
                     x: settings.xAxis.getPosition(at: currentTempInverse!),
-                    y: settings.yAxis.getPosition(at: equation!.getY(at: currentTempInverse!))
+                    y: settings.yAxis.getPosition(at: equation!.getValue(at: currentTempInverse!))
                 )
             }
 

@@ -12,8 +12,8 @@ class MoleculeScalesRotationEquationTest: XCTestCase {
             leftMolecules: .single(concentration: .init(fraction: LinearEquation(m: 1, x1: 0, y1: 0))),
             rightMolecules: .single(concentration: .init(fraction: LinearEquation(m: 1, x1: 0, y1: 0)))
         )
-        XCTAssertEqual(rotation.getY(at: 0), 0)
-        XCTAssertEqual(rotation.getY(at: 1), 0)
+        XCTAssertEqual(rotation.getValue(at: 0), 0)
+        XCTAssertEqual(rotation.getValue(at: 1), 0)
     }
 
     func testRotationForHeavyLeftBasket() {
@@ -21,7 +21,7 @@ class MoleculeScalesRotationEquationTest: XCTestCase {
             leftMolecules: .single(concentration: .init(fraction: ConstantEquation(value: 1))),
             rightMolecules: .single(concentration: .init(fraction: ConstantEquation(value: 0)))
         )
-        XCTAssertEqual(rotation.getY(at: 0), -1)
+        XCTAssertEqual(rotation.getValue(at: 0), -1)
     }
 
     func testRotationForHeavyLeftBasketWhileAddingToTheRightBasket() {
@@ -29,8 +29,8 @@ class MoleculeScalesRotationEquationTest: XCTestCase {
             leftMolecules: .single(fraction: ConstantEquation(value: 1)),
             rightMolecules: .single(fraction: LinearEquation(m: 1, x1: 0, y1: 0))
         )
-        XCTAssertEqual(rotation.getY(at: 0), -1)
-        XCTAssertEqual(rotation.getY(at: 1), 0)
+        XCTAssertEqual(rotation.getValue(at: 0), -1)
+        XCTAssertEqual(rotation.getValue(at: 1), 0)
     }
 
 }

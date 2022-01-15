@@ -44,7 +44,7 @@ struct ReactionConvergenceSolver {
             iterations: Int
         ) -> CGFloat? {
             let midPoint = (maxX + minX) / 2
-            let result = equation.getY(at: midPoint)
+            let result = equation.getValue(at: midPoint)
 
             if abs(result - k) <= Self.tolerance {
                 return midPoint
@@ -99,7 +99,7 @@ private struct ConvergingReactionQuotientEquation: Equation {
     let initialConcentrations: BalancedReactionInitialConcentrations
     let isForward: Bool
 
-    func getY(at x: CGFloat) -> CGFloat {
+    func getValue(at x: CGFloat) -> CGFloat {
         let aTerm = reactantTerm(x: x, coeffs.reactantA, initialConcentrations.reactantA)
         let bTerm = reactantTerm(x: x, coeffs.reactantB, initialConcentrations.reactantB)
         let cTerm = productTerm(x: x, coeffs.productC, initialConcentrations.productC)

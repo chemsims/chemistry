@@ -59,7 +59,7 @@ extension PrecipitationComponents {
             underlying.add(count: count)
 
             let currentRPCount = reactionProgressModel.moleculeCounts(ofType: .unknownReactant)
-            let desiredRPCount = reactionProgressCoordCount.getY(
+            let desiredRPCount = reactionProgressCoordCount.getValue(
                 at: CGFloat(underlying.coords.count)
             ).roundedInt()
 

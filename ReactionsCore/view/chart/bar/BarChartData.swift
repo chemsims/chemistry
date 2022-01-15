@@ -19,7 +19,7 @@ public struct BarChartData {
             color: color,
             accessibilityLabel: accessibilityLabel,
             initialValue: initialValue,
-            accessibilityValue: { equation.getY(at: $0).str(decimals: 2) }
+            accessibilityValue: { equation.getValue(at: $0).str(decimals: 2) }
         )
     }
 

@@ -56,7 +56,7 @@ public struct ChartLine: Shape {
         var didStart = false
 
         func addLine(x: CGFloat, y: CGFloat) {
-            let xValue = xEquation?.getY(at: x) ?? x
+            let xValue = xEquation?.getValue(at: x) ?? x
             let xPosition = shiftedXAxis.getPosition(at: xValue)
             let yPosition = yAxis.getPosition(at: y)
             if didStart {
@@ -69,17 +69,17 @@ public struct ChartLine: Shape {
 
         if let dc = discontinuity {
             for x in strideLhs(dx: dx, discontinuityX: dc.x) {
-                let y = equation.getY(at: x)
+                let y = equation.getValue(at: x)
                 addLine(x: x, y: y)
             }
-            addLine(x: dc.x - (dx / 100), y: equation.getY(at: dc.x - (dx / 100)))
+            addLine(x: dc.x - (dx / 100), y: equation.getValue(at: dc.x - (dx / 100)))
         }
 
         for x in strideRhs(dx: dx) {
-            let y = equation.getY(at: x)
+            let y = equation.getValue(at: x)
             addLine(x: x, y: y)
         }
-        addLine(x: endX, y: equation.getY(at: endX))
+        addLine(x: endX, y: equation.getValue(at: endX))
 
         return path
     }
@@ -143,9 +143,9 @@ public struct ChartIndicatorHead: Shape {
 
     public func path(in rect: CGRect) -> Path {
         var path = Path()
-        let y = equation.getY(at: x)
+        let y = equation.getValue(at: x)
 
-        let xValue = xEquation?.getY(at: x) ?? x
+        let xValue = xEquation?.getValue(at: x) ?? x
         let xPosition = shiftedXAxis.getPosition(at: xValue)
         let yPosition = yAxis.getPosition(at: y)
 

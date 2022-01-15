@@ -27,7 +27,7 @@ protocol ConcentrationEquation: Equation {
 }
 
 extension ConcentrationEquation {
-    func getY(at x: CGFloat) -> CGFloat {
+    func getValue(at x: CGFloat) -> CGFloat {
         getConcentration(at: x)
     }
 
@@ -139,7 +139,7 @@ struct ConcentrationBEquation: Equation {
     let concentrationA: ConcentrationEquation
     let initialAConcentration: CGFloat
 
-    func getY(at x: CGFloat) -> CGFloat {
+    func getValue(at x: CGFloat) -> CGFloat {
         initialAConcentration - concentrationA.getConcentration(at: x)
     }
 
@@ -201,7 +201,7 @@ struct SecondOrderConcentration: ConcentrationEquation {
 struct InverseEquation: Equation {
     let underlying: ConcentrationEquation
 
-    func getY(at x: CGFloat) -> CGFloat {
+    func getValue(at x: CGFloat) -> CGFloat {
         let value = underlying.getConcentration(at: x)
         assert(value != 0)
         return 1 / value
@@ -211,7 +211,7 @@ struct InverseEquation: Equation {
 struct RateEquation: Equation {
     let concentration: ConcentrationEquation
 
-    func getY(at x: CGFloat) -> CGFloat {
+    func getValue(at x: CGFloat) -> CGFloat {
         let k = concentration.rateConstant
         let order = CGFloat(concentration.order)
         let value = concentration.getConcentration(at: x)

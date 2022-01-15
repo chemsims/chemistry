@@ -159,7 +159,7 @@ private struct TitrationMacroscopicBeaker: View {
     }
 
     private var colorInputFraction: CGFloat {
-        colorInputFractionEquation.getY(at: equationInput)
+        colorInputFractionEquation.getValue(at: equationInput)
     }
 
     private var colorInputFractionEquation: Equation {

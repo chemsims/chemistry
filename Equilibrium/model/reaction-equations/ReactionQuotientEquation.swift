@@ -26,11 +26,11 @@ struct ReactionQuotientEquation: Equation {
         self.terms = terms
     }
 
-    func getY(at x: CGFloat) -> CGFloat {
+    func getValue(at x: CGFloat) -> CGFloat {
         func getTerm(_ term: QuotientTerm) -> CGFloat {
             let equation = term.equation
             let coeff = term.coefficient
-            let y = equation.getY(at: x)
+            let y = equation.getValue(at: x)
             return pow(y, CGFloat(coeff))
         }
 

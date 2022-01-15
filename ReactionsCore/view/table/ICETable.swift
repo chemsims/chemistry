@@ -211,8 +211,8 @@ private struct SizedICETable: View {
         let initial: Equation
         let final: Equation
 
-        func getY(at x: CGFloat) -> CGFloat {
-            let delta = final.getY(at: x) - initial.getY(at: x)
+        func getValue(at x: CGFloat) -> CGFloat {
+            let delta = final.getValue(at: x) - initial.getValue(at: x)
             return abs(delta) < 0.00001 ? 0 : delta
         }
     }
@@ -232,7 +232,7 @@ private struct SizedICETable: View {
 
 extension Equation {
     fileprivate func delta(t2: CGFloat) -> CGFloat {
-        getY(at: t2) - getY(at: 0)
+        getValue(at: t2) - getValue(at: 0)
     }
 }
 

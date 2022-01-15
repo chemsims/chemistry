@@ -28,11 +28,11 @@ public struct SwitchingEquation: Equation {
         self.underlyingRight = underlyingRight
     }
 
-    public func getY(at x: CGFloat) -> CGFloat {
+    public func getValue(at x: CGFloat) -> CGFloat {
         if x < thresholdX {
-            return underlyingLeft.getY(at: x)
+            return underlyingLeft.getValue(at: x)
         }
-        return underlyingRight.getY(at: x)
+        return underlyingRight.getValue(at: x)
     }
 
     /// Returns a switching equation with two linear lines that switch at the
@@ -116,7 +116,7 @@ public struct QuadraticEquation: Equation {
         self.c = c
     }
 
-    public func getY(at x: CGFloat) -> CGFloat {
+    public func getValue(at x: CGFloat) -> CGFloat {
         (a * pow(x, 2)) + (b * x) + c
     }
 

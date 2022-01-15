@@ -160,17 +160,17 @@ class TitrationWeakAcidPostEPModelTests: XCTestCase {
             let initialBarChart = secondModel.barChartDataMap.value(for: part).equation
             let currentBarChart = model.barChartDataMap.value(for: part).equation
             XCTAssertEqual(
-                initialBarChart.getY(at: CGFloat(secondModel.maxTitrant)),
-                currentBarChart.getY(at: 0),
+                initialBarChart.getValue(at: CGFloat(secondModel.maxTitrant)),
+                currentBarChart.getValue(at: 0),
                 "Failed for \(part)"
             )
         }
 
         func finalBarHeight(_ part: ExtendedSubstancePart) -> CGFloat {
-            model.barChartDataMap.value(for: part).equation.getY(at: CGFloat(model.maxTitrant))
+            model.barChartDataMap.value(for: part).equation.getValue(at: CGFloat(model.maxTitrant))
         }
         func initialBarHeight(_ part: ExtendedSubstancePart) -> CGFloat {
-            model.barChartDataMap.value(for: part).equation.getY(at: 0)
+            model.barChartDataMap.value(for: part).equation.getValue(at: 0)
         }
 
 

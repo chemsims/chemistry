@@ -45,8 +45,8 @@ struct SolubilityChartEquation: Equation {
         )
     }
 
-    func getY(at x: CGFloat) -> CGFloat {
-        underlying.getY(at: x)
+    func getValue(at x: CGFloat) -> CGFloat {
+        underlying.getValue(at: x)
     }
 
     func getLeftHandPh(for solubility: CGFloat) -> CGFloat? {

@@ -18,8 +18,8 @@ struct ScalesRotationEquation: Equation {
         self.maxAngle = maxAngle
     }
 
-    func getY(at x: CGFloat) -> CGFloat {
-        fraction.getY(at: x) * maxAngle
+    func getValue(at x: CGFloat) -> CGFloat {
+        fraction.getValue(at: x) * maxAngle
     }
 }
 

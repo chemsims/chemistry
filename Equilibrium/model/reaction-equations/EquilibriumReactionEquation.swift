@@ -26,8 +26,8 @@ struct EquilibriumReactionEquation: Equation {
         )
     }
 
-    func getY(at x: CGFloat) -> CGFloat {
-        let res = underlying.getY(at: x)
+    func getValue(at x: CGFloat) -> CGFloat {
+        let res = underlying.getValue(at: x)
         // There's an issue where very small concentrations could appear as a negative zero
         if (abs(res) < 0.000000001) {
             return 0

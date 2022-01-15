@@ -72,8 +72,8 @@ public struct ReactionProgressChartGeometry<MoleculeType: CaseIterable> {
         rowIndex: Int
     ) -> CGPoint {
         CGPoint(
-            x: columnXEquation.getY(at: CGFloat(colIndex)),
-            y: rowYEquation.getY(at: CGFloat(rowIndex))
+            x: columnXEquation.getValue(at: CGFloat(colIndex)),
+            y: rowYEquation.getValue(at: CGFloat(rowIndex))
         )
     }
 }

@@ -20,24 +20,24 @@ class BufferSaltComponentsTests: XCTestCase {
         let saltModel = BufferSaltComponents(prev: weakModel)
 
         // Correct values before any substance added
-        XCTAssertEqual(saltModel.barChartEquations.substance.getY(at: 0), 0.27)
-        XCTAssertEqual(saltModel.barChartEquations.primaryIon.getY(at: 0), 0.03)
-        XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getY(at: 0), 0.03)
+        XCTAssertEqual(saltModel.barChartEquations.substance.getValue(at: 0), 0.27)
+        XCTAssertEqual(saltModel.barChartEquations.primaryIon.getValue(at: 0), 0.03)
+        XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getValue(at: 0), 0.03)
 
         // One molecule added
-        XCTAssertEqual(saltModel.barChartEquations.substance.getY(at: 1), 0.28)
-        XCTAssertEqual(saltModel.barChartEquations.primaryIon.getY(at: 1), 0.02, accuracy: 0.0001)
-        XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getY(at: 1), 0.03)
+        XCTAssertEqual(saltModel.barChartEquations.substance.getValue(at: 1), 0.28)
+        XCTAssertEqual(saltModel.barChartEquations.primaryIon.getValue(at: 1), 0.02, accuracy: 0.0001)
+        XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getValue(at: 1), 0.03)
 
         // All of primary molecules gone
-        XCTAssertEqual(saltModel.barChartEquations.substance.getY(at: 3), 0.3)
-        XCTAssertEqual(saltModel.barChartEquations.primaryIon.getY(at: 3), 0)
-        XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getY(at: 3), 0.03)
+        XCTAssertEqual(saltModel.barChartEquations.substance.getValue(at: 3), 0.3)
+        XCTAssertEqual(saltModel.barChartEquations.primaryIon.getValue(at: 3), 0)
+        XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getValue(at: 3), 0.03)
 
         // End of adding substance
-        XCTAssertEqual(saltModel.barChartEquations.substance.getY(at: CGFloat(saltModel.maxSubstance)), 0.3)
-        XCTAssertEqual(saltModel.barChartEquations.primaryIon.getY(at: CGFloat(saltModel.maxSubstance)), 0)
-        XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getY(at: CGFloat(saltModel.maxSubstance)), 0.3)
+        XCTAssertEqual(saltModel.barChartEquations.substance.getValue(at: CGFloat(saltModel.maxSubstance)), 0.3)
+        XCTAssertEqual(saltModel.barChartEquations.primaryIon.getValue(at: CGFloat(saltModel.maxSubstance)), 0)
+        XCTAssertEqual(saltModel.barChartEquations.secondaryIon.getValue(at: CGFloat(saltModel.maxSubstance)), 0.3)
     }
 
     func testCoords() {
@@ -129,18 +129,18 @@ class BufferSaltComponentsTests: XCTestCase {
         weakModel.incrementSubstance(count: weakModel.maxSubstanceCount)
 
         let model = BufferSaltComponents(prev: weakModel)
-        let changeInConcentration = weakModel.concentration.primaryIon.getY(at: 1)
+        let changeInConcentration = weakModel.concentration.primaryIon.getValue(at: 1)
         let initialSubstanceConcentration = 0.3 - changeInConcentration
 
-        XCTAssertEqual(model.concentration.substance.getY(at: 0), initialSubstanceConcentration)
-        XCTAssertEqual(model.concentration.primaryIon.getY(at: 0), changeInConcentration)
-        XCTAssertEqual(model.concentration.secondaryIon.getY(at: 0), changeInConcentration)
+        XCTAssertEqual(model.concentration.substance.getValue(at: 0), initialSubstanceConcentration)
+        XCTAssertEqual(model.concentration.primaryIon.getValue(at: 0), changeInConcentration)
+        XCTAssertEqual(model.concentration.secondaryIon.getValue(at: 0), changeInConcentration)
 
 
         // All primary ion gone
-        XCTAssertEqual(model.concentration.substance.getY(at: 3), 0.3)
-        XCTAssertEqual(model.concentration.primaryIon.getY(at: 3), 0)
-        XCTAssertEqual(model.concentration.secondaryIon.getY(at: 3), changeInConcentration)
+        XCTAssertEqual(model.concentration.substance.getValue(at: 3), 0.3)
+        XCTAssertEqual(model.concentration.primaryIon.getValue(at: 3), 0)
+        XCTAssertEqual(model.concentration.secondaryIon.getValue(at: 3), changeInConcentration)
 
         // Equal concentrations
         XCTAssertEqual(model.finalConcentration.substance, 0.3)
@@ -153,9 +153,9 @@ class BufferSaltComponentsTests: XCTestCase {
 
         let model = BufferSaltComponents(prev: weakModel)
 
-        let initialPh = model.pH.getY(at: 0)
-        let finalPh = model.pH.getY(at: CGFloat(model.maxSubstance))
-        XCTAssertEqual(weakModel.pH.getY(at: 1), initialPh)
+        let initialPh = model.pH.getValue(at: 0)
+        let finalPh = model.pH.getValue(at: CGFloat(model.maxSubstance))
+        XCTAssertEqual(weakModel.pH.getValue(at: 1), initialPh)
 
         XCTAssertGreaterThan(finalPh, initialPh)
     }
@@ -166,9 +166,9 @@ class BufferSaltComponentsTests: XCTestCase {
 
         let model = BufferSaltComponents(prev: weakModel)
 
-        let initialPh = model.pH.getY(at: 0)
-        let finalPh = model.pH.getY(at: CGFloat(model.maxSubstance))
-        XCTAssertEqual(weakModel.pH.getY(at: 1), initialPh)
+        let initialPh = model.pH.getValue(at: 0)
+        let finalPh = model.pH.getValue(at: CGFloat(model.maxSubstance))
+        XCTAssertEqual(weakModel.pH.getValue(at: 1), initialPh)
 
         XCTAssertLessThan(finalPh, initialPh)
     }

@@ -12,10 +12,10 @@ class BufferSaltComponents: ObservableObject {
     ) {
         reactingModel = Self.initialReactingBeakerModel(previous: prev)
 
-        let initialSubstanceC = prev.concentration.substance.getY(at: 1)
-        let finalSubstanceC = prev.concentration.substance.getY(at: 0)
-        let initialSecondaryC = prev.concentration.secondaryIon.getY(at: 1)
-        let initialPrimaryC = prev.concentration.primaryIon.getY(at: 1)
+        let initialSubstanceC = prev.concentration.substance.getValue(at: 1)
+        let finalSubstanceC = prev.concentration.substance.getValue(at: 0)
+        let initialSecondaryC = prev.concentration.secondaryIon.getValue(at: 1)
+        let initialPrimaryC = prev.concentration.primaryIon.getValue(at: 1)
 
         self.previous = prev
 
@@ -75,13 +75,13 @@ class BufferSaltComponents: ObservableObject {
             thresholdX: xThreshold,
             underlyingLeft: LinearEquation(
                 x1: 0,
-                y1: prev.substanceBarEquation.getY(at: 1),
+                y1: prev.substanceBarEquation.getValue(at: 1),
                 x2: xThreshold,
                 y2: finalSubstanceC
             ),
             underlyingRight: ConstantEquation(value: finalSubstanceC)
         )
-        let initialIonBarHeight = prev.ionBarEquation.getY(at: 1)
+        let initialIonBarHeight = prev.ionBarEquation.getValue(at: 1)
         let primaryIonBarChartEquation = SwitchingEquation(
             thresholdX: xThreshold,
             underlyingLeft: LinearEquation(
@@ -109,7 +109,7 @@ class BufferSaltComponents: ObservableObject {
             secondaryIon: secondaryIonBarChartEquation
         )
 
-        self.initialPh = previous.pH.getY(at: 1)
+        self.initialPh = previous.pH.getValue(at: 1)
 
         self.reactionProgress = prev.reactionProgress
         self.initialProgressCounts = .init(builder: { part in
@@ -139,7 +139,7 @@ class BufferSaltComponents: ObservableObject {
     let concentration: SubstanceValue<Equation>
 
     var finalConcentration: SubstanceValue<CGFloat> {
-        concentration.map { $0.getY(at: CGFloat(maxSubstance)) }
+        concentration.map { $0.getValue(at: CGFloat(maxSubstance)) }
     }
 
     func incrementSalt(count: Int) {
@@ -169,7 +169,7 @@ class BufferSaltComponents: ObservableObject {
     }
 
     var finalPH: CGFloat {
-        pH.getY(at: CGFloat(maxSubstance))
+        pH.getValue(at: CGFloat(maxSubstance))
     }
 
     let haFractionInTermsOfPH: Equation
@@ -186,7 +186,7 @@ class BufferSaltComponents: ObservableObject {
                 color: substance.color(ofPart: part),
                 accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label,
                 initialValue: nil,
-                accessibilityValue: { self.barChartEquations.value(for: part).getY(at: $0).percentage }
+                accessibilityValue: { self.barChartEquations.value(for: part).getValue(at: $0).percentage }
             )
         })
     }
@@ -241,7 +241,7 @@ extension BufferSaltComponents {
     private func column(_ part: SubstancePart) -> ICETableColumn {
         ICETableColumn(
             header: substance.chargedSymbol(ofPart: part).symbol.asString,
-            initialValue: ConstantEquation(value: concentration.value(for: part).getY(at: 0)),
+            initialValue: ConstantEquation(value: concentration.value(for: part).getValue(at: 0)),
             finalValue: concentration.value(for: part)
         )
     }
@@ -251,8 +251,8 @@ extension BufferSaltComponents {
 extension BufferSaltComponents {
 
     private func updateReactionProgress() {
-        let desiredPrimary = (primaryIonReactionProgressCounts.getY(at: CGFloat(substanceAdded))).roundedInt()
-        let desiredSecondary = (secondarySubstanceReactionProgressCount.getY(at: CGFloat(substanceAdded))).roundedInt()
+        let desiredPrimary = (primaryIonReactionProgressCounts.getValue(at: CGFloat(substanceAdded))).roundedInt()
+        let desiredSecondary = (secondarySubstanceReactionProgressCount.getValue(at: CGFloat(substanceAdded))).roundedInt()
 
         let currentPrimary = reactionProgress.moleculeCounts(ofType: .primaryIon)
         let currentSecondary = reactionProgress.moleculeCounts(ofType: .secondaryIon)

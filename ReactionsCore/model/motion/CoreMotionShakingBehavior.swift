@@ -37,7 +37,7 @@ public struct CoreMotionShakingBehavior {
             return nil
         }
         return timeIntervalEquation
-            .getY(at: rotationRate)
+            .getValue(at: rotationRate)
             .within(min: minTimeInterval, max: maxTimeInterval)
     }
 

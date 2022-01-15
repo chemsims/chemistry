@@ -198,7 +198,7 @@ final class SolubilityViewModel: ObservableObject {
 
     var soluteToAddForSaturation: Int {
         let equation = LinearEquation(x1: 0, y1: 10, x2: 1, y2: 20)
-        return equation.getY(at: waterHeightFactor).roundedInt()
+        return equation.getValue(at: waterHeightFactor).roundedInt()
     }
 
     var commonIonSoluteToAddForSaturation: Int {

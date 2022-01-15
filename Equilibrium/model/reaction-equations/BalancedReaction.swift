@@ -91,7 +91,7 @@ struct BalancedReactionEquation {
             )
         }
         self.equilibriumConcentrations = concentration.map {
-            $0.getY(at: equilibriumTime)
+            $0.getValue(at: equilibriumTime)
         }
     }
 
@@ -108,7 +108,7 @@ struct BalancedReactionEquation {
             equations: initialConcentrations.map {
                 ConstantEquation(value: $0)
             }
-        ).getY(at: 0)
+        ).getValue(at: 0)
         return initialQuotient < equilibriumConstant ? .forward : .reverse
     }
 

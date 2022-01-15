@@ -52,8 +52,8 @@ struct TitrationCurve: View {
         guard showData else {
             return ""
         }
-        let initialPh = phEquation.getY(at: 0)
-        let finalPh = phEquation.getY(at: maxEquationInput)
+        let initialPh = phEquation.getValue(at: 0)
+        let finalPh = phEquation.getValue(at: maxEquationInput)
 
         let isIncreasing = initialPh < finalPh
 
@@ -72,7 +72,7 @@ struct TitrationCurve: View {
             return "no data"
         }
         let perc = (equationInput / maxEquationInput).percentage
-        let pH = phEquation.getY(at: equationInput).str(decimals: 2)
+        let pH = phEquation.getValue(at: equationInput).str(decimals: 2)
         return "\(perc) along x axis, pH \(pH)"
     }
 
@@ -159,7 +159,7 @@ struct TitrationCurve: View {
         let x = xAxis.getPosition(at: CGFloat(titrantAdded))
 
         let percent = (CGFloat(titrantAdded) / maxEquationInput).percentage
-        let pH = phEquation.getY(at: CGFloat(titrantAdded)).str(decimals: 2)
+        let pH = phEquation.getValue(at: CGFloat(titrantAdded)).str(decimals: 2)
 
         return Path { p in
             p.addLines(
@@ -248,8 +248,8 @@ private struct PostEquivalencePointPHEquation: Equation {
     /// Titrant added at the equivalence point
     let equivalencePointTitrant: Int
 
-    func getY(at x: CGFloat) -> CGFloat {
-        underlying.getY(at: x - CGFloat(equivalencePointTitrant))
+    func getValue(at x: CGFloat) -> CGFloat {
+        underlying.getValue(at: x - CGFloat(equivalencePointTitrant))
     }
 }
 

@@ -65,8 +65,8 @@ struct WrappedPointEquation: PointEquation {
 
     func getPoint(at progress: CGFloat) -> CGPoint {
         CGPoint(
-            x: xEquation.getY(at: progress),
-            y: yEquation.getY(at: progress)
+            x: xEquation.getValue(at: progress),
+            y: yEquation.getValue(at: progress)
         )
     }
 }

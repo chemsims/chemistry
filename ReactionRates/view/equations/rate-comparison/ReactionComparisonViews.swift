@@ -435,9 +435,9 @@ private struct VaryingText: View {
             }
             Group {
                 if time == nil {
-                    FixedText(equation.getY(at: 0).str(decimals: decimals))
+                    FixedText(equation.getValue(at: 0).str(decimals: decimals))
                         .accessibility(label: Text(label))
-                        .accessibility(value: Text(equation.getY(at: 0).str(decimals: decimals)))
+                        .accessibility(value: Text(equation.getValue(at: 0).str(decimals: decimals)))
                 }
                 if time != nil {
                     AnimatingNumber(

@@ -136,7 +136,7 @@ private struct TitrationBarChart: View {
     private var dataWithUpdatedAccessibility: [BarChartData] {
         data.map { data in
             data.withAccessibilityValue { input in
-                data.equation.getY(at: input).percentage
+                data.equation.getValue(at: input).percentage
             }
         }
     }

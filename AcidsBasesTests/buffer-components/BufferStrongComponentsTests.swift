@@ -25,15 +25,15 @@ class BufferStrongComponentsTests: XCTestCase {
         let strongModel = BufferStrongSubstanceComponents(prev: saltModel)
 
         func finalBarChartValue(_ part: SubstancePart) -> CGFloat {
-            strongModel.barChart(part).equation.getY(at: CGFloat(strongModel.maxSubstance))
+            strongModel.barChart(part).equation.getValue(at: CGFloat(strongModel.maxSubstance))
         }
         func finalConcentration(_ part: SubstancePart) -> CGFloat {
-            strongModel.concentration.value(for: part).getY(at: CGFloat(strongModel.maxSubstance))
+            strongModel.concentration.value(for: part).getValue(at: CGFloat(strongModel.maxSubstance))
         }
 
-        XCTAssertEqual(strongModel.barChart(.substance).equation.getY(at: 0), 0.3)
-        XCTAssertEqual(strongModel.barChart(.primaryIon).equation.getY(at: 0), 0)
-        XCTAssertEqual(strongModel.barChart(.secondaryIon).equation.getY(at: 0), 0.3, accuracy: 0.00001)
+        XCTAssertEqual(strongModel.barChart(.substance).equation.getValue(at: 0), 0.3)
+        XCTAssertEqual(strongModel.barChart(.primaryIon).equation.getValue(at: 0), 0)
+        XCTAssertEqual(strongModel.barChart(.secondaryIon).equation.getValue(at: 0), 0.3, accuracy: 0.00001)
 
         XCTAssertEqual(finalBarChartValue(.substance), finalConcentration(.substance))
         XCTAssertEqual(finalBarChartValue(.primaryIon), finalConcentration(.primaryIon))
@@ -147,10 +147,10 @@ class BufferStrongComponentsTests: XCTestCase {
 
         let model = BufferStrongSubstanceComponents(prev: saltModel)
 
-        let initialPh = model.pH.getY(at: 0)
-        let finalPh = model.pH.getY(at: CGFloat(model.maxSubstance))
+        let initialPh = model.pH.getValue(at: 0)
+        let finalPh = model.pH.getValue(at: CGFloat(model.maxSubstance))
 
-        XCTAssertEqual(saltModel.pH.getY(at: CGFloat(saltModel.maxSubstance)), initialPh)
+        XCTAssertEqual(saltModel.pH.getValue(at: CGFloat(saltModel.maxSubstance)), initialPh)
         XCTAssertLessThan(finalPh, initialPh)
     }
 
@@ -163,10 +163,10 @@ class BufferStrongComponentsTests: XCTestCase {
 
         let model = BufferStrongSubstanceComponents(prev: saltModel)
 
-        let initialPh = model.pH.getY(at: 0)
-        let finalPh = model.pH.getY(at: CGFloat(model.maxSubstance))
+        let initialPh = model.pH.getValue(at: 0)
+        let finalPh = model.pH.getValue(at: CGFloat(model.maxSubstance))
 
-        XCTAssertEqual(saltModel.pH.getY(at: CGFloat(saltModel.maxSubstance)), initialPh)
+        XCTAssertEqual(saltModel.pH.getValue(at: CGFloat(saltModel.maxSubstance)), initialPh)
         XCTAssertGreaterThan(finalPh, initialPh)
     }
 }

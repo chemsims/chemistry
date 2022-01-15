@@ -26,7 +26,7 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         )
         
         var initialConcentrations: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
-            model.concentration.map { $0.getY(at: 0) }
+            model.concentration.map { $0.getValue(at: 0) }
         }
 
         XCTAssertEqual(initialConcentrations.value(for: increasingIon.concentration), 0)
@@ -36,7 +36,7 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         model.incrementSubstance(count: 20)
         XCTAssertEqual(initialConcentrations.value(for: .substance), 0.2)
 
-        let finalConcentration = model.concentration.map { $0.getY(at: 1) }
+        let finalConcentration = model.concentration.map { $0.getValue(at: 1) }
 
         let finalIncreasingIon = finalConcentration.value(for: increasingIon.concentration)
         let finalSecondary = finalConcentration.value(for: .secondary)
@@ -94,29 +94,29 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         let model = TitrationWeakSubstancePreparationModel(substance: substance)
 
         model.moles.all.forEach { mole in
-            XCTAssertEqual(mole.getY(at: 0), 0)
-            XCTAssertEqual(mole.getY(at: 1), 0)
+            XCTAssertEqual(mole.getValue(at: 0), 0)
+            XCTAssertEqual(mole.getValue(at: 1), 0)
         }
 
         model.incrementSubstance(count: 20)
         let substanceMoles = model.moles.value(for: .substance)
         let substanceVolume = model.volume.value(for: .substance)
         let initialSubstanceMoles = model.moles.value(for: .initialSubstance)
-        XCTAssertEqual(substanceMoles.getY(at: 0), 0.2 * substanceVolume)
+        XCTAssertEqual(substanceMoles.getValue(at: 0), 0.2 * substanceVolume)
         XCTAssertEqual(
-            substanceMoles.getY(at: 1),
-            model.concentration.value(for: .substance).getY(at: 1) * substanceVolume
+            substanceMoles.getValue(at: 1),
+            model.concentration.value(for: .substance).getValue(at: 1) * substanceVolume
         )
         XCTAssertEqual(
-            initialSubstanceMoles.getY(at: 0),
-            model.concentration.value(for: .initialSubstance).getY(at:0) * substanceVolume
+            initialSubstanceMoles.getValue(at: 0),
+            model.concentration.value(for: .initialSubstance).getValue(at:0) * substanceVolume
         )
-        XCTAssertEqual(initialSubstanceMoles.getY(at: 0), initialSubstanceMoles.getY(at: 1))
+        XCTAssertEqual(initialSubstanceMoles.getValue(at: 0), initialSubstanceMoles.getValue(at: 1))
 
-        XCTAssertEqual(model.moles.value(for: .secondary).getY(at: 0), 0)
+        XCTAssertEqual(model.moles.value(for: .secondary).getValue(at: 0), 0)
 
-        let finalSecondaryConcentration = model.concentration.value(for: .secondary).getY(at: 1)
-        let finalSecondaryMoles = model.moles.value(for: .secondary).getY(at: 1)
+        let finalSecondaryConcentration = model.concentration.value(for: .secondary).getValue(at: 1)
+        let finalSecondaryMoles = model.moles.value(for: .secondary).getValue(at: 1)
         let expectedFinalSecondaryMoles = substanceVolume * finalSecondaryConcentration
         XCTAssertEqual(finalSecondaryMoles, expectedFinalSecondaryMoles)
     }
@@ -126,8 +126,8 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
 
         model.incrementSubstance(count: 20)
 
-        let finalSecondary = model.concentration.value(for: .secondary).getY(at: 1)
-        let finalSubstance = model.concentration.value(for: .substance).getY(at: 1)
+        let finalSecondary = model.concentration.value(for: .secondary).getValue(at: 1)
+        let finalSubstance = model.concentration.value(for: .substance).getValue(at: 1)
 
         // Check we satisfy the equation pH = pKa + log(secondary / substance)
         // For bases, this is pOH = pKb + log(secondary / substance)
@@ -155,27 +155,27 @@ class TitrationWeakAcidPreparationModelTests: XCTestCase {
         )
 
         model.barChartDataMap.all.forEach { barChart in
-            XCTAssertEqual(barChart.equation.getY(at: 0), 0)
-            XCTAssertEqual(barChart.equation.getY(at: 1), 0)
+            XCTAssertEqual(barChart.equation.getValue(at: 0), 0)
+            XCTAssertEqual(barChart.equation.getValue(at: 1), 0)
         }
 
         model.incrementSubstance(count: 20)
 
         let substance = model.barChartDataMap.value(for: .substance).equation
-        XCTAssertEqual(substance.getY(at: 0), 0.2)
+        XCTAssertEqual(substance.getValue(at: 0), 0.2)
 
         let changeInHeight: CGFloat = 0.05
-        XCTAssertEqual(substance.getY(at: 1), 0.2 - changeInHeight)
+        XCTAssertEqual(substance.getValue(at: 1), 0.2 - changeInHeight)
 
         let increasingIonBar = model.barChartDataMap.value(
             for: increasingIon.extendedSubstancePart
         ).equation
-        XCTAssertEqual(increasingIonBar.getY(at: 0), 0)
-        XCTAssertEqual(increasingIonBar.getY(at: 1), changeInHeight)
+        XCTAssertEqual(increasingIonBar.getValue(at: 0), 0)
+        XCTAssertEqual(increasingIonBar.getValue(at: 1), changeInHeight)
 
         let secondary = model.barChartDataMap.value(for: .secondaryIon).equation
-        XCTAssertEqual(secondary.getY(at: 0), 0)
-        XCTAssertEqual(secondary.getY(at: 1), changeInHeight)
+        XCTAssertEqual(secondary.getValue(at: 0), 0)
+        XCTAssertEqual(secondary.getValue(at: 1), changeInHeight)
     }
 
     func testInputLimits() {

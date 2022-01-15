@@ -232,7 +232,7 @@ private class EndOfWeakAcidReaction: BufferScreenState {
         model.statement = statements.weakAcidEquilibriumReached(
             substance: model.substance,
             ka: model.weakSubstanceModel.substance.kA,
-            pH: model.weakSubstanceModel.pH.getY(at: 1)
+            pH: model.weakSubstanceModel.pH.getValue(at: 1)
         )
         model.equationState = .acidFilled
         withAnimation(endReactionAnimation) {
@@ -406,7 +406,7 @@ private class RunWeakBaseReaction: RunWeakSubstanceReaction {
 
 private class EndOfWeakBaseReaction: BufferScreenState {
     override func apply(on model: BufferScreenViewModel) {
-        let finalPh = model.weakSubstanceModel.pH.getY(at: 1)
+        let finalPh = model.weakSubstanceModel.pH.getValue(at: 1)
         model.statement = model.substanceStatements.reachedBaseEquilibrium(pH: finalPh)
         model.equationState = .baseFilled
         withAnimation(.easeOut(duration: 0.5)) {

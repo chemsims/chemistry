@@ -241,7 +241,7 @@ extension BufferWeakSubstanceComponents {
             color: substance.color(ofPart: part),
             accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label,
             initialValue: nil,
-            accessibilityValue: { equation.getY(at: $0).percentage }
+            accessibilityValue: { equation.getValue(at: $0).percentage }
         )
     }
 }
@@ -294,7 +294,7 @@ extension BufferWeakSubstanceComponents {
     }
 
     private var initialSubstanceProgressCoords: Int {
-        Int(substanceReactionProgressCoordCount.getY(at: CGFloat(initialSubstanceCount)))
+        Int(substanceReactionProgressCoordCount.getValue(at: CGFloat(initialSubstanceCount)))
     }
 }
 

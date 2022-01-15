@@ -66,9 +66,9 @@ struct RateEquation: Equation {
     let secondMolecule: ReactionRateDefinition.Part
     let k: CGFloat
 
-    func getY(at x: CGFloat) -> CGFloat {
+    func getValue(at x: CGFloat) -> CGFloat {
         func getTerm(_ term: ReactionRateDefinition.Part) -> CGFloat {
-            pow(term.concentration.getY(at: x), CGFloat(term.coefficient))
+            pow(term.concentration.getValue(at: x), CGFloat(term.coefficient))
         }
 
         return k * getTerm(firstMolecule) * getTerm(secondMolecule)
@@ -156,11 +156,11 @@ class AqueousOrIntegrationReactionViewModel<NavigationState: ScreenState>: Obser
     }
 
     var maxQuotient: CGFloat {
-        quotientEquation.getY(at: components.tForMaxQuotient)
+        quotientEquation.getValue(at: components.tForMaxQuotient)
     }
 
     var convergenceQuotient: CGFloat {
-        quotientEquation.getY(at: AqueousReactionSettings.endOfReverseReaction)
+        quotientEquation.getValue(at: AqueousReactionSettings.endOfReverseReaction)
     }
 
     func stopShaking() {

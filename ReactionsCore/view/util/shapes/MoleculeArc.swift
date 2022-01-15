@@ -95,13 +95,13 @@ public struct MoleculeArc: Shape {
                 y1: 0,
                 x2: endProgress,
                 y2: 1
-            ).within(min: 0, max: 1).getY(at: newValue)
+            ).within(min: 0, max: 1).getValue(at: newValue)
         }
     }
 
     public func path(in rect: CGRect) -> Path {
         var path = Path()
-        let xFraction = xEquation.getY(at: progress)
+        let xFraction = xEquation.getValue(at: progress)
         let x = AxisPositionCalculations(
             minValuePosition: hAlignment == .leading ? 0 : rect.width,
             maxValuePosition: hAlignment == .leading ? rect.width : 0,
@@ -109,7 +109,7 @@ public struct MoleculeArc: Shape {
             maxValue: 1
         ).getPosition(at: xFraction)
 
-        let yFraction = yEquation.getY(at: xFraction)
+        let yFraction = yEquation.getValue(at: xFraction)
         let y = AxisPositionCalculations<CGFloat>(
             minValuePosition: vAlignment == .bottom ? rect.height : 0,
             maxValuePosition: vAlignment == .bottom ? 0 : rect.height,

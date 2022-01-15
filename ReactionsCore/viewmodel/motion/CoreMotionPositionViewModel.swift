@@ -101,6 +101,6 @@ public class CoreMotionPositionViewModel: ObservableObject {
     }
 
     private func getOffset(value: Double, equation: Equation) -> CGFloat {
-        within(min: -1, max: 1, value: equation.getY(at: CGFloat(value)))
+        within(min: -1, max: 1, value: equation.getValue(at: CGFloat(value)))
     }
 }

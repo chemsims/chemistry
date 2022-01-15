@@ -29,7 +29,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
         TitrationEquationTerm.Concentration.allCases.forEach { term in
             XCTAssertEqualWithTolerance(
                 model.currentConcentration.value(for: term),
-                firstModel.concentration.value(for: term).getY(at: 1),
+                firstModel.concentration.value(for: term).getValue(at: 1),
                 "Failed for \(term)"
             )
         }
@@ -116,7 +116,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
 
         // Check the equation n-initial-substance = V-titrant * M-titrant
         let resultingMoles = finalTitrantVolume * model.molarity.value(for: .titrant)
-        let expectedMoles = firstModel.moles.value(for: .substance).getY(at: 1)
+        let expectedMoles = firstModel.moles.value(for: .substance).getValue(at: 1)
         XCTAssertEqualWithTolerance(resultingMoles, expectedMoles)
     }
 
@@ -125,14 +125,14 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
         firstModel.incrementSubstance(count: 20)
         let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
 
-        let initialSubstanceMoles = firstModel.moles.value(for: .substance).getY(at: 1)
+        let initialSubstanceMoles = firstModel.moles.value(for: .substance).getValue(at: 1)
         XCTAssertEqual(model.currentMoles.value(for: .initialSubstance), initialSubstanceMoles)
         XCTAssertEqualWithTolerance(
             model.currentMoles.value(for: .substance),
             initialSubstanceMoles
         )
 
-        let initialSecondaryMoles = firstModel.moles.value(for: .secondary).getY(at: 1)
+        let initialSecondaryMoles = firstModel.moles.value(for: .secondary).getValue(at: 1)
         XCTAssertEqual(
             model.currentMoles.value(for: .initialSecondary),
             initialSecondaryMoles
@@ -166,7 +166,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
         ExtendedSubstancePart.allCases.forEach { part in
             let initialBarChart = firstModel.barChartDataMap.value(for: part).equation
             let currentBarChart = model.barChartDataMap.value(for: part).equation
-            XCTAssertEqual(initialBarChart.getY(at: 1), currentBarChart.getY(at: 0))
+            XCTAssertEqual(initialBarChart.getValue(at: 1), currentBarChart.getValue(at: 0))
         }
     }
 
@@ -202,7 +202,7 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
         let model = TitrationWeakSubstancePreEPModel(previous: firstModel)
 
         func getConcentration(_ term: TitrationEquationTerm.Concentration) -> CGFloat {
-            model.concentration.value(for: term).getY(at: CGFloat(model.titrantAtMaxBufferCapacity))
+            model.concentration.value(for: term).getValue(at: CGFloat(model.titrantAtMaxBufferCapacity))
         }
 
         XCTAssertEqualWithTolerance(getConcentration(.substance), getConcentration(.secondary))
@@ -211,18 +211,18 @@ class TitrationWeakAcidPreEPModelTests: XCTestCase {
 
 extension TitrationWeakSubstancePreEPModel {
     var currentConcentration: EnumMap<TitrationEquationTerm.Concentration, CGFloat> {
-        concentration.map { $0.getY(at: CGFloat(titrantAdded)) }
+        concentration.map { $0.getValue(at: CGFloat(titrantAdded)) }
     }
 
     var currentPValues: EnumMap<TitrationEquationTerm.PValue, CGFloat> {
-        equationData.pValues.map { $0.getY(at: CGFloat(titrantAdded)) }
+        equationData.pValues.map { $0.getValue(at: CGFloat(titrantAdded)) }
     }
 
     var currentVolume: EnumMap<TitrationEquationTerm.Volume, CGFloat> {
-        volume.map { $0.getY(at: CGFloat(titrantAdded)) }
+        volume.map { $0.getValue(at: CGFloat(titrantAdded)) }
     }
 
     var currentMoles: EnumMap<TitrationEquationTerm.Moles, CGFloat> {
-        equationData.moles.map { $0.getY(at: CGFloat(titrantAdded)) }
+        equationData.moles.map { $0.getValue(at: CGFloat(titrantAdded)) }
     }
 }

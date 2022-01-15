@@ -5,7 +5,7 @@
 import CoreGraphics
 
 public protocol Equation {
-    func getY(at x: CGFloat) -> CGFloat
+    func getValue(at input: CGFloat) -> CGFloat
 }
 
 public func * (lhs: Equation, rhs: Equation) -> Equation {
@@ -80,7 +80,7 @@ public struct LinearEquation: Equation {
         self.init(m: m, x1: x1, y1: y1)
     }
 
-    public func getY(at x: CGFloat) -> CGFloat {
+    public func getValue(at x: CGFloat) -> CGFloat {
         (m * x) + c
     }
 
@@ -96,7 +96,7 @@ public struct LinearEquation: Equation {
         }
 
         let xIntersect = numer / denom
-        let yIntersect = getY(at: xIntersect)
+        let yIntersect = getValue(at: xIntersect)
         return CGPoint(x: xIntersect, y: yIntersect)
 
 
@@ -113,7 +113,7 @@ public struct IdentityEquation: Equation {
 
     public init() { }
 
-    public func getY(at x: CGFloat) -> CGFloat {
+    public func getValue(at x: CGFloat) -> CGFloat {
         x
     }
 }
@@ -125,7 +125,7 @@ public struct ConstantEquation: Equation {
         self.value = value
     }
 
-    public func getY(at x: CGFloat) -> CGFloat {
+    public func getValue(at x: CGFloat) -> CGFloat {
         value
     }
 }
@@ -136,13 +136,13 @@ public struct ScaledEquation: Equation {
     public let underlying: Equation
 
     public init(targetY: CGFloat, targetX: CGFloat, underlying: Equation) {
-        let currentY = underlying.getY(at: targetX)
+        let currentY = underlying.getValue(at: targetX)
         self.scaleFactor = currentY == 0 ? 1 : targetY / currentY
         self.underlying = underlying
     }
 
-    public func getY(at x: CGFloat) -> CGFloat {
-        scaleFactor * underlying.getY(at: x)
+    public func getValue(at x: CGFloat) -> CGFloat {
+        scaleFactor * underlying.getValue(at: x)
     }
 }
 
@@ -159,8 +159,8 @@ public struct OperatorEquation: Equation {
         self.op = op
     }
 
-    public func getY(at x: CGFloat) -> CGFloat {
-        op(lhs.getY(at: x), rhs.getY(at: x))
+    public func getValue(at x: CGFloat) -> CGFloat {
+        op(lhs.getValue(at: x), rhs.getValue(at: x))
     }
 }
 
@@ -183,8 +183,8 @@ public struct BoundEquation: Equation {
         self.upperBound = upperBound
     }
 
-    public func getY(at x: CGFloat) -> CGFloat {
-        let value = underlying.getY(at: x)
+    public func getValue(at x: CGFloat) -> CGFloat {
+        let value = underlying.getValue(at: x)
         let withLowerBound = lowerBound.map { max($0, value) } ?? value
         return upperBound.map { min($0, withLowerBound) } ?? withLowerBound
     }
@@ -199,8 +199,8 @@ public struct LogEquation: Equation {
         self.underlying = underlying
     }
 
-    public func getY(at x: CGFloat) -> CGFloat {
-        let value = underlying.getY(at: x)
+    public func getValue(at x: CGFloat) -> CGFloat {
+        let value = underlying.getValue(at: x)
         return value == 0 ? 0 : log(value)
     }
 }
@@ -218,8 +218,8 @@ public struct Log10Equation: Equation {
         self.underlying = underlying
     }
 
-    public func getY(at x: CGFloat) -> CGFloat {
-        let value = underlying.getY(at: x)
+    public func getValue(at x: CGFloat) -> CGFloat {
+        let value = underlying.getValue(at: x)
         return value <= 0 ? 0 : log10(value)
     }
 }
@@ -238,7 +238,7 @@ public struct LinearEquationWithMinIntersection: Equation {
         minIntersection: CGPoint
     ) {
         let idealEquation = LinearEquation(x1: x1, y1: y1, x2: x2, y2: y2)
-        let yValueAtIntersection = idealEquation.getY(at: minIntersection.x)
+        let yValueAtIntersection = idealEquation.getValue(at: minIntersection.x)
 
         if yValueAtIntersection > minIntersection.y {
             self.underlying = idealEquation
@@ -253,8 +253,8 @@ public struct LinearEquationWithMinIntersection: Equation {
 
     let underlying: Equation
 
-    public func getY(at x: CGFloat) -> CGFloat {
-        underlying.getY(at: x)
+    public func getValue(at x: CGFloat) -> CGFloat {
+        underlying.getValue(at: x)
     }
 }
 
@@ -273,15 +273,15 @@ public struct ComposedEquation: Equation {
     let outer: Equation
     let inner: Equation
 
-    public func getY(at x: CGFloat) -> CGFloat {
-        outer.getY(at: inner.getY(at: x))
+    public func getValue(at x: CGFloat) -> CGFloat {
+        outer.getValue(at: inner.getValue(at: x))
     }
 }
 
 private struct AnonymousEquation: Equation {
     let transform: (CGFloat) -> CGFloat
 
-    func getY(at x: CGFloat) -> CGFloat {
+    func getValue(at x: CGFloat) -> CGFloat {
         transform(x)
     }
 }

@@ -131,7 +131,7 @@ class IntroScreenComponents: ObservableObject {
             color: substance.color(ofPart: part),
             accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label,
             initialValue: nil,
-            accessibilityValue: { equation.getY(at: $0).percentage }
+            accessibilityValue: { equation.getValue(at: $0).percentage }
         )
     }
 
@@ -161,7 +161,7 @@ class IntroScreenComponents: ObservableObject {
 private struct PrimaryPhEquation: Equation {
     let substance: AcidOrBase
 
-    func getY(at x: CGFloat) -> CGFloat {
+    func getValue(at x: CGFloat) -> CGFloat {
         let p = PrimaryIonConcentration.varyingPWithSubstance(
             fractionSubstanceAdded: x.within(min: 0, max: 1),
             finalConcentration: substance.concentrationAtMaxSubstance
@@ -173,8 +173,8 @@ private struct PrimaryPhEquation: Equation {
 private struct ComplementPhEquation: Equation {
     let substance: AcidOrBase
 
-    func getY(at x: CGFloat) -> CGFloat {
-        let otherP = PrimaryPhEquation(substance: substance).getY(at: x)
+    func getValue(at x: CGFloat) -> CGFloat {
+        let otherP = PrimaryPhEquation(substance: substance).getValue(at: x)
         return 14 - otherP
     }
 }

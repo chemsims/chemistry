@@ -71,9 +71,9 @@ struct QuotientPlot: View {
         guard showData else {
             return "no data"
         }
-        let quotient = accessibilityValue.getY(at: time).str(decimals: 2)
+        let quotient = accessibilityValue.getValue(at: time).str(decimals: 2)
         let timeString = time.str(decimals: 1)
-        let k = accessibilityValue.getY(at: finalTime + offset).str(decimals: 2)
+        let k = accessibilityValue.getValue(at: finalTime + offset).str(decimals: 2)
 
         return "Time \(timeString), quotient \(quotient), \(kTerm) \(k)"
     }
@@ -144,7 +144,7 @@ struct QuotientPlot: View {
     }
 
     private var equilibriumConstant: CGFloat {
-        equation.getY(at: finalTime + offset)
+        equation.getValue(at: finalTime + offset)
     }
 }
 

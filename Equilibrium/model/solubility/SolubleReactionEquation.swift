@@ -37,7 +37,7 @@ struct SolubleReactionEquation {
         self.concentration = combined
         self.initialConcentration = initialConcentration
         self.finalConcentration = combined.map {
-            $0.getY(at: equilibriumTime)
+            $0.getValue(at: equilibriumTime)
         }
     }
 

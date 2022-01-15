@@ -285,7 +285,7 @@ extension QuizViewModel {
         let maxDuration: CGFloat = 1
         let equation = LinearEquation(x1: 200, y1: minDuration, x2: 800, y2: 1)
 
-        let duration = equation.getY(at: CGFloat(contentLength))
+        let duration = equation.getValue(at: CGFloat(contentLength))
         return Double(min(maxDuration, max(duration, minDuration)))
     }
 

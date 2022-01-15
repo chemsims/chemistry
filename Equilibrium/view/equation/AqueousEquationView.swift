@@ -226,7 +226,7 @@ private struct QuotientEqualsKView: View {
     }
 
     private var label: String {
-        let quotient = self.quotient.getY(at: currentTime)
+        let quotient = self.quotient.getValue(at: currentTime)
         let symbol = QuotientEqualitySign.formatEquals(quotient: quotient, convergedQuotient: convergedQuotient)
         return "Q \(symbol) \(kTerm)"
     }

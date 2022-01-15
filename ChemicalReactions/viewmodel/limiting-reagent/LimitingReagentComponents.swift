@@ -21,7 +21,7 @@ class LimitingReagentComponents: ObservableObject {
         self.settings = settings
         self.equationData = Self.makeEquationData(
             reaction: reaction,
-            volume: rowsToVolume.getY(at: CGFloat(initialRows)),
+            volume: rowsToVolume.getValue(at: CGFloat(initialRows)),
             limitingReactantMolarity: 0
         )
         self.reactionProgressModel = Self.reactionProgressModel(reaction: reaction)
@@ -88,7 +88,7 @@ class LimitingReagentComponents: ObservableObject {
     }
 
     var volume: CGFloat {
-        rowsToVolume.getY(at: rows)
+        rowsToVolume.getValue(at: rows)
     }
 
     var limitingReactantMolarity: CGFloat {
@@ -146,14 +146,14 @@ extension LimitingReagentComponents {
                 switch $0 {
                 case .limitingReactant:
                     let eq = getEquationOfLimitingBeakerCoordsToReactionProgressMolecules()
-                    return eq.getY(
+                    return eq.getValue(
                         at: CGFloat(limitingReactantCoords.count)
                     ).roundedInt()
 
                 case .excessReactant:
                     let limitingEq = getEquationOfLimitingBeakerCoordsToReactionProgressMolecules()
                     let coeff = reaction.excessReactant.coefficient
-                    let limitingCount = limitingEq.getY(
+                    let limitingCount = limitingEq.getValue(
                         at: CGFloat(limitingReactantCoords.count)
                     ).roundedInt()
                     return coeff * limitingCount
@@ -264,7 +264,7 @@ extension LimitingReagentComponents {
     private func updateReactionProgressPostAddingLimitingReactant() {
         let currentCount = reactionProgressModel.moleculeCounts(ofType: .limitingReactant)
         let equation = getEquationOfLimitingBeakerCoordsToReactionProgressMolecules()
-        let desiredCount = equation.getY(
+        let desiredCount = equation.getValue(
             at: CGFloat(limitingReactantCoords.count)
         ).roundedInt()
 
@@ -278,7 +278,7 @@ extension LimitingReagentComponents {
     private func updateReactionProgressPostAddingExcessReactant() {
         let equation = getEquationOfExcessBeakerCoordsToReactionProgressMolecules()
         let currentCount = reactionProgressModel.moleculeCounts(ofType: .excessReactant)
-        let desiredCount = equation.getY(
+        let desiredCount = equation.getValue(
             at: CGFloat(excessReactantCoords.count)
         ).roundedInt()
 
@@ -339,7 +339,7 @@ extension LimitingReagentComponents {
             y2: endPoint.y
         )
 
-        let moleculesAtMinBeakerCoords = idealEquation.getY(
+        let moleculesAtMinBeakerCoords = idealEquation.getValue(
             at: CGFloat(settings.minLimitingReactantCoords)
         ).roundedInt()
 

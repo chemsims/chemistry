@@ -42,8 +42,8 @@ class BufferStrongSubstanceComponents: ObservableObject {
             y2: prev.finalConcentration.secondaryIon - changeInConcentration
         )
 
-        let finalSubstanceConcentration = substanceConcentration.getY(at: CGFloat(maxSubstance))
-        let finalSecondaryConcentration = substanceConcentration.getY(at: CGFloat(maxSubstance))
+        let finalSubstanceConcentration = substanceConcentration.getValue(at: CGFloat(maxSubstance))
+        let finalSecondaryConcentration = substanceConcentration.getValue(at: CGFloat(maxSubstance))
         let finalPrimaryConcentration = (prev.substance.kA * finalSubstanceConcentration) / finalSecondaryConcentration
         let primaryConcentration = LinearEquation(
             x1: 0,
@@ -177,7 +177,7 @@ extension BufferStrongSubstanceComponents {
                 color: substance.color(ofPart: part),
                 accessibilityLabel: substance.chargedSymbol(ofPart: part).text.label,
                 initialValue: nil,
-                accessibilityValue: { self.concentration.value(for: part).getY(at: $0).percentage }
+                accessibilityValue: { self.concentration.value(for: part).getValue(at: $0).percentage }
             )
         })
     }
@@ -200,7 +200,7 @@ extension BufferStrongSubstanceComponents {
     private func column(_ part: SubstancePart) -> ICETableColumn {
         ICETableColumn(
             header: substance.chargedSymbol(ofPart: part).text.asString,
-            initialValue: ConstantEquation(value: concentration.value(for: part).getY(at: 0)),
+            initialValue: ConstantEquation(value: concentration.value(for: part).getValue(at: 0)),
             finalValue: concentration.value(for: part)
         )
     }
@@ -259,8 +259,8 @@ extension BufferStrongSubstanceComponents {
 // MARK: Reaction progress
 extension BufferStrongSubstanceComponents {
     func updateReactionProgress() {
-        let desiredSecondary = (secondaryIonReactionProgressCount.getY(at: CGFloat(substanceAdded))).roundedInt()
-        let desiredPrimary = (primaryIonReactionProgressCount.getY(at: CGFloat(substanceAdded))).roundedInt()
+        let desiredSecondary = (secondaryIonReactionProgressCount.getValue(at: CGFloat(substanceAdded))).roundedInt()
+        let desiredPrimary = (primaryIonReactionProgressCount.getValue(at: CGFloat(substanceAdded))).roundedInt()
 
         let currentSecondary = reactionProgress.moleculeCounts(ofType: .secondaryIon)
         let currentPrimary = reactionProgress.moleculeCounts(ofType: .primaryIon)

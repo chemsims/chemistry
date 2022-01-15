@@ -25,7 +25,7 @@ public struct AnimatableRotation: AnimatableModifier {
 
     public func body(content: Content) -> some View {
         content.rotationEffect(
-            .degrees(Double(degreesRotation.getY(at: currentTime)))
+            .degrees(Double(degreesRotation.getValue(at: currentTime)))
         )
     }
 }

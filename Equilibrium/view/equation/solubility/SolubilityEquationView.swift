@@ -216,7 +216,7 @@ private struct QuotientKspDefinition: View {
 
     private var label: String {
         let symbol = QuotientEqualitySign.formatEquals(
-            quotient: quotient.getY(at: currentTime),
+            quotient: quotient.getValue(at: currentTime),
             convergedQuotient: convergedQuotient
         )
         return "Q \(symbol) Ksp"

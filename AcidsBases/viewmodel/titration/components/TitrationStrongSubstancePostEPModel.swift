@@ -79,7 +79,7 @@ extension TitrationStrongSubstancePostEPModel {
 extension TitrationStrongSubstancePostEPModel {
     func updateReactionProgress() {
         let currentMolecules = reactionProgress.moleculeCounts(ofType: substance.primary.complement)
-        let desiredMolecules = reactionProgressMoleculeCount.getY(at: CGFloat(titrantAdded)).roundedInt()
+        let desiredMolecules = reactionProgressMoleculeCount.getValue(at: CGFloat(titrantAdded)).roundedInt()
 
         let toAdd = desiredMolecules - currentMolecules
         assert(toAdd >= 0, "Expected positive molecule count to add")
@@ -238,7 +238,7 @@ private class Calculations {
             x2: CGFloat(maxTitrant),
             y2: settings
                 .barChartHeightFromConcentration
-                .getY(at: increasingIonConcentration.getY(at: CGFloat(maxTitrant)))
+                .getValue(at: increasingIonConcentration.getValue(at: CGFloat(maxTitrant)))
         )
 
     var increasingIonConcentration: Equation {

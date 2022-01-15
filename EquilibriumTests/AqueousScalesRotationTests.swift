@@ -24,10 +24,10 @@ class AqueousScalesRotationTests: XCTestCase {
             model.components.startTime
         }
         var startRotation: CGFloat {
-            scalesRotation.getY(at: model.components.startTime)
+            scalesRotation.getValue(at: model.components.startTime)
         }
         var endRotation: CGFloat {
-            scalesRotation.getY(at: model.components.equilibriumTime)
+            scalesRotation.getValue(at: model.components.equilibriumTime)
         }
 
         nav.nextUntil { $0.inputState == .addReactants }

@@ -122,7 +122,7 @@ class ReactionComponents {
             return nil
         }
         return equation.concentration.map {
-            CGPoint(x: startTime, y: $0.getY(at: startTime))
+            CGPoint(x: startTime, y: $0.getValue(at: startTime))
         }
     }()
 
@@ -141,18 +141,18 @@ class ReactionComponents {
         }
         return CGPoint(
             x: startTime,
-            y: quotientEquation.getY(at: startTime)
+            y: quotientEquation.getValue(at: startTime)
         )
     }()
 
     private(set) lazy var maxQuotient: CGFloat = {
         let currentMax = max(
-            quotientEquation.getY(at: startTime),
-            quotientEquation.getY(at: equilibriumTime)
+            quotientEquation.getValue(at: startTime),
+            quotientEquation.getValue(at: equilibriumTime)
         )
         if let previous = previousEquation {
             let prevQ = ReactionQuotientEquation(equations: previous)
-            let prevMax = max(prevQ.getY(at: previous.startTime), prevQ.getY(at: previous.equilibriumTime))
+            let prevMax = max(prevQ.getValue(at: previous.startTime), prevQ.getValue(at: previous.equilibriumTime))
             return max(prevMax, currentMax)
         }
         return currentMax

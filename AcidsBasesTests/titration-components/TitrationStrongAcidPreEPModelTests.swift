@@ -158,30 +158,30 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
 
         // Initial heights
         XCTAssertEqualWithTolerance(
-            modelHydrogenBar.equation.getY(at: 0),
-            firstIncreasingBar.equation.getY(at: 20)
+            modelHydrogenBar.equation.getValue(at: 0),
+            firstIncreasingBar.equation.getValue(at: 20)
         )
         XCTAssertEqualWithTolerance(
-            modelDecreasingBar.equation.getY(at: 0),
-            firstDecresingBar.equation.getY(at: 20)
+            modelDecreasingBar.equation.getValue(at: 0),
+            firstDecresingBar.equation.getValue(at: 20)
         )
 
         // Mid heights
-        let expectedMidHHeight = (firstIncreasingBar.equation.getY(at: 20) + 0.3) / 2
-        let expectedMidOHHEight = (firstDecresingBar.equation.getY(at: 20) + 0.3) / 2
+        let expectedMidHHeight = (firstIncreasingBar.equation.getValue(at: 20) + 0.3) / 2
+        let expectedMidOHHEight = (firstDecresingBar.equation.getValue(at: 20) + 0.3) / 2
 
         XCTAssertEqualWithTolerance(
-            modelHydrogenBar.equation.getY(at: CGFloat(model.maxTitrant) / 2),
+            modelHydrogenBar.equation.getValue(at: CGFloat(model.maxTitrant) / 2),
             expectedMidHHeight
         )
         XCTAssertEqualWithTolerance(
-            modelDecreasingBar.equation.getY(at: CGFloat(model.maxTitrant) / 2),
+            modelDecreasingBar.equation.getValue(at: CGFloat(model.maxTitrant) / 2),
             expectedMidOHHEight
         )
 
         // Final heights
-        XCTAssertEqualWithTolerance(modelHydrogenBar.equation.getY(at: CGFloat(model.maxTitrant)), 0.3)
-        XCTAssertEqualWithTolerance(modelDecreasingBar.equation.getY(at: CGFloat(model.maxTitrant)), 0.3)
+        XCTAssertEqualWithTolerance(modelHydrogenBar.equation.getValue(at: CGFloat(model.maxTitrant)), 0.3)
+        XCTAssertEqualWithTolerance(modelDecreasingBar.equation.getValue(at: CGFloat(model.maxTitrant)), 0.3)
     }
 
     func testCoords() {
@@ -191,8 +191,8 @@ class TitrationStrongAcidPreEPModelTests: XCTestCase {
 
         XCTAssertEqual(model.primaryIonCoords.molecules.coords, firstModel.primaryIonCoords.coords)
 
-        XCTAssertEqual(model.primaryIonCoords.fractionToDraw.getY(at: 0), 1)
-        XCTAssertEqual(model.primaryIonCoords.fractionToDraw.getY(at: CGFloat(model.maxTitrant)), 0)
+        XCTAssertEqual(model.primaryIonCoords.fractionToDraw.getValue(at: 0), 1)
+        XCTAssertEqual(model.primaryIonCoords.fractionToDraw.getValue(at: CGFloat(model.maxTitrant)), 0)
     }
 
     func testInputLimits() {

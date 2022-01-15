@@ -24,20 +24,20 @@ class BalancedReactionEquationTests: XCTestCase {
         let equations = model.concentration
 
         let quotient = ReactionQuotientEquation(equations: model)
-        XCTAssertEqual(quotient.getY(at: 10), 1, accuracy: 0.001)
+        XCTAssertEqual(quotient.getValue(at: 10), 1, accuracy: 0.001)
 
         let unitChange: CGFloat = 0.10411
-        XCTAssertEqual(equations.reactantA.getY(at: 0), 0.4)
-        XCTAssertEqual(equations.reactantA.getY(at: 10), 0.4 - (2 * unitChange), accuracy: tolerance)
+        XCTAssertEqual(equations.reactantA.getValue(at: 0), 0.4)
+        XCTAssertEqual(equations.reactantA.getValue(at: 10), 0.4 - (2 * unitChange), accuracy: tolerance)
 
-        XCTAssertEqual(equations.reactantB.getY(at: 0), 0.5)
-        XCTAssertEqual(equations.reactantB.getY(at: 10), 0.5 - (2 * unitChange), accuracy: tolerance)
+        XCTAssertEqual(equations.reactantB.getValue(at: 0), 0.5)
+        XCTAssertEqual(equations.reactantB.getValue(at: 10), 0.5 - (2 * unitChange), accuracy: tolerance)
 
-        XCTAssertEqual(equations.productC.getY(at: 0), 0)
-        XCTAssertEqual(equations.productC.getY(at: 10), unitChange, accuracy: tolerance)
+        XCTAssertEqual(equations.productC.getValue(at: 0), 0)
+        XCTAssertEqual(equations.productC.getValue(at: 10), unitChange, accuracy: tolerance)
 
-        XCTAssertEqual(equations.productD.getY(at: 0), 0)
-        XCTAssertEqual(equations.productD.getY(at: 10), 4 * unitChange, accuracy: tolerance)
+        XCTAssertEqual(equations.productD.getValue(at: 0), 0)
+        XCTAssertEqual(equations.productD.getValue(at: 10), 4 * unitChange, accuracy: tolerance)
     }
 
     func testBalancedReactionConvergenceForAPressureReaction() {
@@ -55,7 +55,7 @@ class BalancedReactionEquationTests: XCTestCase {
         let expectedPressureQuotient = GaseousReactionSettings.pressureConstantFromConcentrationConstant(k, coefficients: equation.coefficients)
         let pressureQuotient = ReactionQuotientEquation(coefficients: equation.coefficients, equations: equation.pressure)
 
-        XCTAssertEqual(pressureQuotient.getY(at: 10), expectedPressureQuotient, accuracy: 0.001)
+        XCTAssertEqual(pressureQuotient.getValue(at: 10), expectedPressureQuotient, accuracy: 0.001)
     }
 
     private func makeCoeffs(A: Int, B: Int, C: Int, D: Int) -> BalancedReactionCoefficients {

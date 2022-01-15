@@ -184,10 +184,10 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
             model.barChartDataMap.value(for: increasingIon).equation
         }
 
-        XCTAssertEqualWithTolerance(increasingIonBar.getY(at: 0), 0.4)
-        XCTAssertEqualWithTolerance(decreasingIonBar.getY(at: 0), 0.4)
+        XCTAssertEqualWithTolerance(increasingIonBar.getValue(at: 0), 0.4)
+        XCTAssertEqualWithTolerance(decreasingIonBar.getValue(at: 0), 0.4)
 
-        XCTAssertEqualWithTolerance(increasingIonBar.getY(at: CGFloat(model.maxTitrant)), 0)
+        XCTAssertEqualWithTolerance(increasingIonBar.getValue(at: CGFloat(model.maxTitrant)), 0)
 
         let expectedDecreasingIonConcentration: CGFloat = 0.01
         let expectedDecreasingIonBarHeight = LinearEquation(
@@ -195,10 +195,10 @@ class TitrationStrongAcidPostEPModelTests: XCTestCase {
             y1: 0.4,
             x2: 1,
             y2: 1
-        ).getY(at: expectedDecreasingIonConcentration)
+        ).getValue(at: expectedDecreasingIonConcentration)
 
         XCTAssertEqualWithTolerance(
-            decreasingIonBar.getY(at: CGFloat(model.maxTitrant)),
+            decreasingIonBar.getValue(at: CGFloat(model.maxTitrant)),
             expectedDecreasingIonBarHeight
         )
     }

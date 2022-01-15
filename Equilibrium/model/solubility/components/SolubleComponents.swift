@@ -43,7 +43,7 @@ struct SolubilityComponents {
         guard previousEquation != nil else {
             return nil
         }
-        return CGPoint(x: startTime, y: quotient.getY(at: startTime))
+        return CGPoint(x: startTime, y: quotient.getValue(at: startTime))
     }
 
     var concentrationDiscontinuity: SoluteValues<CGPoint>? {

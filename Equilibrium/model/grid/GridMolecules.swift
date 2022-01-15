@@ -27,7 +27,7 @@ struct GridUtil {
         if let prevCoords = previousCoords, let prevEquation = previousEquation {
             let current = coords
             if prevCoords.count == current.count && !(rowsHaveChangeFromPrevious ?? false) {
-                return prevEquation.concentration.value(for: molecule).getY(at: time)
+                return prevEquation.concentration.value(for: molecule).getValue(at: time)
             }
         }
         return defaultValue

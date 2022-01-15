@@ -123,14 +123,14 @@ private struct SolubilityChartWithGeometry: View {
     }
 
     private func chartLineLabel(at time: CGFloat) -> String {
-        let rawPh = ph.getY(at: time)
-        let rawSol = solubility.getY(at: time)
+        let rawPh = ph.getValue(at: time)
+        let rawSol = solubility.getValue(at: time)
 
         let phPerc = rawPh.percentage
         let solPerc = rawSol.percentage
         var label = "Ph \(phPerc) along x axis, solubility \(solPerc) up y axis. "
 
-        let curveSolubility = curve.getY(at: rawPh)
+        let curveSolubility = curve.getValue(at: rawPh)
         let delta = curveSolubility - rawSol
 
         if abs(delta) < 0.01 {
@@ -210,10 +210,10 @@ private struct SolubilityPhIndicatorHead: Shape {
     func path(in rect: CGRect) -> Path {
         ChartIndicatorHead(
             radius: radius,
-            equation: ConstantEquation(value: solubility.getY(at: currentTime)),
+            equation: ConstantEquation(value: solubility.getValue(at: currentTime)),
             yAxis: solubilityAxis,
             xAxis: phAxis,
-            x: ph.getY(at: currentTime),
+            x: ph.getValue(at: currentTime),
             offset: 0
         ).path(in: rect)
     }
@@ -246,8 +246,8 @@ private struct SolubilityPhPositionLine: Shape {
 
         path.move(to: getPoint(ph: startingPh, solubility: 0))
 
-        let endPh = self.ph.getY(at: currentTime)
-        let endSolubility = self.solubility.getY(at: currentTime)
+        let endPh = self.ph.getValue(at: currentTime)
+        let endSolubility = self.solubility.getValue(at: currentTime)
 
         if startingPh != endPh {
             path.addLine(to: getPoint(ph: startingPh, solubility: endSolubility))

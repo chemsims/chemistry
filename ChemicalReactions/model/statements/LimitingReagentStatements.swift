@@ -217,7 +217,7 @@ struct LimitingReagentReactionStatements {
     }
 
     var endOfReaction: [TextLine] {
-        let actualMass = components.equationData.actualProductMass.getY(at: 1).str(decimals: 2)
+        let actualMass = components.equationData.actualProductMass.getValue(at: 1).str(decimals: 2)
         let theoreticalMass = components.equationData.theoreticalProductMass.str(decimals: 2)
         return [
             """

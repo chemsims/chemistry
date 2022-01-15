@@ -108,7 +108,7 @@ struct BufferFractionsChart: View {
         let textLine = saltModel.substance.chargedSymbol(ofPart: part).text
         let equation = part == .substance ? substanceEquation : secondaryIonEquation
 
-        let initialFraction = equation.getY(at: initialChartPh)
+        let initialFraction = equation.getValue(at: initialChartPh)
 
         let initialVerticalPos = initialFraction > 0.5 ? "top" : "bottom"
         let finalVerticalPos = initialFraction > 0.5 ? "bottom" : "top"
@@ -123,7 +123,7 @@ struct BufferFractionsChart: View {
         curved line for \(textLine.label) which goes from the \(initialPos) of the chart to the \(finalPos)
         """
 
-        let currentFraction = equation.getY(at: currentPh)
+        let currentFraction = equation.getValue(at: currentPh)
         let value = "pH \(currentPh.str(decimals: 2)), fraction of species \(currentFraction.str(decimals: 2))"
 
         return VStack(spacing: layout.fractionLegendVSpacing) {
@@ -209,9 +209,9 @@ struct BufferFractionsChart: View {
 
     private var currentPh: CGFloat {
         if phase == .addStrongSubstance {
-            return strongModel.pH.getY(at: CGFloat(strongModel.substanceAdded))
+            return strongModel.pH.getValue(at: CGFloat(strongModel.substanceAdded))
         }
-        return saltModel.pH.getY(at: CGFloat(saltModel.substanceAdded))
+        return saltModel.pH.getValue(at: CGFloat(saltModel.substanceAdded))
     }
 
     private var substanceEquation: Equation {

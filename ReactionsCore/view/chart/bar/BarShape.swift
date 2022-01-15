@@ -18,7 +18,7 @@ struct BarShape: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
 
-        let yValue = equation.getY(at: time)
+        let yValue = equation.getValue(at: time)
         let yPos = axis.getPosition(at: yValue)
 
         let bar = CGRect(

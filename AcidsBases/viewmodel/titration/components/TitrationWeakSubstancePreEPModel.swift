@@ -77,7 +77,7 @@ class TitrationWeakSubstancePreEPModel: ObservableObject {
     }
 
     var currentPH: CGFloat {
-        pH.getY(at: CGFloat(titrantAdded))
+        pH.getValue(at: CGFloat(titrantAdded))
     }
 
     var barChartData: [BarChartData] {
@@ -218,7 +218,7 @@ extension TitrationWeakSubstancePreEPModel {
 
     private func updateReactionProgress() {
         let currentCount = reactionProgress.moleculeCounts(ofType: .secondaryIon)
-        let desiredCount = reactionProgressSecondaryIonCount.getY(
+        let desiredCount = reactionProgressSecondaryIonCount.getValue(
             at: CGFloat(titrantAdded)
         ).roundedInt()
 
@@ -286,7 +286,7 @@ private class WeakSubstanceCalculations {
         }
 
     private lazy var finalPrevious: EnumMap<TitrationEquationTerm.Concentration, CGFloat> =
-        previous.concentration.map { $0.getY(at: 1) }
+        previous.concentration.map { $0.getValue(at: 1) }
 
     private lazy var finalSecondaryPreKBalancing: CGFloat =
         initialSubstanceMoles / (initialSubstanceVolume + finalTitrantVolume)
@@ -348,7 +348,7 @@ private class WeakSubstanceCalculations {
     )
 
     private func initialConcentration(of term: TitrationEquationTerm.Concentration) -> CGFloat {
-        previous.concentration.value(for: term).getY(at: 1)
+        previous.concentration.value(for: term).getValue(at: 1)
     }
 
     private lazy var concentrationIntersect: CGPoint = {
@@ -479,7 +479,7 @@ private class WeakSubstanceCalculations {
     }()
 
     private func initialMoles(of term: TitrationEquationTerm.Moles) -> CGFloat {
-        previous.moles.value(for: term).getY(at: 1)
+        previous.moles.value(for: term).getValue(at: 1)
     }
 
     // MARK: Bar Chart Data
@@ -525,7 +525,7 @@ private class WeakSubstanceCalculations {
             x2: CGFloat(maxTitrant),
             y2: concentration
                 .value(for: concentrationFromPart(part))
-                .getY(at: CGFloat(maxTitrant))
+                .getValue(at: CGFloat(maxTitrant))
         )
     }
 
@@ -539,7 +539,7 @@ private class WeakSubstanceCalculations {
     }
 
     private func initialBarHeight(forPart part: ExtendedSubstancePart) -> CGFloat {
-        previous.barChartDataMap.value(for: part).equation.getY(at: 1)
+        previous.barChartDataMap.value(for: part).equation.getValue(at: 1)
     }
 }
 

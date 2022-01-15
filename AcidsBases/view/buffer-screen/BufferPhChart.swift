@@ -42,7 +42,7 @@ struct BufferPhChart: View {
                 data: data,
                 initialTime: minSubstance,
                 currentTime: .constant(
-                    safeSubstanceAdded.getY(
+                    safeSubstanceAdded.getValue(
                         at: CGFloat(strongModel.substanceAdded)
                     )
                 ),
@@ -182,11 +182,11 @@ struct BufferPhChart: View {
     }
 
     private var initialPh: CGFloat {
-        strongModel.pH.getY(at: 0)
+        strongModel.pH.getValue(at: 0)
     }
 
     private var finalPh: CGFloat {
-        strongModel.pH.getY(at: CGFloat(strongModel.maxSubstance))
+        strongModel.pH.getValue(at: CGFloat(strongModel.maxSubstance))
     }
 
     private var deltaPhSize: CGFloat {

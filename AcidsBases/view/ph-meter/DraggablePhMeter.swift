@@ -66,7 +66,7 @@ struct DraggablePhMeter: View {
 
     private var accessibilityValue: String {
         if shouldShowLabelWhenInWater {
-            return "\(pHEquation.getY(at: pHEquationInput).str(decimals: 1))"
+            return "\(pHEquation.getValue(at: pHEquationInput).str(decimals: 1))"
         }
         return "no value"
     }

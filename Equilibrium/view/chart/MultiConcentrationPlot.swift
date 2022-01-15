@@ -115,7 +115,7 @@ struct MultiConcentrationPlot: View {
             return "no data"
         }
         let concentrations = values.map { value -> String in
-            let concentration = value.accessibilityValue.getY(at: time).str(decimals: 2)
+            let concentration = value.accessibilityValue.getValue(at: time).str(decimals: 2)
             return "\(value.legendValue) \(concentration)"
         }
         let concentrationString = StringUtil.combineStrings(concentrations)

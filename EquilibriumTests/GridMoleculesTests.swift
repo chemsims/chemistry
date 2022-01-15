@@ -51,25 +51,25 @@ class GridMoleculesTests: XCTestCase {
             CGFloat(gridCountFor(c)) / CGFloat(gridCountFor(initC))
         }
 
-        XCTAssertEqual(aGrid.fractionToDraw.getY(at: 0), 1)
-        XCTAssertEqual(aGrid.fractionToDraw.getY(at: 3), expectedFraction(reaction.reactantA.getY(at: 3), 0.5), accuracy: 0.01)
-        XCTAssertEqual(aGrid.fractionToDraw.getY(at: 5), expectedFraction(reaction.reactantA.getY(at: 5), 0.5), accuracy: 0.01)
-        XCTAssertEqual(aGrid.fractionToDraw.getY(at: 10), expectedFraction(reaction.reactantA.getY(at: 10), 0.5), accuracy: 0.00001)
+        XCTAssertEqual(aGrid.fractionToDraw.getValue(at: 0), 1)
+        XCTAssertEqual(aGrid.fractionToDraw.getValue(at: 3), expectedFraction(reaction.reactantA.getValue(at: 3), 0.5), accuracy: 0.01)
+        XCTAssertEqual(aGrid.fractionToDraw.getValue(at: 5), expectedFraction(reaction.reactantA.getValue(at: 5), 0.5), accuracy: 0.01)
+        XCTAssertEqual(aGrid.fractionToDraw.getValue(at: 10), expectedFraction(reaction.reactantA.getValue(at: 10), 0.5), accuracy: 0.00001)
 
-        XCTAssertEqual(bGrid.fractionToDraw.getY(at: 0), 1)
-        XCTAssertEqual(bGrid.fractionToDraw.getY(at: 3), expectedFraction(reaction.reactantB.getY(at: 3), 0.5), accuracy: 0.01)
-        XCTAssertEqual(bGrid.fractionToDraw.getY(at: 5), expectedFraction(reaction.reactantB.getY(at: 5), 0.5), accuracy: 0.01)
-        XCTAssertEqual(bGrid.fractionToDraw.getY(at: 10), expectedFraction(reaction.reactantB.getY(at: 10), 0.5), accuracy: 0.01)
+        XCTAssertEqual(bGrid.fractionToDraw.getValue(at: 0), 1)
+        XCTAssertEqual(bGrid.fractionToDraw.getValue(at: 3), expectedFraction(reaction.reactantB.getValue(at: 3), 0.5), accuracy: 0.01)
+        XCTAssertEqual(bGrid.fractionToDraw.getValue(at: 5), expectedFraction(reaction.reactantB.getValue(at: 5), 0.5), accuracy: 0.01)
+        XCTAssertEqual(bGrid.fractionToDraw.getValue(at: 10), expectedFraction(reaction.reactantB.getValue(at: 10), 0.5), accuracy: 0.01)
 
-        XCTAssertEqual(cGrid.fractionToDraw.getY(at: 0), 0)
-        XCTAssertEqual(cGrid.fractionToDraw.getY(at: 3), expectedFraction(reaction.productC.getY(at: 3), 0.25), accuracy: 0.01)
-        XCTAssertEqual(cGrid.fractionToDraw.getY(at: 5), expectedFraction(reaction.productC.getY(at: 5), 0.25), accuracy: 0.015)
-        XCTAssertEqual(cGrid.fractionToDraw.getY(at: 10), 1)
+        XCTAssertEqual(cGrid.fractionToDraw.getValue(at: 0), 0)
+        XCTAssertEqual(cGrid.fractionToDraw.getValue(at: 3), expectedFraction(reaction.productC.getValue(at: 3), 0.25), accuracy: 0.01)
+        XCTAssertEqual(cGrid.fractionToDraw.getValue(at: 5), expectedFraction(reaction.productC.getValue(at: 5), 0.25), accuracy: 0.015)
+        XCTAssertEqual(cGrid.fractionToDraw.getValue(at: 10), 1)
 
-        XCTAssertEqual(dGrid.fractionToDraw.getY(at: 0), 0)
-        XCTAssertEqual(dGrid.fractionToDraw.getY(at: 3), expectedFraction(reaction.productD.getY(at: 3), 0.25), accuracy: 0.01)
-        XCTAssertEqual(dGrid.fractionToDraw.getY(at: 5), expectedFraction(reaction.productD.getY(at: 5), 0.25), accuracy: 0.015)
-        XCTAssertEqual(dGrid.fractionToDraw.getY(at: 10), 1)
+        XCTAssertEqual(dGrid.fractionToDraw.getValue(at: 0), 0)
+        XCTAssertEqual(dGrid.fractionToDraw.getValue(at: 3), expectedFraction(reaction.productD.getValue(at: 3), 0.25), accuracy: 0.01)
+        XCTAssertEqual(dGrid.fractionToDraw.getValue(at: 5), expectedFraction(reaction.productD.getValue(at: 5), 0.25), accuracy: 0.015)
+        XCTAssertEqual(dGrid.fractionToDraw.getValue(at: 10), 1)
     }
 
     func testReverseGridMolecules() {
@@ -110,8 +110,8 @@ class GridMoleculesTests: XCTestCase {
 
         func testStartOfReactionBeforeProductIsAdded(reverseCoords: FractionedCoordinates, expectedForwardCoords: [GridCoordinate]) {
             XCTAssertEqual(reverseCoords.coordinates, expectedForwardCoords)
-            XCTAssertEqual(reverseCoords.fractionToDraw.getY(at: tAddProd), 1, accuracy: 0.0001)
-            XCTAssertEqual(reverseCoords.fractionToDraw.getY(at: tEnd), 1, accuracy: 0.0001)
+            XCTAssertEqual(reverseCoords.fractionToDraw.getValue(at: tAddProd), 1, accuracy: 0.0001)
+            XCTAssertEqual(reverseCoords.fractionToDraw.getValue(at: tEnd), 1, accuracy: 0.0001)
         }
 
         let expectedInitA = Array(forwardModel.components.equilibriumGrid.reactantA.coords(at: 10))
@@ -135,27 +135,27 @@ class GridMoleculesTests: XCTestCase {
         XCTAssertEqual(aGrid.coords(at: tAddProd), forwardModel.components.equilibriumGrid.reactantA.coords(at: 10))
         XCTAssertEqual(bGrid.coords(at: tAddProd), forwardModel.components.equilibriumGrid.reactantB.coords(at: 10))
 
-        XCTAssertEqual(aGrid.fractionToDraw.getY(at: tAddProd), CGFloat(gridCountFor(0.15)) / CGFloat(gridCountFor(eqC.reactantA)), accuracy: 0.01)
-        XCTAssertEqual(bGrid.fractionToDraw.getY(at: tAddProd), CGFloat(gridCountFor(0.15)) / CGFloat(gridCountFor(eqC.reactantB)), accuracy: 0.0001)
-        XCTAssertEqual(cGrid.fractionToDraw.getY(at: tAddProd), 1, accuracy: 0.0001)
-        XCTAssertEqual(dGrid.fractionToDraw.getY(at: tAddProd), 1, accuracy: 0.0001)
+        XCTAssertEqual(aGrid.fractionToDraw.getValue(at: tAddProd), CGFloat(gridCountFor(0.15)) / CGFloat(gridCountFor(eqC.reactantA)), accuracy: 0.01)
+        XCTAssertEqual(bGrid.fractionToDraw.getValue(at: tAddProd), CGFloat(gridCountFor(0.15)) / CGFloat(gridCountFor(eqC.reactantB)), accuracy: 0.0001)
+        XCTAssertEqual(cGrid.fractionToDraw.getValue(at: tAddProd), 1, accuracy: 0.0001)
+        XCTAssertEqual(dGrid.fractionToDraw.getValue(at: tAddProd), 1, accuracy: 0.0001)
 
-        XCTAssertEqual(aGrid.fractionToDraw.getY(at: tEnd), 1)
-        XCTAssertEqual(bGrid.fractionToDraw.getY(at: tEnd), 1)
-        XCTAssertEqual(cGrid.fractionToDraw.getY(at: tEnd), CGFloat(gridCountFor(eqC.productC)) / CGFloat(gridCountFor(initC.productC)), accuracy: 0.0001)
-        XCTAssertEqual(dGrid.fractionToDraw.getY(at: tEnd), CGFloat(gridCountFor(eqC.productD)) / CGFloat(gridCountFor(initC.productD)), accuracy: 0.0001)
+        XCTAssertEqual(aGrid.fractionToDraw.getValue(at: tEnd), 1)
+        XCTAssertEqual(bGrid.fractionToDraw.getValue(at: tEnd), 1)
+        XCTAssertEqual(cGrid.fractionToDraw.getValue(at: tEnd), CGFloat(gridCountFor(eqC.productC)) / CGFloat(gridCountFor(initC.productC)), accuracy: 0.0001)
+        XCTAssertEqual(dGrid.fractionToDraw.getValue(at: tEnd), CGFloat(gridCountFor(eqC.productD)) / CGFloat(gridCountFor(initC.productD)), accuracy: 0.0001)
 
         let dt = tEnd - tAddProd
         let tMid = tAddProd + (dt / 3)
         func expectedFraction(_ underlying: Equation, _ maxC: CGFloat) -> CGFloat {
-            CGFloat(gridCountFor(underlying.getY(at: tMid))) / CGFloat(gridCountFor(maxC))
+            CGFloat(gridCountFor(underlying.getValue(at: tMid))) / CGFloat(gridCountFor(maxC))
         }
 
         let reverseReaction = equation.concentration
-        XCTAssertEqual(aGrid.fractionToDraw.getY(at: tMid), expectedFraction(reverseReaction.reactantA, eqC.reactantA), accuracy: 0.015)
-        XCTAssertEqual(bGrid.fractionToDraw.getY(at: tMid), expectedFraction(reverseReaction.reactantA, eqC.reactantB), accuracy: 0.015)
-        XCTAssertEqual(cGrid.fractionToDraw.getY(at: tMid), expectedFraction(reverseReaction.productC, initC.productC), accuracy: 0.015)
-        XCTAssertEqual(dGrid.fractionToDraw.getY(at: tMid), expectedFraction(reverseReaction.productD, initC.productC), accuracy: 0.015)
+        XCTAssertEqual(aGrid.fractionToDraw.getValue(at: tMid), expectedFraction(reverseReaction.reactantA, eqC.reactantA), accuracy: 0.015)
+        XCTAssertEqual(bGrid.fractionToDraw.getValue(at: tMid), expectedFraction(reverseReaction.reactantA, eqC.reactantB), accuracy: 0.015)
+        XCTAssertEqual(cGrid.fractionToDraw.getValue(at: tMid), expectedFraction(reverseReaction.productC, initC.productC), accuracy: 0.015)
+        XCTAssertEqual(dGrid.fractionToDraw.getValue(at: tMid), expectedFraction(reverseReaction.productD, initC.productC), accuracy: 0.015)
     }
 
     func testAddingSecondElementBeforeFirstElement() {

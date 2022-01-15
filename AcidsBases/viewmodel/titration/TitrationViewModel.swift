@@ -193,7 +193,7 @@ extension TitrationViewModel {
             y1: 1,
             x2: CGFloat(maxIndicator),
             y2: 0
-        ).getY(at: CGFloat(indicatorEmitted))
+        ).getValue(at: CGFloat(indicatorEmitted))
     }
 
     // Adds indicator from an accessibility action

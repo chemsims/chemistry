@@ -64,7 +64,7 @@ enum SolubilityBeakerAccessibilityLabel {
         }
         let products = model.selectedReaction.products
         var concentrationB: CGFloat {
-            model.components.equation.concentration.productB.getY(at: time)
+            model.components.equation.concentration.productB.getValue(at: time)
         }
         var mg: String {
             "\(model.milligramsSoluteAdded.str(decimals: 0))mg"

@@ -103,7 +103,7 @@ extension TitrationWeakSubstancePreparationModel {
     // substance molecules
     private func updateReactionProgress() {
         let currentPairs = reactionProgressModel.moleculeCounts(ofType: .substance) / 2
-        let desiredPairs = reactionProgressMoleculePairCount.getY(at: CGFloat(substanceAdded)).roundedInt()
+        let desiredPairs = reactionProgressMoleculePairCount.getValue(at: CGFloat(substanceAdded)).roundedInt()
 
         let pairsToAdd = desiredPairs - currentPairs
         assert(pairsToAdd >= 0, "Expected number of pairs to add")
@@ -173,7 +173,7 @@ extension TitrationWeakSubstancePreparationModel {
     }
 
     var currentMolarity: EnumMap<TitrationEquationTerm.Molarity, CGFloat> {
-        calculations.molarity.map { $0.getY(at: CGFloat(reactionProgress)) }
+        calculations.molarity.map { $0.getValue(at: CGFloat(reactionProgress)) }
     }
 
     var volume: EnumMap<TitrationEquationTerm.Volume, CGFloat> {
@@ -193,11 +193,11 @@ extension TitrationWeakSubstancePreparationModel {
     }
 
     var currentPH: CGFloat {
-        equationData.pValues.value(for: .hydrogen).getY(at: reactionProgress)
+        equationData.pValues.value(for: .hydrogen).getValue(at: reactionProgress)
     }
 
     var currentSubstanceMoles: CGFloat {
-        moles.value(for: .substance).getY(at: reactionProgress)
+        moles.value(for: .substance).getValue(at: reactionProgress)
     }
 }
 
@@ -314,7 +314,7 @@ private class Calculations {
             case .substance, .initialSubstance:
                 return settings
                     .beakerVolumeFromRows
-                    .getY(at: CGFloat(rows))
+                    .getValue(at: CGFloat(rows))
             case .titrant: return 0
             }
         }
