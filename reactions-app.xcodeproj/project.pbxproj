@@ -478,7 +478,6 @@
 		5797A4AB25E40A5800991BD9 /* FilledBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED3255BE09D00DB3A19 /* FilledBeaker.swift */; };
 		5797A4C625E40A6900991BD9 /* GridCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EC7255BDB6B00DB3A19 /* GridCoordinate.swift */; };
 		5797A4D325E40A8E00991BD9 /* Styling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D6A6E255AB25400F4E635 /* Styling.swift */; };
-		5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */; };
 		5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035ED7255BF05100DB3A19 /* CustomSlider.swift */; };
 		5797A54C25E41E2100991BD9 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57035EF0255C09B500DB3A19 /* Orientation.swift */; };
 		5797A55F25E41E8F00991BD9 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA138255D6C5000CB8804 /* Extensions.swift */; };
@@ -1623,7 +1622,6 @@
 		57EEF91A2689976400398A2D /* TitrationMacroBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationMacroBeaker.swift; sourceTree = "<group>"; };
 		57F10984255E985700834783 /* ConcentrationEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcentrationEquation.swift; sourceTree = "<group>"; };
 		57F2D70F271606950057B070 /* MovingHand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovingHand.swift; sourceTree = "<group>"; };
-		57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingNumber.swift; sourceTree = "<group>"; };
 		57F337F82578CE7E00EF90A1 /* Tooltip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tooltip.swift; sourceTree = "<group>"; };
 		57F4160C2642DC32007C8CE8 /* SolubilityPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubilityPersistence.swift; sourceTree = "<group>"; };
 		57F467382687009900E294BE /* TitrationPreparationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationPreparationModel.swift; sourceTree = "<group>"; };
@@ -3396,7 +3394,6 @@
 				576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */,
 				57D2F2D225EA27D100AEE0D8 /* shapes */,
 				5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */,
-				57F337F22578BFBE00EF90A1 /* AnimatingNumber.swift */,
 				57567B6A26066450009711D4 /* SlidingSwitch.swift */,
 				5710E22126272A3800CF6FBE /* ShakeText.swift */,
 				57BDFF4F26415745001B97CC /* ImageTypeView.swift */,
@@ -5351,7 +5348,6 @@
 				578B1716261874D500D8079F /* CoreMotionShakingBehavior.swift in Sources */,
 				57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */,
 				578B17412618D1AB00D8079F /* MoleculeGridShape.swift in Sources */,
-				5797A4E925E40B5300991BD9 /* AnimatingNumber.swift in Sources */,
 				57C4BC3727137D0300411B49 /* PolygonEquationView.swift in Sources */,
 				57072BE426C9406200DC6F0E /* MoleculeConcentration.swift in Sources */,
 				57072BE626C954DA00DC6F0E /* MoleculeScales.swift in Sources */,
