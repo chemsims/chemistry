@@ -708,7 +708,6 @@
 		57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C5F2625B12700BE1303 /* ParticleContainer.swift */; };
 		57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2D325EA27DA00AEE0D8 /* Line.swift */; };
 		57D2F2EE25EA2D7400AEE0D8 /* PlaceholderBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* PlaceholderBox.swift */; };
-		57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */; };
 		57D2F31225EA389C00AEE0D8 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
 		57D3261D26A2D22E0093CD16 /* EdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */; };
 		57D3997E26615A2200443C5A /* ShakeContainerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3997D26615A2200443C5A /* ShakeContainerViewModel.swift */; };
@@ -1509,7 +1508,6 @@
 		57D2F2D325EA27DA00AEE0D8 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		57D2F2E325EA2C4300AEE0D8 /* AqueousEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousEquationView.swift; sourceTree = "<group>"; };
 		57D2F2F725EA2E4000AEE0D8 /* Placeholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Placeholder.swift; sourceTree = "<group>"; };
-		57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationSizing.swift; sourceTree = "<group>"; };
 		57D2F31825EA601B00AEE0D8 /* ICETable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICETable.swift; sourceTree = "<group>"; };
 		57D2F32625EA86C600AEE0D8 /* EquilibriumGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquilibriumGrid.swift; sourceTree = "<group>"; };
 		57D3261526A1DFD80093CD16 /* ReactionDefinitionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionDefinitionTests.swift; sourceTree = "<group>"; };
@@ -3324,7 +3322,6 @@
 		5797A46625E407D400991BD9 /* equation */ = {
 			isa = PBXGroup;
 			children = (
-				57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */,
 				57C4BC3427137C6B00411B49 /* PointEquation.swift */,
 			);
 			path = equation;
@@ -5282,7 +5279,6 @@
 				57B57CBB278716FD00A75897 /* ModuleExport.swift in Sources */,
 				5797A4C625E40A6900991BD9 /* GridCoordinate.swift in Sources */,
 				57315EC226401CF500A7D0F9 /* QuizIntroBody.swift in Sources */,
-				57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */,
 				57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */,
 				57B701AC26D3FE6D0053ED79 /* Link.swift in Sources */,
 				575A880F25E4310700AEE448 /* QuizOption.swift in Sources */,
