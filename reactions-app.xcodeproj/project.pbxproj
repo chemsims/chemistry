@@ -709,7 +709,6 @@
 		57D15C602625B12700BE1303 /* ParticleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D15C5F2625B12700BE1303 /* ParticleContainer.swift */; };
 		57D2F2D425EA27DA00AEE0D8 /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F2D325EA27DA00AEE0D8 /* Line.swift */; };
 		57D2F2EE25EA2D7400AEE0D8 /* PlaceholderBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57FDA124255D5CFA00CB8804 /* PlaceholderBox.swift */; };
-		57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DAE4D32577C2FD006D945B /* FixedText.swift */; };
 		57D2F30D25EA336500AEE0D8 /* EquationSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2F30C25EA336500AEE0D8 /* EquationSizing.swift */; };
 		57D2F31225EA389C00AEE0D8 /* ScaledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576D5A7725665E170062F722 /* ScaledView.swift */; };
 		57D3261D26A2D22E0093CD16 /* EdgeInsetsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D3261C26A2D22E0093CD16 /* EdgeInsetsExtension.swift */; };
@@ -1548,7 +1547,6 @@
 		57D9C3E626D964870023ED91 /* FixedDateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedDateProvider.swift; sourceTree = "<group>"; };
 		57D9C3E926D969FB0023ED91 /* SharePrompter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharePrompter.swift; sourceTree = "<group>"; };
 		57DAE4C52577A299006D945B /* CGFloatRoundingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloatRoundingTests.swift; sourceTree = "<group>"; };
-		57DAE4D32577C2FD006D945B /* FixedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixedText.swift; sourceTree = "<group>"; };
 		57DAE4D72577C4F1006D945B /* HalfLife.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfLife.swift; sourceTree = "<group>"; };
 		57DAE4E32577C53B006D945B /* EquationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EquationSettings.swift; sourceTree = "<group>"; };
 		57DAE4ED2577C942006D945B /* SubscriptViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptViews.swift; sourceTree = "<group>"; };
@@ -3801,7 +3799,6 @@
 			children = (
 				576D5A7725665E170062F722 /* ScaledView.swift */,
 				57FDA124255D5CFA00CB8804 /* PlaceholderBox.swift */,
-				57DAE4D32577C2FD006D945B /* FixedText.swift */,
 				57CD325B2672549800C94109 /* AnimatingNumberPlaceholder.swift */,
 			);
 			path = equation;
@@ -5366,7 +5363,6 @@
 				579EA8F9264694E5008461E8 /* BarChartGeometry.swift in Sources */,
 				5797A54525E41E0D00991BD9 /* CustomSlider.swift in Sources */,
 				577A2609262822FF0060EC54 /* ValueWithPrevious.swift in Sources */,
-				57D2F30325EA30CC00AEE0D8 /* FixedText.swift in Sources */,
 				57315EBA2640193D00A7D0F9 /* SavedQuiz.swift in Sources */,
 				57567B6B26066450009711D4 /* SlidingSwitch.swift in Sources */,
 				57B3B905260B282D00EB9B47 /* NavigationInjector.swift in Sources */,
