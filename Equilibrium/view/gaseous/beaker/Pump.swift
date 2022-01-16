@@ -86,8 +86,8 @@ private struct PumpWithGeometry: View {
         axis.getPosition(at: extensionFactor)
     }
 
-    private var axis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    private var axis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: pumpedHandleYCenter,
             maxValuePosition: 0,
             minValue: 0,

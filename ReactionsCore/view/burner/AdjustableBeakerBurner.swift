@@ -88,12 +88,12 @@ public struct AdjustableBeakerBurnerSettings {
 
     public let standWidth: CGFloat
     public let handleHeight: CGFloat
-    public let axis: AxisPositionCalculations<CGFloat>
+    public let axis: LinearAxis<CGFloat>
 
     public init(
         standWidth: CGFloat,
         handleHeight: CGFloat,
-        axis: AxisPositionCalculations<CGFloat>
+        axis: LinearAxis<CGFloat>
     ) {
         self.standWidth = standWidth
         self.handleHeight = handleHeight
@@ -133,7 +133,7 @@ struct AdjustableBeakerBurner_Previews: PreviewProvider {
             settings: AdjustableBeakerBurnerSettings(
                 standWidth: 300,
                 handleHeight: 30,
-                axis: AxisPositionCalculations(
+                axis: LinearAxis(
                     minValuePosition: 0,
                     maxValuePosition: 200,
                     minValue: 0,

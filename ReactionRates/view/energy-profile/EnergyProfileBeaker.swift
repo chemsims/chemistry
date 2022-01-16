@@ -339,8 +339,8 @@ struct EnergyBeakerSettings {
     let standHeightToWidth: CGFloat = 0.257
     let burnerHeightToWidth: CGFloat = 0.1064
 
-    var axis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    var axis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: geometry.size.width * 0.1,
             maxValuePosition: geometry.size.width * 0.9,
             minValue: EnergyBeakerSettings.minTemp,

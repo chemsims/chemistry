@@ -193,8 +193,8 @@ struct TitrationCurve: View {
         state.phase == .preEP || state.phase == .postEP
     }
 
-    private var yAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    private var yAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: 0.9 * layout.common.chartSize,
             maxValuePosition: 0.1 * layout.common.chartSize,
             minValue: 0,
@@ -202,8 +202,8 @@ struct TitrationCurve: View {
         )
     }
 
-    private var xAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    private var xAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: 0.1 * layout.common.chartSize,
             maxValuePosition: 0.9 * layout.common.chartSize,
             minValue: 0,

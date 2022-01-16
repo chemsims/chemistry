@@ -147,8 +147,8 @@ private struct AdjustableAirBeakerWithHeight: View {
         )
     }
 
-    private var sliderAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    private var sliderAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: relativeSliderPosition(for: minRows),
             maxValuePosition: relativeSliderPosition(for: maxRows),
             minValue: minRows,

@@ -36,8 +36,8 @@ public struct BarChartGeometry {
         0.05 * chartWidth
     }
 
-    var yAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    var yAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: chartWidth - barMinHeight,
             maxValuePosition: chartWidth - maxBarHeight,
             minValue: minYValue,

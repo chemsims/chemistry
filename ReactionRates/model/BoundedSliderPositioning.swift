@@ -17,9 +17,9 @@ struct LimitConstraints {
     ///     - spacing: Spacing between upper/lower safe areas and this value
     static func constrain(
         limit: InputLimits,
-        axis: AxisPositionCalculations<CGFloat>,
+        axis: LinearAxis<CGFloat>,
         spacing: CGFloat
-    ) -> AxisPositionCalculations<CGFloat> {
+    ) -> LinearAxis<CGFloat> {
         BoundedSliderPositioning(
             axis: axis,
             absoluteMin: limit.min,
@@ -33,7 +33,7 @@ struct LimitConstraints {
 
 private struct BoundedSliderPositioning {
 
-    let axis: AxisPositionCalculations<CGFloat>
+    let axis: LinearAxis<CGFloat>
     let absoluteMin: CGFloat
     let absoluteMax: CGFloat
 
@@ -47,13 +47,13 @@ private struct BoundedSliderPositioning {
     let spacing: CGFloat
 
     /// An axis with updated upper and lower bounds
-    var boundedAxis: AxisPositionCalculations<CGFloat> {
+    var boundedAxis: LinearAxis<CGFloat> {
         let absoluteBounds = axis.updateMin(value: absoluteMin).updateMax(value: absoluteMax)
         let updatedLower = updateLowerBounds(axis: absoluteBounds)
         return updateUpperBounds(axis: updatedLower)
     }
 
-    private func updateLowerBounds(axis: AxisPositionCalculations<CGFloat>) -> AxisPositionCalculations<CGFloat> {
+    private func updateLowerBounds(axis: LinearAxis<CGFloat>) -> LinearAxis<CGFloat> {
         if let minWithSpacing = minPreSpacing {
             let direction = axis.minValuePosition < axis.maxValuePosition ? 1 : -1
             let minPositionPreSpacing = axis.getPosition(at: minWithSpacing)
@@ -67,7 +67,7 @@ private struct BoundedSliderPositioning {
         return axis
     }
 
-    private func updateUpperBounds(axis: AxisPositionCalculations<CGFloat>) -> AxisPositionCalculations<CGFloat> {
+    private func updateUpperBounds(axis: LinearAxis<CGFloat>) -> LinearAxis<CGFloat> {
         if let maxWithSpacing = maxPreSpacing {
             let direction = axis.minValuePosition < axis.maxValuePosition ? 1 : -1
             let maxPositionPreSpacing = axis.getPosition(at: maxWithSpacing)

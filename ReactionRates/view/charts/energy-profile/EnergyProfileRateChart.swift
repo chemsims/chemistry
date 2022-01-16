@@ -131,8 +131,8 @@ struct EnergyRateChartSettings {
         chartSize * 0.05
     }
 
-    var yAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    var yAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: chartSize,
             maxValuePosition: 0,
             minValue: log(0.6),
@@ -140,8 +140,8 @@ struct EnergyRateChartSettings {
         )
     }
 
-    var xAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    var xAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: 0.1 * chartSize,
             maxValuePosition: 0.9 * chartSize,
             minValue: 1 / 600,

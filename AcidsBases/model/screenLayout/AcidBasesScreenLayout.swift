@@ -139,7 +139,7 @@ extension AcidBasesScreenLayout {
         sliderHeight - sliderAxis.getPosition(at: rows)
     }
 
-    private var sliderAxis: AxisPositionCalculations<CGFloat> {
+    private var sliderAxis: LinearAxis<CGFloat> {
         BeakerLiquidSliderAxis.axis(
             minRows: AcidAppSettings.minBeakerRows,
             maxRows: AcidAppSettings.maxBeakerRows,
@@ -224,13 +224,13 @@ extension AcidBasesScreenLayout {
     
     func phChartSettings(minX: CGFloat = 0, maxX: CGFloat = 1) ->  TimeChartLayoutSettings {
         TimeChartLayoutSettings(
-            xAxis: AxisPositionCalculations<CGFloat>(
+            xAxis: LinearAxis<CGFloat>(
                 minValuePosition: 0.1 * chartSize,
                 maxValuePosition: 0.9 * chartSize,
                 minValue: 0,
                 maxValue: 1
             ),
-            yAxis: AxisPositionCalculations<CGFloat>(
+            yAxis: LinearAxis<CGFloat>(
                 minValuePosition: 0.9 * chartSize,
                 maxValuePosition: 0.1 * chartSize,
                 minValue: 0,

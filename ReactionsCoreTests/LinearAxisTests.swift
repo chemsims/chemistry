@@ -5,21 +5,21 @@
 import XCTest
 import ReactionsCore
 
-class AxisPositionCalculationsTests: XCTestCase {
+class LinearAxisTests: XCTestCase {
 
     func testSimpleSliderPositionAtCenter() {
-        let model1 = AxisPositionCalculations(minValuePosition: 0, maxValuePosition: 1, minValue: 0, maxValue: 1)
+        let model1 = LinearAxis(minValuePosition: 0, maxValuePosition: 1, minValue: 0, maxValue: 1)
         testSlider(handlePosition: 0.5, value: 0.5, model: model1)
 
-        let model2 = AxisPositionCalculations(minValuePosition: 1, maxValuePosition: 2, minValue: 0, maxValue: 1)
+        let model2 = LinearAxis(minValuePosition: 1, maxValuePosition: 2, minValue: 0, maxValue: 1)
         testSlider(handlePosition: 1.5, value: 0.5, model: model2)
 
-        let model3 = AxisPositionCalculations(minValuePosition: -1, maxValuePosition: 1, minValue: 0, maxValue: 1)
+        let model3 = LinearAxis(minValuePosition: -1, maxValuePosition: 1, minValue: 0, maxValue: 1)
         testSlider(handlePosition: 0, value: 0.5, model: model3)
     }
 
     func testSliderPositionOffCenter() {
-        let model1 = AxisPositionCalculations(minValuePosition: 0, maxValuePosition: 1, minValue: 0, maxValue: 1)
+        let model1 = LinearAxis(minValuePosition: 0, maxValuePosition: 1, minValue: 0, maxValue: 1)
         testSlider(handlePosition: 0, value: 0, model: model1)
         testSlider(handlePosition: 0.2, value: 0.2, model: model1)
         testSlider(handlePosition: 1, value: 1, model: model1)
@@ -28,31 +28,31 @@ class AxisPositionCalculationsTests: XCTestCase {
         testSlider(handlePosition: 0.2, value: 0.2, model: model1)
         testSlider(handlePosition: 1, value: 1, model: model1)
 
-        let model2 = AxisPositionCalculations(minValuePosition: 1, maxValuePosition: 3, minValue: 0, maxValue: 1)
+        let model2 = LinearAxis(minValuePosition: 1, maxValuePosition: 3, minValue: 0, maxValue: 1)
         testSlider(handlePosition: 1, value: 0, model: model2)
         testSlider(handlePosition: 1.4, value: 0.2, model: model2)
         testSlider(handlePosition: 3, value: 1, model: model2)
 
-        let model3 = AxisPositionCalculations(minValuePosition: -1, maxValuePosition: 1, minValue: 0, maxValue: 1)
+        let model3 = LinearAxis(minValuePosition: -1, maxValuePosition: 1, minValue: 0, maxValue: 1)
         testSlider(handlePosition: -1, value: 0, model: model3)
         testSlider(handlePosition: -0.6, value: 0.2, model: model3)
         testSlider(handlePosition: 1, value: 1, model: model3)
     }
 
     func testSliderPositionForReverseAxis() {
-        let model = AxisPositionCalculations(minValuePosition: 1, maxValuePosition: 0, minValue: 0, maxValue: 1)
+        let model = LinearAxis(minValuePosition: 1, maxValuePosition: 0, minValue: 0, maxValue: 1)
         testSlider(handlePosition: 0.5, value: 0.5, model: model)
         testSlider(handlePosition: 1, value: 0, model: model)
         testSlider(handlePosition: 0, value: 1, model: model)
     }
 
     func testSliderPositionForOffzeroValues() {
-        let model = AxisPositionCalculations(minValuePosition: 10, maxValuePosition: 20, minValue: 100, maxValue: 200)
+        let model = LinearAxis(minValuePosition: 10, maxValuePosition: 20, minValue: 100, maxValue: 200)
         testSlider(handlePosition: 10, value: 100, model: model)
     }
 
     func testSliderPositionForNegativeValues() {
-        let model = AxisPositionCalculations(minValuePosition: 10, maxValuePosition: 20, minValue: -100, maxValue: -50)
+        let model = LinearAxis(minValuePosition: 10, maxValuePosition: 20, minValue: -100, maxValue: -50)
         testSlider(handlePosition: 10, value: -100, model: model)
         testSlider(handlePosition: 20, value: -50, model: model)
         testSlider(handlePosition: 15, value: -75, model: model)
@@ -60,7 +60,7 @@ class AxisPositionCalculationsTests: XCTestCase {
     }
 
     func testUpdatingTheMinimumPosition() {
-        let model = AxisPositionCalculations(minValuePosition: 10, maxValuePosition: 110, minValue: 100, maxValue: 200)
+        let model = LinearAxis(minValuePosition: 10, maxValuePosition: 110, minValue: 100, maxValue: 200)
 
         let updatedModel = model.updateMin(position: 60)
         XCTAssertEqual(updatedModel.minValuePosition, 60)
@@ -82,7 +82,7 @@ class AxisPositionCalculationsTests: XCTestCase {
     }
 
     func testUpdatingTheMinimumValue() {
-        let model = AxisPositionCalculations(minValuePosition: -20, maxValuePosition: 20, minValue: -100, maxValue: 100)
+        let model = LinearAxis(minValuePosition: -20, maxValuePosition: 20, minValue: -100, maxValue: 100)
 
         let updatedModel = model.updateMin(value: 0)
         XCTAssertEqual(updatedModel.minValuePosition, 0)
@@ -98,7 +98,7 @@ class AxisPositionCalculationsTests: XCTestCase {
     }
 
     func testUpdatingTheMaximumPosition() {
-        let model = AxisPositionCalculations(minValuePosition: 0, maxValuePosition: 100, minValue: 100, maxValue: 400)
+        let model = LinearAxis(minValuePosition: 0, maxValuePosition: 100, minValue: 100, maxValue: 400)
 
         let updatedModel = model.updateMax(position: 50)
         XCTAssertEqual(updatedModel.minValuePosition, 0)
@@ -114,7 +114,7 @@ class AxisPositionCalculationsTests: XCTestCase {
     }
 
     func testUpdatingTheMaximumValue() {
-        let model = AxisPositionCalculations(minValuePosition: 20, maxValuePosition: 30, minValue: 200, maxValue: 400)
+        let model = LinearAxis(minValuePosition: 20, maxValuePosition: 30, minValue: 200, maxValue: 400)
 
         let updatedModel = model.updateMax(value: 300)
         XCTAssertEqual(updatedModel.minValuePosition, 20)
@@ -130,18 +130,18 @@ class AxisPositionCalculationsTests: XCTestCase {
     }
 
     func testGettingValueForDistance() {
-        let model1 = AxisPositionCalculations(minValuePosition: 10, maxValuePosition: 20, minValue: 0, maxValue: 10)
+        let model1 = LinearAxis(minValuePosition: 10, maxValuePosition: 20, minValue: 0, maxValue: 10)
         XCTAssertEqual(model1.valueForDistance(5), 5)
 
-        let model2 = AxisPositionCalculations(minValuePosition: 10, maxValuePosition: 30, minValue: 0, maxValue: 10)
+        let model2 = LinearAxis(minValuePosition: 10, maxValuePosition: 30, minValue: 0, maxValue: 10)
         XCTAssertEqual(model2.valueForDistance(10), 5)
 
-        let model3 = AxisPositionCalculations(minValuePosition: 50, maxValuePosition: 0, minValue: 0, maxValue: 25)
+        let model3 = LinearAxis(minValuePosition: 50, maxValuePosition: 0, minValue: 0, maxValue: 25)
         XCTAssertEqual(model3.valueForDistance(10), 5)
     }
 
     // Tests that getting the value returned for the given position is correct, and vice versa.
-    private func testSlider(handlePosition: Double, value: Double, model: AxisPositionCalculations<Double>) {
+    private func testSlider(handlePosition: Double, value: Double, model: LinearAxis<Double>) {
         XCTAssertEqual(value, model.getValue(at: handlePosition), accuracy: 0.00001)
         XCTAssertEqual(handlePosition, model.getPosition(at: value), accuracy: 0.00001)
     }

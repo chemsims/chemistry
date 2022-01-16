@@ -189,7 +189,7 @@ private struct PHScaleWithGeometry: View {
     private func indicator(
         _ indicator: PHScale.IndicatorValue,
         position: PHScaleBar.LabelPosition,
-        axis: AxisPositionCalculations<CGFloat>
+        axis: LinearAxis<CGFloat>
     ) -> some View {
         return VStack(spacing: 0) {
             if position == .bottom {

@@ -86,7 +86,7 @@ struct PressureBeaker: View {
             settings: AdjustableBeakerBurnerSettings(
                 standWidth: settings.standWidth,
                 handleHeight: settings.sliderWidth,
-                axis: AxisPositionCalculations(
+                axis: LinearAxis(
                     minValuePosition: settings.sliderValuePadding,
                     maxValuePosition: settings.standWidth - settings.sliderValuePadding,
                     minValue: 0,
@@ -230,7 +230,7 @@ struct PressureBeakerSettings {
         AdjustableBeakerBurnerSettings(
             standWidth: standWidth,
             handleHeight: sliderWidth,
-            axis: AxisPositionCalculations(
+            axis: LinearAxis(
                 minValuePosition: 20,
                 maxValuePosition: 150,
                 minValue: 0,

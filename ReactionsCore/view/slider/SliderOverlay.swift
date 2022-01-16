@@ -160,7 +160,7 @@ private struct SliderOverlayWithGeometry: View {
 
             CustomSlider(
                 value: $value,
-                axis: AxisPositionCalculations(
+                axis: LinearAxis(
                     minValuePosition: sliderGeometry.minValuePosition,
                     maxValuePosition: sliderGeometry.maxValuePosition,
                     minValue: minValue,

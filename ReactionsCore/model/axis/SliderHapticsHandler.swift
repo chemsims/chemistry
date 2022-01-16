@@ -7,10 +7,10 @@ import SwiftUI
 
 public struct SliderHapticsHandler<Value: BinaryFloatingPoint> {
 
-    let axis: AxisPositionCalculations<Value>
+    let axis: LinearAxis<Value>
     let impactGenerator: UIImpactFeedbackGenerator
 
-    public init(axis: AxisPositionCalculations<Value>, impactGenerator: UIImpactFeedbackGenerator) {
+    public init(axis: LinearAxis<Value>, impactGenerator: UIImpactFeedbackGenerator) {
         self.axis = axis
         self.impactGenerator = impactGenerator
     }

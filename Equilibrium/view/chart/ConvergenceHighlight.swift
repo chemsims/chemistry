@@ -9,7 +9,7 @@ struct EquilibriumHighlight: View {
 
     let equilibriumTime: CGFloat
     let chartSize: CGFloat
-    let xAxis: AxisPositionCalculations<CGFloat>
+    let xAxis: LinearAxis<CGFloat>
     let offset: CGFloat
 
     var body: some View {

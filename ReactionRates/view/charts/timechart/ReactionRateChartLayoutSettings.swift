@@ -93,8 +93,8 @@ struct ReactionRateChartLayoutSettings {
         chartSize + (2 * chartHStackSpacing) + sliderHandleWidth + yLabelWidth
     }
 
-    var yAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    var yAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: chartSize,
             maxValuePosition: includeAxisPadding ? sliderMaxValuePadding : 0,
             minValue: minConcentration,
@@ -102,8 +102,8 @@ struct ReactionRateChartLayoutSettings {
         )
     }
 
-    var xAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    var xAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: 0,
             maxValuePosition: includeAxisPadding ? chartSize - sliderMaxValuePadding : chartSize,
             minValue: minTime,

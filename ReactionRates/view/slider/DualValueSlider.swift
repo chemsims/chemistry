@@ -16,7 +16,7 @@ struct DualValueSlider: View {
     let value1Label: String
     let value2Label: String
 
-    let axis: AxisPositionCalculations<CGFloat>
+    let axis: LinearAxis<CGFloat>
     let orientation: Orientation
     let settings: ReactionRateChartLayoutSettings
     let canSetInitialValue: Bool
@@ -55,7 +55,7 @@ struct DualValueSlider: View {
 
     private func slider(
         binding: Binding<CGFloat>,
-        axis: AxisPositionCalculations<CGFloat>,
+        axis: LinearAxis<CGFloat>,
         disabled: Bool,
         showBar: Bool
     ) -> some View {
@@ -78,7 +78,7 @@ struct DualValueSlider: View {
         .disabled(disabled)
     }
 
-    private func axis(limits: InputLimits) -> AxisPositionCalculations<CGFloat> {
+    private func axis(limits: InputLimits) -> LinearAxis<CGFloat> {
         LimitConstraints.constrain(
             limit: limits,
             axis: axis,

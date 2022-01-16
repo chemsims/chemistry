@@ -124,7 +124,7 @@ extension ChemicalReactionsScreenLayout {
         0.8 * beakerHeight
     }
 
-    private var beakerSliderAxis: AxisPositionCalculations<CGFloat> {
+    private var beakerSliderAxis: LinearAxis<CGFloat> {
         beakerSettings.sliderAxis
     }
 

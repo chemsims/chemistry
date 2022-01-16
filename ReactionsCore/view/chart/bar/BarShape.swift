@@ -8,7 +8,7 @@ struct BarShape: Shape {
 
     let equation: Equation
     var time: CGFloat
-    let axis: AxisPositionCalculations<CGFloat>
+    let axis: LinearAxis<CGFloat>
 
     var animatableData: CGFloat {
         get { time }
@@ -38,7 +38,7 @@ struct BarShape_Previews: PreviewProvider {
         BarShape(
             equation: LinearEquation(m: 1, x1: 0, y1: 0),
             time: 0.1,
-            axis: AxisPositionCalculations(
+            axis: LinearAxis(
                 minValuePosition: 90,
                 maxValuePosition: 0,
                 minValue: 0,

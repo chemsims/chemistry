@@ -116,7 +116,7 @@ public struct AdjustableFluidBeakerSettings {
         -0.2 * sliderSettings.handleWidth
     }
 
-    public var sliderAxis: AxisPositionCalculations<CGFloat> {
+    public var sliderAxis: LinearAxis<CGFloat> {
         BeakerLiquidSliderAxis.axis(
             minRows: minRows,
             maxRows: maxRows,
@@ -145,7 +145,7 @@ public struct BeakerLiquidSliderAxis {
         maxRows: Int,
         beakerWidth: CGFloat,
         sliderHeight: CGFloat
-    ) -> AxisPositionCalculations<CGFloat> {
+    ) -> LinearAxis<CGFloat> {
         let innerBeakerWidth = BeakerSettings(
             width: beakerWidth,
             hasLip: true
@@ -157,7 +157,7 @@ public struct BeakerLiquidSliderAxis {
             sliderHeight - grid.height(for: CGFloat(rows))
         }
 
-        return AxisPositionCalculations(
+        return LinearAxis(
             minValuePosition: posForRows(minRows),
             maxValuePosition: posForRows(maxRows),
             minValue: CGFloat(minRows),

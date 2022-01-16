@@ -121,8 +121,8 @@ class LimitConstraintsTests: XCTestCase {
         maxPos: CGFloat,
         minValue: CGFloat,
         maxValue: CGFloat
-    ) -> AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    ) -> LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: minPos,
             maxValuePosition: maxPos,
             minValue: minValue,

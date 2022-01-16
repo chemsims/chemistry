@@ -240,8 +240,8 @@ struct BufferFractionsChart: View {
         model.substance.pKA
     }
 
-    private var xAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    private var xAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: 0.1 * chartSize,
             maxValuePosition: 0.9 * chartSize,
             minValue: minPh,
@@ -249,8 +249,8 @@ struct BufferFractionsChart: View {
         )
     }
 
-    private var yAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    private var yAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: 0.9 * chartSize,
             maxValuePosition: 0.1 * chartSize,
             minValue: 0,

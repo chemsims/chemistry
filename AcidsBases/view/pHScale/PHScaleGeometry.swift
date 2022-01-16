@@ -86,14 +86,14 @@ extension PHScaleGeometry {
         0.9 * labelsFontSize
     }
 
-    var topIndicatorAxis: AxisPositionCalculations<CGFloat> {
+    var topIndicatorAxis: LinearAxis<CGFloat> {
         indicatorAxis(
             leftValue: topLeftTickValue,
             rightValue: topRightTickValue
         )
     }
 
-    var bottomIndicatorAxis: AxisPositionCalculations<CGFloat> {
+    var bottomIndicatorAxis: LinearAxis<CGFloat> {
         indicatorAxis(
             leftValue: topRightTickValue,
             rightValue: topLeftTickValue
@@ -103,8 +103,8 @@ extension PHScaleGeometry {
     private func indicatorAxis(
         leftValue: CGFloat,
         rightValue: CGFloat
-    ) -> AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    ) -> LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: barHorizontalSpacing + tickXSpacing,
             maxValuePosition: width - barHorizontalSpacing - tickXSpacing,
             minValue: leftValue,

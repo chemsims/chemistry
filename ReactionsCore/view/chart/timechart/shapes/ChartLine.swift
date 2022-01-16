@@ -9,8 +9,8 @@ public struct ChartLine: Shape {
     let equation: Equation
     let xEquation: Equation?
 
-    let yAxis: AxisPositionCalculations<CGFloat>
-    let xAxis: AxisPositionCalculations<CGFloat>
+    let yAxis: LinearAxis<CGFloat>
+    let xAxis: LinearAxis<CGFloat>
 
     let startX: CGFloat
     var endX: CGFloat
@@ -22,8 +22,8 @@ public struct ChartLine: Shape {
     public init(
         equation: Equation,
         xEquation: Equation? = nil,
-        yAxis: AxisPositionCalculations<CGFloat>,
-        xAxis: AxisPositionCalculations<CGFloat>,
+        yAxis: LinearAxis<CGFloat>,
+        xAxis: LinearAxis<CGFloat>,
         startX: CGFloat,
         endX: CGFloat,
         offset: CGFloat = 0,
@@ -41,7 +41,7 @@ public struct ChartLine: Shape {
 
     private let maxWidthSteps = 100
 
-    private var shiftedXAxis: AxisPositionCalculations<CGFloat> {
+    private var shiftedXAxis: LinearAxis<CGFloat> {
         xAxis.shift(by: offset)
     }
 
@@ -112,8 +112,8 @@ public struct ChartIndicatorHead: Shape {
     let equation: Equation
     let xEquation: Equation?
 
-    let yAxis: AxisPositionCalculations<CGFloat>
-    let xAxis: AxisPositionCalculations<CGFloat>
+    let yAxis: LinearAxis<CGFloat>
+    let xAxis: LinearAxis<CGFloat>
 
     var x: CGFloat
     var offset: CGFloat
@@ -122,8 +122,8 @@ public struct ChartIndicatorHead: Shape {
         radius: CGFloat,
         equation: Equation,
         xEquation: Equation? = nil,
-        yAxis: AxisPositionCalculations<CGFloat>,
-        xAxis: AxisPositionCalculations<CGFloat>,
+        yAxis: LinearAxis<CGFloat>,
+        xAxis: LinearAxis<CGFloat>,
         x: CGFloat,
         offset: CGFloat
     ) {
@@ -137,7 +137,7 @@ public struct ChartIndicatorHead: Shape {
     }
 
 
-    private var shiftedXAxis: AxisPositionCalculations<CGFloat> {
+    private var shiftedXAxis: LinearAxis<CGFloat> {
         xAxis.shift(by: offset)
     }
 
@@ -215,16 +215,16 @@ struct ChartLine_Previews: PreviewProvider {
             }
         }
 
-        private var yAxis: AxisPositionCalculations<CGFloat> {
-            AxisPositionCalculations(
+        private var yAxis: LinearAxis<CGFloat> {
+            LinearAxis(
                 minValuePosition: 240,
                 maxValuePosition: 10,
                 minValue: 0,
                 maxValue: 50)
         }
 
-        private var xAxis: AxisPositionCalculations<CGFloat> {
-            AxisPositionCalculations(
+        private var xAxis: LinearAxis<CGFloat> {
+            LinearAxis(
                 minValuePosition: 10,
                 maxValuePosition: 250 - 10,
                 minValue: 0,

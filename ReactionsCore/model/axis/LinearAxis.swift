@@ -5,7 +5,7 @@
 import CoreGraphics
 
 /// Encapsulates a linear axis, which moves from two positions and two values
-public struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
+public struct LinearAxis<Value: BinaryFloatingPoint> {
     public let minValuePosition: Value
     public let maxValuePosition: Value
     public let minValue: Value
@@ -38,28 +38,28 @@ public struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
 
     /// Returns a new axis with the minimum value updated to the provided value.
     /// The minimum value position is updated to keep the same axis scale
-    public func updateMin(value: Value) -> AxisPositionCalculations<Value> {
+    public func updateMin(value: Value) -> LinearAxis<Value> {
         let valuePosition = getPosition(at: value)
         return withNewMin(position: valuePosition, value: value)
     }
 
     /// Returns a new axis with the minimum value position updated to the provided value.
     /// The minimum value is updated to keep the same axis scale
-    public func updateMin(position: Value) -> AxisPositionCalculations<Value> {
+    public func updateMin(position: Value) -> LinearAxis<Value> {
         let valueForPosition = getValue(at: position)
         return withNewMin(position: position, value: valueForPosition)
     }
 
     /// Returns a new axis with the maximum value updated to the provided value.
     /// The maximum value position is updated to keep the same axis scale
-    public func updateMax(value: Value) -> AxisPositionCalculations<Value> {
+    public func updateMax(value: Value) -> LinearAxis<Value> {
         let valuePosition = getPosition(at: value)
         return withNewMax(position: valuePosition, value: value)
     }
 
     /// Returns a new axis with the maximum value position updated to the provided value.
     /// The maximum value is updated to keep the same axis scale
-    public func updateMax(position: Value) -> AxisPositionCalculations<Value> {
+    public func updateMax(position: Value) -> LinearAxis<Value> {
         let valueForPosition = getValue(at: position)
         return withNewMax(position: position, value: valueForPosition)
     }
@@ -71,8 +71,8 @@ public struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
         return minValue + (scaledDistance * dValue)
     }
 
-    private func withNewMin(position: Value, value: Value) -> AxisPositionCalculations<Value> {
-        AxisPositionCalculations(
+    private func withNewMin(position: Value, value: Value) -> LinearAxis<Value> {
+        LinearAxis(
             minValuePosition: position,
             maxValuePosition: maxValuePosition,
             minValue: value,
@@ -80,8 +80,8 @@ public struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
         )
     }
 
-    private func withNewMax(position: Value, value: Value) -> AxisPositionCalculations<Value> {
-        AxisPositionCalculations(
+    private func withNewMax(position: Value, value: Value) -> LinearAxis<Value> {
+        LinearAxis(
             minValuePosition: minValuePosition,
             maxValuePosition: position,
             minValue: minValue,
@@ -98,9 +98,9 @@ public struct AxisPositionCalculations<Value: BinaryFloatingPoint> {
     }
 }
 
-extension AxisPositionCalculations {
-    public func shift(by delta: Value) -> AxisPositionCalculations<Value> {
-        AxisPositionCalculations(
+extension LinearAxis {
+    public func shift(by delta: Value) -> LinearAxis<Value> {
+        LinearAxis(
             minValuePosition: minValuePosition,
             maxValuePosition: maxValuePosition,
             minValue: minValue + delta,

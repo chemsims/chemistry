@@ -7,7 +7,7 @@ import SwiftUI
 public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     @Binding var value: Value
-    let axis: AxisPositionCalculations<Value>
+    let axis: LinearAxis<Value>
 
     let handleThickness: CGFloat
     let handleColor: Color
@@ -26,7 +26,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     public init(
         value: Binding<Value>,
-        axis: AxisPositionCalculations<Value>,
+        axis: LinearAxis<Value>,
         orientation: Orientation,
         includeFill: Bool,
         settings: SliderGeometrySettings,
@@ -50,7 +50,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
 
     public init(
         value: Binding<Value>,
-        axis: AxisPositionCalculations<Value>,
+        axis: LinearAxis<Value>,
         orientation: Orientation,
         includeFill: Bool,
         settings: SliderGeometrySettings,
@@ -111,7 +111,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
         )
     }
 
-    private func handle(geometry: GeometryProxy, axis: AxisPositionCalculations<Value>) -> some View {
+    private func handle(geometry: GeometryProxy, axis: LinearAxis<Value>) -> some View {
         RoundedRectangle(cornerRadius: handleCornerRadius)
             .foregroundColor(handleColor)
             .frame(width: handleWidth(geometry), height: handleHeight(geometry))
@@ -225,7 +225,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     }
 
     /// Return the x position of the center of the slider handle
-    private func handleXPosition(_ geometry: GeometryProxy, calculations: AxisPositionCalculations<Value>) -> CGFloat {
+    private func handleXPosition(_ geometry: GeometryProxy, calculations: LinearAxis<Value>) -> CGFloat {
         if isPortrait {
             return geometry.size.width / 2
         }
@@ -233,7 +233,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     }
 
     /// Return the y position of the center of the slider handle
-    private func handleYPosition(_ geometry: GeometryProxy, calculations: AxisPositionCalculations<Value>) -> CGFloat {
+    private func handleYPosition(_ geometry: GeometryProxy, calculations: LinearAxis<Value>) -> CGFloat {
         if isPortrait {
             return CGFloat(calculations.getPosition(at: value))
         }
@@ -290,7 +290,7 @@ struct CustomSlider_Previews: PreviewProvider {
 
                 CustomSlider(
                     value: $value,
-                    axis: AxisPositionCalculations(
+                    axis: LinearAxis(
                         minValuePosition: 0,
                         maxValuePosition: 250,
                         minValue: 1,
@@ -305,7 +305,7 @@ struct CustomSlider_Previews: PreviewProvider {
 
                 CustomSlider(
                     value: $value,
-                    axis: AxisPositionCalculations(
+                    axis: LinearAxis(
                         minValuePosition: 250,
                         maxValuePosition: 0,
                         minValue: 1,

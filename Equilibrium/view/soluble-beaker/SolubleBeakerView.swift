@@ -346,11 +346,11 @@ private struct SolubleBeakerViewWithGeometry: View {
         settings.waterHeightAxis.getPosition(at: model.waterHeightFactor)
     }
 
-    private var sliderAxis: AxisPositionCalculations<CGFloat> {
+    private var sliderAxis: LinearAxis<CGFloat> {
         func position(_ waterHeight: CGFloat) -> CGFloat {
             settings.soluble.beaker.beakerHeight - waterHeight - settings.soluble.sliderBottomPadding
         }
-        return AxisPositionCalculations(
+        return LinearAxis(
             minValuePosition: position(settings.waterHeightAxis.minValuePosition),
             maxValuePosition: position(settings.waterHeightAxis.maxValuePosition),
             minValue: settings.waterHeightAxis.minValue,

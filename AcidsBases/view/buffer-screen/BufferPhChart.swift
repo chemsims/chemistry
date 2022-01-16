@@ -147,12 +147,12 @@ struct BufferPhChart: View {
         model.substance.type.isAcid
     }
 
-    private var yAxis: AxisPositionCalculations<CGFloat> {
+    private var yAxis: LinearAxis<CGFloat> {
         let minPh = initialPh == finalPh ? initialPh - 1 : min(initialPh, finalPh)
         let maxPh = initialPh == finalPh ? initialPh + 1 : max(initialPh, finalPh)
         let maxValuePosition = 0.5 * (chartSize - deltaPhSize)
         let minValuePosition = maxValuePosition + deltaPhSize
-        return AxisPositionCalculations(
+        return LinearAxis(
             minValuePosition: minValuePosition,
             maxValuePosition: maxValuePosition,
             minValue: minPh,
@@ -160,8 +160,8 @@ struct BufferPhChart: View {
         )
     }
 
-    private var xAxis: AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    private var xAxis: LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: minXValuePosition,
             maxValuePosition: maxXValuePosition,
             minValue: log10(minSubstance),

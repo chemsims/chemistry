@@ -144,16 +144,16 @@ private struct SolubilityChartWithGeometry: View {
         return label
     }
 
-    private var phAxis: AxisPositionCalculations<CGFloat> {
+    private var phAxis: LinearAxis<CGFloat> {
         axis(minPosition: 0, maxPosition: width)
     }
 
-    private var solubilityAxis: AxisPositionCalculations<CGFloat> {
+    private var solubilityAxis: LinearAxis<CGFloat> {
         axis(minPosition: plotHeight, maxPosition: 0)
     }
 
-    private func axis(minPosition: CGFloat, maxPosition: CGFloat) -> AxisPositionCalculations<CGFloat> {
-        AxisPositionCalculations(
+    private func axis(minPosition: CGFloat, maxPosition: CGFloat) -> LinearAxis<CGFloat> {
+        LinearAxis(
             minValuePosition: minPosition,
             maxValuePosition: maxPosition,
             minValue: 0,
@@ -198,8 +198,8 @@ private struct SolubilityPhIndicatorHead: Shape {
     var currentTime: CGFloat
 
     let radius: CGFloat
-    let solubilityAxis: AxisPositionCalculations<CGFloat>
-    let phAxis: AxisPositionCalculations<CGFloat>
+    let solubilityAxis: LinearAxis<CGFloat>
+    let phAxis: LinearAxis<CGFloat>
 
 
     var animatableData: CGFloat {
@@ -226,8 +226,8 @@ private struct SolubilityPhPositionLine: Shape {
     let ph: Equation
     var currentTime: CGFloat
 
-    let phAxis: AxisPositionCalculations<CGFloat>
-    let solubilityAxis: AxisPositionCalculations<CGFloat>
+    let phAxis: LinearAxis<CGFloat>
+    let solubilityAxis: LinearAxis<CGFloat>
 
     var animatableData: CGFloat {
         get { currentTime }

@@ -16,13 +16,13 @@ struct ReactionEquilibriumChartsLayoutSettings {
 
     var layout: TimeChartLayoutSettings {
         TimeChartLayoutSettings(
-            xAxis: AxisPositionCalculations<CGFloat>(
+            xAxis: LinearAxis<CGFloat>(
                 minValuePosition: 0,
                 maxValuePosition: size,
                 minValue: 0,
                 maxValue: AqueousReactionSettings.forwardReactionTime
             ),
-            yAxis: AxisPositionCalculations<CGFloat>(
+            yAxis: LinearAxis<CGFloat>(
                 minValuePosition: size,
                 maxValuePosition: 0.2 * size,
                 minValue: 0,

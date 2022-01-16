@@ -10,7 +10,7 @@ struct SliderIndicator: View {
     let value2: CGFloat?
     let showInitialValue: Bool
     let settings: ReactionRateChartLayoutSettings
-    let axis: AxisPositionCalculations<CGFloat>
+    let axis: LinearAxis<CGFloat>
     let orientation: Orientation
 
     var body: some View {

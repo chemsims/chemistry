@@ -197,7 +197,7 @@ extension EquilibriumAppLayoutSettings {
 }
 
 extension EquilibriumAppLayoutSettings {
-    var sliderAxis: AxisPositionCalculations<CGFloat> {
+    var sliderAxis: LinearAxis<CGFloat> {
         BeakerLiquidSliderAxis.axis(
             minRows: AqueousReactionSettings.minRows,
             maxRows: AqueousReactionSettings.maxRows,

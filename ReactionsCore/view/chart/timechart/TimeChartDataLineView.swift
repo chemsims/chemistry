@@ -261,13 +261,13 @@ struct TimeChartDataLineView_Previews: PreviewProvider {
 
     private static var settings: TimeChartLayoutSettings {
         TimeChartLayoutSettings(
-            xAxis: AxisPositionCalculations<CGFloat>(
+            xAxis: LinearAxis<CGFloat>(
                 minValuePosition: 0,
                 maxValuePosition: 300,
                 minValue: 0,
                 maxValue: 10
             ),
-            yAxis: AxisPositionCalculations<CGFloat>(
+            yAxis: LinearAxis<CGFloat>(
                 minValuePosition: 300,
                 maxValuePosition: 0,
                 minValue: 0,
