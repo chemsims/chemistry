@@ -15,34 +15,8 @@ extension View {
 }
 
 extension CGFloat {
-    public func str(decimals: Int) -> String {
-        String(format: "%.\(decimals)f", self)
-    }
-
-    public func rounded(decimals: Int) -> CGFloat {
-        let power = pow(10, CGFloat(decimals))
-        let multiplied = self * power
-        let rounded = multiplied.rounded()
-        return rounded / power
-    }
-
     /// Dissociation constant of water (Kw) at 25°C
     public static let waterDissociationConstant: CGFloat = 1e-14
-}
-
-extension BinaryFloatingPoint {
-    public func str(decimals: Int) -> String {
-        String(format: "%.\(decimals)f", Double(self))
-    }
-
-    /// Returns the value as a percentage where 1 corresponds to 100%
-    public var percentage: String {
-        "\((self * 100).str(decimals: 0))%"
-    }
-
-    public func roundedInt() -> Int {
-        Int(rounded())
-    }
 }
 
 extension Array {
