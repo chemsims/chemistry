@@ -419,7 +419,6 @@
 		5769751726D4D7B700D30ECE /* ValidURLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769751626D4D7B700D30ECE /* ValidURLTests.swift */; };
 		5769751926D64D9D00D30ECE /* TippingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769751826D64D9D00D30ECE /* TippingViewModel.swift */; };
 		5769751E26D66A7300D30ECE /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769751D26D66A7300D30ECE /* ActivityIndicator.swift */; };
-		576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */; };
 		576F922E26F227230035D3F4 /* Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576F922D26F227230035D3F4 /* Devices.swift */; };
 		5772DA5526CD12A300A00EAA /* BalancedReactionMoleculeGridLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA5426CD12A300A00EAA /* BalancedReactionMoleculeGridLayout.swift */; };
 		5772DA5726CD164400A00EAA /* BalancedReactionMoleculeLayoutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5772DA5626CD164400A00EAA /* BalancedReactionMoleculeLayoutTests.swift */; };
@@ -1224,7 +1223,6 @@
 		576D5A8C256674FD0062F722 /* ZeroOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroOrderEquationView.swift; sourceTree = "<group>"; };
 		576D5AA42566BAB50062F722 /* FirstOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOrderEquationView.swift; sourceTree = "<group>"; };
 		576D5AAB2566CA900062F722 /* SecondOrderEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondOrderEquationView.swift; sourceTree = "<group>"; };
-		576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDeferEdgeGesturesController.swift; sourceTree = "<group>"; };
 		576F922D26F227230035D3F4 /* Devices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Devices.swift; sourceTree = "<group>"; };
 		577077B42568E318003E750E /* EnergyProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileScreen.swift; sourceTree = "<group>"; };
 		577077BB2568E3E1003E750E /* BeakyOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakyOverlay.swift; sourceTree = "<group>"; };
@@ -3356,7 +3354,6 @@
 				57AD96BB263024FD0027DD0C /* AnalyticsConsentView.swift */,
 				5773B5EB25B84A9100889A2E /* MailComposerView.swift */,
 				5787039725B88E14002A4487 /* ShareSheetView.swift */,
-				576EBF9E25B371220074B5C5 /* SceneDeferEdgeGesturesController.swift */,
 				57D2F2D225EA27D100AEE0D8 /* shapes */,
 				5727486A25A60D30000CFA1E /* DropDownSelectionView.swift */,
 				57567B6A26066450009711D4 /* SlidingSwitch.swift */,
@@ -5292,7 +5289,6 @@
 				575A885F25E435F600AEE448 /* BeakyGeometrySettings.swift in Sources */,
 				57A5F076263EA066002F23DE /* QuizQuestionReader.swift in Sources */,
 				5797A48825E40A3E00991BD9 /* EmptyBeaker.swift in Sources */,
-				576A41EE25F7787B00047618 /* SceneDeferEdgeGesturesController.swift in Sources */,
 				57D3998026615C4D00443C5A /* MovingPoint.swift in Sources */,
 				57315EC426401CF500A7D0F9 /* ProgressBar.swift in Sources */,
 				57E59A5E25F92E260087F760 /* HighlightedElements.swift in Sources */,
