@@ -962,7 +962,7 @@
 		5710E21B2627237E00CF6FBE /* SolubleScreenElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleScreenElement.swift; sourceTree = "<group>"; };
 		5710E22126272A3800CF6FBE /* ShakeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeText.swift; sourceTree = "<group>"; };
 		5711603426831A800045CF7A /* TitrationStrongAcidPreparationModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitrationStrongAcidPreparationModelTests.swift; sourceTree = "<group>"; };
-		57118CC8279D2B51000B8224 /* CogSciKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CogSciKit; path = ../CogSciKit; sourceTree = "<group>"; };
+		57118CCA279D3FC2000B8224 /* CogSciKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CogSciKit; path = ../CogSciKit; sourceTree = "<group>"; };
 		5711DFC425C45EEC00B28E45 /* EnergyProfilePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfilePersistenceTests.swift; sourceTree = "<group>"; };
 		5711DFCA25C467DA00B28E45 /* ProductionQuizQuestionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductionQuizQuestionsTests.swift; sourceTree = "<group>"; };
 		5711E00225C4840D00B28E45 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -2084,7 +2084,7 @@
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
-				57118CC8279D2B51000B8224 /* CogSciKit */,
+				57118CCA279D3FC2000B8224 /* CogSciKit */,
 				5769751B26D6548E00D30ECE /* storekit-config */,
 				57FD4033264878C100E352C1 /* TestPlan.xctestplan */,
 				5748659E26A96E55007FA314 /* APChemistry */,
