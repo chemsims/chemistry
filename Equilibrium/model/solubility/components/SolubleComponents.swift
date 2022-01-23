@@ -39,19 +39,17 @@ struct SolubilityComponents {
         SolubilityQuotientEquation(concentration: equation.concentration)
     }
 
-    var quotientDiscontinuity: CGPoint? {
+    var quotientDiscontinuity: CGFloat? {
         guard previousEquation != nil else {
             return nil
         }
-        return CGPoint(x: startTime, y: quotient.getValue(at: startTime))
+        return startTime
     }
 
-    var concentrationDiscontinuity: SoluteValues<CGPoint>? {
+    var concentrationDiscontinuity: SoluteValues<CGFloat>? {
         guard previousEquation != nil else {
             return nil
         }
-        return equation.initialConcentration.map {
-            CGPoint(x: startTime, y: $0)
-        }
+        return .constant(startTime)
     }
 }

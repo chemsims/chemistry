@@ -17,7 +17,7 @@ struct QuotientPlot: View {
 
     let showData: Bool
     let offset: CGFloat
-    let discontinuity: CGPoint?
+    let discontinuity: CGFloat?
 
     let kTerm: String
     let accessibilityValue: Equation
@@ -58,7 +58,7 @@ struct QuotientPlot: View {
         .accessibilitySetCurrentTimeAction(
             currentTime: $currentTime,
             canSetTime: canSetCurrentTime,
-            initialTime: discontinuity?.x ?? 0,
+            initialTime: discontinuity ?? 0,
             finalTime: maxDragTime
         )
     }
@@ -118,7 +118,7 @@ struct QuotientPlot: View {
             axisSettings: settings.axisShapeSettings,
             clipData: true,
             offset: offset,
-            minDragTime: discontinuity?.x
+            minDragTime: discontinuity
         )
     }
 

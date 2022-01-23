@@ -117,13 +117,11 @@ class ReactionComponents {
         return builder
     }()
 
-    private(set) lazy var moleculeChartDiscontinuities: MoleculeValue<CGPoint>? = {
+    private(set) lazy var moleculeChartDiscontinuities: MoleculeValue<CGFloat>? = {
         guard startTime > 0 else {
             return nil
         }
-        return equation.concentration.map {
-            CGPoint(x: startTime, y: $0.getValue(at: startTime))
-        }
+        return .constant(startTime)
     }()
 
     private(set) lazy var quotientEquation: Equation = ReactionQuotientEquation(
@@ -135,14 +133,11 @@ class ReactionComponents {
         equations: equation.pressure
     )
 
-    private(set) lazy var quotientChartDiscontinuity: CGPoint? = {
+    private(set) lazy var quotientChartDiscontinuity: CGFloat? = {
         guard startTime > 0 else {
             return nil
         }
-        return CGPoint(
-            x: startTime,
-            y: quotientEquation.getValue(at: startTime)
-        )
+        return startTime
     }()
 
     private(set) lazy var maxQuotient: CGFloat = {

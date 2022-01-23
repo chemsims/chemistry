@@ -12,7 +12,7 @@ struct ChartStack: View {
     let equilibriumTime: CGFloat
     let quotientEquation: Equation
     @Binding var currentTime: CGFloat
-    let quotientChartDiscontinuity: CGPoint?
+    let quotientChartDiscontinuity: CGFloat?
     let chartOffset: CGFloat
     let canSetCurrentTime: Bool
     let canSetChartIndex: Bool
@@ -71,7 +71,7 @@ struct ChartStack: View {
             canSetCurrentTime: canSetCurrentTime,
             showData: showConcentrationLines,
             offset: chartOffset,
-            minDragTime: quotientChartDiscontinuity?.x,
+            minDragTime: quotientChartDiscontinuity,
             canSetIndex: canSetChartIndex,
             yLabel: topChartYLabel,
             maxDragTime: maxDragTime,

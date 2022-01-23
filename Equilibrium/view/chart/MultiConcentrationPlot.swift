@@ -8,7 +8,7 @@ import ReactionsCore
 struct MultiConcentrationPlotData {
     let equation: Equation
     let color: Color
-    let discontinuity: CGPoint?
+    let discontinuity: CGFloat?
     let legendValue: String
     let accessibilityValue: Equation
 }
@@ -131,7 +131,7 @@ struct MultiConcentrationPlot: View {
     private func data(
         equation: Equation,
         color: Color,
-        discontinuity: CGPoint?
+        discontinuity: CGFloat?
     ) -> TimeChartDataLine {
         TimeChartDataLine(
             equation: equation,

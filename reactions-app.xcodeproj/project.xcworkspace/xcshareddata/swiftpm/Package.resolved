@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "CogSciKit",
+        "repositoryURL": "https://github.com/chemsims/CogSciKit",
+        "state": {
+          "branch": "main",
+          "revision": "8f6a4c1c7549fbc5a311599785dd6cdf386932b9",
+          "version": null
+        }
+      },
+      {
         "package": "Firebase",
         "repositoryURL": "https://github.com/firebase/firebase-ios-sdk.git",
         "state": {
