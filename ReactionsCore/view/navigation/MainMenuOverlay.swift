@@ -215,7 +215,7 @@ extension MainMenuOverlayWithSettings {
     }
 
     private var panelShape: some Shape {
-        MainMenuPanel(
+        PanelShape(
             tabWidth: settings.tabSize,
             tabHeight: settings.tabSize,
             cornerRadius: 0.5 * settings.tabSize

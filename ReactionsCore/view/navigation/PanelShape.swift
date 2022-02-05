@@ -4,7 +4,8 @@
 
 import SwiftUI
 
-struct MainMenuPanel: Shape {
+/// A panel with curved corners & a tab on the top right.
+struct PanelShape: Shape {
 
     let tabWidth: CGFloat
     let tabHeight: CGFloat
@@ -58,7 +59,7 @@ struct MainMenuPanel: Shape {
 
 struct MainMenuPanel_Previews: PreviewProvider {
     static var previews: some View {
-        MainMenuPanel(
+        PanelShape(
             tabWidth: 100,
             tabHeight: 130,
             cornerRadius: 20
