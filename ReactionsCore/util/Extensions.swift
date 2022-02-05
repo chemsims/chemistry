@@ -19,29 +19,6 @@ extension CGFloat {
     public static let waterDissociationConstant: CGFloat = 1e-14
 }
 
-extension Array {
-    public subscript (safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-
-extension Array where Self.Element: Equatable {
-
-    public func element(after element: Element) -> Element? {
-        self.element(after: element, distance: 1)
-    }
-
-    public func element(before element: Element) -> Element? {
-        self.element(after: element, distance: -1)
-    }
-
-    private func element(after element: Element, distance: Int) -> Element? {
-        let index = firstIndex(of: element)
-        let nextIndex = index.map { $0 + distance }
-        return nextIndex.flatMap { self[safe: $0] }
-    }
-}
-
 extension Array where Self.Element: Numeric {
     public func sum() -> Self.Element {
         self.reduce(Self.Element.zero) { $0 + $1 }
