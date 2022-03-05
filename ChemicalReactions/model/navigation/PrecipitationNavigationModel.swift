@@ -74,6 +74,10 @@ class PrecipitationScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: PrecipitationScreenViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: PrecipitationScreenState {

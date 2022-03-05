@@ -77,6 +77,10 @@ class IntroScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: IntroScreenViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: IntroScreenState {

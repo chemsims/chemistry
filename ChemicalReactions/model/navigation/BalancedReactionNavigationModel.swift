@@ -54,6 +54,10 @@ class BalancedReactionScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: BalancedReactionScreenViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: BalancedReactionScreenState {

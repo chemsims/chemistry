@@ -69,6 +69,10 @@ class SolubilityScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: SolubilityViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: SolubilityScreenState {

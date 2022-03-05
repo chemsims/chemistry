@@ -65,6 +65,10 @@ class AqueousScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: AqueousReactionViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatementState: AqueousScreenState {

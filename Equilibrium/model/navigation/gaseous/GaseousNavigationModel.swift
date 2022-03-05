@@ -84,6 +84,10 @@ class GaseousScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: GaseousReactionViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: GaseousScreenState {

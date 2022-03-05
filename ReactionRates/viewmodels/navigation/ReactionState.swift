@@ -31,7 +31,9 @@ class ReactionState: ScreenState, SubState {
         []
     }
 
-
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 // MARK: Common reaction nodes

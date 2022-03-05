@@ -229,6 +229,10 @@ class TitrationScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: TitrationViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: TitrationScreenState {

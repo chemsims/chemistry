@@ -118,8 +118,8 @@ class EnergyProfileState: ScreenState, SubState {
         []
     }
 
-    var ignoreOnBack: Bool {
-        false
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
     }
 }
 
@@ -267,8 +267,8 @@ private class PrepareChosenCatalyst: EnergyProfileState {
         model.highlightedElements = []
     }
 
-    override var ignoreOnBack: Bool {
-        true
+    override var backBehaviour: NavigationModelBackBehaviour {
+        .skipAndIgnore
     }
 }
 
@@ -287,8 +287,8 @@ private class StartShakingCatalyst: EnergyProfileState {
         1
     }
 
-    override var ignoreOnBack: Bool {
-        true
+    override var backBehaviour: NavigationModelBackBehaviour {
+        .skipAndIgnore
     }
 }
 
@@ -444,8 +444,8 @@ private class PrepareAnotherCatalystState: EnergyProfileState {
         model.doSetCatalystInProgress(catalyst: catalyst)
     }
 
-    override var ignoreOnBack: Bool {
-        true
+    override var backBehaviour: NavigationModelBackBehaviour {
+        .skipAndIgnore
     }
 }
 

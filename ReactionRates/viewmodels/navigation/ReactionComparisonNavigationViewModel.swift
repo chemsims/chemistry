@@ -54,6 +54,10 @@ class ReactionComparisonState: ScreenState {
     func delayedStates(model: ReactionComparisonViewModel) -> [DelayedState<ReactionComparisonSubstate>] {
         []
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 class ReactionComparisonSubstate: SubState {

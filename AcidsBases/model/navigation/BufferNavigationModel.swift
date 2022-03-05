@@ -98,6 +98,10 @@ class BufferScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: BufferScreenViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: BufferScreenState {

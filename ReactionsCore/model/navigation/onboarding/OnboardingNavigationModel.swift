@@ -64,6 +64,10 @@ public class OnboardingScreenState: ScreenState, SubState {
     public func nextStateAutoDispatchDelay(model: OnboardingViewModel) -> Double? {
         nil
     }
+    
+    public var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: OnboardingScreenState {

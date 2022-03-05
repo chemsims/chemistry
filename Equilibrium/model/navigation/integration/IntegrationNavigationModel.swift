@@ -57,6 +57,10 @@ class IntegrationScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: IntegrationViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: IntegrationScreenState {

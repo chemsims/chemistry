@@ -109,6 +109,10 @@ class LimitingReagentScreenState: ScreenState, SubState {
     func nextStateAutoDispatchDelay(model: LimitingReagentScreenViewModel) -> Double? {
         nil
     }
+    
+    var backBehaviour: NavigationModelBackBehaviour {
+        .unapply
+    }
 }
 
 private class SetStatement: LimitingReagentScreenState {

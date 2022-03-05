@@ -1140,7 +1140,6 @@
 		574F14BB25B4898700EB316C /* InputLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputLimits.swift; sourceTree = "<group>"; };
 		574F14BF25B48C9200EB316C /* NewDualValueSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDualValueSlider.swift; sourceTree = "<group>"; };
 		574F14C725B4E2C300EB316C /* ReactionInputLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputLimits.swift; sourceTree = "<group>"; };
-		574FE9BB27AEC99E001D8F9B /* CogSciKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CogSciKit; path = ../CogSciKit; sourceTree = "<group>"; };
 		57517F2E25739E3A00EB79C7 /* ReactionOrderSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrderSelection.swift; sourceTree = "<group>"; };
 		57517F3225739E5200EB79C7 /* ReactionOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionOrder.swift; sourceTree = "<group>"; };
 		575317C92709ADA4003CBA25 /* MultiShakingContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiShakingContainerView.swift; sourceTree = "<group>"; };
@@ -2080,7 +2079,6 @@
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
-				574FE9BB27AEC99E001D8F9B /* CogSciKit */,
 				5769751B26D6548E00D30ECE /* storekit-config */,
 				57FD4033264878C100E352C1 /* TestPlan.xctestplan */,
 				5748659E26A96E55007FA314 /* APChemistry */,
