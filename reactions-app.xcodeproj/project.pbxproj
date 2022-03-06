@@ -710,7 +710,6 @@
 		57D9C3E726D964870023ED91 /* FixedDateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9C3E626D964870023ED91 /* FixedDateProvider.swift */; };
 		57D9C3EA26D969FB0023ED91 /* SharePrompter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D9C3E926D969FB0023ED91 /* SharePrompter.swift */; };
 		57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */; };
-		57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */; };
 		57DDACFE25E55A6900B535A7 /* GridCoordinateListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDACFD25E55A6900B535A7 /* GridCoordinateListTests.swift */; };
 		57DDAD0925E5608700B535A7 /* BeakerMolecules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD0825E5608700B535A7 /* BeakerMolecules.swift */; };
 		57DDAD3825E57A5000B535A7 /* TimeChartLayoutSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */; };
@@ -1537,7 +1536,6 @@
 		57DD22AC25B780DC003E6842 /* EnergyProfileNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileNavigationTests.swift; sourceTree = "<group>"; };
 		57DDAC1925E4FD8100B535A7 /* AqueousReactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionScreen.swift; sourceTree = "<group>"; };
 		57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewLayoutExtensions.swift; sourceTree = "<group>"; };
-		57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderGeometrySettings.swift; sourceTree = "<group>"; };
 		57DDAC7D25E5260400B535A7 /* AqueousReactionSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionSettings.swift; sourceTree = "<group>"; };
 		57DDACDC25E54EF100B535A7 /* AqueousMolecule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousMolecule.swift; sourceTree = "<group>"; };
 		57DDACE825E552F700B535A7 /* AqueousReactionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AqueousReactionViewModel.swift; sourceTree = "<group>"; };
@@ -2717,7 +2715,6 @@
 			isa = PBXGroup;
 			children = (
 				575A885E25E435F600AEE448 /* BeakyGeometrySettings.swift */,
-				57DDAC6E25E520C100B535A7 /* SliderGeometrySettings.swift */,
 				57DDAD3725E57A5000B535A7 /* TimeChartLayoutSettings.swift */,
 			);
 			path = "layout-settings";
@@ -5365,7 +5362,6 @@
 				579EA8F7264689CD008461E8 /* BarShape.swift in Sources */,
 				575317D32709F6D6003CBA25 /* ElementType.swift in Sources */,
 				57DDAC5925E51AC200B535A7 /* PreviewLayoutExtensions.swift in Sources */,
-				57DDAC6F25E520C100B535A7 /* SliderGeometrySettings.swift in Sources */,
 				57B5781F2639953B008DFAB5 /* UniqueGridCoordinates.swift in Sources */,
 				5786BD0F267B45BA001A165C /* Dropper.swift in Sources */,
 				57346C6126D0DE8D00525920 /* PageControl.swift in Sources */,
