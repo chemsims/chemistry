@@ -411,7 +411,6 @@
 		57686AB92600E008005BD328 /* FlamesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AB82600E008005BD328 /* FlamesView.swift */; };
 		57686AC72600E342005BD328 /* BurnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AC62600E342005BD328 /* BurnerView.swift */; };
 		57686AD12600E6B1005BD328 /* AdjustableBeakerBurner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AD02600E6B1005BD328 /* AdjustableBeakerBurner.swift */; };
-		57686AE72601D541005BD328 /* SliderHapticsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AE62601D541005BD328 /* SliderHapticsHandler.swift */; };
 		57686AF42601F5CF005BD328 /* FilledAirBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AF32601F5CF005BD328 /* FilledAirBeaker.swift */; };
 		57686AFA2601FD17005BD328 /* AdjustableAirBeaker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */; };
 		5769751526D4D79A00D30ECE /* URLExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5769751426D4D79A00D30ECE /* URLExtension.swift */; };
@@ -1192,7 +1191,6 @@
 		57686AC62600E342005BD328 /* BurnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BurnerView.swift; sourceTree = "<group>"; };
 		57686AD02600E6B1005BD328 /* AdjustableBeakerBurner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustableBeakerBurner.swift; sourceTree = "<group>"; };
 		57686AD82601C981005BD328 /* Pump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pump.swift; sourceTree = "<group>"; };
-		57686AE62601D541005BD328 /* SliderHapticsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderHapticsHandler.swift; sourceTree = "<group>"; };
 		57686AED2601EDB6005BD328 /* PressureBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PressureBeaker.swift; sourceTree = "<group>"; };
 		57686AF32601F5CF005BD328 /* FilledAirBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilledAirBeaker.swift; sourceTree = "<group>"; };
 		57686AF92601FD17005BD328 /* AdjustableAirBeaker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustableAirBeaker.swift; sourceTree = "<group>"; };
@@ -1533,6 +1531,7 @@
 		57DAE4F92577ECD9006D945B /* ReactionInputPersistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputPersistence.swift; sourceTree = "<group>"; };
 		57DAE4FD2577ED76006D945B /* ReactionInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInput.swift; sourceTree = "<group>"; };
 		57DB304325F74D050070E96F /* AddMoleculeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMoleculeView.swift; sourceTree = "<group>"; };
+		57DB753527D4BC2E00280439 /* CogSciKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CogSciKit; path = ../CogSciKit; sourceTree = "<group>"; };
 		57DD22A025B771A8003E6842 /* ReactionInputLimitsWithoutC2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputLimitsWithoutC2Tests.swift; sourceTree = "<group>"; };
 		57DD22A625B7721C003E6842 /* ReactionInputLimitsWithoutT2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionInputLimitsWithoutT2Tests.swift; sourceTree = "<group>"; };
 		57DD22AC25B780DC003E6842 /* EnergyProfileNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyProfileNavigationTests.swift; sourceTree = "<group>"; };
@@ -2079,6 +2078,7 @@
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
+				57DB753527D4BC2E00280439 /* CogSciKit */,
 				5769751B26D6548E00D30ECE /* storekit-config */,
 				57FD4033264878C100E352C1 /* TestPlan.xctestplan */,
 				5748659E26A96E55007FA314 /* APChemistry */,
@@ -3373,7 +3373,6 @@
 		5797A53D25E41DF500991BD9 /* axis */ = {
 			isa = PBXGroup;
 			children = (
-				57686AE62601D541005BD328 /* SliderHapticsHandler.swift */,
 			);
 			path = axis;
 			sourceTree = "<group>";
@@ -5358,7 +5357,6 @@
 				5784F4502664075400513B2A /* EnumMap.swift in Sources */,
 				570A7661266CC30A009329FB /* ReactingBeakerViewModel.swift in Sources */,
 				57346C5F26D0DD6D00525920 /* PageViewController.swift in Sources */,
-				57686AE72601D541005BD328 /* SliderHapticsHandler.swift in Sources */,
 				57B8946F26A0500100D71998 /* NamePersistence.swift in Sources */,
 				57BDFF4E26415540001B97CC /* ImageType.swift in Sources */,
 				574BF91827047F8D0079CA8F /* BeakerGrid.swift in Sources */,
