@@ -10,9 +10,9 @@ public enum Orientation {
     var sliderOrientation: SliderOrientation {
         switch self {
         case .landscape:
-            return .landscape
+            return .horizontal
         case .portrait:
-            return .portrait
+            return .vertical
         }
     }
 }

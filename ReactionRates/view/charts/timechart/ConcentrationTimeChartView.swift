@@ -438,7 +438,7 @@ struct GeneralTimeChartView: View {
             showInitialValue: true,
             settings: settings,
             axis: settings.yAxis,
-            orientation: .portrait
+            orientation: .vertical
         ).frame(width: settings.indicatorWidth, height: settings.chartSize)
     }
 
@@ -449,7 +449,7 @@ struct GeneralTimeChartView: View {
             showInitialValue: canSetInitialTime,
             settings: settings,
             axis: settings.xAxis,
-            orientation: .landscape
+            orientation: .horizontal
         ).frame(width: settings.chartSize, height: settings.indicatorWidth)
     }
 

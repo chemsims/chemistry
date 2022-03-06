@@ -50,7 +50,7 @@ public struct AdjustableFluidBeaker<BeakerModifier: ViewModifier>: View {
         CustomSlider(
             value: $rows,
             axis: settings.sliderAxis,
-            orientation: .portrait,
+            orientation: .vertical,
             includeFill: true,
             settings: settings.sliderSettings,
             disabled: !canSetLevel,

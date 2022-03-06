@@ -130,7 +130,7 @@ private struct AdjustableAirBeakerWithHeight: View {
         CustomSlider(
             value: $rows,
             axis: sliderAxis,
-            orientation: .portrait,
+            orientation: .vertical,
             includeFill: true,
             settings: SliderGeometrySettings(handleWidth: settings.sliderWidth),
             disabled: disabled,

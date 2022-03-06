@@ -118,7 +118,7 @@ private struct SolubleBeakerViewWithGeometry: View {
         CustomSlider(
             value: $model.waterHeightFactor,
             axis: sliderAxis,
-            orientation: .portrait,
+            orientation: .vertical,
             includeFill: true,
             settings: settings.common.sliderSettings,
             disabled: model.inputState != .setWaterLevel,

@@ -60,7 +60,7 @@ public struct AdjustableBeakerBurner: View {
         CustomSlider(
             value: $temp,
             axis: settings.axis,
-            orientation: .landscape,
+            orientation: .horizontal,
             includeFill: true,
             settings: settings.sliderSettings,
             disabled: disabled,

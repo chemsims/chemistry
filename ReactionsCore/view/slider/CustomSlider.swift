@@ -128,7 +128,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { gesture in
-                        let inputValue = orientation == .portrait ? gesture.location.y : gesture.location.x
+                        let inputValue = orientation == .vertical ? gesture.location.y : gesture.location.x
                         let newValue = axis.getValue(at: Value(inputValue))
                         setHandleScale(
                             geometry: geometry,
@@ -269,7 +269,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     }
 
     private var isPortrait: Bool {
-        orientation == .portrait
+        orientation == .vertical
     }
 }
 
@@ -296,7 +296,7 @@ struct CustomSlider_Previews: PreviewProvider {
                         minValue: 1,
                         maxValue: 2
                     ),
-                    orientation: .landscape,
+                    orientation: .horizontal,
                     includeFill: true,
                     settings: SliderGeometrySettings(handleWidth: width),
                     disabled: false,
@@ -311,7 +311,7 @@ struct CustomSlider_Previews: PreviewProvider {
                         minValue: 1,
                         maxValue: 2
                     ),
-                    orientation: .portrait,
+                    orientation: .vertical,
                     includeFill: true,
                     settings: SliderGeometrySettings(handleWidth: width),
                     disabled: false,
@@ -323,5 +323,5 @@ struct CustomSlider_Previews: PreviewProvider {
 }
  
 public enum SliderOrientation {
-    case landscape, portrait
+    case horizontal, vertical
 }

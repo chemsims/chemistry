@@ -76,7 +76,7 @@ struct TitrationMacroBeaker: View {
         CustomSlider(
             value: $model.rows,
             axis: beakerSettings.sliderAxis,
-            orientation: .portrait,
+            orientation: .vertical,
             includeFill: true,
             settings: beakerSettings.sliderSettings,
             disabled: model.inputState != .setWaterLevel,
