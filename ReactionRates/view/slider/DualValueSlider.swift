@@ -17,7 +17,7 @@ struct DualValueSlider: View {
     let value2Label: String
 
     let axis: LinearAxis<CGFloat>
-    let orientation: Orientation
+    let orientation: SliderOrientation
     let settings: ReactionRateChartLayoutSettings
     let canSetInitialValue: Bool
 

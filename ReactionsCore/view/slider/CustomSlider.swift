@@ -16,7 +16,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     let barThickness: CGFloat
     let barColor: Color
 
-    let orientation: Orientation
+    let orientation: SliderOrientation
 
     let includeFill: Bool
     let useHaptics: Bool
@@ -27,7 +27,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     public init(
         value: Binding<Value>,
         axis: LinearAxis<Value>,
-        orientation: Orientation,
+        orientation: SliderOrientation,
         includeFill: Bool,
         settings: SliderGeometrySettings,
         disabled: Bool,
@@ -51,7 +51,7 @@ public struct CustomSlider<Value>: View where Value: BinaryFloatingPoint {
     public init(
         value: Binding<Value>,
         axis: LinearAxis<Value>,
-        orientation: Orientation,
+        orientation: SliderOrientation,
         includeFill: Bool,
         settings: SliderGeometrySettings,
         disabled: Bool,
@@ -322,3 +322,6 @@ struct CustomSlider_Previews: PreviewProvider {
     }
 }
  
+public enum SliderOrientation {
+    case landscape, portrait
+}

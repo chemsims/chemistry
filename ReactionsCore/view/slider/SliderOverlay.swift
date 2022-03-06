@@ -166,7 +166,7 @@ private struct SliderOverlayWithGeometry: View {
                     minValue: minValue,
                     maxValue: maxValue
                 ),
-                orientation: position.orientation,
+                orientation: position.orientation.sliderOrientation,
                 includeFill: includeFill,
                 settings: SliderGeometrySettings(handleWidth: sliderGeometry.handleWidth),
                 disabled: false,

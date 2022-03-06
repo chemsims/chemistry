@@ -11,7 +11,7 @@ struct SliderIndicator: View {
     let showInitialValue: Bool
     let settings: ReactionRateChartLayoutSettings
     let axis: LinearAxis<CGFloat>
-    let orientation: Orientation
+    let orientation: SliderOrientation
 
     var body: some View {
         ZStack {
