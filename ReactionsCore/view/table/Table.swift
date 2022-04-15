@@ -62,7 +62,7 @@ private struct SizedTable: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ForEach(0..<rows.count) { rowIndex in
+            ForEach(0..<rows.count, id: \.self) { rowIndex in
                 rowView(row: rows[rowIndex])
             }
         }
@@ -72,7 +72,7 @@ private struct SizedTable: View {
 
     private func rowView(row: Table.Row) -> some View {
         HStack(spacing: 0) {
-            ForEach(0..<row.cells.count) { cellIndex in
+            ForEach(0..<row.cells.count, id: \.self) { cellIndex in
                 cellView(content: row.emphasised ? row.cells[cellIndex].emphasised() : row.cells[cellIndex])
             }
         }

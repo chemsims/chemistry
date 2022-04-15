@@ -227,14 +227,14 @@ extension MainMenuOverlayWithSettings {
 extension MainMenuOverlayWithSettings {
     private var panelContent: some View {
         VStack(alignment: .leading, spacing: settings.navVStackSpacing) {
-            ForEach(0..<rows.primary.count) { i in
+            ForEach(0..<rows.primary.count, id: \.self) { i in
                 navRow(rows.primary[i])
             }
             if !rows.secondary.isEmpty {
                 Divider()
                     .frame(width: settings.dividerWidth(rows: rows))
             }
-            ForEach(0..<rows.secondary.count) { i in
+            ForEach(0..<rows.secondary.count, id: \.self) { i in
                 navRow(rows.secondary[i])
             }
         }

@@ -38,7 +38,7 @@ struct PHScaleBar: View {
         }
 
         return ZStack {
-            ForEach(elements.indices) { i in
+            ForEach(elements.indices, id: \.self) { i in
                 VStack(spacing: 0) {
                     if position == .bottom {
                         Spacer()

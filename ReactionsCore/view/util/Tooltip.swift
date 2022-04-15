@@ -328,7 +328,7 @@ struct Tooltip_Previews: PreviewProvider {
 
     static var previews: some View {
         VStack(spacing: 50) {
-            ForEach(arrows.indices) { i in
+            ForEach(arrows.indices, id: \.self) { i in
                 Tooltip(
                     text: "Hello, world!!",
                     color: .white,

@@ -331,8 +331,8 @@ extension TitrationEquationView {
 struct TitrationEquationView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 80) {
-            ForEach(TitrationViewModel.EquationState.allCases.indices) { i in
-                equation(forState: TitrationViewModel.EquationState.allCases[i])
+            ForEach(TitrationViewModel.EquationState.allCases, id: \.rawValue) { state in
+                equation(forState: state)
             }
         }
         .previewLayout(.sizeThatFits)

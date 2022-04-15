@@ -467,7 +467,7 @@ extension TitrationViewModel {
              setTitrantMolarity
     }
 
-    enum EquationState: CaseIterable {
+    enum EquationState: Int, CaseIterable {
         case strongAcidBlank,
              strongAcidAddingSubstance,
              strongAcidPreEPFilled,
