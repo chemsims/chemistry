@@ -1417,7 +1417,6 @@
 		57D15C4A2624267D00BE1303 /* ReactionToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionToggle.swift; sourceTree = "<group>"; };
 		57D15C502624303F00BE1303 /* SolubleReactionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolubleReactionType.swift; sourceTree = "<group>"; };
 		57D15C5F2625B12700BE1303 /* ParticleContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticleContainer.swift; sourceTree = "<group>"; };
-		57D22E682809C5C100F9BBD0 /* CogSciKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CogSciKit; path = ../CogSciKit; sourceTree = "<group>"; };
 		57D2F2C225EA227D00AEE0D8 /* ReactionQuotientEquation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionQuotientEquation.swift; sourceTree = "<group>"; };
 		57D2F2C825EA265900AEE0D8 /* QuotientPlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuotientPlot.swift; sourceTree = "<group>"; };
 		57D2F2D325EA27DA00AEE0D8 /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
@@ -2002,7 +2001,6 @@
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
-				57D22E682809C5C100F9BBD0 /* CogSciKit */,
 				5769751B26D6548E00D30ECE /* storekit-config */,
 				57FD4033264878C100E352C1 /* TestPlan.xctestplan */,
 				5748659E26A96E55007FA314 /* APChemistry */,
