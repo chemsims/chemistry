@@ -657,7 +657,6 @@
 		57CAD89026D94DF900D75D9B /* AppLaunchPersistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD88F26D94DF900D75D9B /* AppLaunchPersistence.swift */; };
 		57CAD89226D94F2600D75D9B /* AppLaunchPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD89126D94F2600D75D9B /* AppLaunchPersistenceTests.swift */; };
 		57CAD89526D959D100D75D9B /* DateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CAD89426D959D100D75D9B /* DateProvider.swift */; };
-		57CEE2A0271DF46900E95B3B /* Countries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57CEE29E271DED5700E95B3B /* Countries.swift */; };
 		57CEE2A3271DF6BF00E95B3B /* balanced-reaction-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57CEE2A2271DF6BF00E95B3B /* balanced-reaction-quiz.csv */; };
 		57CEE2A7271DFAD300E95B3B /* limiting-reagent-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57CEE2A5271DFAD200E95B3B /* limiting-reagent-quiz.csv */; };
 		57CEE2A9271DFB3200E95B3B /* precipitation-quiz.csv in Resources */ = {isa = PBXBuildFile; fileRef = 57CEE2A8271DFB3200E95B3B /* precipitation-quiz.csv */; };
@@ -1247,7 +1246,6 @@
 		5787039B25B89D01002A4487 /* ReactionPairDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionPairDisplay.swift; sourceTree = "<group>"; };
 		5787C26325F65BC400CF685A /* MoleculeValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoleculeValue.swift; sourceTree = "<group>"; };
 		578A1EAE266FA90000D11E22 /* BufferPhChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferPhChart.swift; sourceTree = "<group>"; };
-		578A7F53285DFF870068E70B /* CogSciKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CogSciKit; path = ../CogSciKit; sourceTree = "<group>"; };
 		578B16FF261864CB00D8079F /* CoreMotionPositionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionPositionViewModel.swift; sourceTree = "<group>"; };
 		578B170E2618749800D8079F /* CoreMotionShakingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionShakingViewModel.swift; sourceTree = "<group>"; };
 		578B1715261874D500D8079F /* CoreMotionShakingBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMotionShakingBehavior.swift; sourceTree = "<group>"; };
@@ -1259,6 +1257,7 @@
 		5790013126FA45490039C753 /* LimitingReagentScreenNavigationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LimitingReagentScreenNavigationTests.swift; sourceTree = "<group>"; };
 		5790A5FE2610C3F800CA2ED7 /* SKSoluteNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SKSoluteNode.swift; sourceTree = "<group>"; };
 		5790AC2E25B375FC00B25776 /* ReactionComparisonViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionComparisonViewModelTests.swift; sourceTree = "<group>"; };
+		5790D1CF2867776C004EB854 /* CogSciKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = CogSciKit; path = ../CogSciKit; sourceTree = "<group>"; };
 		57913D81258EB9730042A89F /* ReactionFilingStatements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReactionFilingStatements.swift; sourceTree = "<group>"; };
 		579193E127105C5400101F1E /* PrecipitationComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrecipitationComponents.swift; sourceTree = "<group>"; };
 		579193E32710DE0400101F1E /* BeakerGridRandomGrowthTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeakerGridRandomGrowthTests.swift; sourceTree = "<group>"; };
@@ -1394,7 +1393,6 @@
 		57CD325726723ACB00C94109 /* BufferFractionsChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferFractionsChart.swift; sourceTree = "<group>"; };
 		57CD325926724DBD00C94109 /* BufferEquationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BufferEquationView.swift; sourceTree = "<group>"; };
 		57CDFE5625E29B0F005D699A /* LastOpenedScreenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastOpenedScreenTests.swift; sourceTree = "<group>"; };
-		57CEE29E271DED5700E95B3B /* Countries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Countries.swift; sourceTree = "<group>"; };
 		57CEE2A2271DF6BF00E95B3B /* balanced-reaction-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "balanced-reaction-quiz.csv"; sourceTree = "<group>"; };
 		57CEE2A5271DFAD200E95B3B /* limiting-reagent-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "limiting-reagent-quiz.csv"; sourceTree = "<group>"; };
 		57CEE2A8271DFB3200E95B3B /* precipitation-quiz.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "precipitation-quiz.csv"; sourceTree = "<group>"; };
@@ -1998,7 +1996,7 @@
 		571D6A33255A780700F4E635 = {
 			isa = PBXGroup;
 			children = (
-				578A7F53285DFF870068E70B /* CogSciKit */,
+				5790D1CF2867776C004EB854 /* CogSciKit */,
 				5769751B26D6548E00D30ECE /* storekit-config */,
 				57FD4033264878C100E352C1 /* TestPlan.xctestplan */,
 				5748659E26A96E55007FA314 /* APChemistry */,
@@ -3776,7 +3774,6 @@
 		57DDAC5725E51AB500B535A7 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				57CEE29E271DED5700E95B3B /* Countries.swift */,
 				579B5D742632A2D600502B69 /* Flags.swift */,
 				57DDAC5825E51AC200B535A7 /* PreviewLayoutExtensions.swift */,
 				57E902B925ED561200758300 /* EquatableCounter.swift */,
@@ -5119,7 +5116,6 @@
 				57E12BDB2705D8140081C52A /* IndirectPropertyWrapper.swift in Sources */,
 				5773BCD6267A2EA500E52C81 /* CircleChartLabel.swift in Sources */,
 				57686AB92600E008005BD328 /* FlamesView.swift in Sources */,
-				57CEE2A0271DF46900E95B3B /* Countries.swift in Sources */,
 				575C90E026628969001DCD17 /* ShakingContainerView.swift in Sources */,
 				574BF91627047F1C0079CA8F /* LimitedGridCoords.swift in Sources */,
 				57315EB4263FF79900A7D0F9 /* Flags.swift in Sources */,
