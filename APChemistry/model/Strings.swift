@@ -42,7 +42,11 @@ struct Strings {
     """
 
     static let largeDonation = """
-    If you'd like to make a large scale donation to help us advance STEM education for students \
-    please reach out to \(FeedbackSettings.defaultAddress) to discuss further.
+    If you’d like to make a non tax deductible gift to support our company and it’s mission \
+    please send an e-mail to \(FeedbackSettings.defaultAddress).
+    """
+  
+    static let tipDisclaimer = """
+    Please be aware all tips to our corporation are NOT tax deductible.
     """
 }

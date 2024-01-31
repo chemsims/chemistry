@@ -60,6 +60,10 @@ extension SupportStudentsModal {
                 Text(Strings.tipMessage)
                     .lineLimit(nil)
                     .minimumScaleFactor(0.75)
+              
+                Text(Strings.tipDisclaimer)
+                  .lineLimit(nil)
+                  .minimumScaleFactor(0.75)
 
                 TipSlider(
                     formatPrice: { level in

@@ -68,6 +68,9 @@ private struct AboutScreenWithSettings: View {
 
                     largeDonation
                         .frame(width: settings.mainContentWidth)
+                  
+                    Text(Strings.tipDisclaimer)
+                      .frame(width: settings.mainContentWidth)
                 }
             }
             .padding(8)
