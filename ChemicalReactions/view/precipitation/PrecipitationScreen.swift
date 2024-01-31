@@ -206,14 +206,14 @@ private struct PrecipitationMiddleStack: View {
         .accessibility(label: Text("Table of elements to their molar mass"))
     }
 
-    private var headerTableRow: Table.Row {
+      private var headerTableRow: ReactionsCore.Table.Row {
         .init(
             cells: ["Compound", "Molar Mass ($g/mol$)"],
             colorMultiply: model.highlights.colorMultiply(for: .metalTable)
         )
     }
 
-    private var tableRows: [Table.Row] {
+    private var tableRows: [ReactionsCore.Table.Row] {
         PrecipitationReaction.Metal.allCases.map { metal in
             let compound = model.chosenReaction.unknownReactant.replacingMetal(with: metal)
             let isCorrectMetal = model.chosenReaction.unknownReactant.metal == metal
